@@ -16,8 +16,10 @@ angular.module('xeditable').factory('editableFormController', function($parse, e
     },
 
     $removeEditable: function(editable) {
-      //todo: check
-      arrayRemove(this.$editables, editable);
+      var index = this.$editables.indexOf(editable);
+      if (index > 1) {
+        this.$editables.splice(index, 1);
+      }
     },
 
     $show: function() {
