@@ -1,0 +1,42 @@
+/* for single editable element */
+.editable-wrap {
+  display: inline-block;
+  white-space: nowrap;
+  margin: 0;
+}
+
+/* remove bottom-margin for bootstrap */
+.editable-wrap .editable-controls,
+.editable-wrap .editable-error {
+  margin-bottom: 0;
+}
+
+/* remove bottom-margin of inputs */
+.editable-wrap .editable-controls > input,
+.editable-wrap .editable-controls > select,
+.editable-wrap .editable-controls > textarea {
+  margin-bottom: 0;
+}
+
+.editable-buttons {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.editable-buttons button {
+  margin-left: 5px;
+}
+
+.editable-click,
+a.editable-click {
+  text-decoration: none;
+  color: #428bca;
+  border-bottom: dashed 1px #428bca;
+}
+
+.editable-click:hover, 
+a.editable-click:hover {
+  text-decoration: none;
+  color: #2a6496;
+  border-bottom-color: #2a6496;
+} 

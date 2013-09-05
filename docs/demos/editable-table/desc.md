@@ -1,0 +1,1 @@
+Just wrap the whole table into `<form>` tag with `editable-form` attribute.

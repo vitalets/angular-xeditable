@@ -1,0 +1,5 @@
+<div ng-controller="SelectRemoteCtrl">
+  <a href="#" editable-select="user.group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
+    {{ showGroup() }}
+  </a>
+</div>  

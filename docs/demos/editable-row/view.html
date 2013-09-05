@@ -1,0 +1,40 @@
+<div ng-controller="EditableRowCtrl">
+  <table class="table table-bordered table-hover table-condensed" style="width: 80%">
+    <tr style="font-weight: bold">
+      <td style="width:35%">Name</td>
+      <td style="width:20%">Status</td>
+      <td style="width:20%">Group</td>
+      <td style="width:25%">Edit</td>
+    </tr>
+    <tr ng-repeat="user in users">
+      <td class="username">
+        <!-- editable username (text with validation) -->
+        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)">
+          {{ user.name }}
+        </span>
+      </td>
+      <td class="status">
+        <!-- editable group (select-remote) -->
+        <span editable-select="user.status" e-name="status" e-form="rowform" e-ng-options="s.value as s.text for s in statuses">
+          {{ showStatus(user) }}
+        </span>
+      </td>
+      <td class="group">
+        <!-- editable group (select-remote) -->
+        <span editable-select="user.group" e-name="group" onshow="loadGroups()" e-form="rowform" e-ng-options="g.id as g.text for g in groups">
+          {{ showGroup(user) }}
+        </span>
+      </td>
+      <td style="white-space: nowrap">
+        <!-- form -->
+        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" 
+         ng-show="rowform.$visible" class="form-buttons form-inline">
+          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">save</button>
+          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$hide()" class="btn btn-default">cancel
+          </button>
+        </form>  
+        <button class="btn btn-default" ng-show="!rowform.$visible" ng-click="rowform.$show()">edit</button>
+      </td>
+    </tr>
+  </table>
+</div>  

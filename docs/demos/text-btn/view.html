@@ -1,0 +1,4 @@
+<div ng-controller="TextBtnCtrl">
+  <span editable-text="user.name" e-form="textBtnForm"> {{ user.name }} </span>
+  <button class="btn btn-default" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">edit</button>
+</div>  

@@ -1,0 +1,125 @@
+doctype
+html(ng-app='app')
+  head
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Angular-xeditable :: edit-in-place for angular.js
+
+    
+    //theme: Bootstrap 3, Bootstrap 2, default
+    //link(ng-repeat="c in css", ng-href="{{c}}", rel="stylesheet", media="screen")
+    link(href="libs/bootstrap/3.0.0/css/bootstrap.css", rel="stylesheet", media="screen")
+
+    //xeditable css  
+    link(href="dist/css/xeditable.css", rel="stylesheet", media="screen")
+
+    //docs css  
+    link(href="docs/css/docs.css", rel="stylesheet", media="screen")
+
+
+    //jquery
+    script(src="libs/jquery/jquery-1.10.2.min.js")
+    //bootstrap    
+    script(src="libs/bootstrap/3.0.0/js/bootstrap.js")
+    //angular
+    script(src='libs/angular/1.2.0rc/angular.js')  
+    script(src='libs/angular/1.2.0rc/angular-mocks.js')  
+    //google-code-prettify
+    script(src='libs/google-code-prettify/run_prettify.js')  
+
+    //app
+    script(src='docs/js/app.js')
+
+    //xeditable
+    script(src='dist/js/xeditable.js') 
+
+
+
+  
+
+
+  body
+    include navbar.jade
+
+    - var items = []
+    - items.push({id: 'text-simple', text: 'Simple editable text'})
+    - items.push({id: 'text-customize', text: 'Customize input'})
+    - items.push({id: 'text-btn', text: 'Trigger manually'})
+    - items.push({id: 'select-local', text: 'Select local'})
+    - items.push({id: 'select-remote', text: 'Select remote'})
+    - items.push({id: 'select-multiple', text: 'Select multiple'})
+    - items.push({id: 'validate-local', text: 'Validate local'})
+    - items.push({id: 'validate-remote', text: 'Validate remote'})
+    - items.push({id: 'send-to-server', text: 'Send to server'})
+    - items.push({id: 'editable-form', text: 'Editable form'})
+    - items.push({id: 'editable-row', text: 'Editable row'})
+    - items.push({id: 'editable-table', text: 'Editable table'})
+
+
+    .container
+      .row
+        .col-md-3
+          .well.sidebar
+            ul.nav
+              li: a(href="#overview") Overview
+              li: a(href="#getstarted") Get started
+              each item in items
+                li: a(href="#"+item.id)= item.text
+        .col-md-9
+
+          mixin demo(brief, header, subheader)
+            section(id=brief)
+            h1= header
+            - dir = "docs/demos/"+brief  
+            - desc = fs.readFileSync(dir+"/desc.md").toString() 
+            - view = fs.readFileSync(dir+"/view.html").toString()
+            - ctrl = fs.readFileSync(dir+"/controller.js").toString()
+            p!= md(desc)
+            script(src=dir+'/controller.js')  
+            h3 html
+            pre.prettyprint.ng-non-bindable= view
+            h3 controller.js
+            pre.prettyprint= ctrl
+            h3 demo
+            .well.line-example!= view
+
+
+          section#overview
+            h1 Overview
+            :markdown
+              **Angular-xeditable** allows you to create editable elements in [angular.js](http://angularjs.org) projects.
+
+              It is based on ideas of [x-editable](http://vitalets.github.io/x-editable) but was written from scratch 
+              to use power of angular and improve some features of x-editable (e.g complex forms and editable rows).
+
+              It does not depend on any libraries except angular itself.
+
+
+          section#getstarted
+            h1 Get started
+            ul
+              li 
+                a(href="zip/angular-xeditable-"+version+".zip") Download
+                |  and extract zip
+              li Include files to your project
+                pre.prettyprint
+                  = '<link href="angular-xeditable/css/xeditable.css" rel="stylesheet">\n'
+                  = '<script src="angular-xeditable/js/xeditable.js"></script>'
+
+              li Add "xeditable" module to app dependencies
+                pre.prettyprint var app = angular.module("app", ["xeditable"]);
+
+              li Set theme in app.run:
+                pre.prettyprint
+                  | app.run(function(editableOptions) {
+                  |   editableOptions.theme = 'bs3'; //can be: 'bs2', 'default'
+                  | });    
+
+              li Follow the guide below
+
+          each item in items
+            +demo(item.id, item.text)
+
+    footer
+      hr
+      p &copy; Vitaliy Potapov 2013. Released under the MIT license

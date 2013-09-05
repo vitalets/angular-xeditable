@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular-xeditable :: edit-in-place for angular.js</title>
+    <!--theme: Bootstrap 3, Bootstrap 2, default-->
+    <!--link(ng-repeat="c in css", ng-href="{{c}}", rel="stylesheet", media="screen")-->
+    <link href="libs/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" media="screen">
+    <!--xeditable css  -->
+    <link href="dist/css/xeditable.css" rel="stylesheet" media="screen">
+    <!--docs css  -->
+    <link href="docs/css/docs.css" rel="stylesheet" media="screen">
+    <!--jquery-->
+    <script src="libs/jquery/jquery-1.10.2.min.js"></script>
+    <!--bootstrap    -->
+    <script src="libs/bootstrap/3.0.0/js/bootstrap.js"></script>
+    <!--angular-->
+    <script src="libs/angular/1.2.0rc/angular.js"> </script>
+    <script src="libs/angular/1.2.0rc/angular-mocks.js"> </script>
+    <!--google-code-prettify-->
+    <script src="libs/google-code-prettify/run_prettify.js"> </script>
+    <!--app-->
+    <script src="docs/js/app.js"></script>
+    <!--xeditable-->
+    <script src="dist/js/xeditable.js"> </script>
+  </head>
+  <body>
+    <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header"><a href="/" class="navbar-brand">Angular-xeditable</a></div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
+          </ul>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.0.zip" class="btn btn-primary">Download 0.1.0</a></form>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="well sidebar">
+            <ul class="nav">
+              <li><a href="#overview">Overview</a></li>
+              <li><a href="#getstarted">Get started</a></li>
+              <li><a href="#text-simple">Simple editable text</a></li>
+              <li><a href="#text-customize">Customize input</a></li>
+              <li><a href="#text-btn">Trigger manually</a></li>
+              <li><a href="#select-local">Select local</a></li>
+              <li><a href="#select-remote">Select remote</a></li>
+              <li><a href="#select-multiple">Select multiple</a></li>
+              <li><a href="#validate-local">Validate local</a></li>
+              <li><a href="#validate-remote">Validate remote</a></li>
+              <li><a href="#send-to-server">Send to server</a></li>
+              <li><a href="#editable-form">Editable form</a></li>
+              <li><a href="#editable-row">Editable row</a></li>
+              <li><a href="#editable-table">Editable table</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <section id="overview">
+            <h1>Overview</h1><p><strong>Angular-xeditable</strong> allows you to create editable elements in <a href="http://angularjs.org">angular.js</a> projects.</p>
+<p>It is based on ideas of <a href="http://vitalets.github.io/x-editable">x-editable</a> but was written from scratch 
+to use power of angular and improve some features of x-editable (e.g complex forms and editable rows).</p>
+<p>It does not depend on any libraries except angular itself.</p>
+
+          </section>
+          <section id="getstarted">
+            <h1>Get started</h1>
+            <ul>
+              <li> <a href="zip/angular-xeditable-0.1.0.zip">Download</a> and extract zip</li>
+              <li>Include files to your project
+                <pre class="prettyprint">&lt;link href=&quot;angular-xeditable/css/xeditable.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;script src=&quot;angular-xeditable/js/xeditable.js&quot;&gt;&lt;/script&gt;</pre>
+              </li>
+              <li>Add "xeditable" module to app dependencies
+                <pre class="prettyprint">var app = angular.module("app", ["xeditable"]);</pre>
+              </li>
+              <li>Set theme in app.run:
+                <pre class="prettyprint">app.run(function(editableOptions) {
+  editableOptions.theme = 'bs3'; //can be: 'bs2', 'default'
+});    </pre>
+              </li>
+              <li>Follow the guide below</li>
+            </ul>
+          </section>
+                    <section id="text-simple"></section>
+                    <h1>Simple editable text</h1>
+                    <p><p>To make element editable via <code>&lt;input type=&quot;text&quot;&gt;</code> just add <code>editable-text</code> attribute 
+pointing to model in scope.</p>
+</p>
+                    <script src="docs/demos/text-simple/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextSimpleCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot;&gt;{{ user.name | uppercase }}&lt;/a&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('TextSimpleCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="TextSimpleCtrl">
+  <a href="#" editable-text="user.name">{{ user.name | uppercase }}</a>
+</div>  </div>
+                    <section id="text-customize"></section>
+                    <h1>Customize input</h1>
+                    <p><p>To define attributes for input (e.g. <code>style</code> or <code>placeholder</code>) you can define them
+on the original element with <code>e-*</code> prefix (e.g. <code>e-style</code> or <code>e-placeholder</code>). 
+When input will appear these attributes will be transfered to it.</p>
+</p>
+                    <script src="docs/demos/text-customize/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextCustomizeCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-style=&quot;width: 150px&quot; e-required e-placeholder=&quot;Enter name&quot;&gt;
+    {{ user.name }}
+  &lt;/a&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('TextCustomizeCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="TextCustomizeCtrl">
+  <a href="#" editable-text="user.name" e-style="width: 150px" e-required e-placeholder="Enter name">
+    {{ user.name }}
+  </a>
+</div>  </div>
+                    <section id="text-btn"></section>
+                    <h1>Trigger manually</h1>
+                    <p><p>To trigger edit-in-place by external button you should define <code>e-form</code> attribute.
+Value of it is the name of variable to be created in scope that allows you to show / hide editor manually.</p>
+</p>
+                    <script src="docs/demos/text-btn/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextBtnCtrl&quot;&gt;
+  &lt;span editable-text=&quot;user.name&quot; e-form=&quot;textBtnForm&quot;&gt; {{ user.name }} &lt;/span&gt;
+  &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;textBtnForm.$show()&quot; ng-hide=&quot;textBtnForm.$visible&quot;&gt;edit&lt;/button&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('TextBtnCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="TextBtnCtrl">
+  <span editable-text="user.name" e-form="textBtnForm"> {{ user.name }} </span>
+  <button class="btn btn-default" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">edit</button>
+</div>  </div>
+                    <section id="select-local"></section>
+                    <h1>Select local</h1>
+                    <p><p>To create editable select (dropdown) just set <code>editable-select</code> attribute pointing to model.
+To pass dropdown options you should define <code>e-ng-options</code> attribute
+that works like normal angular <code>ng-options</code> but is transfered to underlying <code>&lt;select&gt;</code> from original element.</p>
+</p>
+                    <script src="docs/demos/select-local/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;SelectLocalCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-select=&quot;user.status&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
+    {{ showStatus() }}
+  &lt;/a&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('SelectLocalCtrl', function($scope, $filter) {
+  $scope.user = {
+    status: 2
+  }; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.showStatus = function() {
+    var selected = $filter('filter')($scope.statuses, {value: $scope.user.status});
+    return ($scope.user.status &amp;&amp; selected.length) ? selected[0].text : 'Not set';
+  };
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="SelectLocalCtrl">
+  <a href="#" editable-select="user.status" e-ng-options="s.value as s.text for s in statuses">
+    {{ showStatus() }}
+  </a>
+</div>  </div>
+                    <section id="select-remote"></section>
+                    <h1>Select remote</h1>
+                    <p><p>To load select options from remote url you should define <code>onshow</code> attribute pointing to scope function.
+The result of function should be a $http promise, it allows to disable element while loading.</p>
+</p>
+                    <script src="docs/demos/select-remote/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;SelectRemoteCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-select=&quot;user.group&quot; onshow=&quot;loadGroups()&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
+    {{ showGroup() }}
+  &lt;/a&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('SelectRemoteCtrl', function($scope, $filter, $http) {
+  $scope.user = {
+    group: 4,
+    groupName: 'admin' // original value
+  }; 
+
+  $scope.groups = [];
+
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.showGroup = function() {
+    if($scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: $scope.user.group});
+      return selected.length ? selected[0].text : 'Not set';
+    } else {
+      return $scope.user.groupName;
+    }
+  };
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="SelectRemoteCtrl">
+  <a href="#" editable-select="user.group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
+    {{ showGroup() }}
+  </a>
+</div>  </div>
+                    <section id="select-multiple"></section>
+                    <h1>Select multiple</h1>
+                    <p><p>Just define <code>e-multiple</code> attribute that will be transfered to select as <code>multiple</code>.</p>
+</p>
+                    <script src="docs/demos/select-multiple/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;SelectMultipleCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-select=&quot;user.status&quot; e-multiple e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
+    {{ showStatus() }}
+  &lt;/a&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('SelectMultipleCtrl', function($scope, $filter) {
+  $scope.user = {
+    status: [2, 4]
+  }; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.showStatus = function() {
+    var selected = [];
+    angular.forEach($scope.statuses, function(s) { 
+      if ($scope.user.status.indexOf(s.value) &gt;= 0) {
+        selected.push(s.text);
+      }
+    });
+    return selected.length ? selected.join(', ') : 'Not set';
+  };
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="SelectMultipleCtrl">
+  <a href="#" editable-select="user.status" e-multiple e-ng-options="s.value as s.text for s in statuses">
+    {{ showStatus() }}
+  </a>
+</div>  </div>
+                    <section id="validate-local"></section>
+                    <h1>Validate local</h1>
+                    <p><p>Validation is performed via <code>onbeforesave</code> attribute pointing to validation method. 
+It should return <strong>string</strong> if validation fails.</p>
+</p>
+                    <script src="docs/demos/validate-local/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ValidateLocalCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
+    {{ user.name }}
+  &lt;/a&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('ValidateLocalCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return &quot;Username should be `awesome`!&quot;;
+    }
+  };
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="ValidateLocalCtrl">
+  <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
+    {{ user.name }}
+  </a>
+</div>  </div>
+                    <section id="validate-remote"></section>
+                    <h1>Validate remote</h1>
+                    <p><p>You can perform remote validation e.g. checking username in db.
+For that define validation method returning <code>$q</code> <strong>promise</strong>. 
+If promise resolves to <strong>string</strong> validation failed.</p>
+</p>
+                    <script src="docs/demos/validate-remote/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ValidateRemoteCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
+    {{ user.name }}
+  &lt;/a&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('ValidateRemoteCtrl', function($scope, $http, $q) {
+  $scope.user = {
+    name: 'awesome user'
+  };
+
+  $scope.checkName = function(data) {
+    var d = $q.defer();
+    $http.post('/checkName', {value: data}).success(function(res) {
+      res = res || {};
+      if(res.status === 'ok') { // {status: &quot;ok&quot;}
+        d.resolve()
+      } else { // {status: &quot;error&quot;, msg: &quot;Username should be `awesome`!&quot;}
+        d.resolve(res.msg)
+      }
+    });
+    return d.promise;
+  };
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="ValidateRemoteCtrl">
+  <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
+    {{ user.name }}
+  </a>
+</div>  </div>
+                    <section id="send-to-server"></section>
+                    <h1>Send to server</h1>
+                    <p><p>There are two ways to send data on server:</p>
+<ol>
+<li>Read data from editable, send it to server and only after response update local models</li>
+<li>Update local models first and then sync them with server</li>
+</ol>
+<p>For the <em>first way</em> you should set <code>onbeforesave</code> attribute to some updating function.
+It will be called <strong>before</strong> local models update.
+You can get updated data as parameters and send them to server. 
+Returning value is promise that should resolve to one of following (depends on server response):</p>
+<ul>
+<li><code>true</code> or <code>undefined</code>: 
+Success. Editable will automatically update local model and close form</li>
+<li><code>false</code>: 
+Success. But editable will close form <strong>without</strong> update of local models </li>
+<li><code>string</code>: 
+Fail. Editable will <strong>not</strong> update local model, form will <strong>not</strong> close, string will be shown as error message</li>
+</ul>
+<p>For <em>second way</em> you should use <code>onaftersave</code> attribute. It is called <strong>after</strong> local models updated.
+So you just send updated data to server. Return value of this method has only two types:</p>
+<ul>
+<li><code>not string</code>: form will be closed</li>
+<li><code>string</code>: form will not close, string will be shown as error message</li>
+</ul>
+<p>Please note that here you can still use <code>onbeforesave</code> for validation purposes.</p>
+</p>
+                    <script src="docs/demos/send-to-server/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;SendToServerCtrl&quot;&gt;
+  onbeforesave: 
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;updateUserBefore($data)&quot;&gt;
+    {{ user.name }}
+   &lt;/a&gt;
+  &lt;br&gt;
+  onaftersave: 
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onaftersave=&quot;updateUserAfter()&quot;&gt;
+    {{ user.name }}
+  &lt;/a&gt;
+  &lt;br&gt;
+  $scope.user: &lt;pre&gt;{{ user | json }}&lt;/pre&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('SendToServerCtrl', function($scope, $http) {
+  $scope.user = {
+    id: 1,
+    name: 'awesome user'
+  };
+
+  $scope.updateUserBefore = function(data) {
+    //$scope.user not updated yet!
+    return $http.post('/updateUser', {id: $scope.user.id, name: data});
+  };
+
+  $scope.updateUserAfter = function() {
+    //$scope.user already updated!
+    return $http.post('/updateUser', $scope.user);
+  };
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="SendToServerCtrl">
+  onbeforesave: 
+  <a href="#" editable-text="user.name" onbeforesave="updateUserBefore($data)">
+    {{ user.name }}
+   </a>
+  <br>
+  onaftersave: 
+  <a href="#" editable-text="user.name" onaftersave="updateUserAfter()">
+    {{ user.name }}
+  </a>
+  <br>
+  $scope.user: <pre>{{ user | json }}</pre>
+</div>  </div>
+                    <section id="editable-form"></section>
+                    <h1>Editable form</h1>
+                    <p><p>To show several editable elements together and submit at once you should wrap them into <code>&lt;form&gt;</code> tag with
+<code>editable-form</code> attribute. The <code>name</code> attribute of form will create variable in scope (normal angular behavior)
+and editble-form attribute will add a few methods to that variable: <code>$show()</code>, <code>$hide()</code>, <code>$visible</code>, <code>$waiting</code>.
+These methods allows you to show/hide form manually.
+Such form supports additional attributes <code>onshow</code>, <code>onbeforesave</code> and <code>onaftersave</code>, instead of <code>ng-submit / submit</code>.
+When you submit form the sequence of calls is following:</p>
+<p>1.Call <code>onbeforesave</code> of each child editable (validation)</p>
+<p>2.Check result of all <code>onbeforesave</code> of children:</p>
+<ul>
+<li>all returned <code>true</code> or <code>undefined</code>:  call <code>onbeforesave</code> of form itself</li>
+<li>at least one returned string: do not call <code>onbeforesave</code> of form itself, show error</li>
+</ul>
+<p>3.Check result of form&#39;s <code>onbeforesave</code> (if defined):</p>
+<ul>
+<li><code>true</code> or <code>undefined</code>: save data to local models and call <code>onaftersave</code></li>
+<li><code>false</code>: <strong>do not save</strong> data to local models and just close form</li>
+<li><code>string</code>: <strong>do not save</strong> data to local models and <strong>do not close</strong> form</li>
+</ul>
+<p>4.Check result of form&#39;s <code>onaftersave</code> (if defined):</p>
+<ul>
+<li><code>not string</code>: close form</li>
+<li><code>string</code>: do not close form</li>
+</ul>
+<p>Please have a look at examples.</p>
+</p>
+                    <script src="docs/demos/editable-form/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableFormCtrl&quot;&gt;
+  &lt;form editable-form name=&quot;editableForm&quot; onaftersave=&quot;saveUser()&quot;&gt;
+    &lt;div&gt;
+      &lt;!-- editable username (text with validation) --&gt;
+      &lt;strong&gt;User name: &lt;/strong&gt;
+      &lt;span editable-text=&quot;user.name&quot; onbeforesave=&quot;checkName($data)&quot;&gt;{{ user.name }}&lt;/span&gt;
+    &lt;/div&gt;  
+    &lt;div&gt;
+      &lt;!-- editable status (select-local) --&gt;
+      &lt;strong&gt;Status: &lt;/strong&gt;
+      &lt;span editable-select=&quot;user.status&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
+        {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
+      &lt;/span&gt;
+    &lt;/div&gt;  
+    &lt;div&gt;
+      &lt;!-- editable group (select-remote) --&gt;
+      &lt;strong&gt;Group: &lt;/strong&gt;
+      &lt;span editable-select=&quot;user.group&quot; onshow=&quot;loadGroups()&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
+        {{ showGroup() }}
+      &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;!-- button to show form --&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;editableForm.$show()&quot; ng-show=&quot;!editableForm.$visible&quot;&gt;  Edit
+      &lt;/button&gt;
+      &lt;!-- buttons to submit / cancel form --&gt;
+      &lt;span ng-show=&quot;editableForm.$visible&quot;&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot; ng-disabled=&quot;editableForm.$waiting&quot;&gt;
+          Save
+        &lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-disabled=&quot;editableForm.$waiting&quot; ng-click=&quot;editableForm.$hide()&quot;&gt;
+          Cancel
+        &lt;/button&gt;
+      &lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;  
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('EditableFormCtrl', function($scope, $filter, $http) {
+  $scope.user = {
+    id: 1,
+    name: 'awesome user',
+    status: 2,
+    group: 4,
+    groupName: 'admin'
+  }; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.groups = [];
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.showGroup = function() {
+    if($scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: $scope.user.group});
+      return selected.length ? selected[0].text : 'Not set';
+    } else {
+      return $scope.user.groupName;
+    }
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return &quot;Username should be `awesome`!&quot;;
+    }
+  };
+
+  $scope.saveUser = function() {
+    //$scope.user already updated!
+    return $http.post('/saveUser', $scope.user);
+  };
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="EditableFormCtrl">
+  <form editable-form name="editableForm" onaftersave="saveUser()">
+    <div>
+      <!-- editable username (text with validation) -->
+      <strong>User name: </strong>
+      <span editable-text="user.name" onbeforesave="checkName($data)">{{ user.name }}</span>
+    </div>  
+    <div>
+      <!-- editable status (select-local) -->
+      <strong>Status: </strong>
+      <span editable-select="user.status" e-ng-options="s.value as s.text for s in statuses">
+        {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
+      </span>
+    </div>  
+    <div>
+      <!-- editable group (select-remote) -->
+      <strong>Group: </strong>
+      <span editable-select="user.group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
+        {{ showGroup() }}
+      </span>
+    </div>
+    <div>
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">  Edit
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="editableForm.$visible">
+        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+          Save
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$hide()">
+          Cancel
+        </button>
+      </span>
+    </div>
+  </form>  
+</div>  </div>
+                    <section id="editable-row"></section>
+                    <h1>Editable row</h1>
+                    <p><p>To create editable row in table you should place editable elements in cells with <code>e-form</code> attribute pointing to form&#39;s name. The form itself can appear later (e.g. in last column) but it will work. Don&#39;t forget to add 
+<code>editable-form</code> attribute to the form. The form behavior is absolutely the same as described in
+<a href="#editable-form">Editable form section</a></p>
+</p>
+                    <script src="docs/demos/editable-row/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableRowCtrl&quot;&gt;
+  &lt;table class=&quot;table table-bordered table-hover table-condensed&quot; style=&quot;width: 80%&quot;&gt;
+    &lt;tr style=&quot;font-weight: bold&quot;&gt;
+      &lt;td style=&quot;width:35%&quot;&gt;Name&lt;/td&gt;
+      &lt;td style=&quot;width:20%&quot;&gt;Status&lt;/td&gt;
+      &lt;td style=&quot;width:20%&quot;&gt;Group&lt;/td&gt;
+      &lt;td style=&quot;width:25%&quot;&gt;Edit&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr ng-repeat=&quot;user in users&quot;&gt;
+      &lt;td class=&quot;username&quot;&gt;
+        &lt;!-- editable username (text with validation) --&gt;
+        &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-form=&quot;rowform&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
+          {{ user.name }}
+        &lt;/span&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;status&quot;&gt;
+        &lt;!-- editable group (select-remote) --&gt;
+        &lt;span editable-select=&quot;user.status&quot; e-name=&quot;status&quot; e-form=&quot;rowform&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
+          {{ showStatus(user) }}
+        &lt;/span&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;group&quot;&gt;
+        &lt;!-- editable group (select-remote) --&gt;
+        &lt;span editable-select=&quot;user.group&quot; e-name=&quot;group&quot; onshow=&quot;loadGroups()&quot; e-form=&quot;rowform&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
+          {{ showGroup(user) }}
+        &lt;/span&gt;
+      &lt;/td&gt;
+      &lt;td style=&quot;white-space: nowrap&quot;&gt;
+        &lt;!-- form --&gt;
+        &lt;form editable-form name=&quot;rowform&quot; onbeforesave=&quot;saveUser($data, user.id)&quot; 
+         ng-show=&quot;rowform.$visible&quot; class=&quot;form-buttons form-inline&quot;&gt;
+          &lt;button type=&quot;submit&quot; ng-disabled=&quot;rowform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;save&lt;/button&gt;
+          &lt;button type=&quot;button&quot; ng-disabled=&quot;rowform.$waiting&quot; ng-click=&quot;rowform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;cancel
+          &lt;/button&gt;
+        &lt;/form&gt;  
+        &lt;button class=&quot;btn btn-default&quot; ng-show=&quot;!rowform.$visible&quot; ng-click=&quot;rowform.$show()&quot;&gt;edit&lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('EditableRowCtrl', function($scope, $filter, $http) {
+  $scope.users = [
+    {id: 1, name: 'awesome user1', status: 2, group: 4, groupName: 'admin'},
+    {id: 2, name: 'awesome user2', status: undefined, group: 3, groupName: 'vip'},
+    {id: 3, name: 'awesome user3', status: 2, group: null}
+  ]; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.groups = [];
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.showGroup = function(user) {
+    if(user.group &amp;&amp; $scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: user.group});
+      return selected.length ? selected[0].text : 'Not set';
+    } else {
+      return user.groupName || 'Not set';
+    }
+  };
+
+  $scope.showStatus = function(user) {
+    var selected = [];
+    if(user.status) {
+      selected = $filter('filter')($scope.statuses, {value: user.status});
+    }
+    return selected.length ? selected[0].text : 'Not set';
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return &quot;Username should be `awesome`!&quot;;
+    }
+  };
+
+  $scope.saveUser = function(data, id) {
+    //$scope.user not updated yet
+    angular.extend(data, {id: id});
+    return $http.post('/saveUser', data);
+  };
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="EditableRowCtrl">
+  <table class="table table-bordered table-hover table-condensed" style="width: 80%">
+    <tr style="font-weight: bold">
+      <td style="width:35%">Name</td>
+      <td style="width:20%">Status</td>
+      <td style="width:20%">Group</td>
+      <td style="width:25%">Edit</td>
+    </tr>
+    <tr ng-repeat="user in users">
+      <td class="username">
+        <!-- editable username (text with validation) -->
+        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)">
+          {{ user.name }}
+        </span>
+      </td>
+      <td class="status">
+        <!-- editable group (select-remote) -->
+        <span editable-select="user.status" e-name="status" e-form="rowform" e-ng-options="s.value as s.text for s in statuses">
+          {{ showStatus(user) }}
+        </span>
+      </td>
+      <td class="group">
+        <!-- editable group (select-remote) -->
+        <span editable-select="user.group" e-name="group" onshow="loadGroups()" e-form="rowform" e-ng-options="g.id as g.text for g in groups">
+          {{ showGroup(user) }}
+        </span>
+      </td>
+      <td style="white-space: nowrap">
+        <!-- form -->
+        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" 
+         ng-show="rowform.$visible" class="form-buttons form-inline">
+          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">save</button>
+          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$hide()" class="btn btn-default">cancel
+          </button>
+        </form>  
+        <button class="btn btn-default" ng-show="!rowform.$visible" ng-click="rowform.$show()">edit</button>
+      </td>
+    </tr>
+  </table>
+</div>  </div>
+                    <section id="editable-table"></section>
+                    <h1>Editable table</h1>
+                    <p><p>Just wrap the whole table into <code>&lt;form&gt;</code> tag with <code>editable-form</code> attribute.</p>
+</p>
+                    <script src="docs/demos/editable-table/controller.js"> </script>
+                    <h3>html</h3>
+                    <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableTableCtrl&quot;&gt;
+  &lt;form editable-form name=&quot;tableform&quot; onaftersave=&quot;saveTable()&quot;&gt;
+    &lt;table class=&quot;table table-bordered table-hover table-condensed&quot; style=&quot;width: 80%&quot;&gt;
+      &lt;tr style=&quot;font-weight: bold&quot;&gt;
+        &lt;td style=&quot;width:40%&quot;&gt;Name&lt;/td&gt;
+        &lt;td style=&quot;width:30%&quot;&gt;Status&lt;/td&gt;
+        &lt;td style=&quot;width:30%&quot;&gt;Group&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr ng-repeat=&quot;user in users&quot;&gt;
+        &lt;td class=&quot;username&quot;&gt;
+          &lt;!-- editable username (text with validation) --&gt;
+          &lt;span editable-text=&quot;user.name&quot; e-form=&quot;tableform&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
+            {{ user.name }}
+          &lt;/span&gt;
+        &lt;/td&gt;
+        &lt;td class=&quot;status&quot;&gt;
+          &lt;!-- editable group (select-remote) --&gt;
+          &lt;span editable-select=&quot;user.status&quot; e-form=&quot;tableform&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
+            {{ showStatus(user) }}
+          &lt;/span&gt;
+        &lt;/td&gt;
+        &lt;td class=&quot;group&quot;&gt;
+          &lt;!-- editable group (select-remote) --&gt;
+          &lt;span editable-select=&quot;user.group&quot; e-form=&quot;tableform&quot; onshow=&quot;loadGroups()&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
+            {{ showGroup(user) }}
+          &lt;/span&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;!-- buttons --&gt;
+    &lt;div style=&quot;white-space: nowrap&quot;&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-show=&quot;!tableform.$visible&quot; ng-click=&quot;tableform.$show()&quot;&gt;
+        edit
+      &lt;/button&gt;
+      &lt;span ng-show=&quot;tableform.$visible&quot;&gt;
+        &lt;button type=&quot;submit&quot; ng-disabled=&quot;tableform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;save&lt;/button&gt;
+        &lt;button type=&quot;button&quot; ng-disabled=&quot;tableform.$waiting&quot; ng-click=&quot;tableform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;cancel
+        &lt;/button&gt;
+      &lt;/span&gt;  
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/div&gt;  </pre>
+                    <h3>controller.js</h3>
+                    <pre class="prettyprint">app.controller('EditableTableCtrl', function($scope, $filter, $http, $q) {
+  $scope.users = [
+    {id: 1, name: 'awesome user1', status: 2, group: 4, groupName: 'admin'},
+    {id: 2, name: 'awesome user2', status: undefined, group: 3, groupName: 'vip'},
+    {id: 3, name: 'awesome user3', status: 2, group: null}
+  ]; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.groups = [];
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.showGroup = function(user) {
+    if(user.group &amp;&amp; $scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: user.group});
+      return selected.length ? selected[0].text : 'Not set';
+    } else {
+      return user.groupName || 'Not set';
+    }
+  };
+
+  $scope.showStatus = function(user) {
+    var selected = [];
+    if(user.status) {
+      selected = $filter('filter')($scope.statuses, {value: user.status});
+    }
+    return selected.length ? selected[0].text : 'Not set';
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return &quot;Username should be `awesome`!&quot;;
+    }
+  };
+
+  $scope.saveTable = function() {
+    //$scope.users already updated
+    var results = [];
+    angular.forEach($scope.users, function(user) {
+      results.push($http.post('/saveUser', user));
+    })
+    return $q.all(results);
+  };
+});</pre>
+                    <h3>demo</h3>
+                    <div class="well line-example"><div ng-controller="EditableTableCtrl">
+  <form editable-form name="tableform" onaftersave="saveTable()">
+    <table class="table table-bordered table-hover table-condensed" style="width: 80%">
+      <tr style="font-weight: bold">
+        <td style="width:40%">Name</td>
+        <td style="width:30%">Status</td>
+        <td style="width:30%">Group</td>
+      </tr>
+      <tr ng-repeat="user in users">
+        <td class="username">
+          <!-- editable username (text with validation) -->
+          <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data)">
+            {{ user.name }}
+          </span>
+        </td>
+        <td class="status">
+          <!-- editable group (select-remote) -->
+          <span editable-select="user.status" e-form="tableform" e-ng-options="s.value as s.text for s in statuses">
+            {{ showStatus(user) }}
+          </span>
+        </td>
+        <td class="group">
+          <!-- editable group (select-remote) -->
+          <span editable-select="user.group" e-form="tableform" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
+            {{ showGroup(user) }}
+          </span>
+        </td>
+      </tr>
+    </table>
+    <!-- buttons -->
+    <div style="white-space: nowrap">
+      <button type="button" class="btn btn-default" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+        edit
+      </button>
+      <span ng-show="tableform.$visible">
+        <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
+        <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$hide()" class="btn btn-default">cancel
+        </button>
+      </span>  
+    </div>
+  </form>
+</div>  </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <hr>
+      <p>&copy; Vitaliy Potapov 2013. Released under the MIT license</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+body { 
+  /*padding-top: 50px; */
+}
+
+.sidebar {
+  position: fixed; 
+  top: 70px; 
+  width: 200px;
+}
+
+/* overwrite ugly google-prettify style */
+pre.prettyprint {
+  padding: 10px !important;
+  border: 1px solid #cccccc !important;
+}
+
+.line-example {
+  min-height: 75px;
+}
+
+form[name="editableForm"] > div {
+  height: auto;
+  padding: 5px 0;
+}
+
+form[name="editableForm"] > div > strong {
+  vertical-align: top;
+}
+
+section {
+  padding-top: 40px;
+}
+
+footer {
+  text-align: center;
+}
