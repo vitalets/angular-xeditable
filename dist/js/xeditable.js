@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.0
 Edit-in-place for angular.js
-Build date: 2013-09-05 
+Build date: 2013-09-16 
 */
 /*
 angular-xeditable module
@@ -168,7 +168,7 @@ angular.module('xeditable').factory('editableController', function($q) {
       $compile(self.editorEl)($scope);
 
       //hide element
-      $element.addClass('ng-hide');
+      $element.addClass('editable-hide');
 
       //onshow
       return self.onshow();
@@ -178,7 +178,7 @@ angular.module('xeditable').factory('editableController', function($q) {
     self.hide = function() {
       //console.log('editable hide', self.name);
       self.editorEl.remove();
-      $element.removeClass('ng-hide');
+      $element.removeClass('editable-hide');
     };
 
     //setWaiting
@@ -704,7 +704,7 @@ Helpers
 
 /*
 Collect results of function calls. Shows waiting if there are promises. 
-Finally, applies callabcks if:
+Finally, applies callbacks if:
 - onTrue(): all results are true and all promises resolved to true
 - onFalse(): at least one result is false or promise resolved to false
 - onString(): at least one result is string or promise rejected or promise resolved to string

@@ -1,3 +1,8 @@
+/* hiding element */
+.editable-hide {
+  display: none;
+}
+
 /* for single editable element */
 .editable-wrap {
   display: inline-block;

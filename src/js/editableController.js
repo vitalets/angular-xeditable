@@ -154,7 +154,7 @@ angular.module('xeditable').factory('editableController', function($q) {
       $compile(self.editorEl)($scope);
 
       //hide element
-      $element.addClass('ng-hide');
+      $element.addClass('editable-hide');
 
       //onshow
       return self.onshow();
@@ -164,7 +164,7 @@ angular.module('xeditable').factory('editableController', function($q) {
     self.hide = function() {
       //console.log('editable hide', self.name);
       self.editorEl.remove();
-      $element.removeClass('ng-hide');
+      $element.removeClass('editable-hide');
     };
 
     //setWaiting
