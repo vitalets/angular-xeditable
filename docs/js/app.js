@@ -85,11 +85,14 @@ app.run(function($httpBackend, editableOptions, editableThemes) {
   //update user
   $httpBackend.whenPOST(/\/updateUser/).respond(function(method, url, data) {
     data = angular.fromJson(data);
+    return [200, {status: 'ok'}];
+    /*
     if(data.name !== 'awesome') {
       return [500, 'Username should be `awesome`']; 
     } else {
       return [200, {status: 'ok'}]; 
     }
+    */
   });
 
   //save user

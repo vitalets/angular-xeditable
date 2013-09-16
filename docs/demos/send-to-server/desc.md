@@ -1,12 +1,12 @@
-There are two ways to send data on server:
+There are two ways to send editable data on server:
 
-1. Read data from editable, send it to server and only after response update local models
-2. Update local models first and then sync them with server
+1. use `onbeforesave` attribute: you send data to server and only after response save to local model (e.g. `scope.user`)
+2. use `onaftersave` attribute: you save data to local models and only then sync it with server
 
 For the *first way* you should set `onbeforesave` attribute to some updating function.
 It will be called **before** local models update.
 You can get updated data as parameters and send them to server. 
-Returning value is promise that should resolve to one of following (depends on server response):
+Returning value is promise that should resolve to one of following (depending on server response):
 
 - `true` or `undefined`: 
 Success. Editable will automatically update local model and close form
@@ -21,4 +21,4 @@ So you just send updated data to server. Return value of this method has only tw
 - `not string`: form will be closed
 - `string`: form will not close, string will be shown as error message
 
-Please note that here you can still use `onbeforesave` for validation purposes.
+Please note that here you can use both `onbeforesave` for validation and `onaftersave` for saving data.
