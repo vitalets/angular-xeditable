@@ -4,7 +4,7 @@ Helpers
 
 /*
 Collect results of function calls. Shows waiting if there are promises. 
-Finally, applies callabcks if:
+Finally, applies callbacks if:
 - onTrue(): all results are true and all promises resolved to true
 - onFalse(): at least one result is false or promise resolved to false
 - onString(): at least one result is string or promise rejected or promise resolved to string
