@@ -69,19 +69,20 @@ html(ng-app='app')
 
           mixin demo(brief, header, subheader)
             section(id=brief)
-            h1= header
-            - dir = "docs/demos/"+brief  
-            - desc = fs.readFileSync(dir+"/desc.md").toString() 
-            - view = fs.readFileSync(dir+"/view.html").toString()
-            - ctrl = fs.readFileSync(dir+"/controller.js").toString()
-            p!= md(desc)
-            script(src=dir+'/controller.js')  
-            h3 html
-            pre.prettyprint.ng-non-bindable= view
-            h3 controller.js
-            pre.prettyprint= ctrl
-            h3 demo
-            .well.line-example!= view
+              h1= header
+              - dir = "docs/demos/"+brief  
+              - desc = fs.readFileSync(dir+"/desc.md").toString() 
+              - view = fs.readFileSync(dir+"/view.html").toString()
+              - ctrl = fs.readFileSync(dir+"/controller.js").toString()
+              h3 demo
+              .well.line-example!= view
+              p!= md(desc)
+              script(src=dir+'/controller.js')  
+              h3 html
+              pre.prettyprint.ng-non-bindable= view
+              h3 controller.js
+              pre.prettyprint= ctrl
+
 
 
           section#overview
