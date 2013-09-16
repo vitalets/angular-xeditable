@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angular-xeditable :: edit-in-place for angular.js</title>
+    <title>Angular-xeditable :: Edit-in-place for AngularJS</title>
     <!--theme: Bootstrap 3, Bootstrap 2, default-->
     <!--link(ng-repeat="c in css", ng-href="{{c}}", rel="stylesheet", media="screen")-->
     <link href="libs/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" media="screen">
@@ -11,7 +11,7 @@
     <link href="dist/css/xeditable.css" rel="stylesheet" media="screen">
     <!--docs css  -->
     <link href="docs/css/docs.css" rel="stylesheet" media="screen">
-    <!--jquery-->
+    <!--jquery (needed for bootstrap)-->
     <script src="libs/jquery/jquery-1.10.2.min.js"></script>
     <!--bootstrap    -->
     <script src="libs/bootstrap/3.0.0/js/bootstrap.js"></script>
@@ -70,9 +70,15 @@ to use power of angular and improve some features of x-editable (e.g complex for
           </section>
           <section id="getstarted">
             <h1>Get started</h1>
-            <ul>
-              <li> <a href="zip/angular-xeditable-0.1.0.zip">Download</a> and extract zip</li>
-              <li>Include files to your project
+            <ol>
+              <li> <p>Include <a href="http://angularjs.org">Angular.js</a> in your project</p>
+
+                <pre class="prettyprint">&lt;script src=&quot;js/1.2.0-rc/angular.js&quot;&gt;&lt;/script&gt;</pre><p>Optionally include <a href="http://getbootstrap.com">Bootstrap</a> CSS for theming</p>
+
+                <pre class="prettyprint">&lt;link href=&quot;bootstrap/css/bootstrap.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
+              </li>
+              <li> <span>Download and extract </span><a href="zip/angular-xeditable-0.1.0.zip">angular-xeditable zip</a></li>
+              <li>Include js and css in your project
                 <pre class="prettyprint">&lt;link href=&quot;angular-xeditable/css/xeditable.css&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;script src=&quot;angular-xeditable/js/xeditable.js&quot;&gt;&lt;/script&gt;</pre>
               </li>
@@ -81,11 +87,11 @@ to use power of angular and improve some features of x-editable (e.g complex for
               </li>
               <li>Set theme in app.run:
                 <pre class="prettyprint">app.run(function(editableOptions) {
-  editableOptions.theme = 'bs3'; //can be: 'bs2', 'default'
-});    </pre>
+  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+});</pre>
               </li>
               <li>Follow the guide below</li>
-            </ul>
+            </ol>
           </section>
                     <section id="text-simple"></section>
                     <h1>Simple editable text</h1>
