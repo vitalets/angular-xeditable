@@ -442,11 +442,13 @@ So you just send updated data to server. Return value of this method has only tw
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="EditableFormCtrl">
   <form editable-form name="editableForm" onaftersave="saveUser()">
+    
     <div>
       <!-- editable username (text with validation) -->
       <strong>User name: </strong>
       <span editable-text="user.name" onbeforesave="checkName($data)">{{ user.name }}</span>
-    </div>  
+    </div> 
+
     <div>
       <!-- editable status (select-local) -->
       <strong>Status: </strong>
@@ -454,6 +456,7 @@ So you just send updated data to server. Return value of this method has only tw
         {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
       </span>
     </div>  
+
     <div>
       <!-- editable group (select-remote) -->
       <strong>Group: </strong>
@@ -461,6 +464,7 @@ So you just send updated data to server. Return value of this method has only tw
         {{ showGroup() }}
       </span>
     </div>
+
     <div>
       <!-- button to show form -->
       <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
@@ -476,6 +480,7 @@ So you just send updated data to server. Return value of this method has only tw
         </button>
       </span>
     </div>
+
   </form>  
 </div>  </div>
                       <p><p>To show several editable elements together and submit at once you should wrap them into <code>&lt;form editable-form name=&quot;myform&quot; ...&gt;</code> tag. The <code>name</code> attribute of form will create variable in scope (normal angular behavior) and <code>editable-form</code> attribute will add a few methods to that variable: </p>
@@ -492,23 +497,32 @@ So you just send updated data to server. Return value of this method has only tw
 <li><strong>onbeforesave</strong>: called on submit before local models update</li>
 <li><strong>onaftersave</strong>: called on submit after local models update</li>
 </ul>
-<p>They work exactly the same as for individual editable elements. Use it instead of <code>ng-submit / submit</code> to get more control over saving process. </p>
+<p>They work nearly the same as for individual editable elements. Use it instead of <code>ng-submit / submit</code> to get more control over saving process. </p>
 <p>When you submit editable form it performs following steps:</p>
-<p>1.Call <code>onbeforesave</code> of each child editable and check returning values (validation):</p>
+<ol>
+<li>call child&#39;s <code>onbeforesave</code></li>
+<li>call form&#39;s <code>onbeforesave</code></li>
+<li>write data to local model (e.g. <code>$scope.user</code>)</li>
+<li>call form&#39;s <code>onaftersave</code></li>
+<li>call child&#39;s <code>onaftersave</code></li>
+</ol>
+<p>Any <code>onbeforesave / onaftersave</code> can be omited so in simplest case you will just write data to local model.</p>
+<p>But in more complex case it becomes usefull:</p>
+<p>If you need <strong>validation of individual editable elements</strong> then you should define <code>onbeforesave</code> on particular editable element.<br>The result of child&#39;s <code>onbeforesave</code> is important for next step:</p>
 <ul>
-<li>all returned <code>true</code> or <code>undefined</code>:  call <code>onbeforesave</code> of form itself</li>
-<li>at least one returned string: do not call <code>onbeforesave</code> of form itself, show error</li>
+<li><code>string</code>: submit will be cancelled, form will stay opened, string will be shown as error message</li>
+<li><code>not string</code>: submit will be continued</li>
 </ul>
-<p>2.Check result of form&#39;s <code>onbeforesave</code>:</p>
+<p>If you need to <strong>send data on server <em>before</em> writing to local model</strong> then you should define form&#39;s <code>onbeforesave</code>.<br>The result of form&#39;s <code>onbeforesave</code> is important for next step:</p>
 <ul>
-<li><code>true</code> or <code>undefined</code>: save data to local models and call <code>onaftersave</code></li>
-<li><code>false</code>: <strong>do not save</strong> data to local models and just close form</li>
-<li><code>string</code>: <strong>do not save</strong> data to local models and <strong>do not close</strong> form</li>
+<li><code>true</code> or <code>undefined</code>: local model will be updated and form will call <code>onaftersave</code> </li>
+<li><code>false</code>: local model <strong>will not be updated</strong> and form will just close (e.g. you update local model yourself)</li>
+<li><code>string</code>: local model <strong>will not be updated</strong> and <strong>form will not close</strong> (e.g. server error)</li>
 </ul>
-<p>3.Check result of form&#39;s <code>onaftersave</code>:</p>
+<p>If you need to <strong>send data on server <em>after</em> writing to local model</strong> then you should define form&#39;s <code>onaftersave</code>.<br>The result of form&#39;s <code>onaftersave</code> is also important for next step: </p>
 <ul>
-<li><code>not string</code>: close form</li>
-<li><code>string</code>: do not close form</li>
+<li><code>string</code>: form will not close (e.g. server error)</li>
+<li><code>not string</code>: form will be closed</li>
 </ul>
 <p>Commonly you should define <code>onbeforesave</code> for child elements to perform validation and <code>onaftersave</code> for whole form to send data on server.</p>
 <p>Please have a look at examples.</p>
@@ -517,11 +531,13 @@ So you just send updated data to server. Return value of this method has only tw
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableFormCtrl&quot;&gt;
   &lt;form editable-form name=&quot;editableForm&quot; onaftersave=&quot;saveUser()&quot;&gt;
+    
     &lt;div&gt;
       &lt;!-- editable username (text with validation) --&gt;
       &lt;strong&gt;User name: &lt;/strong&gt;
       &lt;span editable-text=&quot;user.name&quot; onbeforesave=&quot;checkName($data)&quot;&gt;{{ user.name }}&lt;/span&gt;
-    &lt;/div&gt;  
+    &lt;/div&gt; 
+
     &lt;div&gt;
       &lt;!-- editable status (select-local) --&gt;
       &lt;strong&gt;Status: &lt;/strong&gt;
@@ -529,6 +545,7 @@ So you just send updated data to server. Return value of this method has only tw
         {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
       &lt;/span&gt;
     &lt;/div&gt;  
+
     &lt;div&gt;
       &lt;!-- editable group (select-remote) --&gt;
       &lt;strong&gt;Group: &lt;/strong&gt;
@@ -536,6 +553,7 @@ So you just send updated data to server. Return value of this method has only tw
         {{ showGroup() }}
       &lt;/span&gt;
     &lt;/div&gt;
+
     &lt;div&gt;
       &lt;!-- button to show form --&gt;
       &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;editableForm.$show()&quot; ng-show=&quot;!editableForm.$visible&quot;&gt;
@@ -551,6 +569,7 @@ So you just send updated data to server. Return value of this method has only tw
         &lt;/button&gt;
       &lt;/span&gt;
     &lt;/div&gt;
+
   &lt;/form&gt;  
 &lt;/div&gt;  </pre>
                       <h3>controller.js</h3>
@@ -610,19 +629,19 @@ So you just send updated data to server. Return value of this method has only tw
       <td style="width:25%">Edit</td>
     </tr>
     <tr ng-repeat="user in users">
-      <td class="username">
+      <td>
         <!-- editable username (text with validation) -->
         <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)">
           {{ user.name }}
         </span>
       </td>
-      <td class="status">
-        <!-- editable group (select-remote) -->
+      <td>
+        <!-- editable status (select-local) -->
         <span editable-select="user.status" e-name="status" e-form="rowform" e-ng-options="s.value as s.text for s in statuses">
           {{ showStatus(user) }}
         </span>
       </td>
-      <td class="group">
+      <td>
         <!-- editable group (select-remote) -->
         <span editable-select="user.group" e-name="group" onshow="loadGroups()" e-form="rowform" e-ng-options="g.id as g.text for g in groups">
           {{ showGroup(user) }}
@@ -630,10 +649,12 @@ So you just send updated data to server. Return value of this method has only tw
       </td>
       <td style="white-space: nowrap">
         <!-- form -->
-        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" 
-         ng-show="rowform.$visible" class="form-buttons form-inline">
-          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">save</button>
-          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$hide()" class="btn btn-default">cancel
+        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline">
+          <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$hide()" class="btn btn-default">
+            cancel
           </button>
         </form>  
         <button class="btn btn-default" ng-show="!rowform.$visible" ng-click="rowform.$show()">edit</button>
@@ -656,19 +677,19 @@ So you just send updated data to server. Return value of this method has only tw
       &lt;td style=&quot;width:25%&quot;&gt;Edit&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr ng-repeat=&quot;user in users&quot;&gt;
-      &lt;td class=&quot;username&quot;&gt;
+      &lt;td&gt;
         &lt;!-- editable username (text with validation) --&gt;
         &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-form=&quot;rowform&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
           {{ user.name }}
         &lt;/span&gt;
       &lt;/td&gt;
-      &lt;td class=&quot;status&quot;&gt;
-        &lt;!-- editable group (select-remote) --&gt;
+      &lt;td&gt;
+        &lt;!-- editable status (select-local) --&gt;
         &lt;span editable-select=&quot;user.status&quot; e-name=&quot;status&quot; e-form=&quot;rowform&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
           {{ showStatus(user) }}
         &lt;/span&gt;
       &lt;/td&gt;
-      &lt;td class=&quot;group&quot;&gt;
+      &lt;td&gt;
         &lt;!-- editable group (select-remote) --&gt;
         &lt;span editable-select=&quot;user.group&quot; e-name=&quot;group&quot; onshow=&quot;loadGroups()&quot; e-form=&quot;rowform&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
           {{ showGroup(user) }}
@@ -676,10 +697,12 @@ So you just send updated data to server. Return value of this method has only tw
       &lt;/td&gt;
       &lt;td style=&quot;white-space: nowrap&quot;&gt;
         &lt;!-- form --&gt;
-        &lt;form editable-form name=&quot;rowform&quot; onbeforesave=&quot;saveUser($data, user.id)&quot; 
-         ng-show=&quot;rowform.$visible&quot; class=&quot;form-buttons form-inline&quot;&gt;
-          &lt;button type=&quot;submit&quot; ng-disabled=&quot;rowform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;save&lt;/button&gt;
-          &lt;button type=&quot;button&quot; ng-disabled=&quot;rowform.$waiting&quot; ng-click=&quot;rowform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;cancel
+        &lt;form editable-form name=&quot;rowform&quot; onbeforesave=&quot;saveUser($data, user.id)&quot; ng-show=&quot;rowform.$visible&quot; class=&quot;form-buttons form-inline&quot;&gt;
+          &lt;button type=&quot;submit&quot; ng-disabled=&quot;rowform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
+            save
+          &lt;/button&gt;
+          &lt;button type=&quot;button&quot; ng-disabled=&quot;rowform.$waiting&quot; ng-click=&quot;rowform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;
+            cancel
           &lt;/button&gt;
         &lt;/form&gt;  
         &lt;button class=&quot;btn btn-default&quot; ng-show=&quot;!rowform.$visible&quot; ng-click=&quot;rowform.$show()&quot;&gt;edit&lt;/button&gt;
@@ -728,7 +751,7 @@ So you just send updated data to server. Return value of this method has only tw
 
   $scope.checkName = function(data) {
     if (data !== 'awesome') {
-      return &quot;Username should be `awesome`!&quot;;
+      return &quot;Username should be `awesome`&quot;;
     }
   };
 
