@@ -1,10 +1,12 @@
 <div ng-controller="EditableFormCtrl">
   <form editable-form name="editableForm" onaftersave="saveUser()">
+    
     <div>
       <!-- editable username (text with validation) -->
       <strong>User name: </strong>
       <span editable-text="user.name" onbeforesave="checkName($data)">{{ user.name }}</span>
-    </div>  
+    </div> 
+
     <div>
       <!-- editable status (select-local) -->
       <strong>Status: </strong>
@@ -12,6 +14,7 @@
         {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
       </span>
     </div>  
+
     <div>
       <!-- editable group (select-remote) -->
       <strong>Group: </strong>
@@ -19,6 +22,7 @@
         {{ showGroup() }}
       </span>
     </div>
+
     <div>
       <!-- button to show form -->
       <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
@@ -34,5 +38,6 @@
         </button>
       </span>
     </div>
+
   </form>  
 </div>  
