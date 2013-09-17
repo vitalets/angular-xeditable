@@ -9,7 +9,7 @@ describe('single', function() {
   beforeEach(function() {
     browser().navigateTo('../../../index.html');
   });
-
+/*
   describe('text', function() {
 
     it('should show editor and submit new value', function() {
@@ -88,9 +88,10 @@ describe('single', function() {
     });
 
   });
+*/
 
   describe('select', function() {
-
+/*
     it('should show editor and submit new value', function() {
       element('#select-simple a').click();
       expect(element('#select-simple a').css('display')).toBe('none');
@@ -125,7 +126,6 @@ describe('single', function() {
       expect(element(s+'form').count()).toBe(0);
     });
 
-
     it('should load remote data in `onshow` event', function() {
       var s = '#select-remote ';
       expect(element(s+'a').text()).toMatch('notset');
@@ -140,7 +140,7 @@ describe('single', function() {
       expect(element(s+'button:visible').count()).toBe(2);
       expect(element(s+'form select').val()).toBe('2');
     });
-
+*/
     it('should show error when `onshow` returns string', function() {
       var s = '#select-onshow-err-string ';
       element(s+'a').click();

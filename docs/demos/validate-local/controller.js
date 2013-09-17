@@ -5,7 +5,7 @@ app.controller('ValidateLocalCtrl', function($scope) {
 
   $scope.checkName = function(data) {
     if (data !== 'awesome') {
-      return "Username should be `awesome`!";
+      return "Username should be `awesome`";
     }
   };
 });

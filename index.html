@@ -147,7 +147,9 @@ When input will appear these attributes will be transfered to it.</p>
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="TextBtnCtrl">
   <span editable-text="user.name" e-form="textBtnForm"> {{ user.name }} </span>
-  <button class="btn btn-default" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">edit</button>
+  <button class="btn btn-default" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">
+    edit
+  </button>
 </div>  </div>
                       <p><p>To trigger edit-in-place by external button you should define <code>e-form</code> attribute.
 Value of it is the name of variable to be created in scope that allows you to show / hide editor manually.</p>
@@ -156,7 +158,9 @@ Value of it is the name of variable to be created in scope that allows you to sh
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextBtnCtrl&quot;&gt;
   &lt;span editable-text=&quot;user.name&quot; e-form=&quot;textBtnForm&quot;&gt; {{ user.name }} &lt;/span&gt;
-  &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;textBtnForm.$show()&quot; ng-hide=&quot;textBtnForm.$visible&quot;&gt;edit&lt;/button&gt;
+  &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;textBtnForm.$show()&quot; ng-hide=&quot;textBtnForm.$visible&quot;&gt;
+    edit
+  &lt;/button&gt;
 &lt;/div&gt;  </pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('TextBtnCtrl', function($scope) {
@@ -295,8 +299,9 @@ The result of function should be a $http promise, it allows to disable element w
     {{ user.name }}
   </a>
 </div>  </div>
-                      <p><p>Validation is performed via <code>onbeforesave</code> attribute pointing to validation method. 
-It should return <strong>string</strong> if validation fails.</p>
+                      <p><p>Validation is performed via <code>onbeforesave</code> attribute pointing to validation method.
+Value is available as <code>$data</code> parameter. If method returns <strong>string</strong> - validation failed
+and string shown as error message.</p>
 </p>
                       <script src="docs/demos/validate-local/controller.js"> </script>
                       <h3>html</h3>
@@ -313,7 +318,7 @@ It should return <strong>string</strong> if validation fails.</p>
 
   $scope.checkName = function(data) {
     if (data !== 'awesome') {
-      return &quot;Username should be `awesome`!&quot;;
+      return &quot;Username should be `awesome`&quot;;
     }
   };
 });</pre>
@@ -375,12 +380,13 @@ If promise resolves to <strong>string</strong> validation failed.</p>
 </div>  </div>
                       <p><p>There are two ways to send editable data on server:</p>
 <ol>
-<li>use <code>onbeforesave</code> attribute: you send data to server and only after response save to local model (e.g. <code>scope.user</code>)</li>
-<li>use <code>onaftersave</code> attribute: you save data to local models and only then sync it with server</li>
+<li>use <code>onbeforesave</code> attribute: you send data to server first and only after response save to local model (e.g. <code>scope.user</code>)</li>
+<li>use <code>onaftersave</code> attribute: you save data to local models first and only then sync it with server</li>
 </ol>
-<p>For the <em>first way</em> you should set <code>onbeforesave</code> attribute to some updating function.
+<p>Which way to use depends on your app structure and conventions.</p>
+<p>For the <em>first way</em> you should define <code>onbeforesave</code> attribute pointing to some updating function.
 It will be called <strong>before</strong> local models update.
-You can get updated data as parameters and send them to server. 
+You can get updated data as parameter <code>$data</code> and send it to server. 
 Returning value is promise that should resolve to one of following (depending on server response):</p>
 <ul>
 <li><code>true</code> or <code>undefined</code>: 
@@ -396,7 +402,7 @@ So you just send updated data to server. Return value of this method has only tw
 <li><code>not string</code>: form will be closed</li>
 <li><code>string</code>: form will not close, string will be shown as error message</li>
 </ul>
-<p>Please note that here you can use both <code>onbeforesave</code> for validation and <code>onaftersave</code> for saving data.</p>
+<p>Note that you can use both <code>onbeforesave</code> for validation and <code>onaftersave</code> for saving data.</p>
 </p>
                       <script src="docs/demos/send-to-server/controller.js"> </script>
                       <h3>html</h3>
@@ -471,29 +477,39 @@ So you just send updated data to server. Return value of this method has only tw
     </div>
   </form>  
 </div>  </div>
-                      <p><p>To show several editable elements together and submit at once you should wrap them into <code>&lt;form&gt;</code> tag with
-<code>editable-form</code> attribute. The <code>name</code> attribute of form will create variable in scope (normal angular behavior)
-and editble-form attribute will add a few methods to that variable: <code>$show()</code>, <code>$hide()</code>, <code>$visible</code>, <code>$waiting</code>.
-These methods allows you to show/hide form manually.
-Such form supports additional attributes <code>onshow</code>, <code>onbeforesave</code> and <code>onaftersave</code>, instead of <code>ng-submit / submit</code>.
-When you submit form the sequence of calls is following:</p>
-<p>1.Call <code>onbeforesave</code> of each child editable (validation)</p>
-<p>2.Check result of all <code>onbeforesave</code> of children:</p>
+                      <p><p>To show several editable elements together and submit at once you should wrap them into <code>&lt;form editable-form name=&quot;myform&quot; ...&gt;</code> tag. The <code>name</code> attribute of form will create variable in scope (normal angular behavior) and <code>editable-form</code> attribute will add a few methods to that variable: </p>
+<ul>
+<li>$show()</li>
+<li>$hide()</li>
+<li>$visible</li>
+<li>$waiting</li>
+</ul>
+<p>Use it to toggle editable state of form. For example, you can call <code>myform.$show()</code>.</p>
+<p>Editable form supports 3 additional attributes: </p>
+<ul>
+<li><strong>onshow</strong>: called when form is shown</li>
+<li><strong>onbeforesave</strong>: called on submit before local models update</li>
+<li><strong>onaftersave</strong>: called on submit after local models update</li>
+</ul>
+<p>They work exactly the same as for individual editable elements. Use it instead of <code>ng-submit / submit</code> to get more control over saving process. </p>
+<p>When you submit editable form it performs following steps:</p>
+<p>1.Call <code>onbeforesave</code> of each child editable and check returning values (validation):</p>
 <ul>
 <li>all returned <code>true</code> or <code>undefined</code>:  call <code>onbeforesave</code> of form itself</li>
 <li>at least one returned string: do not call <code>onbeforesave</code> of form itself, show error</li>
 </ul>
-<p>3.Check result of form&#39;s <code>onbeforesave</code> (if defined):</p>
+<p>2.Check result of form&#39;s <code>onbeforesave</code>:</p>
 <ul>
 <li><code>true</code> or <code>undefined</code>: save data to local models and call <code>onaftersave</code></li>
 <li><code>false</code>: <strong>do not save</strong> data to local models and just close form</li>
 <li><code>string</code>: <strong>do not save</strong> data to local models and <strong>do not close</strong> form</li>
 </ul>
-<p>4.Check result of form&#39;s <code>onaftersave</code> (if defined):</p>
+<p>3.Check result of form&#39;s <code>onaftersave</code>:</p>
 <ul>
 <li><code>not string</code>: close form</li>
 <li><code>string</code>: do not close form</li>
 </ul>
+<p>Commonly you should define <code>onbeforesave</code> for child elements to perform validation and <code>onaftersave</code> for whole form to send data on server.</p>
 <p>Please have a look at examples.</p>
 </p>
                       <script src="docs/demos/editable-form/controller.js"> </script>

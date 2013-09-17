@@ -7,7 +7,7 @@ describe('text-simple', function() {
   it('should show editor and submit new value', function() {
     var s = '[ng-controller="TextSimpleCtrl"] ';
 
-    expect(element(s+'a').text()).toBe('AWESOME USER');
+    expect(element(s+'a').text()).toMatch('AWESOME USER');
     element(s+'a').click();
 
     expect(element(s+'a').css('display')).toBe('none');
