@@ -38,7 +38,7 @@ app.controller('EditableTableCtrl', function($scope, $filter, $http, $q) {
 
   $scope.checkName = function(data) {
     if (data !== 'awesome') {
-      return "Username should be `awesome`!";
+      return "Username should be `awesome`";
     }
   };
 

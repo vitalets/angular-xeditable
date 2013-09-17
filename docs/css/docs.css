@@ -27,6 +27,12 @@ form[name="editableForm"] > div > strong {
   vertical-align: top;
 }
 
+div[ng-controller] table tr td {
+  height: 45px;
+  /*text-align: center;*/
+  vertical-align: middle;
+}
+
 section {
   padding-top: 40px;
 }

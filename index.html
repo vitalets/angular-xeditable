@@ -767,6 +767,8 @@ So you just send updated data to server. Return value of this method has only tw
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="EditableTableCtrl">
   <form editable-form name="tableform" onaftersave="saveTable()">
+
+    <!-- table -->
     <table class="table table-bordered table-hover table-condensed" style="width: 80%">
       <tr style="font-weight: bold">
         <td style="width:40%">Name</td>
@@ -774,19 +776,19 @@ So you just send updated data to server. Return value of this method has only tw
         <td style="width:30%">Group</td>
       </tr>
       <tr ng-repeat="user in users">
-        <td class="username">
+        <td>
           <!-- editable username (text with validation) -->
           <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data)">
             {{ user.name }}
           </span>
         </td>
-        <td class="status">
-          <!-- editable group (select-remote) -->
+        <td>
+          <!-- editable status (select-local) -->
           <span editable-select="user.status" e-form="tableform" e-ng-options="s.value as s.text for s in statuses">
             {{ showStatus(user) }}
           </span>
         </td>
-        <td class="group">
+        <td>
           <!-- editable group (select-remote) -->
           <span editable-select="user.group" e-form="tableform" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
             {{ showGroup(user) }}
@@ -794,6 +796,7 @@ So you just send updated data to server. Return value of this method has only tw
         </td>
       </tr>
     </table>
+
     <!-- buttons -->
     <div style="white-space: nowrap">
       <button type="button" class="btn btn-default" ng-show="!tableform.$visible" ng-click="tableform.$show()">
@@ -805,6 +808,7 @@ So you just send updated data to server. Return value of this method has only tw
         </button>
       </span>  
     </div>
+    
   </form>
 </div>  </div>
                       <p><p>Just wrap the whole table into <code>&lt;form&gt;</code> tag with <code>editable-form</code> attribute.</p>
@@ -813,6 +817,8 @@ So you just send updated data to server. Return value of this method has only tw
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableTableCtrl&quot;&gt;
   &lt;form editable-form name=&quot;tableform&quot; onaftersave=&quot;saveTable()&quot;&gt;
+
+    &lt;!-- table --&gt;
     &lt;table class=&quot;table table-bordered table-hover table-condensed&quot; style=&quot;width: 80%&quot;&gt;
       &lt;tr style=&quot;font-weight: bold&quot;&gt;
         &lt;td style=&quot;width:40%&quot;&gt;Name&lt;/td&gt;
@@ -820,19 +826,19 @@ So you just send updated data to server. Return value of this method has only tw
         &lt;td style=&quot;width:30%&quot;&gt;Group&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr ng-repeat=&quot;user in users&quot;&gt;
-        &lt;td class=&quot;username&quot;&gt;
+        &lt;td&gt;
           &lt;!-- editable username (text with validation) --&gt;
           &lt;span editable-text=&quot;user.name&quot; e-form=&quot;tableform&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
             {{ user.name }}
           &lt;/span&gt;
         &lt;/td&gt;
-        &lt;td class=&quot;status&quot;&gt;
-          &lt;!-- editable group (select-remote) --&gt;
+        &lt;td&gt;
+          &lt;!-- editable status (select-local) --&gt;
           &lt;span editable-select=&quot;user.status&quot; e-form=&quot;tableform&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
             {{ showStatus(user) }}
           &lt;/span&gt;
         &lt;/td&gt;
-        &lt;td class=&quot;group&quot;&gt;
+        &lt;td&gt;
           &lt;!-- editable group (select-remote) --&gt;
           &lt;span editable-select=&quot;user.group&quot; e-form=&quot;tableform&quot; onshow=&quot;loadGroups()&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
             {{ showGroup(user) }}
@@ -840,6 +846,7 @@ So you just send updated data to server. Return value of this method has only tw
         &lt;/td&gt;
       &lt;/tr&gt;
     &lt;/table&gt;
+
     &lt;!-- buttons --&gt;
     &lt;div style=&quot;white-space: nowrap&quot;&gt;
       &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-show=&quot;!tableform.$visible&quot; ng-click=&quot;tableform.$show()&quot;&gt;
@@ -851,6 +858,7 @@ So you just send updated data to server. Return value of this method has only tw
         &lt;/button&gt;
       &lt;/span&gt;  
     &lt;/div&gt;
+    
   &lt;/form&gt;
 &lt;/div&gt;  </pre>
                       <h3>controller.js</h3>
@@ -894,7 +902,7 @@ So you just send updated data to server. Return value of this method has only tw
 
   $scope.checkName = function(data) {
     if (data !== 'awesome') {
-      return &quot;Username should be `awesome`!&quot;;
+      return &quot;Username should be `awesome`&quot;;
     }
   };
 

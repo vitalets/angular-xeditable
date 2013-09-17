@@ -1,5 +1,7 @@
 <div ng-controller="EditableTableCtrl">
   <form editable-form name="tableform" onaftersave="saveTable()">
+
+    <!-- table -->
     <table class="table table-bordered table-hover table-condensed" style="width: 80%">
       <tr style="font-weight: bold">
         <td style="width:40%">Name</td>
@@ -7,19 +9,19 @@
         <td style="width:30%">Group</td>
       </tr>
       <tr ng-repeat="user in users">
-        <td class="username">
+        <td>
           <!-- editable username (text with validation) -->
           <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data)">
             {{ user.name }}
           </span>
         </td>
-        <td class="status">
-          <!-- editable group (select-remote) -->
+        <td>
+          <!-- editable status (select-local) -->
           <span editable-select="user.status" e-form="tableform" e-ng-options="s.value as s.text for s in statuses">
             {{ showStatus(user) }}
           </span>
         </td>
-        <td class="group">
+        <td>
           <!-- editable group (select-remote) -->
           <span editable-select="user.group" e-form="tableform" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
             {{ showGroup(user) }}
@@ -27,6 +29,7 @@
         </td>
       </tr>
     </table>
+
     <!-- buttons -->
     <div style="white-space: nowrap">
       <button type="button" class="btn btn-default" ng-show="!tableform.$visible" ng-click="tableform.$show()">
@@ -38,5 +41,6 @@
         </button>
       </span>  
     </div>
+    
   </form>
 </div>  
