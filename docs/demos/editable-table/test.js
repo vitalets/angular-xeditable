@@ -4,7 +4,7 @@ describe('editable-table', function() {
     browser().navigateTo('../../index.html');
   });
 
-  iit('should show form by `edit` button and save new values', function() {
+  it('should show form by `edit` button and save new values', function() {
     var s = '[ng-controller="EditableTableCtrl"] > form ';
 
     //edit button initially shown, form initially hidden

@@ -58,6 +58,7 @@
               <li><a href="#send-to-server">Send to server</a></li>
               <li><a href="#editable-form">Editable form</a></li>
               <li><a href="#editable-row">Editable row</a></li>
+              <li><a href="#editable-column">Editable column</a></li>
               <li><a href="#editable-table">Editable table</a></li>
             </ul>
           </div>
@@ -760,6 +761,223 @@ So you just send updated data to server. Return value of this method has only tw
     angular.extend(data, {id: id});
     return $http.post('/saveUser', data);
   };
+});</pre>
+                    </section>
+                    <section id="editable-column">
+                      <h1>Editable column</h1>
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="EditableColumnCtrl">
+  <table class="table table-bordered table-hover table-condensed" style="width: 80%">
+    <tr style="font-weight: bold; white-space: nowrap">
+
+      <!-- username header -->
+      <td style="width:40%">
+        Name
+        <form editable-form name="nameform" onaftersave="saveColumn('name')" ng-show="nameform.$visible">
+          <button type="submit" ng-disabled="nameform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="nameform.$waiting" ng-click="nameform.$hide()" class="btn btn-default">
+            cancel
+          </button>
+        </form>  
+        <button class="btn btn-default" ng-show="!nameform.$visible" ng-click="nameform.$show()">
+          edit
+        </button>
+      </td>
+
+      <!-- status header -->
+      <td style="width:30%">
+        Status
+        <form editable-form name="statusform" onaftersave="saveColumn('status')" ng-show="statusform.$visible">
+          <button type="submit" ng-disabled="statusform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="statusform.$waiting" ng-click="statusform.$hide()" class="btn btn-default">
+            cancel
+          </button>
+        </form>  
+        <button class="btn btn-default" ng-show="!statusform.$visible" ng-click="statusform.$show()">
+          edit
+        </button>
+      </td>
+
+      <!-- group header -->
+      <td style="width:30%">
+        Group
+        <form editable-form name="groupform" onaftersave="saveColumn('group')" ng-show="groupform.$visible">
+          <button type="submit" ng-disabled="groupform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="groupform.$waiting" ng-click="groupform.$hide()" class="btn btn-default">
+            cancel
+          </button>
+        </form>  
+        <button class="btn btn-default" ng-show="!groupform.$visible" ng-click="groupform.$show()">
+          edit
+        </button>
+      </td>
+    </tr>
+
+    <tr ng-repeat="user in users">
+      <td>
+        <!-- editable username (text with validation) -->
+        <span editable-text="user.name" e-name="name" e-form="nameform" onbeforesave="checkName($data)">
+          {{ user.name }}
+        </span>
+      </td>
+
+      <td>
+        <!-- editable status (select-local) -->
+        <span editable-select="user.status" e-name="status" e-form="statusform" e-ng-options="s.value as s.text for s in statuses">
+          {{ showStatus(user) }}
+        </span>
+      </td>
+
+      <td>
+        <!-- editable group (select-remote) -->
+        <span editable-select="user.group" e-name="group" onshow="loadGroups()" e-form="groupform" e-ng-options="g.id as g.text for g in groups">
+          {{ showGroup(user) }}
+        </span>
+      </td>
+    </tr>
+  </table>
+</div>  </div>
+                      <p><p>To create editable column in table you should place editable elements in cells with <code>e-form</code> attribute pointing to form&#39;s name. The form itself can appear in column header or footer. The form behavior is absolutely the same as described in
+<a href="#editable-form">Editable form section</a></p>
+</p>
+                      <script src="docs/demos/editable-column/controller.js"> </script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableColumnCtrl&quot;&gt;
+  &lt;table class=&quot;table table-bordered table-hover table-condensed&quot; style=&quot;width: 80%&quot;&gt;
+    &lt;tr style=&quot;font-weight: bold; white-space: nowrap&quot;&gt;
+
+      &lt;!-- username header --&gt;
+      &lt;td style=&quot;width:40%&quot;&gt;
+        Name
+        &lt;form editable-form name=&quot;nameform&quot; onaftersave=&quot;saveColumn('name')&quot; ng-show=&quot;nameform.$visible&quot;&gt;
+          &lt;button type=&quot;submit&quot; ng-disabled=&quot;nameform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
+            save
+          &lt;/button&gt;
+          &lt;button type=&quot;button&quot; ng-disabled=&quot;nameform.$waiting&quot; ng-click=&quot;nameform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;
+            cancel
+          &lt;/button&gt;
+        &lt;/form&gt;  
+        &lt;button class=&quot;btn btn-default&quot; ng-show=&quot;!nameform.$visible&quot; ng-click=&quot;nameform.$show()&quot;&gt;
+          edit
+        &lt;/button&gt;
+      &lt;/td&gt;
+
+      &lt;!-- status header --&gt;
+      &lt;td style=&quot;width:30%&quot;&gt;
+        Status
+        &lt;form editable-form name=&quot;statusform&quot; onaftersave=&quot;saveColumn('status')&quot; ng-show=&quot;statusform.$visible&quot;&gt;
+          &lt;button type=&quot;submit&quot; ng-disabled=&quot;statusform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
+            save
+          &lt;/button&gt;
+          &lt;button type=&quot;button&quot; ng-disabled=&quot;statusform.$waiting&quot; ng-click=&quot;statusform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;
+            cancel
+          &lt;/button&gt;
+        &lt;/form&gt;  
+        &lt;button class=&quot;btn btn-default&quot; ng-show=&quot;!statusform.$visible&quot; ng-click=&quot;statusform.$show()&quot;&gt;
+          edit
+        &lt;/button&gt;
+      &lt;/td&gt;
+
+      &lt;!-- group header --&gt;
+      &lt;td style=&quot;width:30%&quot;&gt;
+        Group
+        &lt;form editable-form name=&quot;groupform&quot; onaftersave=&quot;saveColumn('group')&quot; ng-show=&quot;groupform.$visible&quot;&gt;
+          &lt;button type=&quot;submit&quot; ng-disabled=&quot;groupform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
+            save
+          &lt;/button&gt;
+          &lt;button type=&quot;button&quot; ng-disabled=&quot;groupform.$waiting&quot; ng-click=&quot;groupform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;
+            cancel
+          &lt;/button&gt;
+        &lt;/form&gt;  
+        &lt;button class=&quot;btn btn-default&quot; ng-show=&quot;!groupform.$visible&quot; ng-click=&quot;groupform.$show()&quot;&gt;
+          edit
+        &lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr ng-repeat=&quot;user in users&quot;&gt;
+      &lt;td&gt;
+        &lt;!-- editable username (text with validation) --&gt;
+        &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-form=&quot;nameform&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
+          {{ user.name }}
+        &lt;/span&gt;
+      &lt;/td&gt;
+
+      &lt;td&gt;
+        &lt;!-- editable status (select-local) --&gt;
+        &lt;span editable-select=&quot;user.status&quot; e-name=&quot;status&quot; e-form=&quot;statusform&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
+          {{ showStatus(user) }}
+        &lt;/span&gt;
+      &lt;/td&gt;
+
+      &lt;td&gt;
+        &lt;!-- editable group (select-remote) --&gt;
+        &lt;span editable-select=&quot;user.group&quot; e-name=&quot;group&quot; onshow=&quot;loadGroups()&quot; e-form=&quot;groupform&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
+          {{ showGroup(user) }}
+        &lt;/span&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/div&gt;  </pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('EditableColumnCtrl', function($scope, $filter, $http, $q) {
+  $scope.users = [
+    {id: 1, name: 'awesome user1', status: 2, group: 4, groupName: 'admin'},
+    {id: 2, name: 'awesome user2', status: undefined, group: 3, groupName: 'vip'},
+    {id: 3, name: 'awesome user3', status: 2, group: null}
+  ]; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.groups = [];
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.showGroup = function(user) {
+    if(user.group &amp;&amp; $scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: user.group});
+      return selected.length ? selected[0].text : 'Not set';
+    } else {
+      return user.groupName || 'Not set';
+    }
+  };
+
+  $scope.showStatus = function(user) {
+    var selected = [];
+    if(user.status) {
+      selected = $filter('filter')($scope.statuses, {value: user.status});
+    }
+    return selected.length ? selected[0].text : 'Not set';
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return &quot;Username should be `awesome`&quot;;
+    }
+  };
+
+  $scope.saveColumn = function(column) {
+    var results = [];
+    angular.forEach($scope.users, function(user) {
+      results.push($http.post('/saveColumn', {column: column, value: user[column], id: user.id}));
+    })
+    return $q.all(results);
+  };
+
 });</pre>
                     </section>
                     <section id="editable-table">

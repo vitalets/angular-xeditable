@@ -105,6 +105,15 @@ app.run(function($httpBackend, editableOptions, editableThemes) {
     return [200, {status: 'ok'}];
   });
 
+  //save column
+  $httpBackend.whenPOST(/\/saveColumn/).respond(function(method, url, data) {
+    data = angular.fromJson(data);
+    if(data.column === 'name' && data.value !== 'awesome') {
+      return [500, 'Username should be `awesome`']; 
+    } else {
+      return [200, {status: 'ok'}]; 
+    }
+  });
 
   $httpBackend.whenGET(/\.(html|css|js)$/).passThrough();
 

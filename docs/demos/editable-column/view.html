@@ -1,0 +1,77 @@
+<div ng-controller="EditableColumnCtrl">
+  <table class="table table-bordered table-hover table-condensed" style="width: 80%">
+    <tr style="font-weight: bold; white-space: nowrap">
+
+      <!-- username header -->
+      <td style="width:40%">
+        Name
+        <form editable-form name="nameform" onaftersave="saveColumn('name')" ng-show="nameform.$visible">
+          <button type="submit" ng-disabled="nameform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="nameform.$waiting" ng-click="nameform.$hide()" class="btn btn-default">
+            cancel
+          </button>
+        </form>  
+        <button class="btn btn-default" ng-show="!nameform.$visible" ng-click="nameform.$show()">
+          edit
+        </button>
+      </td>
+
+      <!-- status header -->
+      <td style="width:30%">
+        Status
+        <form editable-form name="statusform" onaftersave="saveColumn('status')" ng-show="statusform.$visible">
+          <button type="submit" ng-disabled="statusform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="statusform.$waiting" ng-click="statusform.$hide()" class="btn btn-default">
+            cancel
+          </button>
+        </form>  
+        <button class="btn btn-default" ng-show="!statusform.$visible" ng-click="statusform.$show()">
+          edit
+        </button>
+      </td>
+
+      <!-- group header -->
+      <td style="width:30%">
+        Group
+        <form editable-form name="groupform" onaftersave="saveColumn('group')" ng-show="groupform.$visible">
+          <button type="submit" ng-disabled="groupform.$waiting" class="btn btn-primary">
+            save
+          </button>
+          <button type="button" ng-disabled="groupform.$waiting" ng-click="groupform.$hide()" class="btn btn-default">
+            cancel
+          </button>
+        </form>  
+        <button class="btn btn-default" ng-show="!groupform.$visible" ng-click="groupform.$show()">
+          edit
+        </button>
+      </td>
+    </tr>
+
+    <tr ng-repeat="user in users">
+      <td>
+        <!-- editable username (text with validation) -->
+        <span editable-text="user.name" e-name="name" e-form="nameform" onbeforesave="checkName($data)">
+          {{ user.name }}
+        </span>
+      </td>
+
+      <td>
+        <!-- editable status (select-local) -->
+        <span editable-select="user.status" e-name="status" e-form="statusform" e-ng-options="s.value as s.text for s in statuses">
+          {{ showStatus(user) }}
+        </span>
+      </td>
+
+      <td>
+        <!-- editable group (select-remote) -->
+        <span editable-select="user.group" e-name="group" onshow="loadGroups()" e-form="groupform" e-ng-options="g.id as g.text for g in groups">
+          {{ showGroup(user) }}
+        </span>
+      </td>
+    </tr>
+  </table>
+</div>  
