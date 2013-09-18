@@ -1,7 +1,7 @@
 describe('onbeforesave', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should show error for incorrect value and save correct', function() {
@@ -20,7 +20,7 @@ describe('onbeforesave', function() {
     expect(element(s+'button:visible:disabled').count()).toBe(2);
     expect(element(s+'.editable-error:visible').count()).toBe(0);
 
-    sleep(1);
+    sleep(0.3);
 
     //error shown
     expect(element(s+'a').css('display')).toBe('none');
@@ -40,7 +40,7 @@ describe('onbeforesave', function() {
     expect(element(s+'button:visible:disabled').count()).toBe(2);
     expect(element(s+'.editable-error:visible').count()).toBe(0);
 
-    sleep(1);
+    sleep(0.3);
 
     //no error shown, form closed
     expect(element(s+'a').css('display')).not().toBe('none');

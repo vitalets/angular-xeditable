@@ -1,7 +1,7 @@
 describe('text-customize', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should transfer e-* attributes (except e-form)', function() {

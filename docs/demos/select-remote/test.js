@@ -1,7 +1,7 @@
 describe('select-remote', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should load remote options and submit new value', function() {
@@ -14,7 +14,7 @@ describe('select-remote', function() {
     expect(element(s+'a').css('display')).toBe('none');
     expect(element(s+'form select:disabled:visible').count()).toBe(1);
     expect(element(s+'button:disabled:visible').count()).toBe(2);
-    sleep(1);
+    sleep(0.3);
     //loaded
     expect(element(s+'form select:enabled:visible').count()).toBe(1);
     expect(element(s+'button:enabled:visible').count()).toBe(2);

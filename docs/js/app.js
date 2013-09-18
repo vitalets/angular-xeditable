@@ -2,7 +2,8 @@ var app = angular.module("app", ["xeditable", "ngMockE2E"]);
 
 //add delay to $httpBackend
 app.config(function($provide) {
-  var delay = 800;
+  var l = window.location.href;
+  var delay = /\?test/.test(l) ? 200 : 800;
   $provide.decorator('$httpBackend', function($delegate) {
       var proxy = function(method, url, data, callback, headers) {
           var interceptor = function() {

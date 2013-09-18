@@ -1,7 +1,7 @@
 describe('editable-table', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should show form by `edit` button and save new values', function() {
@@ -49,7 +49,7 @@ describe('editable-table', function() {
     //show form
     element(s+'> div > button').click();
     checkWaiting();
-    sleep(1);
+    sleep(0.3);
     checkShown();
 
     //submit incorrect values
@@ -76,7 +76,7 @@ describe('editable-table', function() {
     //error hidden
     expect(element(s+'table tr td:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(1);
+    sleep(0.3);
 
     checkClosed();
 

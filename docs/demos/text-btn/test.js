@@ -1,7 +1,7 @@
 describe('text-btn', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should show editor by external button', function() {

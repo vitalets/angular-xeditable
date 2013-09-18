@@ -1,7 +1,7 @@
 describe('editable-column', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should show USERNAME form by `edit` button and save new values', function() {
@@ -75,7 +75,7 @@ describe('editable-column', function() {
     //error hidden
     expect(element(s+'td:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(1);
+    sleep(0.3);
 
     checkClosed();
 

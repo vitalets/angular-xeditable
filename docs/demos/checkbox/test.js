@@ -1,7 +1,7 @@
 describe('checkbox', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should show editor and submit new value', function() {

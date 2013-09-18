@@ -1,7 +1,7 @@
 describe('editable-form', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should show form by `edit` button click and close by `cancel`', function() {
@@ -23,10 +23,10 @@ describe('editable-form', function() {
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(0);
     expect(element(s+'form > div > button:visible').count()).toBe(0);
     expect(element(s+'form > div > span button:visible:disabled').count()).toBe(2);
-    expect(element(s+'select:disabled:visible').count()).toBe(2);
+    expect(element(s+'select:disabled:visible').count()).toBe(2);    
     expect(element(s+'input[type="text"]:disabled:visible').count()).toBe(1);
     
-    sleep(1);
+    sleep(0.3);
 
     //form enabled when data loaded
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
@@ -54,7 +54,7 @@ describe('editable-form', function() {
     //show form
     element(s+'form > div > button').click();
     
-    sleep(1);
+    sleep(0.3);
 
     //set incorrect values
     using(s+'form > div:eq(0)').input('$data').enter('username2'); 
@@ -83,7 +83,7 @@ describe('editable-form', function() {
     //no error shwn
     expect(element(s+'form > div:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(1);
+    sleep(0.3);
 
     //form closed, new values shown
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(1);

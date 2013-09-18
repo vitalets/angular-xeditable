@@ -1,7 +1,7 @@
 describe('editable-row', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should show form by `edit` button and save new values', function() {
@@ -45,7 +45,7 @@ describe('editable-row', function() {
     //show form
     element(s+'td:eq(3) > button:visible').click();
     checkWaiting();
-    sleep(1);
+    sleep(0.3);
     checkShown();
 
     //set incorrect values
@@ -68,7 +68,7 @@ describe('editable-row', function() {
     //error hidden
     expect(element(s+'td:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(1);
+    sleep(0.3);
 
     checkClosed();
   });

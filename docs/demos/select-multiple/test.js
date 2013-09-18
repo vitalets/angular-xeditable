@@ -1,7 +1,7 @@
 describe('select-multiple', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should show options and submit new value', function() {

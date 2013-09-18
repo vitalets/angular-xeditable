@@ -1,7 +1,7 @@
 describe('validate-remote', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html');
+    browser().navigateTo('../../index.html?test');
   });
 
   it('should show error', function() {
@@ -17,14 +17,14 @@ describe('validate-remote', function() {
     //checking
     expect(element(s+'a').css('display')).toBe('none');
     expect(element(s+'input[type="text"]:visible:disabled').count()).toBe(1);
-    expect(element(s+'button:visible:disabled').count()).toBe(2);
+    expect(element(s+'button:disabled:visible').count()).toBe(2);
     expect(element(s+'.editable-error:visible').count()).toBe(0);
 
-    sleep(1);
+    sleep(0.3);
 
     //error shown
     expect(element(s+'a').css('display')).toBe('none');
-    expect(element(s+'input[type="text"]:visible:enabled').count()).toBe(1);
+    expect(element(s+'input[type="text"]:enabled:visible').count()).toBe(1);
     expect(element(s+'button:visible:enabled').count()).toBe(2);
     expect(element(s+'.editable-error:visible').count()).toBe(1);
     expect(element(s+'.editable-error').text()).toMatch('Username should be `awesome`');
@@ -39,7 +39,7 @@ describe('validate-remote', function() {
     expect(element(s+'button:visible:disabled').count()).toBe(2);
     expect(element(s+'.editable-error:visible').count()).toBe(0);
 
-    sleep(1);
+    sleep(0.3);
 
     //no error shown, form closed
     expect(element(s+'a').css('display')).not().toBe('none');
