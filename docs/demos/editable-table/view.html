@@ -12,7 +12,7 @@
         <td>
           <!-- editable username (text with validation) -->
           <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data)">
-            {{ user.name }}
+            {{ user.name || 'empty' }}
           </span>
         </td>
         <td>

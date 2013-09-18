@@ -55,7 +55,7 @@
       <td>
         <!-- editable username (text with validation) -->
         <span editable-text="user.name" e-name="name" e-form="nameform" onbeforesave="checkName($data)">
-          {{ user.name }}
+          {{ user.name || 'empty' }}
         </span>
       </td>
 

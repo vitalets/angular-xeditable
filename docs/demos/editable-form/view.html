@@ -4,7 +4,7 @@
     <div>
       <!-- editable username (text with validation) -->
       <strong>User name: </strong>
-      <span editable-text="user.name" onbeforesave="checkName($data)">{{ user.name }}</span>
+      <span editable-text="user.name" onbeforesave="checkName($data)">{{ user.name || 'empty' }}</span>
     </div> 
 
     <div>

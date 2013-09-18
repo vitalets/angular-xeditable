@@ -10,7 +10,7 @@
       <td>
         <!-- editable username (text with validation) -->
         <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)">
-          {{ user.name }}
+          {{ user.name || 'empty' }}
         </span>
       </td>
       <td>

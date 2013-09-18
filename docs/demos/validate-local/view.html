@@ -1,5 +1,5 @@
 <div ng-controller="ValidateLocalCtrl">
   <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
-    {{ user.name }}
+    {{ user.name || 'empty' }}
   </a>
 </div>  
