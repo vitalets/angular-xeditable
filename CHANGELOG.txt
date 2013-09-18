@@ -1,0 +1,12 @@
+Angular-xeditable changelog
+=============================
+
+Version 0.1.1 wip
+----------------------------
+[bug #1] add support of angular 1.0.8 (vitalets)
+[enh] improve docs (vitalets)
+
+
+Version 0.1.0 Sep 5, 2013
+----------------------------
+Initial release.
