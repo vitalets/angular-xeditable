@@ -45,7 +45,7 @@ describe('editable-row', function() {
     //show form
     element(s+'td:eq(3) > button:visible').click();
     checkWaiting();
-    sleep(0.3);
+    sleep(0.5);
     checkShown();
 
     //set incorrect values
@@ -68,7 +68,7 @@ describe('editable-row', function() {
     //error hidden
     expect(element(s+'td:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(0.3);
+    sleep(0.5);
 
     checkClosed();
   });

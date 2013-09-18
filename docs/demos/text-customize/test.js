@@ -7,7 +7,7 @@ describe('text-customize', function() {
   it('should transfer e-* attributes (except e-form)', function() {
     var s = '[ng-controller="TextCustomizeCtrl"] ';
 
-    expect(element(s+'a').text()).toMatch('awesome user');
+    expect(element(s+'a').text()).toMatch('AWESOME USER');
     element(s+'a').click();
 
     expect(element(s+'form input[type="text"]').attr('required')).toBe("required");

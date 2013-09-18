@@ -49,7 +49,7 @@ describe('editable-table', function() {
     //show form
     element(s+'> div > button').click();
     checkWaiting();
-    sleep(0.3);
+    sleep(0.5);
     checkShown();
 
     //submit incorrect values
@@ -76,7 +76,7 @@ describe('editable-table', function() {
     //error hidden
     expect(element(s+'table tr td:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(0.3);
+    sleep(0.5);
 
     checkClosed();
 

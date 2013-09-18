@@ -23,7 +23,7 @@ describe('onaftersave', function() {
     expect(element(s+'button:visible:disabled').count()).toBe(2);
     expect(element(s+'.editable-error:visible').count()).toBe(0);
 
-    sleep(0.3);
+    sleep(0.5);
 
     //error shown
     expect(element(s+'a').css('display')).toBe('none');
@@ -46,7 +46,7 @@ describe('onaftersave', function() {
     expect(element(s+'button:visible:disabled').count()).toBe(2);
     expect(element(s+'.editable-error:visible').count()).toBe(0);
 
-    sleep(0.3);
+    sleep(0.5);
 
     //no error shown, form closed
     expect(element(s+'a').css('display')).not().toBe('none');

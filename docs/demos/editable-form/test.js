@@ -26,7 +26,7 @@ describe('editable-form', function() {
     expect(element(s+'select:disabled:visible').count()).toBe(2);    
     expect(element(s+'input[type="text"]:disabled:visible').count()).toBe(1);
     
-    sleep(0.3);
+    sleep(0.5);
 
     //form enabled when data loaded
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
@@ -54,7 +54,7 @@ describe('editable-form', function() {
     //show form
     element(s+'form > div > button').click();
     
-    sleep(0.3);
+    sleep(0.5);
 
     //set incorrect values
     using(s+'form > div:eq(0)').input('$data').enter('username2'); 
@@ -83,7 +83,7 @@ describe('editable-form', function() {
     //no error shwn
     expect(element(s+'form > div:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(0.3);
+    sleep(0.5);
 
     //form closed, new values shown
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(1);

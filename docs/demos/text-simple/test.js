@@ -7,7 +7,8 @@ describe('text-simple', function() {
   it('should show editor and submit new value', function() {
     var s = '[ng-controller="TextSimpleCtrl"] ';
 
-    expect(element(s+'a').text()).toMatch('AWESOME USER');
+    expect(element(s+'a').css('display')).not().toBe('none');
+    expect(element(s+'a').text()).toMatch('awesome user');
     element(s+'a').click();
 
     expect(element(s+'a').css('display')).toBe('none');
@@ -21,7 +22,7 @@ describe('text-simple', function() {
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');
-    expect(element(s+'a').text()).toBe('USERNAME2');
+    expect(element(s+'a').text()).toBe('username2');
     expect(element(s+'form').count()).toBe(0);
   });
 
@@ -33,7 +34,7 @@ describe('text-simple', function() {
     element(s+'form button[type="button"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');
-    expect(element(s+'a').text()).toBe('AWESOME USER');
+    expect(element(s+'a').text()).toMatch('awesome user');
     expect(element(s+'form').count()).toBe(0);
   });
 

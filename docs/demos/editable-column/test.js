@@ -75,7 +75,7 @@ describe('editable-column', function() {
     //error hidden
     expect(element(s+'td:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(0.3);
+    sleep(0.5);
 
     checkClosed();
 
