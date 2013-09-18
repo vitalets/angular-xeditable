@@ -69,7 +69,8 @@ angular.module('xeditable').directive('editableForm', function($rootScope, $pars
                 return $parse(attrs.onaftersave)(scope, {$data: eForm.$data});
               };
             }
-            elem.on('submit', function(event) {
+            //elem.on('submit', function(event) {
+            elem.bind('submit', function(event) {
               event.preventDefault();
               scope.$apply(function() {
                 eForm.$submit();

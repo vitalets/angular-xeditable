@@ -5,9 +5,11 @@ angular.module('xeditable').factory('editableFormController', function($parse, e
 
   var base = {
     $addEditable: function(editable) {
-      //console.log('add editable', editable);
+      //console.log('add editable', editable.elem, editable.elem.bind);
       this.$editables.push(editable);
-      editable.elem.on('$destroy', angular.bind(this, this.$removeEditable, editable));
+      //'on' is not supported in angular 1.0.8
+      //editable.elem.on('$destroy', angular.bind(this, this.$removeEditable, editable));
+      editable.elem.bind('$destroy', angular.bind(this, this.$removeEditable, editable));
 
       //bind editable's local $form to self (if not bound yet, below form) 
       if (!editable.scope.$form) {
