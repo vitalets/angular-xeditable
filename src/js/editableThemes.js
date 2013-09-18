@@ -9,7 +9,7 @@ Note: in postrender() `this` is instance of editableController
 angular.module('xeditable').factory('editableThemes', function() {
   var themes = {
     //default
-    default: {
+    'default': {
       formTpl:      '<form class="editable-wrap"></form>',
       noformTpl:    '<span class="editable-wrap"></span>',
       controlsTpl:  '<span class="editable-controls"></span>',
@@ -21,7 +21,7 @@ angular.module('xeditable').factory('editableThemes', function() {
     },
 
     //bs2
-    bs2: {
+    'bs2': {
       formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls controls control-group" ng-class="{\'error\': $error}"></div>',
@@ -36,7 +36,7 @@ angular.module('xeditable').factory('editableThemes', function() {
     },
 
     //bs3
-    bs3: {
+    'bs3': {
       formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls form-group" ng-class="{\'has-error\': $error}"></div>',
