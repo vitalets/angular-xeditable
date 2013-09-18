@@ -54,7 +54,8 @@ html(ng-app='app')
     - items.push({id: 'checkbox', text: 'Checkbox'})
     - items.push({id: 'validate-local', text: 'Validate local'})
     - items.push({id: 'validate-remote', text: 'Validate remote'})
-    - items.push({id: 'send-to-server', text: 'Send to server'})
+    - items.push({id: 'onbeforesave', text: 'Onbeforesave'})
+    - items.push({id: 'onaftersave', text: 'Onaftersave'})
     - items.push({id: 'editable-form', text: 'Editable form'})
     - items.push({id: 'editable-row', text: 'Editable row'})
     - items.push({id: 'editable-column', text: 'Editable column'})
@@ -73,6 +74,8 @@ html(ng-app='app')
                   li Controls
                 if item.id == 'validate-local'
                   li Validation
+                if item.id == 'onbeforesave'
+                  li Submit
                 if item.id == 'editable-form'
                   li Forms
                 li: a(href="#"+item.id)= item.text
@@ -93,7 +96,6 @@ html(ng-app='app')
               pre.prettyprint.ng-non-bindable= view
               h3 controller.js
               pre.prettyprint= ctrl
-
 
 
           section#overview

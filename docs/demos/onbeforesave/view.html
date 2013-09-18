@@ -1,0 +1,7 @@
+<div ng-controller="OnbeforesaveCtrl">
+  <a href="#" editable-text="user.name" onbeforesave="updateUser($data)">
+    {{ user.name || 'empty' }}
+  </a>
+  <br><br>
+  Debug: $scope.user {{ user | json }}
+</div>  

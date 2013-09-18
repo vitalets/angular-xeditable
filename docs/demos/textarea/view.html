@@ -1,5 +1,5 @@
 <div ng-controller="TextareaCtrl">
   <a href="#" editable-textarea="user.desc" e-rows="7" e-cols="40">
-    <pre>{{ user.desc }}</pre>
+    <pre>{{ user.desc || 'empty' }}</pre>
   </a>
 </div>  

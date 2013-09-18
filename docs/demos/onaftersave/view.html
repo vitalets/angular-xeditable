@@ -1,0 +1,7 @@
+<div ng-controller="OnaftersaveCtrl">
+  <a href="#" editable-text="user.name" onaftersave="updateUser()">
+    {{ user.name || 'empty' }}
+  </a>
+  <br><br>
+  Debug: $scope.user {{ user | json }}
+</div>  

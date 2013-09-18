@@ -59,7 +59,9 @@
               <li>Validation</li>
               <li><a href="#validate-local">Validate local</a></li>
               <li><a href="#validate-remote">Validate remote</a></li>
-              <li><a href="#send-to-server">Send to server</a></li>
+              <li>Submit</li>
+              <li><a href="#onbeforesave">Onbeforesave</a></li>
+              <li><a href="#onaftersave">Onaftersave</a></li>
               <li>Forms</li>
               <li><a href="#editable-form">Editable form</a></li>
               <li><a href="#editable-row">Editable row</a></li>
@@ -302,7 +304,7 @@ The result of function should be a $http promise, it allows to disable element w
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="TextareaCtrl">
   <a href="#" editable-textarea="user.desc" e-rows="7" e-cols="40">
-    <pre>{{ user.desc }}</pre>
+    <pre>{{ user.desc || 'empty' }}</pre>
   </a>
 </div>  </div>
                       <p><p>To make element editable via textarea just add <code>editable-textarea</code> attribute 
@@ -313,7 +315,7 @@ Data can be submitted by <em>Ctrl + Enter</em>.</p>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextareaCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-textarea=&quot;user.desc&quot; e-rows=&quot;7&quot; e-cols=&quot;40&quot;&gt;
-    &lt;pre&gt;{{ user.desc }}&lt;/pre&gt;
+    &lt;pre&gt;{{ user.desc || 'empty' }}&lt;/pre&gt;
   &lt;/a&gt;
 &lt;/div&gt;  </pre>
                       <h3>controller.js</h3>
@@ -419,77 +421,88 @@ If promise resolves to <strong>string</strong> validation failed.</p>
   };
 });</pre>
                     </section>
-                    <section id="send-to-server">
-                      <h1>Send to server</h1>
+                    <section id="onbeforesave">
+                      <h1>Onbeforesave</h1>
                       <h3>demo</h3>
-                      <div class="well line-example"><div ng-controller="SendToServerCtrl">
-  onbeforesave: 
-  <a href="#" editable-text="user.name" onbeforesave="updateUserBefore($data)">
-    {{ user.name }}
-   </a>
-  <br>
-  onaftersave: 
-  <a href="#" editable-text="user.name" onaftersave="updateUserAfter()">
-    {{ user.name }}
+                      <div class="well line-example"><div ng-controller="OnbeforesaveCtrl">
+  <a href="#" editable-text="user.name" onbeforesave="updateUser($data)">
+    {{ user.name || 'empty' }}
   </a>
-  <br>
-  $scope.user: <pre>{{ user | json }}</pre>
+  <br><br>
+  Debug: $scope.user {{ user | json }}
 </div>  </div>
-                      <p><p>There are two ways to send editable data on server:</p>
-<ol>
-<li>use <code>onbeforesave</code> attribute: you send data to server first and only after response save to local model (e.g. <code>scope.user</code>)</li>
-<li>use <code>onaftersave</code> attribute: you save data to local models first and only then sync it with server</li>
-</ol>
-<p>Which way to use depends on your app structure and conventions.</p>
-<p>For the <em>first way</em> you should define <code>onbeforesave</code> attribute pointing to some updating function.
-It will be called <strong>before</strong> local models update.
-You can get updated data as parameter <code>$data</code> and send it to server. 
-Returning value is promise that should resolve to one of following (depending on server response):</p>
+                      <p><p>One way to submit data on server is to define <code>onbeforesave</code> attribute pointing to some method of scope.
+Useful when you need to send data on server first and only then update local model (e.g. <code>$scope.user</code>).
+New value can be passed as <code>$data</code> parameter (e.g. <code>&lt;a ... onbeforesave=&quot;updateUser($data)&quot;&gt;</code>).</p>
+<p>The main thing is that local model will be updated only if method returns <code>true</code> or <code>undefined</code> (or promise resolved to <code>true/undefined</code>). Commonly there are 3 cases depending on result type:</p>
 <ul>
 <li><code>true</code> or <code>undefined</code>: 
-Success. Editable will automatically update local model and close form</li>
+Success. Local model will be updated automatically and form will close.</li>
 <li><code>false</code>: 
-Success. But editable will close form <strong>without</strong> update of local models </li>
+Success. But local model will <strong>not</strong> be updated and form will close. Useful when you want to update local model manually (e.g. server changed values).</li>
 <li><code>string</code>: 
-Fail. Editable will <strong>not</strong> update local model, form will <strong>not</strong> close, string will be shown as error message</li>
+Error. Local model will <strong>not</strong> be updated, form will <strong>not</strong> close, string will be shown as error message.
+Useful for validation and processing errors.</li>
 </ul>
-<p>For <em>second way</em> you should use <code>onaftersave</code> attribute. It is called <strong>after</strong> local models updated.
-So you just send updated data to server. Return value of this method has only two types:</p>
-<ul>
-<li><code>not string</code>: form will be closed</li>
-<li><code>string</code>: form will not close, string will be shown as error message</li>
-</ul>
-<p>Note that you can use both <code>onbeforesave</code> for validation and <code>onaftersave</code> for saving data.</p>
 </p>
-                      <script src="docs/demos/send-to-server/controller.js"> </script>
+                      <script src="docs/demos/onbeforesave/controller.js"> </script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;SendToServerCtrl&quot;&gt;
-  onbeforesave: 
-  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;updateUserBefore($data)&quot;&gt;
-    {{ user.name }}
-   &lt;/a&gt;
-  &lt;br&gt;
-  onaftersave: 
-  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onaftersave=&quot;updateUserAfter()&quot;&gt;
-    {{ user.name }}
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;OnbeforesaveCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;updateUser($data)&quot;&gt;
+    {{ user.name || 'empty' }}
   &lt;/a&gt;
-  &lt;br&gt;
-  $scope.user: &lt;pre&gt;{{ user | json }}&lt;/pre&gt;
+  &lt;br&gt;&lt;br&gt;
+  Debug: $scope.user {{ user | json }}
 &lt;/div&gt;  </pre>
                       <h3>controller.js</h3>
-                      <pre class="prettyprint">app.controller('SendToServerCtrl', function($scope, $http) {
+                      <pre class="prettyprint">app.controller('OnbeforesaveCtrl', function($scope, $http) {
   $scope.user = {
     id: 1,
     name: 'awesome user'
   };
 
-  $scope.updateUserBefore = function(data) {
-    //$scope.user not updated yet!
+  $scope.updateUser = function(data) {
     return $http.post('/updateUser', {id: $scope.user.id, name: data});
   };
+});</pre>
+                    </section>
+                    <section id="onaftersave">
+                      <h1>Onaftersave</h1>
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="OnaftersaveCtrl">
+  <a href="#" editable-text="user.name" onaftersave="updateUser()">
+    {{ user.name || 'empty' }}
+  </a>
+  <br><br>
+  Debug: $scope.user {{ user | json }}
+</div>  </div>
+                      <p><p>Another way to submit data on server is to define <code>onaftersave</code> attribute pointing to some method of scope.
+Useful when you need to update local model first and only then send it to server.
+There is no input parameters as data already in local model (e.g. <code>&lt;a ... onaftersave=&quot;updateUser()&quot;&gt;</code>).</p>
+<p>The result type of this method can be following:</p>
+<ul>
+<li>anything except <code>string</code>: success, form will be closed</li>
+<li><code>string</code>: error, form will <strong>not</strong> close, string will be shown as error message</li>
+</ul>
+<p>Note that you can use both <code>onbeforesave</code> for validation and <code>onaftersave</code> for saving data.</p>
+</p>
+                      <script src="docs/demos/onaftersave/controller.js"> </script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;OnaftersaveCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onaftersave=&quot;updateUser()&quot;&gt;
+    {{ user.name || 'empty' }}
+  &lt;/a&gt;
+  &lt;br&gt;&lt;br&gt;
+  Debug: $scope.user {{ user | json }}
+&lt;/div&gt;  </pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('OnaftersaveCtrl', function($scope, $http) {
+  $scope.user = {
+    id: 1,
+    name: 'awesome user'
+  };
 
-  $scope.updateUserAfter = function() {
-    //$scope.user already updated!
+  $scope.updateUser = function() {
     return $http.post('/updateUser', $scope.user);
   };
 });</pre>
