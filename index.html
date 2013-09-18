@@ -16,10 +16,11 @@
     <!--bootstrap    -->
     <script src="libs/bootstrap/3.0.0/js/bootstrap.js"></script>
     <!--angular-->
-    <!--script(src='libs/angular/1.0.8/angular.js')  -->
+    <script src="libs/angular/1.0.8/angular.js"> </script>
+    <script src="libs/angular/1.0.8/angular-mocks.js"> </script>
     <!--script(src='libs/angular/1.1.5/angular.js')  -->
-    <script src="libs/angular/1.2.0rc/angular.js"> </script>
-    <script src="libs/angular/1.2.0rc/angular-mocks.js"> </script>
+    <!--script(src='libs/angular/1.2.0rc/angular.js')  -->
+    <!--script(src='libs/angular/1.2.0rc/angular-mocks.js')  -->
     <!--google-code-prettify-->
     <script src="libs/google-code-prettify/run_prettify.js"> </script>
     <!--app-->
@@ -83,7 +84,7 @@ to use power of angular and improve some features of x-editable (e.g complex for
             <ol>
               <li> <p>Include <a href="http://angularjs.org">Angular.js</a> in your project</p>
 
-                <pre class="prettyprint">&lt;script src=&quot;js/1.2.0-rc/angular.js&quot;&gt;&lt;/script&gt;</pre><p>Optionally include <a href="http://getbootstrap.com">Bootstrap</a> CSS for theming</p>
+                <pre class="prettyprint">&lt;script src=&quot;js/1.1.5/angular.js&quot;&gt;&lt;/script&gt;</pre><p>Optionally include <a href="http://getbootstrap.com">Bootstrap</a> CSS for theming</p>
 
                 <pre class="prettyprint">&lt;link href=&quot;bootstrap/css/bootstrap.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
               </li>
@@ -330,7 +331,7 @@ Data can be submitted by <em>Ctrl + Enter</em>.</p>
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="CheckboxCtrl">
   <a href="#" editable-checkbox="user.remember" e-title="Remember?">
-    {{ user.remember ? 'Remember me!' : 'Don`t remember' }}
+    {{ user.remember && "Remember me!" || "Don't remember" }}
   </a>
 </div>  </div>
                       <p><p>To make element editable via checkbox just add <code>editable-checkbox</code> attribute 
@@ -340,7 +341,7 @@ pointing to model in scope. Set <code>e-title</code> attribute to define text sh
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;CheckboxCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-checkbox=&quot;user.remember&quot; e-title=&quot;Remember?&quot;&gt;
-    {{ user.remember ? 'Remember me!' : 'Don`t remember' }}
+    {{ user.remember &amp;&amp; &quot;Remember me!&quot; || &quot;Don't remember&quot; }}
   &lt;/a&gt;
 &lt;/div&gt;  </pre>
                       <h3>controller.js</h3>

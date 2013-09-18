@@ -1,5 +1,5 @@
 <div ng-controller="CheckboxCtrl">
   <a href="#" editable-checkbox="user.remember" e-title="Remember?">
-    {{ user.remember ? 'Remember me!' : 'Don`t remember' }}
+    {{ user.remember && "Remember me!" || "Don't remember" }}
   </a>
 </div>  

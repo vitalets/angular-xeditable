@@ -21,7 +21,7 @@ describe('checkbox', function() {
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a:visible').count()).toBe(1);
-    expect(element(s+'a').text()).toMatch('Don`t remember');
+    expect(element(s+'a').text()).toMatch("Don't remember");
     expect(element(s+'form').count()).toBe(0);
   });
 
