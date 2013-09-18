@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.0
 Edit-in-place for angular.js
-Build date: 2013-09-16 
+Build date: 2013-09-18 
 */
 /*
 angular-xeditable module
@@ -423,9 +423,9 @@ angular.module('xeditable').directive('editableCheckbox', function(editableDirec
     inputTpl: '<input type="checkbox">',
     render: function() {
       this.parent.render.call(this);
-      if(this.attrs.title) {
+      if(this.attrs.eTitle) {
         this.inputEl.wrap('<label></label>');
-        this.inputEl.after(angular.element('<span></span>').text(' '+this.attrs.title));
+        this.inputEl.after(angular.element('<span></span>').text(' '+this.attrs.eTitle));
       }
     }
   });
