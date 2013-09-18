@@ -55,6 +55,7 @@
               <li><a href="#select-remote">Select remote</a></li>
               <li><a href="#select-multiple">Select multiple</a></li>
               <li><a href="#textarea">Textarea</a></li>
+              <li><a href="#checkbox">Checkbox</a></li>
               <li>Validation</li>
               <li><a href="#validate-local">Validate local</a></li>
               <li><a href="#validate-remote">Validate remote</a></li>
@@ -319,6 +320,31 @@ Data can be submitted by <em>Ctrl + Enter</em>.</p>
                       <pre class="prettyprint">app.controller('TextareaCtrl', function($scope) {
   $scope.user = {
     desc: 'Awesome user\ndescription!'
+  };  
+});</pre>
+                    </section>
+                    <section id="checkbox">
+                      <h1>Checkbox</h1>
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="CheckboxCtrl">
+  <a href="#" editable-checkbox="user.remember" e-title="Remember?">
+    {{ user.remember ? 'Remember me!' : 'Don`t remember' }}
+  </a>
+</div>  </div>
+                      <p><p>To make element editable via checkbox just add <code>editable-checkbox</code> attribute 
+pointing to model in scope. Set <code>e-title</code> attribute to define text shown with checkbox.</p>
+</p>
+                      <script src="docs/demos/checkbox/controller.js"> </script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;CheckboxCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-checkbox=&quot;user.remember&quot; e-title=&quot;Remember?&quot;&gt;
+    {{ user.remember ? 'Remember me!' : 'Don`t remember' }}
+  &lt;/a&gt;
+&lt;/div&gt;  </pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('CheckboxCtrl', function($scope) {
+  $scope.user = {
+    remember: true
   };  
 });</pre>
                     </section>
