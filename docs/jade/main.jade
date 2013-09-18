@@ -50,6 +50,7 @@ html(ng-app='app')
     - items.push({id: 'select-local', text: 'Select local'})
     - items.push({id: 'select-remote', text: 'Select remote'})
     - items.push({id: 'select-multiple', text: 'Select multiple'})
+    - items.push({id: 'textarea', text: 'Textarea'})
     - items.push({id: 'validate-local', text: 'Validate local'})
     - items.push({id: 'validate-remote', text: 'Validate remote'})
     - items.push({id: 'send-to-server', text: 'Send to server'})
@@ -64,9 +65,15 @@ html(ng-app='app')
         .col-md-3
           .well.sidebar
             ul.nav
-              li: a(href="#overview") Overview
-              li: a(href="#getstarted") Get started
+              li: a(href="#overview", style="padding-left: 0") Overview
+              li: a(href="#getstarted", style="padding-left: 0") Get started
               each item in items
+                if item.id == 'text-simple'
+                  li Controls
+                if item.id == 'validate-local'
+                  li Validation
+                if item.id == 'editable-form'
+                  li Forms
                 li: a(href="#"+item.id)= item.text
         .col-md-9
 

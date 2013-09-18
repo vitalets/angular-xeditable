@@ -45,17 +45,21 @@
         <div class="col-md-3">
           <div class="well sidebar">
             <ul class="nav">
-              <li><a href="#overview">Overview</a></li>
-              <li><a href="#getstarted">Get started</a></li>
+              <li><a href="#overview" style="padding-left: 0">Overview</a></li>
+              <li><a href="#getstarted" style="padding-left: 0">Get started</a></li>
+              <li>Controls</li>
               <li><a href="#text-simple">Simple editable text</a></li>
               <li><a href="#text-customize">Customize input</a></li>
               <li><a href="#text-btn">Trigger manually</a></li>
               <li><a href="#select-local">Select local</a></li>
               <li><a href="#select-remote">Select remote</a></li>
               <li><a href="#select-multiple">Select multiple</a></li>
+              <li><a href="#textarea">Textarea</a></li>
+              <li>Validation</li>
               <li><a href="#validate-local">Validate local</a></li>
               <li><a href="#validate-remote">Validate remote</a></li>
               <li><a href="#send-to-server">Send to server</a></li>
+              <li>Forms</li>
               <li><a href="#editable-form">Editable form</a></li>
               <li><a href="#editable-row">Editable row</a></li>
               <li><a href="#editable-column">Editable column</a></li>
@@ -290,6 +294,32 @@ The result of function should be a $http promise, it allows to disable element w
     });
     return selected.length ? selected.join(', ') : 'Not set';
   };
+});</pre>
+                    </section>
+                    <section id="textarea">
+                      <h1>Textarea</h1>
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="TextareaCtrl">
+  <a href="#" editable-textarea="user.desc" e-rows="7" e-cols="40">
+    <pre>{{ user.desc }}</pre>
+  </a>
+</div>  </div>
+                      <p><p>To make element editable via textarea just add <code>editable-textarea</code> attribute 
+pointing to model in scope. You can also wrap content into <code>&lt;pre&gt;</code> tags to keep linebreaks.
+Data can be submitted by <em>Ctrl + Enter</em>.</p>
+</p>
+                      <script src="docs/demos/textarea/controller.js"> </script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextareaCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-textarea=&quot;user.desc&quot; e-rows=&quot;7&quot; e-cols=&quot;40&quot;&gt;
+    &lt;pre&gt;{{ user.desc }}&lt;/pre&gt;
+  &lt;/a&gt;
+&lt;/div&gt;  </pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('TextareaCtrl', function($scope) {
+  $scope.user = {
+    desc: 'Awesome user\ndescription!'
+  };  
 });</pre>
                     </section>
                     <section id="validate-local">

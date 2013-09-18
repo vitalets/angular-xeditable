@@ -8,6 +8,10 @@ body {
   width: 200px;
 }
 
+.sidebar .nav li a {
+  padding: 5px 15px;
+}
+
 /* overwrite ugly google-prettify style */
 pre.prettyprint {
   padding: 10px !important;
