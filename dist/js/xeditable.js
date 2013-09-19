@@ -1,5 +1,5 @@
 /*!
-angular-xeditable - 0.1.2
+angular-xeditable - 0.1.3
 Edit-in-place for angular.js
 Build date: 2013-09-19 
 */
@@ -14,12 +14,12 @@ angular.module('xeditable', [])
 
 /*
 EditableController: attached to editable element
-TODO: this file should be refactored to works without closures!
+TODO: this file should be refactored to work more clear without closures!
 */
-angular.module('xeditable').factory('editableController', function($q) { 
+angular.module('xeditable').factory('editableController', ['$q', function($q) { 
  
   //EditableController function
-  EditableController.$invect = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
+  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
   function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
     var valueGetter;
 
@@ -253,7 +253,7 @@ angular.module('xeditable').factory('editableController', function($q) {
   }
 
   return EditableController;
-});
+}]);
 
 /*
 editableFactory: 
@@ -262,7 +262,8 @@ editableFactory:
 
 Depends on: editableController, editableFormFactory 
 */
-angular.module('xeditable').factory('editableDirectiveFactory', 
+angular.module('xeditable').factory('editableDirectiveFactory',
+['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController', 
 function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController) {
 
   //directive object
@@ -384,53 +385,57 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
       }
     };
   };
-});
+}]);
 
 //text
-angular.module('xeditable').directive('editableText', function(editableDirectiveFactory) {
-  return editableDirectiveFactory({
-    directiveName: 'editableText',
-    inputTpl: '<input type="text">'
-  });
-});
+angular.module('xeditable').directive('editableText', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableText',
+      inputTpl: '<input type="text">'
+    });
+}]);
 
 //select
-angular.module('xeditable').directive('editableSelect', function(editableDirectiveFactory) {
-  return editableDirectiveFactory({
-    directiveName: 'editableSelect',
-    inputTpl: '<select></select>'
-  });
-});
+angular.module('xeditable').directive('editableSelect', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableSelect',
+      inputTpl: '<select></select>'
+    });
+}]);
 
 
 //textarea
-angular.module('xeditable').directive('editableTextarea', function(editableDirectiveFactory) {
-  return editableDirectiveFactory({
-    directiveName: 'editableTextarea',
-    inputTpl: '<textarea ng-keydown="$editable.keydown($event)"></textarea>',
-    keydown: function(e) {
-      if (e.ctrlKey && (e.keyCode === 13)) {
-        this.scope.$form.$submit();
+angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableTextarea',
+      inputTpl: '<textarea ng-keydown="$editable.keydown($event)"></textarea>',
+      keydown: function(e) {
+        if (e.ctrlKey && (e.keyCode === 13)) {
+          this.scope.$form.$submit();
+        }
       }
-    }
-  });
-});
+    });
+}]);
 
 
 //checkbox
-angular.module('xeditable').directive('editableCheckbox', function(editableDirectiveFactory) {
-  return editableDirectiveFactory({
-    directiveName: 'editableCheckbox',
-    inputTpl: '<input type="checkbox">',
-    render: function() {
-      this.parent.render.call(this);
-      if(this.attrs.eTitle) {
-        this.inputEl.wrap('<label></label>');
-        this.inputEl.after(angular.element('<span></span>').text(' '+this.attrs.eTitle));
+angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableCheckbox',
+      inputTpl: '<input type="checkbox">',
+      render: function() {
+        this.parent.render.call(this);
+        if(this.attrs.eTitle) {
+          this.inputEl.wrap('<label></label>');
+          this.inputEl.after(angular.element('<span></span>').text(' '+this.attrs.eTitle));
+        }
       }
-    }
-  });
-});
+    });
+}]);
 
 
 
@@ -441,7 +446,9 @@ angular.module('xeditable').directive('editableCheckbox', function(editableDirec
 /*
 Returns editableForm controller
 */
-angular.module('xeditable').factory('editableFormController', function($parse, editablePromiseCollection) {
+angular.module('xeditable').factory('editableFormController', 
+  ['$parse', 'editablePromiseCollection',
+  function($parse, editablePromiseCollection) {
 
   var base = {
     $addEditable: function(editable) {
@@ -621,92 +628,94 @@ angular.module('xeditable').factory('editableFormController', function($parse, e
       $data: {}
     }, base);
   };
-});
+}]);
 
 /*
 EditableForm directive:
 - wrap form into editable form: add `onshow` attribute, etc
 - read buffered editables
 */
-angular.module('xeditable').directive('editableForm', function($rootScope, $parse, editableFormController) {
-  return { 
-    restrict: 'A',
-    require: ['form'],
-    //require: ['form', 'editableForm'],
-    //controller: EditableFormController,
-    compile: function() {
-      return {
-        pre: function(scope, elem, attrs, ctrl) {
-          //console.log('pre form', attrs.name);
-          var form = ctrl[0];
-          var eForm;
+angular.module('xeditable').directive('editableForm', 
+  ['$rootScope', '$parse', 'editableFormController',
+  function($rootScope, $parse, editableFormController) {
+    return { 
+      restrict: 'A',
+      require: ['form'],
+      //require: ['form', 'editableForm'],
+      //controller: EditableFormController,
+      compile: function() {
+        return {
+          pre: function(scope, elem, attrs, ctrl) {
+            //console.log('pre form', attrs.name);
+            var form = ctrl[0];
+            var eForm;
 
-          //if `editableForm` has value - publish smartly under this value
-          //this is required only for single editor form that is created and removed
-          if(attrs.editableForm) {
-            if(scope[attrs.editableForm] && scope[attrs.editableForm].$show) {
-              eForm = scope[attrs.editableForm];
-              angular.extend(form, eForm);
-            } else {
+            //if `editableForm` has value - publish smartly under this value
+            //this is required only for single editor form that is created and removed
+            if(attrs.editableForm) {
+              if(scope[attrs.editableForm] && scope[attrs.editableForm].$show) {
+                eForm = scope[attrs.editableForm];
+                angular.extend(form, eForm);
+              } else {
+                eForm = editableFormController();
+                scope[attrs.editableForm] = eForm;
+                angular.extend(eForm, form);
+              }
+            } else { //just merge to form and publish if form has name
               eForm = editableFormController();
-              scope[attrs.editableForm] = eForm;
-              angular.extend(eForm, form);
+              angular.extend(form, eForm);
             }
-          } else { //just merge to form and publish if form has name
-            eForm = editableFormController();
-            angular.extend(form, eForm);
-          }
 
-          //read editables from buffer (that appeared before FORM tag)
-          var buf = $rootScope.$$editableBuffer;
-          var name = form.$name;
-          if(name && buf && buf[name]) {
-            angular.forEach(buf[name], function(editable) {
-              eForm.$addEditable(editable);
-            });
-            delete buf[name];
-          }          
-        },
-        post: function(scope, elem, attrs, ctrl) {
-          //console.log('post form', attrs.name);
-          var eForm;
-
-          if(attrs.editableForm && scope[attrs.editableForm] && scope[attrs.editableForm].$show) {
-            eForm = scope[attrs.editableForm];
-          } else {
-            eForm = ctrl[0];
-          }
-
-          //onshow
-          if(attrs.onshow) {
-            eForm.$onshow = angular.bind(eForm, $parse(attrs.onshow), scope);
-          }
-
-          //onbeforesave, onaftersave
-          if(!attrs.ngSubmit && !attrs.submit) {
-            if(attrs.onbeforesave) { 
-              eForm.$onbeforesave = function() {
-                return $parse(attrs.onbeforesave)(scope, {$data: eForm.$data});
-              };
-            }
-            if(attrs.onaftersave) { 
-              eForm.$onaftersave = function() {
-                return $parse(attrs.onaftersave)(scope, {$data: eForm.$data});
-              };
-            }
-            //elem.on('submit', function(event) {
-            elem.bind('submit', function(event) {
-              event.preventDefault();
-              scope.$apply(function() {
-                eForm.$submit();
+            //read editables from buffer (that appeared before FORM tag)
+            var buf = $rootScope.$$editableBuffer;
+            var name = form.$name;
+            if(name && buf && buf[name]) {
+              angular.forEach(buf[name], function(editable) {
+                eForm.$addEditable(editable);
               });
-            });
+              delete buf[name];
+            }          
+          },
+          post: function(scope, elem, attrs, ctrl) {
+            //console.log('post form', attrs.name);
+            var eForm;
+
+            if(attrs.editableForm && scope[attrs.editableForm] && scope[attrs.editableForm].$show) {
+              eForm = scope[attrs.editableForm];
+            } else {
+              eForm = ctrl[0];
+            }
+
+            //onshow
+            if(attrs.onshow) {
+              eForm.$onshow = angular.bind(eForm, $parse(attrs.onshow), scope);
+            }
+
+            //onbeforesave, onaftersave
+            if(!attrs.ngSubmit && !attrs.submit) {
+              if(attrs.onbeforesave) { 
+                eForm.$onbeforesave = function() {
+                  return $parse(attrs.onbeforesave)(scope, {$data: eForm.$data});
+                };
+              }
+              if(attrs.onaftersave) { 
+                eForm.$onaftersave = function() {
+                  return $parse(attrs.onaftersave)(scope, {$data: eForm.$data});
+                };
+              }
+              //elem.on('submit', function(event) {
+              elem.bind('submit', function(event) {
+                event.preventDefault();
+                scope.$apply(function() {
+                  eForm.$submit();
+                });
+              });
+            }
           }
-        }
-      };
-    }
-  };
-});
+        };
+      }
+    };
+}]);
 /*
 Helpers
 */
@@ -718,7 +727,7 @@ Finally, applies callbacks if:
 - onFalse(): at least one result is false or promise resolved to false
 - onString(): at least one result is string or promise rejected or promise resolved to string
 */
-angular.module('xeditable').factory('editablePromiseCollection', function($q) { 
+angular.module('xeditable').factory('editablePromiseCollection', ['$q', function($q) { 
 
   function promiseCollection() {
     return {
@@ -784,7 +793,7 @@ angular.module('xeditable').factory('editablePromiseCollection', function($q) {
 
   return promiseCollection;
 
-});
+}]);
 /*
 Editable themes:
 - default
