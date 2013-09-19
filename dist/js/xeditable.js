@@ -1,5 +1,5 @@
 /*!
-angular-xeditable - 0.1.1
+angular-xeditable - 0.1.2
 Edit-in-place for angular.js
 Build date: 2013-09-19 
 */
@@ -144,6 +144,7 @@ angular.module('xeditable').factory('editableController', function($q) {
         }
       } 
 
+      self.inputEl.addClass('editable-input');
       self.inputEl.attr('ng-model', '$data');
 
       if(!self.hasForm) {
