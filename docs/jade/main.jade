@@ -40,10 +40,11 @@ html(ng-app='app')
     //xeditable
     script(src='dist/js/xeditable.js') 
 
-
-
-  
-
+    script.
+      function isProd() {
+        return true;
+        return window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') >= 0;
+      }
 
   body
     include navbar.jade

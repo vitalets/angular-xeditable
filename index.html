@@ -27,6 +27,13 @@
     <script src="docs/js/app.js"></script>
     <!--xeditable-->
     <script src="dist/js/xeditable.js"> </script>
+    <script>
+      function isProd() {
+        return true;
+        return window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') >= 0;
+      }
+      
+    </script>
   </head>
   <body>
     <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
@@ -38,6 +45,44 @@
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
           <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.1.zip" class="btn btn-primary">Download 0.1.1</a></form>
+          <div style="padding-top: 13px"><!-- twitter -->
+<div class="pull-right" style="width: 90px; margin-right: 20%">
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://vitalets.github.io/angular-xeditable" data-via="xeditable">Tweet</a>
+<script>!function(d,s,id){
+  if (!isProd()) return;
+  var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>            
+</div>
+
+<!-- facebook -->
+<div class="pull-right" style="width: 90px">
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  if (!isProd()) return;
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=558710054143871";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<div style="vertical-align:top;zoom:1;*display:inline" class="fb-like" data-href="http://vitalets.github.io/angular-xeditable" data-send="false" data-layout="button_count" data-width1="450" data-show-faces="false"></div>
+</div>
+
+<!-- google+ -->
+<div class="pull-right" style="width: 80px">
+<div class="g-plusone" data-size="medium" data-href="http://vitalets.github.io/angular-xeditable"></div>
+<script type="text/javascript">
+  (function() {
+    if (!isProd()) return;
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+</div>
+          </div>
         </div>
       </div>
     </nav>
@@ -1217,7 +1262,7 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
     </footer><!-- Yandex.Metrika counter -->
 <script type="text/javascript">
 (function (d, w, c) {
-    if (window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') === -1) return;
+    if (!isProd()) return;
 
     (w[c] = w[c] || []).push(function() {
         try {
