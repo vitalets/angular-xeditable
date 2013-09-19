@@ -1,7 +1,9 @@
 /*
 Returns editableForm controller
 */
-angular.module('xeditable').factory('editableFormController', function($parse, editablePromiseCollection) {
+angular.module('xeditable').factory('editableFormController', 
+  ['$parse', 'editablePromiseCollection',
+  function($parse, editablePromiseCollection) {
 
   var base = {
     $addEditable: function(editable) {
@@ -181,4 +183,4 @@ angular.module('xeditable').factory('editableFormController', function($parse, e
       $data: {}
     }, base);
   };
-});
+}]);

@@ -9,7 +9,7 @@ Finally, applies callbacks if:
 - onFalse(): at least one result is false or promise resolved to false
 - onString(): at least one result is string or promise rejected or promise resolved to string
 */
-angular.module('xeditable').factory('editablePromiseCollection', function($q) { 
+angular.module('xeditable').factory('editablePromiseCollection', ['$q', function($q) { 
 
   function promiseCollection() {
     return {
@@ -75,4 +75,4 @@ angular.module('xeditable').factory('editablePromiseCollection', function($q) {
 
   return promiseCollection;
 
-});
+}]);

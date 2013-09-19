@@ -5,7 +5,8 @@ editableFactory:
 
 Depends on: editableController, editableFormFactory 
 */
-angular.module('xeditable').factory('editableDirectiveFactory', 
+angular.module('xeditable').factory('editableDirectiveFactory',
+['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController', 
 function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController) {
 
   //directive object
@@ -127,4 +128,4 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
       }
     };
   };
-});
+}]);

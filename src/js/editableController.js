@@ -1,11 +1,11 @@
 /*
 EditableController: attached to editable element
-TODO: this file should be refactored to works without closures!
+TODO: this file should be refactored to work more clear without closures!
 */
-angular.module('xeditable').factory('editableController', function($q) { 
+angular.module('xeditable').factory('editableController', ['$q', function($q) { 
  
   //EditableController function
-  EditableController.$invect = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
+  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
   function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
     var valueGetter;
 
@@ -239,4 +239,4 @@ angular.module('xeditable').factory('editableController', function($q) {
   }
 
   return EditableController;
-});
+}]);
