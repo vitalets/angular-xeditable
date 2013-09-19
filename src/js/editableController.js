@@ -130,6 +130,7 @@ angular.module('xeditable').factory('editableController', function($q) {
         }
       } 
 
+      self.inputEl.addClass('editable-input');
       self.inputEl.attr('ng-model', '$data');
 
       if(!self.hasForm) {

@@ -3,7 +3,7 @@
   display: none;
 }
 
-/* for single editable element */
+/* class for single editable element */
 .editable-wrap {
   display: inline-block;
   white-space: nowrap;
@@ -21,6 +21,11 @@
 .editable-wrap .editable-controls > select,
 .editable-wrap .editable-controls > textarea {
   margin-bottom: 0;
+}
+
+/* keep buttons on the same line */
+.editable-wrap .editable-input {
+  display: inline-block;
 }
 
 .editable-buttons {
