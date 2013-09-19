@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.0
+angular-xeditable - 0.1.1
 Edit-in-place for angular.js
-Build date: 2013-09-18 
+Build date: 2013-09-19 
 */
 /*
 angular-xeditable module
@@ -444,9 +444,11 @@ angular.module('xeditable').factory('editableFormController', function($parse, e
 
   var base = {
     $addEditable: function(editable) {
-      //console.log('add editable', editable);
+      //console.log('add editable', editable.elem, editable.elem.bind);
       this.$editables.push(editable);
-      editable.elem.on('$destroy', angular.bind(this, this.$removeEditable, editable));
+      //'on' is not supported in angular 1.0.8
+      //editable.elem.on('$destroy', angular.bind(this, this.$removeEditable, editable));
+      editable.elem.bind('$destroy', angular.bind(this, this.$removeEditable, editable));
 
       //bind editable's local $form to self (if not bound yet, below form) 
       if (!editable.scope.$form) {
@@ -455,8 +457,13 @@ angular.module('xeditable').factory('editableFormController', function($parse, e
     },
 
     $removeEditable: function(editable) {
-      //todo: check
-      arrayRemove(this.$editables, editable);
+      //arrayRemove
+      for(var i=0; i < this.$editables.length; i++) {
+        if(this.$editables[i] === editable) {
+          this.$editables.splice(i, 1);
+          return;
+        }
+      }
     },
 
     $show: function() {
@@ -686,7 +693,8 @@ angular.module('xeditable').directive('editableForm', function($rootScope, $pars
                 return $parse(attrs.onaftersave)(scope, {$data: eForm.$data});
               };
             }
-            elem.on('submit', function(event) {
+            //elem.on('submit', function(event) {
+            elem.bind('submit', function(event) {
               event.preventDefault();
               scope.$apply(function() {
                 eForm.$submit();
@@ -787,7 +795,7 @@ Note: in postrender() `this` is instance of editableController
 angular.module('xeditable').factory('editableThemes', function() {
   var themes = {
     //default
-    default: {
+    'default': {
       formTpl:      '<form class="editable-wrap"></form>',
       noformTpl:    '<span class="editable-wrap"></span>',
       controlsTpl:  '<span class="editable-controls"></span>',
@@ -799,7 +807,7 @@ angular.module('xeditable').factory('editableThemes', function() {
     },
 
     //bs2
-    bs2: {
+    'bs2': {
       formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls controls control-group" ng-class="{\'error\': $error}"></div>',
@@ -814,7 +822,7 @@ angular.module('xeditable').factory('editableThemes', function() {
     },
 
     //bs3
-    bs3: {
+    'bs3': {
       formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls form-group" ng-class="{\'has-error\': $error}"></div>',
