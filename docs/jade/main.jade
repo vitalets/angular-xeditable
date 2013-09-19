@@ -126,13 +126,13 @@ html(ng-app='app')
                   Include [Angular.js](http://angularjs.org) in your project
 
                 pre.prettyprint
-                  = '<script src="js/1.0.8/angular.js"></script>'
+                  = '<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>'
 
                 :markdown
                   Optionally include [Bootstrap](http://getbootstrap.com) CSS for theming
 
                 pre.prettyprint
-                  = '<link href="bootstrap/css/bootstrap.css" rel="stylesheet">'
+                  = '<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">'
 
               li 
                 span Download and extract 
@@ -153,7 +153,7 @@ html(ng-app='app')
                   | });
                     
 
-              li Follow the guide below
+              li You're ready! Follow the guide below
 
           each item in items
             +demo(item.id, item.text)
