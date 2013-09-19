@@ -5,7 +5,7 @@ Edit-in-place for AnguarJS
 ## live demo and docs
 **http://vitalets.github.io/angular-xeditable**
 
-## jsFiddle template
+## jsFiddle
 Please before creating issues check it in jsFiddle:  
 http://jsfiddle.net/NfPcH
 
