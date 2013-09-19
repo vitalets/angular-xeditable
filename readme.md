@@ -1,5 +1,5 @@
 # Angular-xeditable
-Edit-in-place for AnguarJS
+Edit in place for AnguarJS
 
 ## overview
 This library allows you to create editable elements in [AngularJS](http://angularjs.org) project.  
@@ -13,9 +13,10 @@ For themes you may need to include [Twitter Bootstrap](http://getbootstrap.com) 
 ## live demo and docs
 **http://vitalets.github.io/angular-xeditable**
 
-## jsFiddle
-Please use jsfiddle to demonstrate issues:  
-http://jsfiddle.net/NfPcH/3
+## jsFiddle / plunker
+Please use these demos to demonstrate issues:  
+http://jsfiddle.net/NfPcH/3  
+http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 
 ## roadmap
 
