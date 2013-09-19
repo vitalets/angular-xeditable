@@ -137,7 +137,8 @@ module.exports = function(grunt) {
     'cssmin', 
     'concat',
     'uglify',
-    'compress'
+    'compress',
+    'docs'
   ]);
 
   grunt.registerTask('docs', [
