@@ -2,6 +2,11 @@ Angular-xeditable changelog
 =============================
 
 
+Version 0.1.3 Sep 19, 2013
+----------------------------
+[bug #9] hotfix for minified js file (vitalets)
+
+
 Version 0.1.2 Sep 19, 2013
 ----------------------------
 [bug] hotfix to keep buttons on the same line via `editable-input` class (vitalets)
