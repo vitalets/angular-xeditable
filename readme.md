@@ -7,7 +7,7 @@ Edit-in-place for AnguarJS
 
 ## jsFiddle
 Please before creating issues check it in jsFiddle:  
-http://jsfiddle.net/NfPcH
+http://jsfiddle.net/NfPcH/3
 
 ## roadmap
 
