@@ -1,9 +1,10 @@
 Angular-xeditable changelog
 =============================
 
-Version 0.1.1 wip
+Version 0.1.1 Sep 19, 2013
 ----------------------------
-[bug #1] add support of angular 1.0.8 (vitalets)
+[bug #4] fix arrayRemove (vitalets)
+[bug #1] add support of angular >= 1.0.8 (vitalets)
 [enh] improve docs (vitalets)
 
 
