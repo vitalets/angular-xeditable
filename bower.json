@@ -6,17 +6,19 @@
   "license": "MIT",
   "homepage": "http://vitalets.github.io/angular-xeditable",
   "main": [
-    "dist/css/xeditable.css",
-    "dist/js/xeditable.js",
-    "dist/js/xeditable.min.js"
+    "./dist/css/xeditable.css",
+    "./dist/js/xeditable.js",
+    "./dist/js/xeditable.min.js"
   ],
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "test*",
-    "libs*",
-    "zip*",
+    "test",
+    "libs",
+    "docs",
+    "zip",
+    "src",
     "Gruntfile.js",
     "index.html",
     "package.json"
