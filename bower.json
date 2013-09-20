@@ -6,14 +6,14 @@
   "license": "MIT",
   "homepage": "http://vitalets.github.io/angular-xeditable",
   "main": [
-    "./dist/css/xeditable.css",
-    "./dist/js/xeditable.js",
-    "./dist/js/xeditable.min.js"
+    "dist/css/xeditable.css",
+    "dist/js/xeditable.js"
   ],
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
+    "playground",
     "test",
     "libs",
     "docs",
