@@ -1,0 +1,35 @@
+h1 Get started
+ol
+  li 
+    :markdown
+      Include [Angular.js](http://angularjs.org) in your project
+
+    pre.prettyprint
+      = '<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>'
+
+    :markdown
+      Optionally include [Bootstrap](http://getbootstrap.com) CSS for theming
+
+    pre.prettyprint
+      = '<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">'
+
+  li 
+    span Download and extract 
+    a(href="zip/angular-xeditable-"+version+".zip") angular-xeditable zip
+
+  li Include js and css in your project
+    pre.prettyprint
+      = '<link href="angular-xeditable/css/xeditable.css" rel="stylesheet">\n'
+      = '<script src="angular-xeditable/js/xeditable.js"></script>'
+
+  li Add "xeditable" module to app dependencies
+    pre.prettyprint var app = angular.module("app", ["xeditable"]);
+
+  li Set theme in app.run:
+    pre.prettyprint
+      | app.run(function(editableOptions) {
+      |   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+      | });
+        
+
+  li You're ready! Follow the guide below

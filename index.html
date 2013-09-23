@@ -175,7 +175,7 @@ pointing to model in scope.</p>
                       <h1>Customize input</h1>
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="TextCustomizeCtrl">
-  <a href="#" editable-text="user.name" e-style="width: 150px" e-required e-placeholder="Enter name">
+  <a href="#" editable-text="user.name" e-style="color: green" e-required e-placeholder="Enter name">
     {{ (user.name || 'empty') | uppercase }}
   </a>
 </div>  </div>
@@ -186,7 +186,7 @@ When input will appear these attributes will be transfered to it.</p>
                       <script src="docs/demos/text-customize/controller.js"> </script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextCustomizeCtrl&quot;&gt;
-  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-style=&quot;width: 150px&quot; e-required e-placeholder=&quot;Enter name&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-style=&quot;color: green&quot; e-required e-placeholder=&quot;Enter name&quot;&gt;
     {{ (user.name || 'empty') | uppercase }}
   &lt;/a&gt;
 &lt;/div&gt;  </pre>
