@@ -11,11 +11,30 @@ body {
 .sidebar {
   position: fixed; 
   top: 70px; 
-  width: 200px;
+  width: 230px;
 }
 
-.sidebar .nav li a {
-  padding: 5px 15px;
+.sidebar > .nav > li > a {
+  padding: 5px 15px 5px 5px;
+  font-size: 1.2em;
+}
+
+.sidebar > .nav > li > .nav > li > a {
+  padding: 5px 15px 5px 15px;
+  font-size: .9em;
+}
+
+.sidebar li.active > a {
+  color: #2a6496;
+  font-weight: bold;
+}
+
+.sidebar > .nav > li > .nav {
+  display: none;
+}
+
+.sidebar > .nav > li.active > .nav {
+  display: block;
 }
 
 /* overwrite ugly google-prettify style */

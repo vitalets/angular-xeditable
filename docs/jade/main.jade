@@ -3,7 +3,7 @@ html(ng-app='app')
   head
     meta(charset='utf-8')
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Angular-xeditable :: Edit-in-place for AngularJS
+    title Angular-xeditable :: Edit in place for AngularJS
 
     
     //theme: Bootstrap 3, Bootstrap 2, default
@@ -16,15 +16,14 @@ html(ng-app='app')
     //docs css  
     link(href="docs/css/docs.css", rel="stylesheet", media="screen")
 
-
-    //jquery (needed for bootstrap)
-    //script(src="libs/jquery/jquery-1.10.2.min.js")
-    //bootstrap    
-    //script(src="libs/bootstrap/3.0.0/js/bootstrap.js")
-
     //angular
     script(src='libs/angular/1.0.8/angular.js')  
     script(src='libs/angular/1.0.8/angular-mocks.js') 
+
+    //jquery (needed for bootstrap)
+    script(src="libs/jquery/jquery-1.10.2.min.js")
+    //bootstrap    
+    script(src="libs/bootstrap/3.0.0/js/bootstrap.js")
 
     //script(src='libs/angular/1.1.5/angular.js')  
 
@@ -47,26 +46,37 @@ html(ng-app='app')
         return window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') >= 0;
       }
 
-  body
+  body(data-spy="scroll", data-target=".sidebar")
     include navbar.jade
 
-    - var items = []
-    - items.push({id: 'text-simple', text: 'Simple editable text'})
-    - items.push({id: 'text-customize', text: 'Customize input'})
-    - items.push({id: 'text-btn', text: 'Trigger manually'})
-    - items.push({id: 'select-local', text: 'Select local'})
-    - items.push({id: 'select-remote', text: 'Select remote'})
-    - items.push({id: 'select-multiple', text: 'Select multiple'})
-    - items.push({id: 'textarea', text: 'Textarea'})
-    - items.push({id: 'checkbox', text: 'Checkbox'})
-    - items.push({id: 'validate-local', text: 'Validate local'})
-    - items.push({id: 'validate-remote', text: 'Validate remote'})
-    - items.push({id: 'onbeforesave', text: 'Onbeforesave'})
-    - items.push({id: 'onaftersave', text: 'Onaftersave'})
-    - items.push({id: 'editable-form', text: 'Editable form'})
-    - items.push({id: 'editable-row', text: 'Editable row'})
-    - items.push({id: 'editable-column', text: 'Editable column'})
-    - items.push({id: 'editable-table', text: 'Editable table'})
+    - var g, groups = []
+    - groups.push({id: 'overview', text: 'Overview', items: []})
+    - groups.push({id: 'getstarted', text: 'Get started', items: []})
+    - groups.push({id: 'text-simple', text: 'Controls', items: []})
+    - groups.push({id: 'validate-local', text: 'Validation', items: []})
+    - groups.push({id: 'onbeforesave', text: 'Submit', items: []})
+    - groups.push({id: 'editable-form', text: 'Forms', items: []})
+
+    - g = groups[2]
+    - g.items.push({id: 'text-simple', text: 'Simple editable text'})
+    - g.items.push({id: 'text-customize', text: 'Customize input'})
+    - g.items.push({id: 'text-btn', text: 'Trigger manually'})
+    - g.items.push({id: 'select-local', text: 'Select local'})
+    - g.items.push({id: 'select-remote', text: 'Select remote'})
+    - g.items.push({id: 'select-multiple', text: 'Select multiple'})
+    - g.items.push({id: 'textarea', text: 'Textarea'})
+    - g.items.push({id: 'checkbox', text: 'Checkbox'})
+    - g = groups[3]
+    - g.items.push({id: 'validate-local', text: 'Validate local'})
+    - g.items.push({id: 'validate-remote', text: 'Validate remote'})
+    - g = groups[4]
+    - g.items.push({id: 'onbeforesave', text: 'Onbeforesave'})
+    - g.items.push({id: 'onaftersave', text: 'Onaftersave'})
+    - g = groups[5]
+    - g.items.push({id: 'editable-form', text: 'Editable form'})
+    - g.items.push({id: 'editable-row', text: 'Editable row'})
+    - g.items.push({id: 'editable-column', text: 'Editable column'})
+    - g.items.push({id: 'editable-table', text: 'Editable table'})
 
 
     .container
@@ -74,18 +84,13 @@ html(ng-app='app')
         .col-md-3
           .well.sidebar
             ul.nav
-              li: a(href="#overview", style="padding-left: 0") Overview
-              li: a(href="#getstarted", style="padding-left: 0") Get started
-              each item in items
-                if item.id == 'text-simple'
-                  li Controls
-                if item.id == 'validate-local'
-                  li Validation
-                if item.id == 'onbeforesave'
-                  li Submit
-                if item.id == 'editable-form'
-                  li Forms
-                li: a(href="#"+item.id)= item.text
+              each g in groups
+                li
+                  a(href="#"+g.id)= g.text
+                  ul.nav
+                    each item in g.items
+                      li: a(href="#"+item.id)= item.text
+
         .col-md-9
 
           mixin demo(brief, header, subheader)
@@ -122,8 +127,12 @@ html(ng-app='app')
             include getstarted.jade
 
 
-          each item in items
-            +demo(item.id, item.text)
+          - groups.shift()
+          - groups.shift()
+          each g in groups
+            //section(id=g.id)
+            each item in g.items
+              +demo(item.id, item.text)
 
     footer
       hr

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angular-xeditable :: Edit-in-place for AngularJS</title>
+    <title>Angular-xeditable :: Edit in place for AngularJS</title>
     <!--theme: Bootstrap 3, Bootstrap 2, default-->
     <!--link(ng-repeat="c in css", ng-href="{{c}}", rel="stylesheet", media="screen")-->
     <link href="libs/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" media="screen">
@@ -11,13 +11,13 @@
     <link href="dist/css/xeditable.css" rel="stylesheet" media="screen">
     <!--docs css  -->
     <link href="docs/css/docs.css" rel="stylesheet" media="screen">
-    <!--jquery (needed for bootstrap)-->
-    <!--script(src="libs/jquery/jquery-1.10.2.min.js")-->
-    <!--bootstrap    -->
-    <!--script(src="libs/bootstrap/3.0.0/js/bootstrap.js")-->
     <!--angular-->
     <script src="libs/angular/1.0.8/angular.js"> </script>
     <script src="libs/angular/1.0.8/angular-mocks.js"> </script>
+    <!--jquery (needed for bootstrap)-->
+    <script src="libs/jquery/jquery-1.10.2.min.js"></script>
+    <!--bootstrap    -->
+    <script src="libs/bootstrap/3.0.0/js/bootstrap.js"></script>
     <!--script(src='libs/angular/1.1.5/angular.js')  -->
     <!--script(src='libs/angular/1.2.0rc/angular.js')  -->
     <!--script(src='libs/angular/1.2.0rc/angular-mocks.js')  -->
@@ -36,7 +36,7 @@
       
     </script>
   </head>
-  <body>
+  <body data-spy="scroll" data-target=".sidebar">
     <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header"><a href="/" class="navbar-brand">Angular-xeditable</a></div>
@@ -92,28 +92,46 @@
         <div class="col-md-3">
           <div class="well sidebar">
             <ul class="nav">
-              <li><a href="#overview" style="padding-left: 0">Overview</a></li>
-              <li><a href="#getstarted" style="padding-left: 0">Get started</a></li>
-              <li>Controls</li>
-              <li><a href="#text-simple">Simple editable text</a></li>
-              <li><a href="#text-customize">Customize input</a></li>
-              <li><a href="#text-btn">Trigger manually</a></li>
-              <li><a href="#select-local">Select local</a></li>
-              <li><a href="#select-remote">Select remote</a></li>
-              <li><a href="#select-multiple">Select multiple</a></li>
-              <li><a href="#textarea">Textarea</a></li>
-              <li><a href="#checkbox">Checkbox</a></li>
-              <li>Validation</li>
-              <li><a href="#validate-local">Validate local</a></li>
-              <li><a href="#validate-remote">Validate remote</a></li>
-              <li>Submit</li>
-              <li><a href="#onbeforesave">Onbeforesave</a></li>
-              <li><a href="#onaftersave">Onaftersave</a></li>
-              <li>Forms</li>
-              <li><a href="#editable-form">Editable form</a></li>
-              <li><a href="#editable-row">Editable row</a></li>
-              <li><a href="#editable-column">Editable column</a></li>
-              <li><a href="#editable-table">Editable table</a></li>
+              <li><a href="#overview">Overview</a>
+                <ul class="nav">
+                </ul>
+              </li>
+              <li><a href="#getstarted">Get started</a>
+                <ul class="nav">
+                </ul>
+              </li>
+              <li><a href="#text-simple">Controls</a>
+                <ul class="nav">
+                  <li><a href="#text-simple">Simple editable text</a></li>
+                  <li><a href="#text-customize">Customize input</a></li>
+                  <li><a href="#text-btn">Trigger manually</a></li>
+                  <li><a href="#select-local">Select local</a></li>
+                  <li><a href="#select-remote">Select remote</a></li>
+                  <li><a href="#select-multiple">Select multiple</a></li>
+                  <li><a href="#textarea">Textarea</a></li>
+                  <li><a href="#checkbox">Checkbox</a></li>
+                </ul>
+              </li>
+              <li><a href="#validate-local">Validation</a>
+                <ul class="nav">
+                  <li><a href="#validate-local">Validate local</a></li>
+                  <li><a href="#validate-remote">Validate remote</a></li>
+                </ul>
+              </li>
+              <li><a href="#onbeforesave">Submit</a>
+                <ul class="nav">
+                  <li><a href="#onbeforesave">Onbeforesave</a></li>
+                  <li><a href="#onaftersave">Onaftersave</a></li>
+                </ul>
+              </li>
+              <li><a href="#editable-form">Forms</a>
+                <ul class="nav">
+                  <li><a href="#editable-form">Editable form</a></li>
+                  <li><a href="#editable-row">Editable row</a></li>
+                  <li><a href="#editable-column">Editable column</a></li>
+                  <li><a href="#editable-table">Editable table</a></li>
+                </ul>
+              </li>
             </ul>
           </div>
         </div>
@@ -150,6 +168,7 @@ to use power of angular and support complex forms / editable grids.</p>
               <li>You're ready! Follow the guide below</li>
             </ol>
           </section>
+          <!--section(id=g.id)-->
                     <section id="text-simple">
                       <h1>Simple editable text</h1>
                       <h3>demo</h3>
@@ -401,6 +420,7 @@ pointing to model in scope. Set <code>e-title</code> attribute to define text sh
   };  
 });</pre>
                     </section>
+          <!--section(id=g.id)-->
                     <section id="validate-local">
                       <h1>Validate local</h1>
                       <h3>demo</h3>
@@ -472,6 +492,7 @@ If promise resolves to <strong>string</strong> validation failed.</p>
   };
 });</pre>
                     </section>
+          <!--section(id=g.id)-->
                     <section id="onbeforesave">
                       <h1>Onbeforesave</h1>
                       <h3>demo</h3>
@@ -558,6 +579,7 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
   };
 });</pre>
                     </section>
+          <!--section(id=g.id)-->
                     <section id="editable-form">
                       <h1>Editable form</h1>
                       <h3>demo</h3>
