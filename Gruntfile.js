@@ -1,4 +1,6 @@
 module.exports = function(grunt) {
+  var fs = require('fs');
+
   //init configuration
   grunt.config.init({
     pkg: grunt.file.readJSON('package.json')
@@ -100,7 +102,8 @@ module.exports = function(grunt) {
         data: {
           fs: require('fs'),
           md: require('marked'),
-          version: '<%= pkg.version %>'
+          version: '<%= pkg.version %>',
+          size: Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024)
         }
       },
       files: [{src: 'docs/jade/main.jade', dest: 'index.html'}]
