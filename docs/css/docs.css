@@ -2,6 +2,12 @@ body {
   /*padding-top: 50px; */
 }
 
+.navbar-brand {
+  background: url("../img/angular32.jpeg") left center no-repeat;
+  padding-left: 38px;
+  margin-left: 0 !important;
+}
+
 .sidebar {
   position: fixed; 
   top: 70px; 
