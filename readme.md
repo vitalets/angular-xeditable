@@ -23,6 +23,8 @@ http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 * date
 * select2
 * checklist
+* comodate
+* popup mode
 
 ## license
 MIT
