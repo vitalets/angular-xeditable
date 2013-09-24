@@ -234,7 +234,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
     self.catchError = function(result, noPromise) {
       if (angular.isObject(result) && noPromise !== true) {
         $q.when(result).then(
-          //success anf fail handlers are equal
+          //success and fail handlers are equal
           angular.bind(this, function(r) {
             this.catchError(r, true);
           }),
