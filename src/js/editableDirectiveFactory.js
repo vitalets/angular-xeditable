@@ -61,7 +61,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         }
         */
 
-        //store original props before merge
+        //store original props to `parent` before merge
         angular.forEach(overwrites, function(v, k) {
           if(eCtrl[k] !== undefined) {
             eCtrl.parent[k] = eCtrl[k];
@@ -98,7 +98,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
 
           //create editableform controller
           scope.$form = editableFormController();
-          //add self
+          //add self to editable controller
           scope.$form.$addEditable(eCtrl);
 
           //elem.after(self.editorEl);

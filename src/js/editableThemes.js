@@ -60,6 +60,12 @@ angular.module('xeditable').factory('editableThemes', function() {
           case 'editableTextarea':
             this.inputEl.addClass('form-control');
             if(this.theme.inputClass) {
+              // don`t apply `input-sm` and `input-lg` to select multiple
+              // should be fixed in bs itself!
+              if(this.inputEl.attr('multiple') && 
+                (this.theme.inputClass === 'input-sm' || this.theme.inputClass === 'input-lg')) {
+                  break;
+              }
               this.inputEl.addClass(this.theme.inputClass);
             }
           break;

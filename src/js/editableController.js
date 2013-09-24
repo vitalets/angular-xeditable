@@ -103,7 +103,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         self.submitEl = angular.element(theme.submitTpl);
         self.cancelEl = angular.element(theme.cancelTpl);
         self.buttonsEl.append(self.submitEl).append(self.cancelEl);
-        self.controlsEl.append(self.buttonsEl);
+        //self.controlsEl.append(self.buttonsEl);
       }
 
       //build error
@@ -141,6 +141,11 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       if(angular.isFunction(theme.postrender)) {
         theme.postrender.call(self);
       }
+
+      //bind autosubmit event
+      self.inputEl.bind('keyup', function(e) {
+        console.log(e);
+      });
     };
 
     //show
