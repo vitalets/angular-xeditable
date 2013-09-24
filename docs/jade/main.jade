@@ -21,6 +21,7 @@ html(ng-app='app')
     - groups.push({id: 'validate-local', text: 'Validation', items: []})
     - groups.push({id: 'onbeforesave', text: 'Submit', items: []})
     - groups.push({id: 'editable-form', text: 'Forms', items: []})
+    - groups.push({id: 'bootstrap3', text: 'Themes', items: []})
 
     - g = groups[2]
     - g.items.push({id: 'text-simple', text: 'Text'})
@@ -46,6 +47,11 @@ html(ng-app='app')
     - g.items.push({id: 'editable-row', text: 'Editable row'})
     - g.items.push({id: 'editable-column', text: 'Editable column'})
     - g.items.push({id: 'editable-table', text: 'Editable table'})
+
+    - g = groups[6]
+    - g.items.push({id: 'bootstrap3', text: 'Bootstrap 3'})
+    - g.items.push({id: 'bootstrap2', text: 'Bootstrap 2'})
+    - g.items.push({id: 'default', text: 'Default'})
 
 
     .container
@@ -84,12 +90,13 @@ html(ng-app='app')
           section#getstarted
             include getstarted.jade
 
-          - groups.shift()
-          - groups.shift()
-          each g in groups
-            //section(id=g.id)
+          - for(var i=2; i<=5; i++)
+            - var g = groups[i]
             each item in g.items
               +demo(item.id, item.text)
+
+          include themes.jade
+
 
     footer
       hr
