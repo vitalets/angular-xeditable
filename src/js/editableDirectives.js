@@ -16,9 +16,7 @@ angular.module('xeditable').directive('editableSelect', ['editableDirectiveFacto
       autosubmit: function() {
         var self = this;
         self.inputEl.bind('change', function() {
-          //console.log('QQ');
           self.scope.$apply(function() {
-            //self.editorEl[0].submit();
             self.scope.$form.$submit();
           });
         });
@@ -32,14 +30,24 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableTextarea',
-      inputTpl: '<textarea ng-keydown="$editable.keydown($event)"></textarea>',
-      // todo: check ng-keydown in angular 1.0.8 - seems to be broken (mac)
-      keydown: function(e) {
-        console.log('keydown', e);
-        // todo: check ctrl on mac keyboard!!
-        if (e.ctrlKey && (e.keyCode === 13)) {
-          this.scope.$form.$submit();
+      inputTpl: '<textarea></textarea>',
+      addListeners: function() {
+        var self = this;
+        self.parent.addListeners.call(self);
+        // submit textarea by ctrl+enter even with buttons
+        if (self.single && self.attrs.buttons !== 'no') {
+          self.autosubmit();
         }
+      },
+      autosubmit: function() {
+        var self = this;
+        self.inputEl.bind('keydown', function(e) {
+          if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
+            self.scope.$apply(function() {
+              self.scope.$form.$submit();
+            });
+          }
+        });
       }
     });
 }]);
