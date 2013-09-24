@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     options: { },
     all: [
       'Gruntfile.js',
-      'src/js/*.js'
+      'src/js/**/*.js'
     ]
   });
 
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
       options: {
         banner: banner
       },
-      src: ['src/js/editableModule.js', 'src/js/*.js'],
+      src: ['src/js/module.js', 'src/js/**/*.js'],
       dest: 'dist/js/xeditable.js'
     }
   });
@@ -71,7 +71,6 @@ module.exports = function(grunt) {
       banner: banner
     },
     dist: {
-      //src: ['dist/js/angular-xeditable.js'],
       src: ['<%= concat.dist.dest %>'],
       dest: 'dist/js/xeditable.min.js'
     }
@@ -87,10 +86,10 @@ module.exports = function(grunt) {
       },
       expand: true,
       cwd: 'dist/',
-      src: ['**'], 
+      src: ['**'],
       dest: '/'
     }
-  });  
+  });
 
   //jade
   grunt.loadNpmTasks('grunt-contrib-jade');
@@ -135,9 +134,9 @@ module.exports = function(grunt) {
 
   //metatasks
   grunt.registerTask('build', [
-    'jshint', 
+    'jshint',
     'clean',
-    'cssmin', 
+    'cssmin',
     'concat',
     'uglify',
     'compress',

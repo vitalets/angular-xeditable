@@ -1,23 +1,90 @@
 /*!
-angular-xeditable - 0.1.3
+angular-xeditable - 0.1.4
 Edit-in-place for angular.js
-Build date: 2013-09-19 
+Build date: 2013-09-24 
 */
 /*
 angular-xeditable module
 */
 angular.module('xeditable', [])
 .value('editableOptions', {
-  theme: 'default' //bs2, bs3,
+  theme: 'default', //bs2, bs3,
+  buttons: 'right'
 });
 
+
+//checkbox
+angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableCheckbox',
+      inputTpl: '<input type="checkbox">',
+      render: function() {
+        this.parent.render.call(this);
+        if(this.attrs.eTitle) {
+          this.inputEl.wrap('<label></label>');
+          this.inputEl.after(angular.element('<span></span>').text(' '+this.attrs.eTitle));
+        }
+      }
+    });
+}]);
+//select
+angular.module('xeditable').directive('editableSelect', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableSelect',
+      inputTpl: '<select></select>',
+      autosubmit: function() {
+        var self = this;
+        self.inputEl.bind('change', function() {
+          self.scope.$apply(function() {
+            self.scope.$form.$submit();
+          });
+        });
+      }
+    });
+}]);
+//text
+angular.module('xeditable').directive('editableText', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableText',
+      inputTpl: '<input type="text">'
+    });
+}]);
+//textarea
+angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFactory',
+  function(editableDirectiveFactory) {
+    return editableDirectiveFactory({
+      directiveName: 'editableTextarea',
+      inputTpl: '<textarea></textarea>',
+      addListeners: function() {
+        var self = this;
+        self.parent.addListeners.call(self);
+        // submit textarea by ctrl+enter even with buttons
+        if (self.single && self.attrs.buttons !== 'no') {
+          self.autosubmit();
+        }
+      },
+      autosubmit: function() {
+        var self = this;
+        self.inputEl.bind('keydown', function(e) {
+          if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
+            self.scope.$apply(function() {
+              self.scope.$form.$submit();
+            });
+          }
+        });
+      }
+    });
+}]);
 
 /*
 EditableController: attached to editable element
 TODO: this file should be refactored to work more clear without closures!
 */
-angular.module('xeditable').factory('editableController', ['$q', function($q) { 
- 
+angular.module('xeditable').factory('editableController', ['$q', function($q) {
+
   //EditableController function
   EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
   function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
@@ -33,18 +100,18 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
     self.attrs = $attrs;
     self.inputEl = null;
     self.editorEl = null;
-    self.hasForm = false;
+    self.single = true;
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
- 
+
     //to be overwritten
     self.inputTpl = '';
     self.directiveName = '';
 
     //init
-    self.init = function(hasForm) {
-      self.hasForm = hasForm;
+    self.init = function(single) {
+      self.single = single;
 
       self.name = $attrs.eName || $attrs[self.directiveName];
       /*
@@ -58,18 +125,11 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         throw 'You should provide value for `'+self.directiveName+'` in editable element!';
       }
 
-      //build input
-      /*
-      if(hasForm) {
-        self.valueString = '$form.$data["' + ($attrs.eName || $attrs[self.directiveName]) + '"]';
-      } else {
-        self.valueString = '$form.$data' + ($attrs.eName ? '.'+$attrs.eName : '');
+      // hide buttons for non-single
+      if (!self.single) {
+        self.attrs.buttons = 'no';
       }
-      */
-      //self.valueString = '$form.$data' + ($attrs.eName ? '.'+$attrs.eName : '');
 
-      // self.inputEl = angular.element(self.inputTpl);
- 
       self.render();
 
       //if name defined --> watch changes and update $data in form
@@ -112,7 +172,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       self.controlsEl.append(self.inputEl);
 
       //build buttons
-      if(!self.hasForm) {
+      if(self.attrs.buttons !== 'no') {
         self.buttonsEl = angular.element(theme.buttonsTpl);
         self.submitEl = angular.element(theme.submitTpl);
         self.cancelEl = angular.element(theme.cancelTpl);
@@ -125,7 +185,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       self.controlsEl.append(self.errorEl);
 
       //build editor
-      self.editorEl = angular.element(self.hasForm ? theme.noformTpl : theme.formTpl);
+      self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
       self.editorEl.append(self.controlsEl);
 
       //attach attributes:
@@ -142,12 +202,12 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
           var attrValue = ($attrs[k] === '') ? v : $attrs[k];
           self.inputEl.attr(v, attrValue);
         }
-      } 
+      }
 
       self.inputEl.addClass('editable-input');
       self.inputEl.attr('ng-model', '$data');
 
-      if(!self.hasForm) {
+      if(self.single) {
         self.editorEl.attr('editable-form', '$form');
       }
 
@@ -155,6 +215,8 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       if(angular.isFunction(theme.postrender)) {
         theme.postrender.call(self);
       }
+
+
     };
 
     //show
@@ -171,6 +233,9 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       //hide element
       $element.addClass('editable-hide');
 
+      //listen to keyboard and other events
+      self.addListeners();
+
       //onshow
       return self.onshow();
     };
@@ -180,6 +245,35 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       //console.log('editable hide', self.name);
       self.editorEl.remove();
       $element.removeClass('editable-hide');
+      // todo: to think is it really needed or not
+      /*
+      if($element[0].tagName === 'A') {
+        $element[0].focus();
+      }
+      */
+    };
+
+    /*
+    Called after show to attach listeners
+    */
+    self.addListeners = function() {
+      //bind keyup: hide on `escape` press
+      self.inputEl.bind('keyup', function(e) {
+          if(!self.single) {
+            return;
+          }
+
+          switch(e.keyCode) {
+            case 27:
+              self.scope.$form.$hide();
+            break;
+          }
+      });
+
+      //autosubmit when no buttons
+      if (self.single && self.attrs.buttons === 'no') {
+        self.autosubmit();
+      }
     };
 
     //setWaiting
@@ -247,6 +341,11 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       valueGetter.assign($scope.$parent, angular.copy(self.scope.$data));
     };
 
+    /*
+    Called when `buttons = "no"` to submit automatically
+    */
+    self.autosubmit = angular.noop;
+
     self.onshow = angular.noop;
     self.onbeforesave = angular.noop;
     self.onaftersave = angular.noop;
@@ -256,34 +355,34 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
 }]);
 
 /*
-editableFactory: 
+editableFactory:
 - attaches editableController to element
 - used to generate editable directives
 
-Depends on: editableController, editableFormFactory 
+Depends on: editableController, editableFormFactory
 */
 angular.module('xeditable').factory('editableDirectiveFactory',
-['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController', 
+['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController',
 function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController) {
 
   //directive object
   return function(overwrites) {
-    return { 
+    return {
       restrict: 'A',
       scope: true,
       require: [overwrites.directiveName, '?^form'],
       controller: editableController,
       link: function(scope, elem, attrs, ctrl) {
         //console.log('link directive', attrs[overwrites.directiveName]);
-        
+
         //editable controller
         var eCtrl = ctrl[0];
 
-        //form controller        
+        //form controller
         var eFormCtrl;
         var hasForm = false;
 
-        //if not inside form, but we have `e-form`: 
+        //if not inside form, but we have `e-form`:
         //check if form exists somewhere in scope. If exists - bind, otherwise create.
         if(ctrl[1]) {
           eFormCtrl = ctrl[1];
@@ -298,7 +397,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
               if($document[0].forms[i].name === attrs.eForm) {
                 //form is below and not processed yet
                 eFormCtrl = null;
-                hasForm = true; 
+                hasForm = true;
                 break;
               }
             }
@@ -318,7 +417,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         }
         */
 
-        //store original props before merge
+        //store original props to `parent` before merge
         angular.forEach(overwrites, function(v, k) {
           if(eCtrl[k] !== undefined) {
             eCtrl.parent[k] = eCtrl[k];
@@ -329,7 +428,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         angular.extend(eCtrl, overwrites);
 
         //init editable ctrl
-        eCtrl.init(hasForm);
+        eCtrl.init(!hasForm);
 
         //publich editable controller as `$editable` to be referenced in html
         scope.$editable = eCtrl;
@@ -344,18 +443,18 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
             }
             scope.$form.$addEditable(eCtrl);
           } else {
-            // future form (below): add editable controller to buffer
+            // future form (below): add editable controller to buffer and add to form later
             $rootScope.$$editableBuffer = $rootScope.$$editableBuffer || {};
             $rootScope.$$editableBuffer[attrs.eForm] = $rootScope.$$editableBuffer[attrs.eForm] || [];
-            $rootScope.$$editableBuffer[attrs.eForm].push(eCtrl);            
+            $rootScope.$$editableBuffer[attrs.eForm].push(eCtrl);
             scope.$form = null; //will be re-assigned later
           }
-        // !hasForm  
+        // !hasForm
         } else {
 
           //create editableform controller
           scope.$form = editableFormController();
-          //add self
+          //add self to editable controller
           scope.$form.$addEditable(eCtrl);
 
           //elem.after(self.editorEl);
@@ -368,17 +467,17 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
           //if `e-form` provided, publish local $form in scope
           if(attrs.eForm) {
             scope.$parent[attrs.eForm] = scope.$form;
-          } 
+          }
 
           //bind click - if no external form defined
           if(!attrs.eForm) {
             elem.addClass('editable-click');
-            elem.bind('click', function(e) { 
+            elem.bind('click', function(e) {
               e.preventDefault();
               scope.$apply(function(){
                 scope.$form.$show();
               });
-            }); 
+            });
           }
         }
 
@@ -386,62 +485,6 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
     };
   };
 }]);
-
-//text
-angular.module('xeditable').directive('editableText', ['editableDirectiveFactory',
-  function(editableDirectiveFactory) {
-    return editableDirectiveFactory({
-      directiveName: 'editableText',
-      inputTpl: '<input type="text">'
-    });
-}]);
-
-//select
-angular.module('xeditable').directive('editableSelect', ['editableDirectiveFactory',
-  function(editableDirectiveFactory) {
-    return editableDirectiveFactory({
-      directiveName: 'editableSelect',
-      inputTpl: '<select></select>'
-    });
-}]);
-
-
-//textarea
-angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFactory',
-  function(editableDirectiveFactory) {
-    return editableDirectiveFactory({
-      directiveName: 'editableTextarea',
-      inputTpl: '<textarea ng-keydown="$editable.keydown($event)"></textarea>',
-      keydown: function(e) {
-        if (e.ctrlKey && (e.keyCode === 13)) {
-          this.scope.$form.$submit();
-        }
-      }
-    });
-}]);
-
-
-//checkbox
-angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFactory',
-  function(editableDirectiveFactory) {
-    return editableDirectiveFactory({
-      directiveName: 'editableCheckbox',
-      inputTpl: '<input type="checkbox">',
-      render: function() {
-        this.parent.render.call(this);
-        if(this.attrs.eTitle) {
-          this.inputEl.wrap('<label></label>');
-          this.inputEl.after(angular.element('<span></span>').text(' '+this.attrs.eTitle));
-        }
-      }
-    });
-}]);
-
-
-
-
-
-
 
 /*
 Returns editableForm controller
@@ -635,10 +678,10 @@ EditableForm directive:
 - wrap form into editable form: add `onshow` attribute, etc
 - read buffered editables
 */
-angular.module('xeditable').directive('editableForm', 
+angular.module('xeditable').directive('editableForm',
   ['$rootScope', '$parse', 'editableFormController',
   function($rootScope, $parse, editableFormController) {
-    return { 
+    return {
       restrict: 'A',
       require: ['form'],
       //require: ['form', 'editableForm'],
@@ -674,7 +717,7 @@ angular.module('xeditable').directive('editableForm',
                 eForm.$addEditable(editable);
               });
               delete buf[name];
-            }          
+            }
           },
           post: function(scope, elem, attrs, ctrl) {
             //console.log('post form', attrs.name);
@@ -693,17 +736,18 @@ angular.module('xeditable').directive('editableForm',
 
             //onbeforesave, onaftersave
             if(!attrs.ngSubmit && !attrs.submit) {
-              if(attrs.onbeforesave) { 
+              if(attrs.onbeforesave) {
                 eForm.$onbeforesave = function() {
                   return $parse(attrs.onbeforesave)(scope, {$data: eForm.$data});
                 };
               }
-              if(attrs.onaftersave) { 
+
+              if(attrs.onaftersave) {
                 eForm.$onaftersave = function() {
                   return $parse(attrs.onaftersave)(scope, {$data: eForm.$data});
                 };
               }
-              //elem.on('submit', function(event) {
+
               elem.bind('submit', function(event) {
                 event.preventDefault();
                 scope.$apply(function() {
@@ -809,7 +853,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       formTpl:      '<form class="editable-wrap"></form>',
       noformTpl:    '<span class="editable-wrap"></span>',
       controlsTpl:  '<span class="editable-controls"></span>',
-      inputTpl:     '', 
+      inputTpl:     '',
       errorTpl:     '<div class="editable-error" ng-show="$error">{{$error}}</div>',
       buttonsTpl:   '<span class="editable-buttons"></span>',
       submitTpl:    '<button type="submit">save</button>',
@@ -821,7 +865,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls controls control-group" ng-class="{\'error\': $error}"></div>',
-      inputTpl:    '', 
+      inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error">{{$error}}</div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span class="icon-ok icon-white"></span></button>',
@@ -836,7 +880,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls form-group" ng-class="{\'has-error\': $error}"></div>',
-      inputTpl:    '', 
+      inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error">{{$error}}</div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span></button>',
@@ -844,10 +888,10 @@ angular.module('xeditable').factory('editableThemes', function() {
                      '<span class="glyphicon glyphicon-remove"></span>'+
                    '</button>',
 
-      //bs3 specific props to change buttons class: btn-sm, btn-lg              
-      buttonsClass: '',                 
-      //bs3 specific props to change standard inputs class: input-sm, input-lg
-      inputClass: '',                 
+      //bs3 specific prop to change buttons class: btn-sm, btn-lg
+      buttonsClass: '',
+      //bs3 specific prop to change standard inputs class: input-sm, input-lg
+      inputClass: '',
       postrender: function() {
         //apply `form-control` class to std inputs
         switch(this.directiveName) {
@@ -856,6 +900,12 @@ angular.module('xeditable').factory('editableThemes', function() {
           case 'editableTextarea':
             this.inputEl.addClass('form-control');
             if(this.theme.inputClass) {
+              // don`t apply `input-sm` and `input-lg` to select multiple
+              // should be fixed in bs itself!
+              if(this.inputEl.attr('multiple') &&
+                (this.theme.inputClass === 'input-sm' || this.theme.inputClass === 'input-lg')) {
+                  break;
+              }
               this.inputEl.addClass(this.theme.inputClass);
             }
           break;
@@ -865,7 +915,7 @@ angular.module('xeditable').factory('editableThemes', function() {
         if(this.buttonsEl && this.theme.buttonsClass) {
           this.buttonsEl.find('button').addClass(this.theme.buttonsClass);
         }
-      } 
+      }
     }
   };
 
