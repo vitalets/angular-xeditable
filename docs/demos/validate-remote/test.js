@@ -1,7 +1,7 @@
 describe('validate-remote', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html?test');
+    browser().navigateTo(mainUrl);
   });
 
   it('should show error', function() {
@@ -20,7 +20,7 @@ describe('validate-remote', function() {
     expect(element(s+'button:disabled:visible').count()).toBe(2);
     expect(element(s+'.editable-error:visible').count()).toBe(0);
 
-    sleep(0.5);
+    sleep(delay);
 
     //error shown
     expect(element(s+'a').css('display')).toBe('none');
@@ -39,7 +39,7 @@ describe('validate-remote', function() {
     expect(element(s+'button:visible:disabled').count()).toBe(2);
     expect(element(s+'.editable-error:visible').count()).toBe(0);
 
-    sleep(0.5);
+    sleep(delay);
 
     //no error shown, form closed
     expect(element(s+'a').css('display')).not().toBe('none');

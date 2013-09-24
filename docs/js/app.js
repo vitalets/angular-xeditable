@@ -119,3 +119,8 @@ app.run(function($httpBackend, editableOptions, editableThemes) {
   $httpBackend.whenGET(/\.(html|css|js)$/).passThrough();
 
 });
+
+function isProd() {
+  //return true;
+  return window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') >= 0;
+}

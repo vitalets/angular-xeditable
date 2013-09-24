@@ -1,7 +1,7 @@
 describe('editable-column', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html?test');
+    browser().navigateTo(mainUrl);
   });
 
   it('should show USERNAME form by `edit` button and save new values', function() {
@@ -65,9 +65,9 @@ describe('editable-column', function() {
     expect(element(s+'tr:eq(3) td:eq(0) .editable-error').text()).toMatch('Username should be `awesome`');
 
     //set correct values
-    using(s+'tr:eq(1) td:eq(0)').input('$data').enter('awesome'); 
-    using(s+'tr:eq(2) td:eq(0)').input('$data').enter('awesome'); 
-    using(s+'tr:eq(3) td:eq(0)').input('$data').enter('awesome'); 
+    using(s+'tr:eq(1) td:eq(0)').input('$data').enter('awesome');
+    using(s+'tr:eq(2) td:eq(0)').input('$data').enter('awesome');
+    using(s+'tr:eq(3) td:eq(0)').input('$data').enter('awesome');
 
     element(s+'tr:eq(0) td:eq(0) form button[type="submit"]').click();
 
@@ -75,7 +75,7 @@ describe('editable-column', function() {
     //error hidden
     expect(element(s+'td:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(0.5);
+    sleep(delay);
 
     checkClosed();
 

@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
   var fs = require('fs');
+  var extend = require('util')._extend;
 
   //init configuration
   grunt.config.init({
@@ -92,20 +93,27 @@ module.exports = function(grunt) {
   });
 
   //jade
+  var jadeData = {
+    fs: require('fs'),
+    md: require('marked'),
+    version: '<%= pkg.version %>',
+    size: Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024)
+  };
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.config('jade', {
     docs: {
       options: {
-        client: false,
         pretty: true,
-        data: {
-          fs: require('fs'),
-          md: require('marked'),
-          version: '<%= pkg.version %>',
-          size: Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024)
-        }
+        data: extend(extend({}, jadeData), {env: 'prod'})
       },
       files: [{src: 'docs/jade/main.jade', dest: 'index.html'}]
+    },
+    docsdev: {
+      options: {
+        pretty: true,
+        data: extend(extend({}, jadeData), {env: 'dev'})
+      },
+      files: [{src: 'docs/jade/main.jade', dest: 'dev.html'}]
     }
   });
 
@@ -125,7 +133,7 @@ module.exports = function(grunt) {
   grunt.config('watch', {
     jade: {
       files: ['docs/**/*'],
-      tasks: ['jade'],
+      tasks: ['jade:docsdev'],
       options: {
         spawn: false
       }

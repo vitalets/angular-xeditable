@@ -1,7 +1,7 @@
 describe('validate-local', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html?test');
+    browser().navigateTo(mainUrl);
   });
 
   it('should show error', function() {

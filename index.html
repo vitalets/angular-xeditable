@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angular-xeditable :: Edit in place for AngularJS</title>
     <!--theme: Bootstrap 3, Bootstrap 2, default-->
-    <!--link(ng-repeat="c in css", ng-href="{{c}}", rel="stylesheet", media="screen")-->
     <link href="libs/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" media="screen">
     <!--xeditable css-->
     <link href="dist/css/xeditable.css" rel="stylesheet" media="screen">
@@ -18,28 +17,17 @@
     <script src="libs/jquery/jquery-1.10.2.min.js"></script>
     <!--bootstrap-->
     <script src="libs/bootstrap/3.0.0/js/bootstrap.js"></script>
-    <!--script(src='libs/angular/1.1.5/angular.js')-->
-    <!--script(src='libs/angular/1.2.0rc/angular.js')-->
-    <!--script(src='libs/angular/1.2.0rc/angular-mocks.js')-->
     <!--google-code-prettify-->
     <script src="libs/google-code-prettify/run_prettify.js"></script>
     <!--app-->
     <script src="docs/js/app.js"></script>
     <!--xeditable-->
-    <!--script(src='dist/js/xeditable.js')-->
     <script src="dist/js/xeditable.min.js"></script>
-    <script>
-      function isProd() {
-        //return true;
-        return window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') >= 0;
-      }
-      
-    </script>
   </head>
   <body data-spy="scroll" data-target=".sidebar">
     <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
       <div class="container">
-        <div class="navbar-header"><a href="/" class="navbar-brand">Angular-xeditable</a></div>
+        <div class="navbar-header"><a href="/" class="navbar-brand">Angular-xeditable </a></div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="">Home</a></li>
@@ -138,11 +126,12 @@
         </div>
         <div class="col-md-9">
           <section id="overview">
-            <h1>Overview</h1><p><strong>Angular-xeditable</strong> allows you to create editable elements in <a href="http://angularjs.org">AngularJS</a> project.
+            <h1>Overview</h1><p><strong>Angular-xeditable</strong> is tiny javascript library allowing you to create edit-in-place elements
+in <a href="http://angularjs.org">AngularJS</a> projects.
 It is based on ideas of <a href="http://vitalets.github.io/x-editable">x-editable</a> but was written from scratch
 to use power of angular and support complex forms / editable grids.</p>
 
-            <h4>Dependencies</h4><p>It does not depend on any libraries except angular itself.
+            <h4>Dependencies</h4><p>It does not depend on any libraries except AngularJS itself.
 For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.</p>
 
           </section>

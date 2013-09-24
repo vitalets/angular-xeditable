@@ -1,7 +1,7 @@
 describe('editable-form', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html?test');
+    browser().navigateTo(mainUrl);
   });
 
   it('should show form by `edit` button click and close by `cancel`', function() {
@@ -23,10 +23,10 @@ describe('editable-form', function() {
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(0);
     expect(element(s+'form > div > button:visible').count()).toBe(0);
     expect(element(s+'form > div > span button:visible:disabled').count()).toBe(2);
-    expect(element(s+'select:disabled:visible').count()).toBe(2);    
+    expect(element(s+'select:disabled:visible').count()).toBe(2);
     expect(element(s+'input[type="text"]:disabled:visible').count()).toBe(1);
-    
-    sleep(0.5);
+
+    sleep(delay);
 
     //form enabled when data loaded
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
@@ -53,11 +53,11 @@ describe('editable-form', function() {
 
     //show form
     element(s+'form > div > button').click();
-    
-    sleep(0.5);
+
+    sleep(delay);
 
     //set incorrect values
-    using(s+'form > div:eq(0)').input('$data').enter('username2'); 
+    using(s+'form > div:eq(0)').input('$data').enter('username2');
     element(s+'form > div > span button[type="submit"]').click();
 
     //error shown
@@ -68,7 +68,7 @@ describe('editable-form', function() {
     expect(element(s+'form > div:eq(0) .editable-error').text()).toMatch('Username should be `awesome`');
 
     //set correct values
-    using(s+'form > div:eq(0)').input('$data').enter('awesome'); 
+    using(s+'form > div:eq(0)').input('$data').enter('awesome');
     using(s+'form > div:eq(1)').select('$data').option('3'); //status4
     using(s+'form > div:eq(2)').select('$data').option('0'); //user
     element(s+'form > div > span button[type="submit"]').click();
@@ -83,7 +83,7 @@ describe('editable-form', function() {
     //no error shwn
     expect(element(s+'form > div:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(0.5);
+    sleep(delay);
 
     //form closed, new values shown
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(1);

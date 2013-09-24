@@ -3,48 +3,13 @@ html(ng-app='app')
   head
     meta(charset='utf-8')
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Angular-xeditable :: Edit in place for AngularJS
 
-
-    //theme: Bootstrap 3, Bootstrap 2, default
-    //link(ng-repeat="c in css", ng-href="{{c}}", rel="stylesheet", media="screen")
-    link(href="libs/bootstrap/3.0.0/css/bootstrap.css", rel="stylesheet", media="screen")
-
-    //xeditable css
-    link(href="dist/css/xeditable.css", rel="stylesheet", media="screen")
-
-    //docs css
-    link(href="docs/css/docs.css", rel="stylesheet", media="screen")
-
-    //angular
-    script(src='libs/angular/1.0.8/angular.js')
-    script(src='libs/angular/1.0.8/angular-mocks.js')
-
-    //jquery (needed for bootstrap)
-    script(src="libs/jquery/jquery-1.10.2.min.js")
-    //bootstrap
-    script(src="libs/bootstrap/3.0.0/js/bootstrap.js")
-
-    //script(src='libs/angular/1.1.5/angular.js')
-
-    //script(src='libs/angular/1.2.0rc/angular.js')
-    //script(src='libs/angular/1.2.0rc/angular-mocks.js')
-
-    //google-code-prettify
-    script(src='libs/google-code-prettify/run_prettify.js')
-
-    //app
-    script(src='docs/js/app.js')
-
-    //xeditable
-    //script(src='dist/js/xeditable.js')
-    script(src='dist/js/xeditable.min.js')
-
-    script.
-      function isProd() {
-        //return true;
-        return window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') >= 0;
-      }
+    if env == 'prod'
+      title Angular-xeditable :: Edit in place for AngularJS
+      include scripts-prod.jade
+    else
+      title Dev
+      include scripts-dev.jade
 
   body(data-spy="scroll", data-target=".sidebar")
     include navbar.jade
@@ -67,12 +32,15 @@ html(ng-app='app')
     - g.items.push({id: 'select-nobuttons', text: 'Select no buttons'})
     - g.items.push({id: 'textarea', text: 'Textarea'})
     - g.items.push({id: 'checkbox', text: 'Checkbox'})
+
     - g = groups[3]
     - g.items.push({id: 'validate-local', text: 'Validate local'})
     - g.items.push({id: 'validate-remote', text: 'Validate remote'})
+
     - g = groups[4]
     - g.items.push({id: 'onbeforesave', text: 'Onbeforesave'})
     - g.items.push({id: 'onaftersave', text: 'Onaftersave'})
+
     - g = groups[5]
     - g.items.push({id: 'editable-form', text: 'Editable form'})
     - g.items.push({id: 'editable-row', text: 'Editable row'})
@@ -110,23 +78,11 @@ html(ng-app='app')
               h3 controller.js
               pre.prettyprint= ctrl
 
-
           section#overview
-            h1 Overview
-            :markdown
-              **Angular-xeditable** allows you to create editable elements in [AngularJS](http://angularjs.org) project.
-              It is based on ideas of [x-editable](http://vitalets.github.io/x-editable) but was written from scratch
-              to use power of angular and support complex forms / editable grids.
-
-            h4 Dependencies
-            :markdown
-              It does not depend on any libraries except angular itself.
-              For themes you may need to include [Twitter Bootstrap](http://getbootstrap.com) CSS.
-
+            include overview.jade
 
           section#getstarted
             include getstarted.jade
-
 
           - groups.shift()
           - groups.shift()
@@ -139,6 +95,7 @@ html(ng-app='app')
       hr
       p &copy; Vitaliy Potapov 2013. Released under the MIT license
 
-    include metrika.html
+    if env == 'prod'
+      include metrika.html
 
 

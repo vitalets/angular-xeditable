@@ -1,7 +1,7 @@
 describe('editable-table', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html?test');
+    browser().navigateTo(mainUrl);
   });
 
   it('should show form by `edit` button and save new values', function() {
@@ -49,14 +49,14 @@ describe('editable-table', function() {
     //show form
     element(s+'> div > button').click();
     checkWaiting();
-    sleep(0.5);
+    sleep(delay);
     checkShown();
 
     //submit incorrect values
     element(s+'> div > span > button[type="submit"]').click();
 
     checkShown();
-    
+
     //error shown
     expect(element(s+'table tr:eq(1) td:eq(0) .editable-error:visible').count()).toBe(1);
     expect(element(s+'table tr:eq(2) td:eq(0) .editable-error:visible').count()).toBe(1);
@@ -64,9 +64,9 @@ describe('editable-table', function() {
     expect(element(s+'table tr:eq(1) td:eq(0) .editable-error').text()).toMatch('Username should be `awesome`');
 
     //set correct values
-    using(s+'table tr:eq(1) td:eq(0)').input('$data').enter('awesome'); 
-    using(s+'table tr:eq(2) td:eq(0)').input('$data').enter('awesome'); 
-    using(s+'table tr:eq(3) td:eq(0)').input('$data').enter('awesome'); 
+    using(s+'table tr:eq(1) td:eq(0)').input('$data').enter('awesome');
+    using(s+'table tr:eq(2) td:eq(0)').input('$data').enter('awesome');
+    using(s+'table tr:eq(3) td:eq(0)').input('$data').enter('awesome');
     using(s+'table tr:eq(1) td:eq(1)').select('$data').option('3'); //status4
     using(s+'table tr:eq(1) td:eq(2)').select('$data').option('0'); //user
 
@@ -76,7 +76,7 @@ describe('editable-table', function() {
     //error hidden
     expect(element(s+'table tr td:eq(0) .editable-error:visible').count()).toBe(0);
 
-    sleep(0.5);
+    sleep(delay);
 
     checkClosed();
 

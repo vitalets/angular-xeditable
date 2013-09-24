@@ -1,7 +1,7 @@
 describe('select-nobuttons', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html?test');
+    browser().navigateTo(mainUrl);
   });
 
   it('should show form without buttons and submit automatically', function() {

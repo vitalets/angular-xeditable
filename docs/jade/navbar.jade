@@ -1,7 +1,7 @@
 nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
   .container
     .navbar-header
-      a.navbar-brand(href="/") Angular-xeditable
+      a.navbar-brand(href="/") Angular-xeditable #{env == 'prod' ? '' : '(dev)'}
 
     .collapse.navbar-collapse.navbar-ex1-collapse
       ul.nav.navbar-nav
@@ -13,5 +13,6 @@ nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
       form.navbar-form.navbar-right
         a.btn.btn-primary(href="zip/angular-xeditable-"+version+'.zip') Download #{version} ~ #{size}k
 
-      div(style="padding-top: 13px")
-        include social.html
+      if env == 'prod'
+        div(style="padding-top: 13px")
+          include social.html

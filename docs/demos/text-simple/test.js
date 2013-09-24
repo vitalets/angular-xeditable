@@ -1,7 +1,7 @@
 describe('text-simple', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../index.html?test');
+    browser().navigateTo(mainUrl);
   });
 
   it('should show editor and submit new value', function() {
