@@ -25,6 +25,16 @@ angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFac
           this.inputEl.wrap('<label></label>');
           this.inputEl.after(angular.element('<span></span>').text(' '+this.attrs.eTitle));
         }
+      },
+      autosubmit: function() {
+        var self = this;
+        self.inputEl.bind('change', function() {
+          setTimeout(function() {
+            self.scope.$apply(function() {
+              self.scope.$form.$submit();
+            });
+          }, 500);
+        });
       }
     });
 }]);
@@ -188,8 +198,6 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
       self.editorEl.append(self.controlsEl);
 
-      //attach attributes:
-
       //transfer `e-*` attributes
       for(var k in $attrs.$attr) {
         if(k === 'eForm' || k === 'eNgSubmit') {
@@ -205,6 +213,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       }
 
       self.inputEl.addClass('editable-input');
+
       self.inputEl.attr('ng-model', '$data');
 
       if(self.single) {
@@ -215,8 +224,6 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       if(angular.isFunction(theme.postrender)) {
         theme.postrender.call(self);
       }
-
-
     };
 
     //show
@@ -257,13 +264,14 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
     Called after show to attach listeners
     */
     self.addListeners = function() {
-      //bind keyup: hide on `escape` press
+      //bind keyup
       self.inputEl.bind('keyup', function(e) {
           if(!self.single) {
             return;
           }
 
           switch(e.keyCode) {
+            // hide on `escape` press
             case 27:
               self.scope.$form.$hide();
             break;
