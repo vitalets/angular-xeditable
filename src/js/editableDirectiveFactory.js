@@ -72,7 +72,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         angular.extend(eCtrl, overwrites);
 
         //init editable ctrl
-        eCtrl.init(hasForm);
+        eCtrl.init(!hasForm);
 
         //publich editable controller as `$editable` to be referenced in html
         scope.$editable = eCtrl;

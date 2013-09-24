@@ -2,8 +2,8 @@
 EditableController: attached to editable element
 TODO: this file should be refactored to work more clear without closures!
 */
-angular.module('xeditable').factory('editableController', ['$q', function($q) { 
- 
+angular.module('xeditable').factory('editableController', ['$q', function($q) {
+
   //EditableController function
   EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
   function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
@@ -19,19 +19,18 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
     self.attrs = $attrs;
     self.inputEl = null;
     self.editorEl = null;
-    // todo: rename to self.single
-    self.hasForm = false;
+    self.single = true;
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
- 
+
     //to be overwritten
     self.inputTpl = '';
     self.directiveName = '';
 
     //init
-    self.init = function(hasForm) {
-      self.hasForm = hasForm;
+    self.init = function(single) {
+      self.single = single;
 
       self.name = $attrs.eName || $attrs[self.directiveName];
       /*
@@ -45,18 +44,11 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         throw 'You should provide value for `'+self.directiveName+'` in editable element!';
       }
 
-      //build input
-      /*
-      if(hasForm) {
-        self.valueString = '$form.$data["' + ($attrs.eName || $attrs[self.directiveName]) + '"]';
-      } else {
-        self.valueString = '$form.$data' + ($attrs.eName ? '.'+$attrs.eName : '');
+      // hide buttons for non-single
+      if (!self.single) {
+        self.attrs.buttons = 'no';
       }
-      */
-      //self.valueString = '$form.$data' + ($attrs.eName ? '.'+$attrs.eName : '');
 
-      // self.inputEl = angular.element(self.inputTpl);
- 
       self.render();
 
       //if name defined --> watch changes and update $data in form
@@ -99,7 +91,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       self.controlsEl.append(self.inputEl);
 
       //build buttons
-      if(!self.hasForm && $attrs.buttons !== 'no') {
+      if(self.attrs.buttons !== 'no') {
         self.buttonsEl = angular.element(theme.buttonsTpl);
         self.submitEl = angular.element(theme.submitTpl);
         self.cancelEl = angular.element(theme.cancelTpl);
@@ -112,7 +104,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       self.controlsEl.append(self.errorEl);
 
       //build editor
-      self.editorEl = angular.element(self.hasForm ? theme.noformTpl : theme.formTpl);
+      self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
       self.editorEl.append(self.controlsEl);
 
       //attach attributes:
@@ -129,12 +121,12 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
           var attrValue = ($attrs[k] === '') ? v : $attrs[k];
           self.inputEl.attr(v, attrValue);
         }
-      } 
+      }
 
       self.inputEl.addClass('editable-input');
       self.inputEl.attr('ng-model', '$data');
 
-      if(!self.hasForm) {
+      if(self.single) {
         self.editorEl.attr('editable-form', '$form');
       }
 
@@ -143,7 +135,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         theme.postrender.call(self);
       }
 
-      
+
     };
 
     //show
@@ -160,24 +152,8 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       //hide element
       $element.addClass('editable-hide');
 
-      //bind keyup: escape to hide, enter to autosubmit
-      self.inputEl.bind('keyup', function(e) {
-          //console.log('keyup', e);
-          if(self.hasForm) {
-            return;
-          }
-
-          switch(e.keyCode) {
-            case 27:
-              self.scope.$form.$hide();
-            break;
-          }
-      });
-
-      //autosubmit when no buttons shown
-      if (!self.hasForm && $attrs.buttons === 'no' && self.autosubmit) {
-        self.autosubmit();
-      }
+      //listen to keyboard and other events
+      self.addListeners();
 
       //onshow
       return self.onshow();
@@ -188,9 +164,34 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       //console.log('editable hide', self.name);
       self.editorEl.remove();
       $element.removeClass('editable-hide');
-      // todo: to think is it needed or not
+      // todo: to think is it really needed or not
+      /*
       if($element[0].tagName === 'A') {
-        //$element[0].focus();
+        $element[0].focus();
+      }
+      */
+    };
+
+    /*
+    Called after show to attach listeners
+    */
+    self.addListeners = function() {
+      //bind keyup: hide on `escape` press
+      self.inputEl.bind('keyup', function(e) {
+          if(!self.single) {
+            return;
+          }
+
+          switch(e.keyCode) {
+            case 27:
+              self.scope.$form.$hide();
+            break;
+          }
+      });
+
+      //autosubmit when no buttons
+      if (self.single && self.attrs.buttons === 'no') {
+        self.autosubmit();
       }
     };
 
@@ -258,6 +259,11 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
     self.save = function() {
       valueGetter.assign($scope.$parent, angular.copy(self.scope.$data));
     };
+
+    /*
+    Called when `buttons = "no"` to submit automatically
+    */
+    self.autosubmit = angular.noop;
 
     self.onshow = angular.noop;
     self.onbeforesave = angular.noop;
