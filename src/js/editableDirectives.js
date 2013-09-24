@@ -12,7 +12,17 @@ angular.module('xeditable').directive('editableSelect', ['editableDirectiveFacto
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableSelect',
-      inputTpl: '<select></select>'
+      inputTpl: '<select></select>',
+      autosubmit: function() {
+        var self = this;
+        self.inputEl.bind('change', function() {
+          //console.log('QQ');
+          self.scope.$apply(function() {
+            //self.editorEl[0].submit();
+            self.scope.$form.$submit();
+          });
+        });
+      }
     });
 }]);
 
@@ -23,7 +33,10 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
     return editableDirectiveFactory({
       directiveName: 'editableTextarea',
       inputTpl: '<textarea ng-keydown="$editable.keydown($event)"></textarea>',
+      // todo: check ng-keydown in angular 1.0.8 - seems to be broken (mac)
       keydown: function(e) {
+        console.log('keydown', e);
+        // todo: check ctrl on mac keyboard!!
         if (e.ctrlKey && (e.keyCode === 13)) {
           this.scope.$form.$submit();
         }

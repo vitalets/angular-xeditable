@@ -1,32 +1,32 @@
 /*
-editableFactory: 
+editableFactory:
 - attaches editableController to element
 - used to generate editable directives
 
-Depends on: editableController, editableFormFactory 
+Depends on: editableController, editableFormFactory
 */
 angular.module('xeditable').factory('editableDirectiveFactory',
-['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController', 
+['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController',
 function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController) {
 
   //directive object
   return function(overwrites) {
-    return { 
+    return {
       restrict: 'A',
       scope: true,
       require: [overwrites.directiveName, '?^form'],
       controller: editableController,
       link: function(scope, elem, attrs, ctrl) {
         //console.log('link directive', attrs[overwrites.directiveName]);
-        
+
         //editable controller
         var eCtrl = ctrl[0];
 
-        //form controller        
+        //form controller
         var eFormCtrl;
         var hasForm = false;
 
-        //if not inside form, but we have `e-form`: 
+        //if not inside form, but we have `e-form`:
         //check if form exists somewhere in scope. If exists - bind, otherwise create.
         if(ctrl[1]) {
           eFormCtrl = ctrl[1];
@@ -41,7 +41,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
               if($document[0].forms[i].name === attrs.eForm) {
                 //form is below and not processed yet
                 eFormCtrl = null;
-                hasForm = true; 
+                hasForm = true;
                 break;
               }
             }
@@ -87,13 +87,13 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
             }
             scope.$form.$addEditable(eCtrl);
           } else {
-            // future form (below): add editable controller to buffer
+            // future form (below): add editable controller to buffer and add to form later
             $rootScope.$$editableBuffer = $rootScope.$$editableBuffer || {};
             $rootScope.$$editableBuffer[attrs.eForm] = $rootScope.$$editableBuffer[attrs.eForm] || [];
-            $rootScope.$$editableBuffer[attrs.eForm].push(eCtrl);            
+            $rootScope.$$editableBuffer[attrs.eForm].push(eCtrl);
             scope.$form = null; //will be re-assigned later
           }
-        // !hasForm  
+        // !hasForm
         } else {
 
           //create editableform controller
@@ -111,17 +111,17 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
           //if `e-form` provided, publish local $form in scope
           if(attrs.eForm) {
             scope.$parent[attrs.eForm] = scope.$form;
-          } 
+          }
 
           //bind click - if no external form defined
           if(!attrs.eForm) {
             elem.addClass('editable-click');
-            elem.bind('click', function(e) { 
+            elem.bind('click', function(e) {
               e.preventDefault();
               scope.$apply(function(){
                 scope.$form.$show();
               });
-            }); 
+            });
           }
         }
 

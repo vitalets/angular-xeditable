@@ -3,10 +3,10 @@ EditableForm directive:
 - wrap form into editable form: add `onshow` attribute, etc
 - read buffered editables
 */
-angular.module('xeditable').directive('editableForm', 
+angular.module('xeditable').directive('editableForm',
   ['$rootScope', '$parse', 'editableFormController',
   function($rootScope, $parse, editableFormController) {
-    return { 
+    return {
       restrict: 'A',
       require: ['form'],
       //require: ['form', 'editableForm'],
@@ -42,7 +42,7 @@ angular.module('xeditable').directive('editableForm',
                 eForm.$addEditable(editable);
               });
               delete buf[name];
-            }          
+            }
           },
           post: function(scope, elem, attrs, ctrl) {
             //console.log('post form', attrs.name);
@@ -61,17 +61,18 @@ angular.module('xeditable').directive('editableForm',
 
             //onbeforesave, onaftersave
             if(!attrs.ngSubmit && !attrs.submit) {
-              if(attrs.onbeforesave) { 
+              if(attrs.onbeforesave) {
                 eForm.$onbeforesave = function() {
                   return $parse(attrs.onbeforesave)(scope, {$data: eForm.$data});
                 };
               }
-              if(attrs.onaftersave) { 
+
+              if(attrs.onaftersave) {
                 eForm.$onaftersave = function() {
                   return $parse(attrs.onaftersave)(scope, {$data: eForm.$data});
                 };
               }
-              //elem.on('submit', function(event) {
+
               elem.bind('submit', function(event) {
                 event.preventDefault();
                 scope.$apply(function() {

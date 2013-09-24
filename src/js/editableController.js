@@ -19,6 +19,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
     self.attrs = $attrs;
     self.inputEl = null;
     self.editorEl = null;
+    // todo: rename to self.single
     self.hasForm = false;
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
@@ -98,12 +99,12 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       self.controlsEl.append(self.inputEl);
 
       //build buttons
-      if(!self.hasForm) {
+      if(!self.hasForm && $attrs.buttons !== 'no') {
         self.buttonsEl = angular.element(theme.buttonsTpl);
         self.submitEl = angular.element(theme.submitTpl);
         self.cancelEl = angular.element(theme.cancelTpl);
         self.buttonsEl.append(self.submitEl).append(self.cancelEl);
-        //self.controlsEl.append(self.buttonsEl);
+        self.controlsEl.append(self.buttonsEl);
       }
 
       //build error
@@ -142,10 +143,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         theme.postrender.call(self);
       }
 
-      //bind autosubmit event
-      self.inputEl.bind('keyup', function(e) {
-        console.log(e);
-      });
+      
     };
 
     //show
@@ -162,6 +160,25 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       //hide element
       $element.addClass('editable-hide');
 
+      //bind keyup: escape to hide, enter to autosubmit
+      self.inputEl.bind('keyup', function(e) {
+          //console.log('keyup', e);
+          if(self.hasForm) {
+            return;
+          }
+
+          switch(e.keyCode) {
+            case 27:
+              self.scope.$form.$hide();
+            break;
+          }
+      });
+
+      //autosubmit when no buttons shown
+      if (!self.hasForm && $attrs.buttons === 'no' && self.autosubmit) {
+        self.autosubmit();
+      }
+
       //onshow
       return self.onshow();
     };
@@ -171,6 +188,10 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       //console.log('editable hide', self.name);
       self.editorEl.remove();
       $element.removeClass('editable-hide');
+      // todo: to think is it needed or not
+      if($element[0].tagName === 'A') {
+        //$element[0].focus();
+      }
     };
 
     //setWaiting
