@@ -13,7 +13,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       formTpl:      '<form class="editable-wrap"></form>',
       noformTpl:    '<span class="editable-wrap"></span>',
       controlsTpl:  '<span class="editable-controls"></span>',
-      inputTpl:     '', 
+      inputTpl:     '',
       errorTpl:     '<div class="editable-error" ng-show="$error">{{$error}}</div>',
       buttonsTpl:   '<span class="editable-buttons"></span>',
       submitTpl:    '<button type="submit">save</button>',
@@ -25,7 +25,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls controls control-group" ng-class="{\'error\': $error}"></div>',
-      inputTpl:    '', 
+      inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error">{{$error}}</div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span class="icon-ok icon-white"></span></button>',
@@ -40,7 +40,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls form-group" ng-class="{\'has-error\': $error}"></div>',
-      inputTpl:    '', 
+      inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error">{{$error}}</div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span></button>',
@@ -48,10 +48,10 @@ angular.module('xeditable').factory('editableThemes', function() {
                      '<span class="glyphicon glyphicon-remove"></span>'+
                    '</button>',
 
-      //bs3 specific props to change buttons class: btn-sm, btn-lg              
-      buttonsClass: '',                 
-      //bs3 specific props to change standard inputs class: input-sm, input-lg
-      inputClass: '',                 
+      //bs3 specific prop to change buttons class: btn-sm, btn-lg
+      buttonsClass: '',
+      //bs3 specific prop to change standard inputs class: input-sm, input-lg
+      inputClass: '',
       postrender: function() {
         //apply `form-control` class to std inputs
         switch(this.directiveName) {
@@ -62,7 +62,7 @@ angular.module('xeditable').factory('editableThemes', function() {
             if(this.theme.inputClass) {
               // don`t apply `input-sm` and `input-lg` to select multiple
               // should be fixed in bs itself!
-              if(this.inputEl.attr('multiple') && 
+              if(this.inputEl.attr('multiple') &&
                 (this.theme.inputClass === 'input-sm' || this.theme.inputClass === 'input-lg')) {
                   break;
               }
@@ -75,7 +75,7 @@ angular.module('xeditable').factory('editableThemes', function() {
         if(this.buttonsEl && this.theme.buttonsClass) {
           this.buttonsEl.find('button').addClass(this.theme.buttonsClass);
         }
-      } 
+      }
     }
   };
 
