@@ -12,7 +12,6 @@ describe('text-customize', function() {
 
     expect(element(s+'form input[type="text"]').attr('required')).toBe("required");
     expect(element(s+'form input[type="text"]').attr('placeholder')).toBe("Enter name");
-    expect(element(s+'form input[type="text"]').outerWidth()).toBe(150);
 
     //reopen
     element(s+'form button[type="button"]').click();
@@ -20,7 +19,6 @@ describe('text-customize', function() {
 
     expect(element(s+'form input[type="text"]').attr('required')).toBe("required");
     expect(element(s+'form input[type="text"]').attr('placeholder')).toBe("Enter name");
-    expect(element(s+'form input[type="text"]').outerWidth()).toBe(150);
   });
 
 });
