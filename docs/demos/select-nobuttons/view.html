@@ -1,0 +1,5 @@
+<div ng-controller="SelectNobuttonsCtrl">
+  <a href="#" editable-select="user.status" buttons="no" e-ng-options="s.value as s.text for s in statuses">
+    {{ showStatus() }}
+  </a>
+</div>
