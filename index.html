@@ -121,18 +121,23 @@
                   <li><a href="#editable-table">Editable table</a></li>
                 </ul>
               </li>
+              <li><a href="#bootstrap3">Themes</a>
+                <ul class="nav">
+                  <li><a href="#bootstrap3">Bootstrap 3</a></li>
+                  <li><a href="#bootstrap2">Bootstrap 2</a></li>
+                  <li><a href="#default">Default</a></li>
+                </ul>
+              </li>
             </ul>
           </div>
         </div>
         <div class="col-md-9">
           <section id="overview">
-            <h1>Overview</h1><p><strong>Angular-xeditable</strong> is tiny javascript library allowing you to create edit-in-place elements
-in <a href="http://angularjs.org">AngularJS</a> projects.
-It is based on ideas of <a href="http://vitalets.github.io/x-editable">x-editable</a> but was written from scratch
+            <h1>Overview</h1><p><strong>Angular-xeditable</strong> is javascript library that allows you to create edit-in-place elements
+in <a href="http://angularjs.org">AngularJS</a> projects.<br>It is based on ideas of <a href="http://vitalets.github.io/x-editable">x-editable</a> but was written from scratch
 to use power of angular and support complex forms / editable grids.</p>
 
-            <h4>Dependencies</h4><p>It does not depend on any libraries except AngularJS itself.
-For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.</p>
+            <h4>Dependencies</h4><p>It does not depend on any libraries except AngularJS itself.<br>For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.</p>
 
           </section>
           <section id="getstarted">
@@ -160,7 +165,6 @@ For themes you may need to include <a href="http://getbootstrap.com">Twitter Boo
               <li>You're ready! Follow the guide below</li>
             </ol>
           </section>
-          <!--section(id=g.id)-->
                     <section id="text-simple">
                       <h1>Text</h1>
                       <h3>demo</h3>
@@ -449,7 +453,6 @@ pointing to model in scope. Set <code>e-title</code> attribute to define text sh
   };  
 });</pre>
                     </section>
-          <!--section(id=g.id)-->
                     <section id="validate-local">
                       <h1>Validate local</h1>
                       <h3>demo</h3>
@@ -521,7 +524,6 @@ If promise resolves to <strong>string</strong> validation failed.</p>
   };
 });</pre>
                     </section>
-          <!--section(id=g.id)-->
                     <section id="onbeforesave">
                       <h1>Onbeforesave</h1>
                       <h3>demo</h3>
@@ -608,7 +610,6 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
   };
 });</pre>
                     </section>
-          <!--section(id=g.id)-->
                     <section id="editable-form">
                       <h1>Editable form</h1>
                       <h3>demo</h3>
@@ -1305,6 +1306,43 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
   };
 });</pre>
                     </section>
+          <section id="bootstrap3"></section>
+          <h1>Themes</h1>
+          <h2>Bootstrap 3</h2><p>Include <a href="http://getbootstrap.com">Bootstrap 3</a> CSS</p>
+
+          <pre class="prettyprint">&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre><p>Set theme in <code>app.run</code>:</p>
+
+          <pre class="prettyprint">app.run(function(editableOptions) {
+  editableOptions.theme = 'bs3';
+});
+</pre><p>To have smaller or bigger controls modify <code>inputClass</code> and <code>buttonsClass</code> properties of theme: </p>
+
+          <pre class="prettyprint">app.run(function(editableOptions, editableThemes) {
+  editableThemes.bs3.inputClass = 'input-sm';
+  editableThemes.bs3.buttonsClass = 'btn-sm';
+  editableOptions.theme = 'bs3';
+});
+</pre>
+          <section id="bootstrap2"></section>
+          <h2>Bootstrap 2</h2><p>Include <a href="http://getbootstrap.com/2.3.2">Bootstrap 2</a> CSS</p>
+
+          <pre class="prettyprint">&lt;link href=&quot;//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre><p>Set theme in <code>app.run</code>:</p>
+
+          <pre class="prettyprint">app.run(function(editableOptions) {
+  editableOptions.theme = 'bs2';
+});
+</pre>
+          <section id="default"></section>
+          <h2>Default</h2><p>No includes required!<br>You can customize theme by overwriting it&#39;s properties:</p>
+
+          <pre class="prettyprint">app.run(function(editableOptions, editableThemes) {
+  editableThemes['default'].submitTpl = '&lt;button type="submit"&gt;ok&lt;/button&gt;';
+  editableOptions.theme = 'default';
+});
+</pre><p>Available properties of each theme you can see in source
+<a href="https://github.com/vitalets/angular-xeditable/tree/master/src/js/themes.js">themes.js</a></p>
+
+          <div ng-controller="Test" class="well"><a href="#" editable-bsdate="dt" e-datepicker-popup="dd-MMMM-yyyy">{{dt | date}}</a></div>
         </div>
       </div>
     </div>
