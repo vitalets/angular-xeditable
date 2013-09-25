@@ -1,4 +1,4 @@
-var app = angular.module("app", ["xeditable", "ngMockE2E"]);
+var app = angular.module("app", ["xeditable", "ngMockE2E", 'ui.bootstrap']);
 
 //add delay to $httpBackend
 app.config(function($provide) {
@@ -22,6 +22,10 @@ app.config(function($provide) {
   });
 });
 
+app.controller('Test', function($scope, $filter, $http) {
+  $scope.dt = new Date();
+  $scope.a = 123;
+});
 /*
 app.config(function($locationProvider) {
   $locationProvider.html5Mode(true);

@@ -97,6 +97,9 @@ html(ng-app='app')
 
           include themes.jade
 
+          div.well(ng-controller="Test")
+            a(href="#", editable-bsdate="dt", e-datepicker-popup="dd-MMMM-yyyy") {{dt | date}}
+
 
     footer
       hr
