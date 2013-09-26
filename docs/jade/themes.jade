@@ -16,7 +16,7 @@ pre.prettyprint.
   });
 
 :markdown
-  To have smaller or bigger controls modify `inputClass` and `buttonsClass` properties of theme: 
+  To have smaller or bigger controls modify `inputClass` and `buttonsClass` properties of theme:
 
 pre.prettyprint.
   app.run(function(editableOptions, editableThemes) {
@@ -44,12 +44,14 @@ pre.prettyprint.
 section#default
 h2 Default
 :markdown
-  No includes required!  
+  No includes required!
   You can customize theme by overwriting it's properties:
 
 pre.prettyprint.
   app.run(function(editableOptions, editableThemes) {
+    // change submit button tpl
     editableThemes['default'].submitTpl = '&lt;button type="submit"&gt;ok&lt;/button&gt;';
+    // set `default` theme
     editableOptions.theme = 'default';
   });
 
