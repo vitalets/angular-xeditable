@@ -93,9 +93,18 @@ module.exports = function(grunt) {
   });
 
   //jade
+  var marked_ = require('marked');
+  var marked = function(text) {
+    var tok = marked_.lexer(text);
+    text = marked_.parser(tok);
+    // workaround to replace marked `<pre><code>` with '<pre class="prettyprint">'
+    text = text.replace(/<pre><code>(.*)<\/code><\/pre>/ig, '<pre class="prettyprint">$1</pre>');
+    return text;
+  };
+
   var jadeData = {
     fs: require('fs'),
-    md: require('marked'),
+    md: marked,
     version: '<%= pkg.version %>',
     size: Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024)
   };
