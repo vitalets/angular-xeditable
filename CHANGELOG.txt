@@ -2,7 +2,7 @@ Angular-xeditable changelog
 =============================
 
 
-Version 0.1.4 wip
+Version 0.1.4 Sep 26, 2013
 ----------------------------
 [enh #10] attach `editable-empty` class if value is empty (vitalets)
 [enh #11] add `buttons="no"` attribute to hide buttons (vitalets)
