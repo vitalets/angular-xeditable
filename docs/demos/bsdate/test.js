@@ -7,11 +7,11 @@ describe('bsdate', function() {
   it('should show editor and submit new value', function() {
     var s = '[ng-controller="BsdateCtrl"] ';
 
-    expect(element(s+'a').css('display')).not().toBe('none');
-    expect(element(s+'a').text()).toMatch('15/05/1984');
-    element(s+'a').click();
+    expect(element(s+'a[editable-bsdate]').css('display')).not().toBe('none');
+    expect(element(s+'a[editable-bsdate]').text()).toMatch('15/05/1984');
+    element(s+'a[editable-bsdate]').click();
 
-    expect(element(s+'a').css('display')).toBe('none');
+    expect(element(s+'a[editable-bsdate]').css('display')).toBe('none');
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
     expect(element(s+'form input[type="text"]:visible').count()).toBe(1);
     expect(element(s+'form input[type="text"]').val()).toBe('15-May-1984');
@@ -28,8 +28,8 @@ describe('bsdate', function() {
     //submit
     element(s+'form button[type="submit"]').click();
 
-    expect(element(s+'a').css('display')).not().toBe('none');
-    expect(element(s+'a').text()).toMatch('29/04/1984');
+    expect(element(s+'a[editable-bsdate]').css('display')).not().toBe('none');
+    expect(element(s+'a[editable-bsdate]').text()).toMatch('29/04/1984');
     expect(element(s+'form').count()).toBe(0);
   });
 });
