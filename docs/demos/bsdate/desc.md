@@ -1,0 +1,11 @@
+Date control is implemented via [Angular-ui bootstrap datepicker](http://angular-ui.github.io/bootstrap/#/datepicker).  
+Currently it has only Bootstrap 2 version, Bootstrap 3 version is [in progress](https://github.com/angular-ui/bootstrap/issues?milestone=6).  
+You should include additional js:
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js"></script>
+
+Add module dependencies to your app:
+
+	var app = angular.module("app", ["xeditable", "ui.bootstrap"]);
+
+And set `editable-bsdate` attribute to editable element.

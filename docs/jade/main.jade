@@ -33,6 +33,7 @@ html(ng-app='app')
     - g.items.push({id: 'select-nobuttons', text: 'Select no buttons'})
     - g.items.push({id: 'textarea', text: 'Textarea'})
     - g.items.push({id: 'checkbox', text: 'Checkbox'})
+    - g.items.push({id: 'bsdate', text: 'Date'})
 
     - g = groups[3]
     - g.items.push({id: 'validate-local', text: 'Validate local'})
@@ -96,10 +97,6 @@ html(ng-app='app')
               +demo(item.id, item.text)
 
           include themes.jade
-
-          div.well(ng-controller="Test")
-            a(href="#", editable-bsdate="dt", e-datepicker-popup="dd-MMMM-yyyy") {{dt | date}}
-
 
     footer
       hr
