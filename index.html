@@ -594,7 +594,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checkbox"]=v; }); });<
   <a href="#" editable-bsdate="user.dob" e-datepicker-popup="dd-MMMM-yyyy">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
-<a href="http://jsfiddle.net/NfPcH/19" target="_blank" class="btn btn-info pull-right">View Bootstrap 2 version in jsFiddle</a>
+<a href="http://jsfiddle.net/NfPcH/20" target="_blank" class="btn btn-info pull-right">View Bootstrap 2 version in jsFiddle</a>
 </div></div>
                       <pre>{{ debug["bsdate"] | json }}</pre>
                       <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br>Currently it has only Bootstrap 2 version, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
