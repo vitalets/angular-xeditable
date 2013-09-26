@@ -17,6 +17,8 @@
     <script src="libs/jquery/jquery-1.10.2.min.js"></script>
     <!--bootstrap-->
     <script src="libs/bootstrap/3.0.0/js/bootstrap.js"></script>
+    <!--angular-ui-bootstrap-->
+    <script src="libs/angular-ui/bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
     <!--google-code-prettify-->
     <script src="libs/google-code-prettify/run_prettify.js"></script>
     <!--app-->
@@ -33,7 +35,7 @@
             <li class="active"><a href="">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.4.zip" class="btn btn-primary">Download 0.1.4 ~ 11k</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.4.zip" class="btn btn-primary">Download 0.1.4 ~ 12k</a></form>
           <div style="padding-top: 13px"><!-- twitter -->
 <div class="pull-right" style="width: 90px; margin-right: 20%">
 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://vitalets.github.io/angular-xeditable" data-via="xeditable">Tweet</a>
@@ -99,6 +101,7 @@
                   <li><a href="#select-nobuttons">Select no buttons</a></li>
                   <li><a href="#textarea">Textarea</a></li>
                   <li><a href="#checkbox">Checkbox</a></li>
+                  <li><a href="#bsdate">Date</a></li>
                 </ul>
               </li>
               <li><a href="#validate-local">Validation</a>
@@ -160,25 +163,35 @@ to use power of angular and support complex forms / editable grids.</p>
               <li>Set theme in app.run:
                 <pre class="prettyprint">app.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-});</pre>
+});
+
+</pre>
               </li>
               <li>You're ready! Follow the guide below</li>
             </ol>
           </section>
                     <section id="text-simple">
                       <h1>Text</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="TextSimpleCtrl">
   <a href="#" editable-text="user.name">{{ user.name || 'empty' }}</a>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["text-simple"] | json }}</pre>
                       <p><p>To make element editable via textbox just add <code>editable-text</code> attribute 
 pointing to model in scope.</p>
 </p>
-                      <script src="docs/demos/text-simple/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('TextSimpleCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+$scope.$watch("user", function(v) { $scope.$parent.debug["text-simple"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextSimpleCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot;&gt;{{ user.name || 'empty' }}&lt;/a&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('TextSimpleCtrl', function($scope) {
   $scope.user = {
@@ -188,23 +201,31 @@ pointing to model in scope.</p>
                     </section>
                     <section id="text-customize">
                       <h1>Customize input</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="TextCustomizeCtrl">
   <a href="#" editable-text="user.name" e-style="color: green" e-required e-placeholder="Enter name">
     {{ (user.name || 'empty') | uppercase }}
   </a>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["text-customize"] | json }}</pre>
                       <p><p>To define attributes for input (e.g. <code>style</code> or <code>placeholder</code>) you can define them
 on the original element with <code>e-*</code> prefix (e.g. <code>e-style</code> or <code>e-placeholder</code>). 
 When input will appear these attributes will be transfered to it.</p>
 </p>
-                      <script src="docs/demos/text-customize/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('TextCustomizeCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+$scope.$watch("user", function(v) { $scope.$parent.debug["text-customize"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextCustomizeCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-style=&quot;color: green&quot; e-required e-placeholder=&quot;Enter name&quot;&gt;
     {{ (user.name || 'empty') | uppercase }}
   &lt;/a&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('TextCustomizeCtrl', function($scope) {
   $scope.user = {
@@ -214,6 +235,8 @@ When input will appear these attributes will be transfered to it.</p>
                     </section>
                     <section id="text-btn">
                       <h1>Trigger manually</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="TextBtnCtrl">
   <span editable-text="user.name" e-form="textBtnForm">
@@ -222,11 +245,17 @@ When input will appear these attributes will be transfered to it.</p>
   <button class="btn btn-default" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">
     edit
   </button>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["text-btn"] | json }}</pre>
                       <p><p>To trigger edit-in-place by external button you should define <code>e-form</code> attribute.
 Value of it is the name of variable to be created in scope that allows you to show / hide editor manually.</p>
 </p>
-                      <script src="docs/demos/text-btn/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('TextBtnCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+$scope.$watch("user", function(v) { $scope.$parent.debug["text-btn"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextBtnCtrl&quot;&gt;
   &lt;span editable-text=&quot;user.name&quot; e-form=&quot;textBtnForm&quot;&gt;
@@ -235,7 +264,7 @@ Value of it is the name of variable to be created in scope that allows you to sh
   &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;textBtnForm.$show()&quot; ng-hide=&quot;textBtnForm.$visible&quot;&gt;
     edit
   &lt;/button&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('TextBtnCtrl', function($scope) {
   $scope.user = {
@@ -245,23 +274,43 @@ Value of it is the name of variable to be created in scope that allows you to sh
                     </section>
                     <section id="select-local">
                       <h1>Select local</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="SelectLocalCtrl">
   <a href="#" editable-select="user.status" e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
   </a>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["select-local"] | json }}</pre>
                       <p><p>To create editable select (dropdown) just set <code>editable-select</code> attribute pointing to model.
 To pass dropdown options you should define <code>e-ng-options</code> attribute
 that works like normal angular <code>ng-options</code> but is transfered to underlying <code>&lt;select&gt;</code> from original element.</p>
 </p>
-                      <script src="docs/demos/select-local/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('SelectLocalCtrl', function($scope, $filter) {
+  $scope.user = {
+    status: 2
+  }; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.showStatus = function() {
+    var selected = $filter('filter')($scope.statuses, {value: $scope.user.status});
+    return ($scope.user.status && selected.length) ? selected[0].text : 'Not set';
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["select-local"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;SelectLocalCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-select=&quot;user.status&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
     {{ showStatus() }}
   &lt;/a&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('SelectLocalCtrl', function($scope, $filter) {
   $scope.user = {
@@ -283,22 +332,46 @@ that works like normal angular <code>ng-options</code> but is transfered to unde
                     </section>
                     <section id="select-remote">
                       <h1>Select remote</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="SelectRemoteCtrl">
   <a href="#" editable-select="user.group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
-    {{ showGroup() }}
+    {{ user.groupName || 'not set' }}
   </a>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["select-remote"] | json }}</pre>
                       <p><p>To load select options from remote url you should define <code>onshow</code> attribute pointing to scope function.
 The result of function should be a $http promise, it allows to disable element while loading.</p>
 </p>
-                      <script src="docs/demos/select-remote/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('SelectRemoteCtrl', function($scope, $filter, $http) {
+  $scope.user = {
+    group: 4,
+    groupName: 'admin' // original value
+  }; 
+
+  $scope.groups = [];
+
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.$watch('user.group', function(newVal, oldVal) {
+    if (newVal !== oldVal) {
+      var selected = $filter('filter')($scope.groups, {id: $scope.user.group});
+      $scope.user.groupName = selected.length ? selected[0].text : null;
+    }
+  });
+$scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;SelectRemoteCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-select=&quot;user.group&quot; onshow=&quot;loadGroups()&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
-    {{ showGroup() }}
+    {{ user.groupName || 'not set' }}
   &lt;/a&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('SelectRemoteCtrl', function($scope, $filter, $http) {
   $scope.user = {
@@ -314,33 +387,56 @@ The result of function should be a $http promise, it allows to disable element w
     });
   };
 
-  $scope.showGroup = function() {
-    if($scope.groups.length) {
+  $scope.$watch('user.group', function(newVal, oldVal) {
+    if (newVal !== oldVal) {
       var selected = $filter('filter')($scope.groups, {id: $scope.user.group});
-      return selected.length ? selected[0].text : 'Not set';
-    } else {
-      return $scope.user.groupName;
+      $scope.user.groupName = selected.length ? selected[0].text : null;
     }
-  };
+  });
 });</pre>
                     </section>
                     <section id="select-multiple">
                       <h1>Select multiple</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="SelectMultipleCtrl">
   <a href="#" editable-select="user.status" e-multiple e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
   </a>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["select-multiple"] | json }}</pre>
                       <p><p>Just define <code>e-multiple</code> attribute that will be transfered to select as <code>multiple</code>.</p>
 </p>
-                      <script src="docs/demos/select-multiple/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('SelectMultipleCtrl', function($scope, $filter) {
+  $scope.user = {
+    status: [2, 4]
+  }; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.showStatus = function() {
+    var selected = [];
+    angular.forEach($scope.statuses, function(s) { 
+      if ($scope.user.status.indexOf(s.value) >= 0) {
+        selected.push(s.text);
+      }
+    });
+    return selected.length ? selected.join(', ') : 'Not set';
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["select-multiple"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;SelectMultipleCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-select=&quot;user.status&quot; e-multiple e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
     {{ showStatus() }}
   &lt;/a&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('SelectMultipleCtrl', function($scope, $filter) {
   $scope.user = {
@@ -367,16 +463,36 @@ The result of function should be a $http promise, it allows to disable element w
                     </section>
                     <section id="select-nobuttons">
                       <h1>Select no buttons</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="SelectNobuttonsCtrl">
   <a href="#" editable-select="user.status" buttons="no" e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
   </a>
 </div></div>
+                      <pre>{{ debug["select-nobuttons"] | json }}</pre>
                       <p><p>To hide <em>Ok</em> and <em>Cancel</em> buttons you may set <code>buttons=&quot;no&quot;</code> attribute.
 New value will be saved automatically after change.</p>
 </p>
-                      <script src="docs/demos/select-nobuttons/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('SelectNobuttonsCtrl', function($scope, $filter) {
+  $scope.user = {
+    status: 2
+  };
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ];
+
+  $scope.showStatus = function() {
+    var selected = $filter('filter')($scope.statuses, {value: $scope.user.status});
+    return ($scope.user.status && selected.length) ? selected[0].text : 'Not set';
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["select-nobuttons"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;SelectNobuttonsCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-select=&quot;user.status&quot; buttons=&quot;no&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
@@ -404,23 +520,31 @@ New value will be saved automatically after change.</p>
                     </section>
                     <section id="textarea">
                       <h1>Textarea</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="TextareaCtrl">
   <a href="#" editable-textarea="user.desc" e-rows="7" e-cols="40">
     <pre>{{ user.desc || 'no description' }}</pre>
   </a>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["textarea"] | json }}</pre>
                       <p><p>To make element editable via textarea just add <code>editable-textarea</code> attribute 
 pointing to model in scope. You can also wrap content into <code>&lt;pre&gt;</code> tags to keep linebreaks.
 Data can be submitted by <em>Ctrl + Enter</em>.</p>
 </p>
-                      <script src="docs/demos/textarea/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('TextareaCtrl', function($scope) {
+  $scope.user = {
+    desc: 'Awesome user \ndescription!'
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["textarea"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextareaCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-textarea=&quot;user.desc&quot; e-rows=&quot;7&quot; e-cols=&quot;40&quot;&gt;
     &lt;pre&gt;{{ user.desc || 'no description' }}&lt;/pre&gt;
   &lt;/a&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('TextareaCtrl', function($scope) {
   $scope.user = {
@@ -430,22 +554,30 @@ Data can be submitted by <em>Ctrl + Enter</em>.</p>
                     </section>
                     <section id="checkbox">
                       <h1>Checkbox</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="CheckboxCtrl">
   <a href="#" editable-checkbox="user.remember" e-title="Remember?">
     {{ user.remember && "Remember me!" || "Don't remember" }}
   </a>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["checkbox"] | json }}</pre>
                       <p><p>To make element editable via checkbox just add <code>editable-checkbox</code> attribute 
 pointing to model in scope. Set <code>e-title</code> attribute to define text shown with checkbox.</p>
 </p>
-                      <script src="docs/demos/checkbox/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('CheckboxCtrl', function($scope) {
+  $scope.user = {
+    remember: true
+  };  
+$scope.$watch("user", function(v) { $scope.$parent.debug["checkbox"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;CheckboxCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-checkbox=&quot;user.remember&quot; e-title=&quot;Remember?&quot;&gt;
     {{ user.remember &amp;&amp; &quot;Remember me!&quot; || &quot;Don't remember&quot; }}
   &lt;/a&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('CheckboxCtrl', function($scope) {
   $scope.user = {
@@ -453,25 +585,77 @@ pointing to model in scope. Set <code>e-title</code> attribute to define text sh
   };  
 });</pre>
                     </section>
+                    <section id="bsdate">
+                      <h1>Date</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="BsdateCtrl">
+  <a href="#" editable-bsdate="user.dob" e-datepicker-popup="dd-MMMM-yyyy">
+    {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
+  </a>
+<a href="http://jsfiddle.net/NfPcH/19" target="_blank" class="btn btn-info pull-right">View Bootstrap 2 version in jsFiddle</a>
+</div></div>
+                      <pre>{{ debug["bsdate"] | json }}</pre>
+                      <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br>Currently it has only Bootstrap 2 version, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
+<pre class="prettyprint">&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<p>Add <code>ui.bootstrap</code> as module dependency:</p>
+<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
+<p>And set <code>editable-bsdate</code> attribute in editable element.
+Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;</code>.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('BsdateCtrl', function($scope) {
+  $scope.user = {
+    dob: new Date(1984, 4, 15)
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;BsdateCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-bsdate=&quot;user.dob&quot; e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;&gt;
+    {{ (user.dob | date:&quot;dd/MM/yyyy&quot;) || 'empty' }}
+  &lt;/a&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('BsdateCtrl', function($scope) {
+  $scope.user = {
+    dob: new Date(1984, 4, 15)
+  };
+});</pre>
+                    </section>
                     <section id="validate-local">
                       <h1>Validate local</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="ValidateLocalCtrl">
   <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
     {{ user.name || 'empty' }}
   </a>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["validate-local"] | json }}</pre>
                       <p><p>Validation is performed via <code>onbeforesave</code> attribute pointing to validation method.
 Value is available as <code>$data</code> parameter. If method returns <strong>string</strong> - validation failed
 and string shown as error message.</p>
 </p>
-                      <script src="docs/demos/validate-local/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('ValidateLocalCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return "Username should be `awesome`";
+    }
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["validate-local"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ValidateLocalCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
     {{ user.name || 'empty' }}
   &lt;/a&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('ValidateLocalCtrl', function($scope) {
   $scope.user = {
@@ -487,23 +671,44 @@ and string shown as error message.</p>
                     </section>
                     <section id="validate-remote">
                       <h1>Validate remote</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="ValidateRemoteCtrl">
   <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
     {{ user.name || 'empty' }}
   </a>
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["validate-remote"] | json }}</pre>
                       <p><p>You can perform remote validation e.g. checking username in db.
 For that define validation method returning <code>$q</code> <strong>promise</strong>. 
 If promise resolves to <strong>string</strong> validation failed.</p>
 </p>
-                      <script src="docs/demos/validate-remote/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('ValidateRemoteCtrl', function($scope, $http, $q) {
+  $scope.user = {
+    name: 'awesome user'
+  };
+
+  $scope.checkName = function(data) {
+    var d = $q.defer();
+    $http.post('/checkName', {value: data}).success(function(res) {
+      res = res || {};
+      if(res.status === 'ok') { // {status: "ok"}
+        d.resolve()
+      } else { // {status: "error", msg: "Username should be `awesome`!"}
+        d.resolve(res.msg)
+      }
+    });
+    return d.promise;
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["validate-remote"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ValidateRemoteCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
     {{ user.name || 'empty' }}
   &lt;/a&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('ValidateRemoteCtrl', function($scope, $http, $q) {
   $scope.user = {
@@ -526,14 +731,15 @@ If promise resolves to <strong>string</strong> validation failed.</p>
                     </section>
                     <section id="onbeforesave">
                       <h1>Onbeforesave</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="OnbeforesaveCtrl">
   <a href="#" editable-text="user.name" onbeforesave="updateUser($data)">
     {{ user.name || 'empty' }}
   </a>
-  <br><br>
-  Debug: $scope.user {{ user | json }}
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["onbeforesave"] | json }}</pre>
                       <p><p>One way to submit data on server is to define <code>onbeforesave</code> attribute pointing to some method of scope.
 Useful when you need to send data on server first and only then update local model (e.g. <code>$scope.user</code>).
 New value can be passed as <code>$data</code> parameter (e.g. <code>&lt;a ... onbeforesave=&quot;updateUser($data)&quot;&gt;</code>).</p>
@@ -548,15 +754,23 @@ Error. Local model will <strong>not</strong> be updated, form will <strong>not</
 Useful for validation and processing errors.</li>
 </ul>
 </p>
-                      <script src="docs/demos/onbeforesave/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('OnbeforesaveCtrl', function($scope, $http) {
+  $scope.user = {
+    id: 1,
+    name: 'awesome user'
+  };
+
+  $scope.updateUser = function(data) {
+    return $http.post('/updateUser', {id: $scope.user.id, name: data});
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["onbeforesave"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;OnbeforesaveCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;updateUser($data)&quot;&gt;
     {{ user.name || 'empty' }}
   &lt;/a&gt;
-  &lt;br&gt;&lt;br&gt;
-  Debug: $scope.user {{ user | json }}
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('OnbeforesaveCtrl', function($scope, $http) {
   $scope.user = {
@@ -571,14 +785,15 @@ Useful for validation and processing errors.</li>
                     </section>
                     <section id="onaftersave">
                       <h1>Onaftersave</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="OnaftersaveCtrl">
   <a href="#" editable-text="user.name" onaftersave="updateUser()">
     {{ user.name || 'empty' }}
   </a>
-  <br><br>
-  Debug: $scope.user {{ user | json }}
-</div>  </div>
+</div></div>
+                      <pre>{{ debug["onaftersave"] | json }}</pre>
                       <p><p>Another way to submit data on server is to define <code>onaftersave</code> attribute pointing to some method of scope.
 Useful when you need to update local model first and only then send it to server.
 There is no input parameters as data already in local model (e.g. <code>&lt;a ... onaftersave=&quot;updateUser()&quot;&gt;</code>).</p>
@@ -589,15 +804,23 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
 </ul>
 <p>Note that you can use both <code>onbeforesave</code> for validation and <code>onaftersave</code> for saving data.</p>
 </p>
-                      <script src="docs/demos/onaftersave/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('OnaftersaveCtrl', function($scope, $http) {
+  $scope.user = {
+    id: 1,
+    name: 'awesome user'
+  };
+
+  $scope.updateUser = function() {
+    return $http.post('/updateUser', $scope.user);
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;OnaftersaveCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onaftersave=&quot;updateUser()&quot;&gt;
     {{ user.name || 'empty' }}
   &lt;/a&gt;
-  &lt;br&gt;&lt;br&gt;
-  Debug: $scope.user {{ user | json }}
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('OnaftersaveCtrl', function($scope, $http) {
   $scope.user = {
@@ -612,6 +835,8 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
                     </section>
                     <section id="editable-form">
                       <h1>Editable form</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="EditableFormCtrl">
   <form editable-form name="editableForm" onaftersave="saveUser()">
@@ -655,7 +880,7 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
     </div>
 
   </form>  
-</div>  </div>
+</div></div>
                       <p><p>To show several editable elements together and submit at once you should wrap them into <code>&lt;form editable-form name=&quot;myform&quot; ...&gt;</code> tag. The <code>name</code> attribute of form will create variable in scope (normal angular behavior) and <code>editable-form</code> attribute will add a few methods to that variable: </p>
 <ul>
 <li>$show()</li>
@@ -700,7 +925,50 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
 <p>Commonly you should define <code>onbeforesave</code> for child elements to perform validation and <code>onaftersave</code> for whole form to send data on server.</p>
 <p>Please have a look at examples.</p>
 </p>
-                      <script src="docs/demos/editable-form/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('EditableFormCtrl', function($scope, $filter, $http) {
+  $scope.user = {
+    id: 1,
+    name: 'awesome user',
+    status: 2,
+    group: 4,
+    groupName: 'admin'
+  }; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.groups = [];
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.showGroup = function() {
+    if($scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: $scope.user.group});
+      return selected.length ? selected[0].text : 'Not set';
+    } else {
+      return $scope.user.groupName;
+    }
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return "Username should be `awesome`";
+    }
+  };
+
+  $scope.saveUser = function() {
+    //$scope.user already updated!
+    return $http.post('/saveUser', $scope.user);
+  };
+});</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableFormCtrl&quot;&gt;
   &lt;form editable-form name=&quot;editableForm&quot; onaftersave=&quot;saveUser()&quot;&gt;
@@ -744,7 +1012,7 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
     &lt;/div&gt;
 
   &lt;/form&gt;  
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('EditableFormCtrl', function($scope, $filter, $http) {
   $scope.user = {
@@ -792,6 +1060,8 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
                     </section>
                     <section id="editable-row">
                       <h1>Editable row</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="EditableRowCtrl">
   <table class="table table-bordered table-hover table-condensed" style="width: 80%">
@@ -834,12 +1104,62 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
       </td>
     </tr>
   </table>
-</div>  </div>
+</div></div>
                       <p><p>To create editable row in table you should place editable elements in cells with <code>e-form</code> attribute pointing to form&#39;s name. The form itself can appear later (e.g. in last column) but it will work. Don&#39;t forget to add 
 <code>editable-form</code> attribute to the form. The form behavior is absolutely the same as described in
 <a href="#editable-form">Editable form section</a></p>
 </p>
-                      <script src="docs/demos/editable-row/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('EditableRowCtrl', function($scope, $filter, $http) {
+  $scope.users = [
+    {id: 1, name: 'awesome user1', status: 2, group: 4, groupName: 'admin'},
+    {id: 2, name: 'awesome user2', status: undefined, group: 3, groupName: 'vip'},
+    {id: 3, name: 'awesome user3', status: 2, group: null}
+  ]; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.groups = [];
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.showGroup = function(user) {
+    if(user.group && $scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: user.group});
+      return selected.length ? selected[0].text : 'Not set';
+    } else {
+      return user.groupName || 'Not set';
+    }
+  };
+
+  $scope.showStatus = function(user) {
+    var selected = [];
+    if(user.status) {
+      selected = $filter('filter')($scope.statuses, {value: user.status});
+    }
+    return selected.length ? selected[0].text : 'Not set';
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return "Username should be `awesome`";
+    }
+  };
+
+  $scope.saveUser = function(data, id) {
+    //$scope.user not updated yet
+    angular.extend(data, {id: id});
+    return $http.post('/saveUser', data);
+  };
+});</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableRowCtrl&quot;&gt;
   &lt;table class=&quot;table table-bordered table-hover table-condensed&quot; style=&quot;width: 80%&quot;&gt;
@@ -882,7 +1202,7 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
       &lt;/td&gt;
     &lt;/tr&gt;
   &lt;/table&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('EditableRowCtrl', function($scope, $filter, $http) {
   $scope.users = [
@@ -937,6 +1257,8 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
                     </section>
                     <section id="editable-column">
                       <h1>Editable column</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="EditableColumnCtrl">
   <table class="table table-bordered table-hover table-condensed" style="width: 80%">
@@ -1014,11 +1336,64 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
       </td>
     </tr>
   </table>
-</div>  </div>
+</div></div>
                       <p><p>To create editable column in table you should place editable elements in cells with <code>e-form</code> attribute pointing to form&#39;s name. The form itself can appear in column header or footer. The form behavior is absolutely the same as described in
 <a href="#editable-form">Editable form section</a></p>
 </p>
-                      <script src="docs/demos/editable-column/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('EditableColumnCtrl', function($scope, $filter, $http, $q) {
+  $scope.users = [
+    {id: 1, name: 'awesome user1', status: 2, group: 4, groupName: 'admin'},
+    {id: 2, name: 'awesome user2', status: undefined, group: 3, groupName: 'vip'},
+    {id: 3, name: 'awesome user3', status: 2, group: null}
+  ]; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.groups = [];
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.showGroup = function(user) {
+    if(user.group && $scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: user.group});
+      return selected.length ? selected[0].text : 'Not set';
+    } else {
+      return user.groupName || 'Not set';
+    }
+  };
+
+  $scope.showStatus = function(user) {
+    var selected = [];
+    if(user.status) {
+      selected = $filter('filter')($scope.statuses, {value: user.status});
+    }
+    return selected.length ? selected[0].text : 'Not set';
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return "Username should be `awesome`";
+    }
+  };
+
+  $scope.saveColumn = function(column) {
+    var results = [];
+    angular.forEach($scope.users, function(user) {
+      results.push($http.post('/saveColumn', {column: column, value: user[column], id: user.id}));
+    })
+    return $q.all(results);
+  };
+
+});</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableColumnCtrl&quot;&gt;
   &lt;table class=&quot;table table-bordered table-hover table-condensed&quot; style=&quot;width: 80%&quot;&gt;
@@ -1096,7 +1471,7 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
       &lt;/td&gt;
     &lt;/tr&gt;
   &lt;/table&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('EditableColumnCtrl', function($scope, $filter, $http, $q) {
   $scope.users = [
@@ -1154,6 +1529,8 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
                     </section>
                     <section id="editable-table">
                       <h1>Editable table</h1>
+                      <!--add bs2 jsfiddle button-->
+                      <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="EditableTableCtrl">
   <form editable-form name="tableform" onaftersave="saveTable()">
@@ -1200,10 +1577,63 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
     </div>
     
   </form>
-</div>  </div>
+</div></div>
                       <p><p>Just wrap the whole table into <code>&lt;form&gt;</code> tag with <code>editable-form</code> attribute.</p>
 </p>
-                      <script src="docs/demos/editable-table/controller.js"></script>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('EditableTableCtrl', function($scope, $filter, $http, $q) {
+  $scope.users = [
+    {id: 1, name: 'awesome user1', status: 2, group: 4, groupName: 'admin'},
+    {id: 2, name: 'awesome user2', status: undefined, group: 3, groupName: 'vip'},
+    {id: 3, name: 'awesome user3', status: 2, group: null}
+  ]; 
+
+  $scope.statuses = [
+    {value: 1, text: 'status1'},
+    {value: 2, text: 'status2'},
+    {value: 3, text: 'status3'},
+    {value: 4, text: 'status4'}
+  ]; 
+
+  $scope.groups = [];
+  $scope.loadGroups = function() {
+    return $scope.groups.length ? null : $http.get('/groups').success(function(data) {
+      $scope.groups = data;
+    });
+  };
+
+  $scope.showGroup = function(user) {
+    if(user.group && $scope.groups.length) {
+      var selected = $filter('filter')($scope.groups, {id: user.group});
+      return selected.length ? selected[0].text : 'Not set';
+    } else {
+      return user.groupName || 'Not set';
+    }
+  };
+
+  $scope.showStatus = function(user) {
+    var selected = [];
+    if(user.status) {
+      selected = $filter('filter')($scope.statuses, {value: user.status});
+    }
+    return selected.length ? selected[0].text : 'Not set';
+  };
+
+  $scope.checkName = function(data) {
+    if (data !== 'awesome') {
+      return "Username should be `awesome`";
+    }
+  };
+
+  $scope.saveTable = function() {
+    //$scope.users already updated
+    var results = [];
+    angular.forEach($scope.users, function(user) {
+      results.push($http.post('/saveUser', user));
+    })
+    return $q.all(results);
+  };
+});</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableTableCtrl&quot;&gt;
   &lt;form editable-form name=&quot;tableform&quot; onaftersave=&quot;saveTable()&quot;&gt;
@@ -1250,7 +1680,7 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
     &lt;/div&gt;
     
   &lt;/form&gt;
-&lt;/div&gt;  </pre>
+&lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('EditableTableCtrl', function($scope, $filter, $http, $q) {
   $scope.users = [
@@ -1315,7 +1745,7 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
           <pre class="prettyprint">app.run(function(editableOptions) {
   editableOptions.theme = 'bs3';
 });
-</pre><p>To have smaller or bigger controls modify <code>inputClass</code> and <code>buttonsClass</code> properties of theme: </p>
+</pre><p>To have smaller or bigger controls modify <code>inputClass</code> and <code>buttonsClass</code> properties of theme:</p>
 
           <pre class="prettyprint">app.run(function(editableOptions, editableThemes) {
   editableThemes.bs3.inputClass = 'input-sm';
@@ -1333,16 +1763,18 @@ There is no input parameters as data already in local model (e.g. <code>&lt;a ..
 });
 </pre>
           <section id="default"></section>
-          <h2>Default</h2><p>No includes required!<br>You can customize theme by overwriting it&#39;s properties:</p>
+          <h2>Default</h2><p>No includes required!
+You can customize theme by overwriting it&#39;s properties:</p>
 
           <pre class="prettyprint">app.run(function(editableOptions, editableThemes) {
+  // change submit button tpl
   editableThemes['default'].submitTpl = '&lt;button type="submit"&gt;ok&lt;/button&gt;';
+  // set `default` theme
   editableOptions.theme = 'default';
 });
 </pre><p>Available properties of each theme you can see in source
 <a href="https://github.com/vitalets/angular-xeditable/tree/master/src/js/themes.js">themes.js</a></p>
 
-          <div ng-controller="Test" class="well"><a href="#" editable-bsdate="dt" e-datepicker-popup="dd-MMMM-yyyy">{{dt | date}}</a></div>
         </div>
       </div>
     </div>
