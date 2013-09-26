@@ -79,6 +79,8 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
           return self.catchError($parse($attrs.onaftersave)($scope));
         };
       }
+
+      self.handleEmpty();
     };
 
     self.render = function() {
@@ -262,6 +264,16 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
 
     self.save = function() {
       valueGetter.assign($scope.$parent, angular.copy(self.scope.$data));
+      self.handleEmpty();
+    };
+
+    /*
+    attach/detach `editable-empty` class to element
+    */
+    self.handleEmpty = function() {
+      var val = valueGetter($scope.$parent);
+      var isEmpty = val === null || val === undefined || val === "" || (angular.isArray(val) && val.length === 0); 
+      $element.toggleClass('editable-empty', isEmpty);
     };
 
     /*
