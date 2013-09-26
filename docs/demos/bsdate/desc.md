@@ -8,4 +8,5 @@ Add module dependencies to your app:
 
 	var app = angular.module("app", ["xeditable", "ui.bootstrap"]);
 
-And set `editable-bsdate` attribute to editable element.
+And set `editable-bsdate` attribute in editable element.
+Additional parameters can be defined via `e-*` syntax, e.g. `e-datepicker-popup="dd-MMMM-yyyy"`.
