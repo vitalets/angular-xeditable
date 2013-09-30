@@ -100,6 +100,8 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         self.cancelEl = angular.element(theme.cancelTpl);
         self.buttonsEl.append(self.submitEl).append(self.cancelEl);
         self.controlsEl.append(self.buttonsEl);
+        
+        self.inputEl.addClass('editable-has-buttons');
       }
 
       //build error
