@@ -49,4 +49,18 @@ a.editable-click:hover {
   text-decoration: none;
   color: #2a6496;
   border-bottom-color: #2a6496;
-} 
+}
+
+/* editable-empty */
+.editable-empty, 
+.editable-empty:hover, 
+.editable-empty:focus,
+a.editable-empty, 
+a.editable-empty:hover, 
+a.editable-empty:focus {
+  font-style: italic; 
+  color: #DD1144;  
+  text-decoration: none;
+}
+
+

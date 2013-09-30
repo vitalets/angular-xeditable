@@ -49,7 +49,8 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         self.attrs.buttons = 'no';
       }
 
-      self.render();
+      //moved to show()
+      //self.render();
 
       //if name defined --> watch changes and update $data in form
       if($attrs.eName) {
@@ -78,6 +79,8 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
           return self.catchError($parse($attrs.onaftersave)($scope));
         };
       }
+
+      self.handleEmpty();
     };
 
     self.render = function() {
@@ -133,24 +136,29 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       if(angular.isFunction(theme.postrender)) {
         theme.postrender.call(self);
       }
+
     };
 
     //show
     self.show = function() {
-      //set value
+      // set value
       self.scope.$data = angular.copy(valueGetter($scope.$parent));
 
-      //insert editor into DOM
-      $element.after(self.editorEl);
+      /*
+      Originally render() was inside init() method, but some directives polluting editorEl,
+      so it is broken on second openning.
+      Cloning is not a solution as jqLite can not clone with event handler's.
+      */
+      self.render();
 
-      //compile needed to attach events (submit, keydown)
-      $compile(self.editorEl)($scope);
+      // compile and insert into DOM (compile needed to attach ng-* events from markup)
+      $element.after($compile(self.editorEl)($scope));
 
-      //hide element
-      $element.addClass('editable-hide');
-
-      //listen to keyboard and other events
+      // attach listeners (`escape`, autosubmit, etc)
       self.addListeners();
+
+      // hide element
+      $element.addClass('editable-hide');
 
       //onshow
       return self.onshow();
@@ -256,6 +264,16 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
 
     self.save = function() {
       valueGetter.assign($scope.$parent, angular.copy(self.scope.$data));
+      self.handleEmpty();
+    };
+
+    /*
+    attach/detach `editable-empty` class to element
+    */
+    self.handleEmpty = function() {
+      var val = valueGetter($scope.$parent);
+      var isEmpty = val === null || val === undefined || val === "" || (angular.isArray(val) && val.length === 0); 
+      $element.toggleClass('editable-empty', isEmpty);
     };
 
     /*

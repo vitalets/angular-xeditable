@@ -1,4 +1,4 @@
-body { 
+body {
   /*padding-top: 50px; */
 }
 
@@ -9,8 +9,8 @@ body {
 }
 
 .sidebar {
-  position: fixed; 
-  top: 70px; 
+  position: fixed;
+  top: 70px;
   width: 230px;
 }
 
@@ -30,11 +30,24 @@ body {
 }
 
 .sidebar > .nav > li > .nav {
-  display: none;
+  /*display: none;*/
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  -webkit-transition: max-height 0.5s ease-in, opacity 0.3s ease-out;
+  /*
+   height: auto can't use transitions
+   http://stackoverflow.com/questions/3508605/css-transition-height-0-to-height-auto
+  */
+  /*-webkit-transition: height 0.5s ease-out;*/
 }
 
 .sidebar > .nav > li.active > .nav {
   display: block;
+  height: auto;
+  max-height: 350px;
+  opacity: 1;
 }
 
 /* overwrite ugly google-prettify style */

@@ -32,8 +32,8 @@ app.config(function($locationProvider) {
 });
 */
 
-app.run(function($httpBackend, editableOptions, editableThemes) {
-
+app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
+  $rootScope.debug = {};
   //detecting query params. Angular $location.search() works in html5mode only!
   /*
   var l = $window.location.href;

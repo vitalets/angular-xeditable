@@ -2,8 +2,11 @@ Angular-xeditable changelog
 =============================
 
 
-Version 0.1.4 wip
+Version 0.1.4 Sep 26, 2013
 ----------------------------
+[enh #10] attach `editable-empty` class if value is empty (vitalets)
+[enh #11] add `buttons="no"` attribute to hide buttons (vitalets)
+[enh #7] add datepicker via angular-ui bootstrap date (vitalets)
 
 
 Version 0.1.3 Sep 19, 2013

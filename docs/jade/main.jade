@@ -33,6 +33,7 @@ html(ng-app='app')
     - g.items.push({id: 'select-nobuttons', text: 'Select no buttons'})
     - g.items.push({id: 'textarea', text: 'Textarea'})
     - g.items.push({id: 'checkbox', text: 'Checkbox'})
+    - g.items.push({id: 'bsdate', text: 'Date', bs2: 'http://jsfiddle.net/NfPcH/19'})
 
     - g = groups[3]
     - g.items.push({id: 'validate-local', text: 'Validate local'})
@@ -43,10 +44,10 @@ html(ng-app='app')
     - g.items.push({id: 'onaftersave', text: 'Onaftersave'})
 
     - g = groups[5]
-    - g.items.push({id: 'editable-form', text: 'Editable form'})
-    - g.items.push({id: 'editable-row', text: 'Editable row'})
-    - g.items.push({id: 'editable-column', text: 'Editable column'})
-    - g.items.push({id: 'editable-table', text: 'Editable table'})
+    - g.items.push({id: 'editable-form', text: 'Editable form', nodebug: true})
+    - g.items.push({id: 'editable-row', text: 'Editable row', nodebug: true})
+    - g.items.push({id: 'editable-column', text: 'Editable column', nodebug: true})
+    - g.items.push({id: 'editable-table', text: 'Editable table', nodebug: true})
 
     - g = groups[6]
     - g.items.push({id: 'bootstrap3', text: 'Bootstrap 3'})
@@ -68,17 +69,33 @@ html(ng-app='app')
 
         .col-md-9
 
-          mixin demo(brief, header, subheader)
+          mixin demo(item)
+            - var brief = item.id
             section(id=brief)
-              h1= header
-              - dir = "docs/demos/"+brief
-              - desc = fs.readFileSync(dir+"/desc.md").toString()
-              - view = fs.readFileSync(dir+"/view.html").toString()
-              - ctrl = fs.readFileSync(dir+"/controller.js").toString()
+              h1= item.text
+              - var dir = "docs/demos/"+brief
+              - var desc = fs.readFileSync(dir+"/desc.md").toString()
+              - var view = fs.readFileSync(dir+"/view.html").toString().trim()
+              - var viewDebug = view
+
+              //add bs2 jsfiddle button
+              - if (item.bs2) {
+              -   var s = '<a href="'+item.bs2+'" target="_blank" class="btn btn-info pull-right">View Bootstrap 2 version in jsFiddle</a>\n</div>'
+              -   viewDebug = viewDebug.replace(/<\/div>$/i, s)
+              - }
+
+              //- viewDebug = view.replace(/<\/div>$/i, '<span class="pull-right">user: <pre>{{user|json}}</pre></span>\n</div>')
+              - var ctrl = fs.readFileSync(dir+"/controller.js").toString().trim()
+              // watch change of user to update rootScope for debugging
+              - var ctrlDebug = item.nodebug ? ctrl : ctrl.replace(/\}\);$/i, '$scope.$watch("user", function(v) { $scope.$parent.debug["'+brief+'"]=v; }); });')
+
               h3 demo
-              .well.line-example!= view
+              .well.line-example!= viewDebug
+              if !item.nodebug
+                pre!= '{{ debug["'+brief+'"] | json }}'
               p!= md(desc)
-              script(src=dir+'/controller.js')
+              //script(src=dir+'/controller.js')
+              script!= ctrlDebug
               h3 html
               pre.prettyprint.ng-non-bindable= view
               h3 controller.js
@@ -93,13 +110,9 @@ html(ng-app='app')
           - for(var i=2; i<=5; i++)
             - var g = groups[i]
             each item in g.items
-              +demo(item.id, item.text)
+              +demo(item)
 
           include themes.jade
-
-          div.well(ng-controller="Test")
-            a(href="#", editable-bsdate="dt", e-datepicker-popup="dd-MMMM-yyyy") {{dt | date}}
-
 
     footer
       hr

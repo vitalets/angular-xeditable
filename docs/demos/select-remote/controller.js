@@ -12,12 +12,10 @@ app.controller('SelectRemoteCtrl', function($scope, $filter, $http) {
     });
   };
 
-  $scope.showGroup = function() {
-    if($scope.groups.length) {
+  $scope.$watch('user.group', function(newVal, oldVal) {
+    if (newVal !== oldVal) {
       var selected = $filter('filter')($scope.groups, {id: $scope.user.group});
-      return selected.length ? selected[0].text : 'Not set';
-    } else {
-      return $scope.user.groupName;
+      $scope.user.groupName = selected.length ? selected[0].text : null;
     }
-  };
+  });
 });
