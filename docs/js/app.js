@@ -125,6 +125,6 @@ app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
 });
 
 function isProd() {
-  return true;
-  //return window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') >= 0;
+  //return true;
+  return window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') >= 0;
 }
