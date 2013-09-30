@@ -1,7 +1,5 @@
-/* hiding element */
-.editable-hide {
-  display: none;
-}
+
+/* ==== editable-form ==== */
 
 /* class for single editable element */
 .editable-wrap {
@@ -35,6 +33,18 @@
 
 .editable-buttons button {
   margin-left: 5px;
+}
+
+/* if width: 100% => buttons go outside the box */
+.editable-input.editable-has-buttons {
+  width: auto;
+}
+
+/* ==== element ==== */
+
+/* hiding element */
+.editable-hide {
+  display: none;
 }
 
 .editable-click,
