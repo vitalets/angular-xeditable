@@ -57,7 +57,7 @@ html(ng-app='app')
 
     .container
       .row
-        .col-md-3
+        .col-sm-3.col-xs-12
           .well.sidebar
             ul.nav
               each g in groups
@@ -67,7 +67,7 @@ html(ng-app='app')
                     each item in g.items
                       li: a(href="#"+item.id)= item.text
 
-        .col-md-9
+        .col-sm-9.col-xs-12
 
           mixin demo(item)
             - var brief = item.id

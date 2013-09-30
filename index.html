@@ -29,25 +29,31 @@
   <body data-spy="scroll" data-target=".sidebar">
     <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
       <div class="container">
-        <div class="navbar-header"><a href="/" class="navbar-brand">Angular-xeditable </a></div>
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">Angular-xeditable </a>
+        </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="">Home</a></li>
+            <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
           <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.4.zip" class="btn btn-primary">Download 0.1.4 ~ 12k</a></form>
-          <div style="padding-top: 13px"><!-- twitter -->
-<div class="pull-right" style="width: 90px; margin-right: 20%">
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://vitalets.github.io/angular-xeditable" data-via="xeditable">Tweet</a>
-<script>!function(d,s,id){
-  if (!isProd()) return;
-  var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-  </script>            
-</div>
+          <div style="padding-top: 13px">
+<!-- google+ -->
+<div id="socials" style="text-align: center">
+<div style="display: inline-block" class="g-plusone" data-size="medium" data-href="http://vitalets.github.io/angular-xeditable"></div>
+<script type="text/javascript">
+  (function() {
+    if (!isProd()) return;
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
 
 <!-- facebook -->
-<div class="pull-right" style="width: 90px">
-<div id="fb-root"></div>
+<div id="fb-root" style="display: inline-block"></div>
 <script>
 (function(d, s, id) {
   if (!isProd()) return;
@@ -58,20 +64,15 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
-<div style="vertical-align:top;zoom:1;*display:inline" class="fb-like" data-href="http://vitalets.github.io/angular-xeditable" data-send="false" data-layout="button_count" data-width1="450" data-show-faces="false"></div>
-</div>
+<div style="vertical-align:top;zoom:1;*display:inline;display: inline-block; text-align:left; margin: 1px 30px 0 0" class="fb-like" data-href="http://vitalets.github.io/angular-xeditable" data-send="false" data-layout="button_count" data-width1="450" data-show-faces="false"></div>
 
-<!-- google+ -->
-<div class="pull-right" style="width: 80px">
-<div class="g-plusone" data-size="medium" data-href="http://vitalets.github.io/angular-xeditable"></div>
-<script type="text/javascript">
-  (function() {
-    if (!isProd()) return;
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
+
+<!-- twitter -->
+<a style="vertical-align:top" href="https://twitter.com/share" class="twitter-share-button" data-url="http://vitalets.github.io/angular-xeditable" data-via="xeditable">Tweet</a>
+<script>!function(d,s,id){
+  if (!isProd()) return;
+  var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  </script>            
 </div>
           </div>
         </div>
@@ -79,7 +80,7 @@
     </nav>
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-sm-3 col-xs-12">
           <div class="well sidebar">
             <ul class="nav">
               <li><a href="#overview">Overview</a>
@@ -134,7 +135,7 @@
             </ul>
           </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-sm-9 col-xs-12">
           <section id="overview">
             <h1>Overview</h1><p><strong>Angular-xeditable</strong> is javascript library that allows you to create edit-in-place elements
 in <a href="http://angularjs.org">AngularJS</a> projects.<br>It is based on ideas of <a href="http://vitalets.github.io/x-editable">x-editable</a> but was written from scratch
