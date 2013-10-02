@@ -6,7 +6,6 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableBsdate',
-      modelKeyName: 'modelKey',
       inputTpl: '<input type="text">'
     });
 }]);
