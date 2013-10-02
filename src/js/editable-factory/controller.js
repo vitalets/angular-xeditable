@@ -8,6 +8,9 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
   EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
   function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
     var valueGetter;
+    
+    var modelKeyGetter;
+    var modelKeyName = 'editableModelKey';
 
     //if control is disabled - it does not participate in waiting process
     var inWaiting;
@@ -42,6 +45,10 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         valueGetter = $parse($attrs[self.directiveName]);
       } else {
         throw 'You should provide value for `'+self.directiveName+'` in editable element!';
+      }
+      
+      if ($attrs[modelKeyName]) {
+          modelKeyGetter = $parse($attrs[modelKeyName]);
       }
 
       // hide buttons for non-single
@@ -143,6 +150,11 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
     self.show = function() {
       // set value
       self.scope.$data = angular.copy(valueGetter($scope.$parent));
+      // set key if defined
+      var keyGetterDefined = modelKeyGetter && {}.toString.call(modelKeyGetter) === '[object Function]';
+      if (keyGetterDefined)
+          self.scope.$key = angular.copy(modelKeyGetter($scope.$parent));
+      
 
       /*
       Originally render() was inside init() method, but some directives polluting editorEl,
