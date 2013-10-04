@@ -81,14 +81,12 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       }
 
       // watch change of model to update editable element
-      // now particulary add/remove `editable-empty` class
+      // now only add/remove `editable-empty` class.
+      // Initially this method called with newVal = undefined, oldVal = undefined
+      // so no need initially call handleEmpty() explicitly
       $scope.$parent.$watch($attrs[self.directiveName], function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          self.handleEmpty();
-        }
+        self.handleEmpty();
       });
-      // handle initial value for empty
-      self.handleEmpty();
     };
 
     self.render = function() {
