@@ -80,6 +80,14 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         };
       }
 
+      // watch change of model to update editable element
+      // now particulary add/remove `editable-empty` class
+      $scope.$parent.$watch($attrs[self.directiveName], function(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          self.handleEmpty();
+        }
+      });
+      // handle initial value for empty
       self.handleEmpty();
     };
 
@@ -266,7 +274,9 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
 
     self.save = function() {
       valueGetter.assign($scope.$parent, angular.copy(self.scope.$data));
-      self.handleEmpty();
+
+      // no need to call handleEmpty here as we are watching change of model value
+      // self.handleEmpty();
     };
 
     /*
