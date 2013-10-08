@@ -10,7 +10,8 @@ module.exports = function(grunt) {
   //clean
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.config('clean', {
-    dist: 'dist'
+    dist: 'dist',
+    starter: 'starter/angular-xeditable'
   });
 
   //js hint
@@ -77,16 +78,35 @@ module.exports = function(grunt) {
     }
   });
 
+  //copy
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.config('copy', {
+    starter:  {
+      expand: true,
+      cwd: 'dist/',
+      src: '**',
+      dest: 'starter/angular-xeditable/'
+    }
+  });
 
   //compress
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.config('compress', {
-    main: {
+    dist: {
       options: {
         archive: 'zip/angular-xeditable-<%= pkg.version %>.zip'
       },
       expand: true,
       cwd: 'dist/',
+      src: ['**'],
+      dest: '/'
+    },
+    starter: {
+      options: {
+        archive: 'zip/angular-xeditable-starter.zip'
+      },
+      expand: true,
+      cwd: 'starter/',
       src: ['**'],
       dest: '/'
     }
@@ -156,6 +176,7 @@ module.exports = function(grunt) {
     'cssmin',
     'concat',
     'uglify',
+    'copy',
     'compress',
     'docs'
   ]);
