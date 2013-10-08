@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.4
+angular-xeditable - 0.1.5
 Edit-in-place for angular.js
-Build date: 2013-09-26 
+Build date: 2013-10-08 
 */
 /*
 angular-xeditable module
@@ -182,7 +182,13 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         };
       }
 
-      self.handleEmpty();
+      // watch change of model to update editable element
+      // now only add/remove `editable-empty` class.
+      // Initially this method called with newVal = undefined, oldVal = undefined
+      // so no need initially call handleEmpty() explicitly
+      $scope.$parent.$watch($attrs[self.directiveName], function(newVal, oldVal) {
+        self.handleEmpty();
+      });
     };
 
     self.render = function() {
@@ -202,6 +208,8 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         self.cancelEl = angular.element(theme.cancelTpl);
         self.buttonsEl.append(self.submitEl).append(self.cancelEl);
         self.controlsEl.append(self.buttonsEl);
+        
+        self.inputEl.addClass('editable-has-buttons');
       }
 
       //build error
@@ -366,7 +374,9 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
 
     self.save = function() {
       valueGetter.assign($scope.$parent, angular.copy(self.scope.$data));
-      self.handleEmpty();
+
+      // no need to call handleEmpty here as we are watching change of model value
+      // self.handleEmpty();
     };
 
     /*
