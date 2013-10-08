@@ -2,6 +2,12 @@ Angular-xeditable changelog
 =============================
 
 
+Version 0.1.5 wip
+----------------------------
+[enh #17] support promise as model value (vitalets)
+[enh] docs: add starter template (vitalets)
+
+
 Version 0.1.4 Sep 26, 2013
 ----------------------------
 [enh #10] attach `editable-empty` class if value is empty (vitalets)
