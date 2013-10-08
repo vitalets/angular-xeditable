@@ -91,6 +91,15 @@ pre.prettyprint {
   min-height: 75px;
 }
 
+
+form.fiddle {
+  margin: 19px;
+}
+
+form.fiddle textarea {
+  display: none;
+}
+
 form[name="editableForm"] > div {
   height: auto;
   padding: 5px 0;
