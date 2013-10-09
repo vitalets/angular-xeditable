@@ -4,6 +4,7 @@ Angular-xeditable changelog
 
 Version 0.1.5 wip
 ----------------------------
+[bug #20] support `data-e-*` and `x-e-*` attributes for transfer (vitalets)
 [enh #12] timepicker (vitalets)
 [enh #17] support promise as model value (vitalets)
 [enh] docs: add starter template (vitalets)

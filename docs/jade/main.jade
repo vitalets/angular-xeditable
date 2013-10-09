@@ -55,6 +55,10 @@ html(ng-app='app')
     - g.items.push({id: 'bootstrap2', text: 'Bootstrap 2'})
     - g.items.push({id: 'default', text: 'Default'})
 
+    // dev-only-tests
+    - groups.push({id: 'dev-text-customize', text: 'Dev Tests', items: [], env: 'dev'})
+    - g = groups[7]
+    - g.items.push({id: 'dev-text-customize'});
 
     .container
       .row
@@ -66,14 +70,15 @@ html(ng-app='app')
                   a(href="#"+g.id)= g.text
                   ul.nav
                     each item in g.items
-                      li: a(href="#"+item.id)= item.text
+                      if (!item.env || item.env === env)
+                        li: a(href="#"+item.id)= item.text
 
         .col-sm-9.col-xs-12
 
           mixin demo(item)
             - var brief = item.id
             section(id=brief)
-              h1= item.text
+              h1= item.text || brief
               - var dir = "docs/demos/"+brief
               - var desc = fs.readFileSync(dir+"/desc.md").toString()
               - var view = fs.readFileSync(dir+"/view.html").toString().trim()
@@ -112,6 +117,12 @@ html(ng-app='app')
               +demo(item)
 
           include themes.jade
+
+          // dev-only
+          if(env !== 'prod')
+            each item in groups[7].items
+              +demo(item)
+
 
     footer
       hr

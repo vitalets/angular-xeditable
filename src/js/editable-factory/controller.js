@@ -9,6 +9,20 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
   function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
     var valueGetter;
 
+    /*
+    checks if attr should be transfered or not
+    */
+    function getTransferAttr(unifiedAttr) {
+      if(unifiedAttr.length > 1) {
+        var nextLetter = unifiedAttr.substring(1, 2);
+        // if starts with `e` + uppercase letter
+        if(unifiedAttr.substring(0, 1) === 'e' && nextLetter === nextLetter.toUpperCase()) {
+          return unifiedAttr.substring(1); // cut `e`
+        }
+      }
+      return false;
+    }
+
     //if control is disabled - it does not participate in waiting process
     var inWaiting;
 
@@ -118,18 +132,35 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
       self.editorEl.append(self.controlsEl);
 
-      //transfer `e-*` attributes
+      // transfer `e-*|data-e-*|x-e-*` attributes
       for(var k in $attrs.$attr) {
-        if(k === 'eForm' || k === 'eNgSubmit') {
+        if(k.length <= 1) {
           continue;
         }
-        if (k.substring(0, 1) === 'e' && k.substring(1, 2) === k.substring(1, 2).toUpperCase()) {
-          //cut "e-"
-          var v = $attrs.$attr[k].substring(2);
-          //workaround for attributes without value (e.g. `multiple = "multiple"`)
-          var attrValue = ($attrs[k] === '') ? v : $attrs[k];
-          self.inputEl.attr(v, attrValue);
+        var transferAttr = false;
+        var nextLetter = k.substring(1, 2);
+
+        // if starts with `e` + uppercase letter
+        if(k.substring(0, 1) === 'e' && nextLetter === nextLetter.toUpperCase()) {
+          transferAttr = k.substring(1); // cut `e`
+        } else {
+          continue;
         }
+        
+        // exclude `form` and `ng-submit`, 
+        if(transferAttr === 'Form' || transferAttr === 'NgSubmit') {
+          continue;
+        }
+
+        // convert back to lowercase style
+        transferAttr = transferAttr.substring(0, 1) + transferAttr.substring(1).replace(/[A-Z]/g, '-$&');  
+        transferAttr = transferAttr.toLowerCase();
+
+        // workaround for attributes without value (e.g. `multiple = "multiple"`)
+        var attrValue = ($attrs[k] === '') ? transferAttr : $attrs[k];
+
+        // set attributes to input
+        self.inputEl.attr(transferAttr, attrValue);
       }
 
       self.inputEl.addClass('editable-input');
