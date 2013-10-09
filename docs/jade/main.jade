@@ -14,18 +14,6 @@ html(ng-app='app')
   body(data-spy="scroll", data-target=".sidebar")
     include navbar.jade
 
-    - var res = {}
-    - res['angular'] = 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js'
-    - res['xeditable-js'] = 'http://vitalets.github.io/angular-xeditable/dist/js/xeditable.js'
-    - res['xeditable-css'] = 'http://vitalets.github.io/angular-xeditable/dist/css/xeditable.css'
-    - res['bs3'] = 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css'
-    - res['bs2'] = 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css'
-    - res['ui-bootstrap'] = 'http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js'
-    - var defRes = ['angular'];
-    - var defJs = ['xeditable-js'];
-    - var defCss = ['xeditable-css'];
-    - var defDeps = ['xeditable'];
-
     - var g, groups = []
     - groups.push({id: 'overview', text: 'Overview', items: []})
     - groups.push({id: 'getstarted', text: 'Get started', items: []})
@@ -36,17 +24,17 @@ html(ng-app='app')
     - groups.push({id: 'bootstrap3', text: 'Themes', items: []})
 
     - g = groups[2]
-    - g.items.push({id: 'text-simple', text: 'Text'})
-    - g.items.push({id: 'text-customize', text: 'Customize input'})
-    - g.items.push({id: 'text-btn', text: 'Trigger manually'})
-    - g.items.push({id: 'select-local', text: 'Select local'})
-    - g.items.push({id: 'select-remote', text: 'Select remote'})
-    - g.items.push({id: 'select-multiple', text: 'Select multiple'})
-    - g.items.push({id: 'select-nobuttons', text: 'Select no buttons'})
-    - g.items.push({id: 'textarea', text: 'Textarea'})
-    - g.items.push({id: 'checkbox', text: 'Checkbox'})
-    - g.items.push({id: 'bsdate', text: 'Date', res: ['bs2'], js: ['ui-bootstrap'], deps: ['ui.bootstrap']})
-    - g.items.push({id: 'bstime', text: 'Time', res: ['bs2'], js: ['ui-bootstrap'], deps: ['ui.bootstrap']})
+    - g.items.push({id: 'text-simple', text: 'Text', fiddle: 'http://jsfiddle.net/NfPcH/25/'})
+    - g.items.push({id: 'text-customize', text: 'Customize input', fiddle: 'http://jsfiddle.net/NfPcH/26/'})
+    - g.items.push({id: 'text-btn', text: 'Trigger manually', fiddle: 'http://jsfiddle.net/NfPcH/27/'})
+    - g.items.push({id: 'select-local', text: 'Select local', fiddle: 'http://jsfiddle.net/NfPcH/28/'})
+    - g.items.push({id: 'select-remote', text: 'Select remote', fiddle: 'http://jsfiddle.net/NfPcH/29/'})
+    - g.items.push({id: 'select-multiple', text: 'Select multiple', fiddle: 'http://jsfiddle.net/NfPcH/30/'})
+    - g.items.push({id: 'select-nobuttons', text: 'Select no buttons', fiddle: 'http://jsfiddle.net/NfPcH/31/'})
+    - g.items.push({id: 'textarea', text: 'Textarea', fiddle: 'http://jsfiddle.net/NfPcH/32/'})
+    - g.items.push({id: 'checkbox', text: 'Checkbox', fiddle: 'http://jsfiddle.net/NfPcH/33/'})
+    - g.items.push({id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/NfPcH/23', fiddleText: 'View Bootstrap 2 jsFiddle'})
+    - g.items.push({id: 'bstime', text: 'Time', fiddle: 'http://jsfiddle.net/NfPcH/34', fiddleText: 'View Bootstrap 2 jsFiddle'})
 
     - g = groups[3]
     - g.items.push({id: 'validate-local', text: 'Validate local'})
@@ -89,47 +77,18 @@ html(ng-app='app')
               - var dir = "docs/demos/"+brief
               - var desc = fs.readFileSync(dir+"/desc.md").toString()
               - var view = fs.readFileSync(dir+"/view.html").toString().trim()
-              - var viewDebug = view
-
-              // resources
-              - var cRes = defRes.concat(item.res || ['bs3'])
-              - var cResString = cRes.map(function(v){ return res[v];}).join(',\n')
-
-              // html prefix
-              - var htmlPrefix = '<!-- scripts -->\n'
-              - htmlPrefix += defCss.concat(item.css || []).map(function(v){ return '<link href="'+res[v]+'" rel="stylesheet">';}).join('\n')
-              - htmlPrefix += defJs.concat(item.js || []).map(function(v){ return '<script src="'+res[v]+'"></script>';}).join('\n')
-
-              - htmlPrefix += '\n\n<!-- markup -->\n';
-              - htmlPrefix += '<h3>Angular-xeditable: '+ item.text + '</h3>\n';
-              - htmlPrefix += '<div>Press <b>Run..</b></div>\n';
-
-              // js prefix
-              - var jsPrefix = []
-              - jsPrefix[0] = 'var app = angular.module("app", ["'+defDeps.concat(item.deps||[]).join('", "')+'"]);' 
-              - jsPrefix[1] = 'app.run(function(editableOptions) {'
-              - jsPrefix[2] = '  editableOptions.theme = "'+(~cRes.indexOf('bs2') ? 'bs2' : 'bs3')+'";'
-              - jsPrefix[3] = '});\n\n'
-              - jsPrefix = jsPrefix.join("\n")
-
-              //- viewDebug = view.replace(/<\/div>$/i, '<span class="pull-right">user: <pre>{{user|json}}</pre></span>\n</div>')
               - var ctrl = fs.readFileSync(dir+"/controller.js").toString().trim()
+
               // watch change of user to update rootScope for debugging
               - var ctrlDebug = item.nodebug ? ctrl : ctrl.replace(/\}\);$/i, '$scope.$watch("user", function(v) { $scope.$parent.debug["'+brief+'"]=v; }); });')
 
               h3 demo
 
-              //add jsfiddle button
-              form.fiddle.pull-right(action="http://jsfiddle.net/api/post/library/pure/", method="post", target="_blank", ng-non-bindable)
-                input(type="hidden", name="title", value="Angular-xeditable")
-                input(type="hidden", name="wrap", value="h")
-                textarea(name="resources")= cResString
-                textarea(name="html")= htmlPrefix + view.replace('ng-controller', 'ng-app="app" ng-controller')
-                textarea(name="js")= jsPrefix+ctrl
-                textarea(name="css") div[ng-app] { margin: 100px; }
-                button.btn.btn-info(type="submit") Edit jsFiddle
+              if item.fiddle
+                a.btn.btn-info.fiddle.pull-right(href=item.fiddle, target="_blank")
+                  = item.fiddleText || 'jsFiddle'
 
-              .well.line-example!= viewDebug
+              .well.line-example!= view
 
               if !item.nodebug
                 pre!= '{{ debug["'+brief+'"] | json }}'
