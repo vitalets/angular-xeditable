@@ -4,7 +4,7 @@ describe('typeahead', function() {
     browser().navigateTo(mainUrl);
   });
 
-  iit('should show editor and submit new value', function() {
+  it('should show editor and submit new value', function() {
     var s = '[ng-controller="TypeaheadCtrl"] ';
     var a = s+'a[editable-text] ';
 

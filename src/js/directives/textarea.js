@@ -8,7 +8,7 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
         var self = this;
         self.parent.addListeners.call(self);
         // submit textarea by ctrl+enter even with buttons
-        if (self.single && self.attrs.buttons !== 'no') {
+        if (self.single && self.buttons !== 'no') {
           self.autosubmit();
         }
       },

@@ -118,6 +118,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
             elem.addClass('editable-click');
             elem.bind('click', function(e) {
               e.preventDefault();
+              e.editable = eCtrl;
               scope.$apply(function(){
                 scope.$form.$show();
               });

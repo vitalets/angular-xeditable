@@ -2,26 +2,41 @@
 EditableController: attached to editable element
 TODO: this file should be refactored to work more clear without closures!
 */
-angular.module('xeditable').factory('editableController', ['$q', function($q) {
+angular.module('xeditable').factory('editableController', ['$q', '$document', 'editableUtils', '$rootScope',
+  function($q, $document, utils, $rootScope) {
+
+  // array of opened editable controls
+  var shown = [];
+
+  // bind click to body: cancel|submit editables
+  $document.bind('click', function(e) {
+    var toCancel = [];
+    var toSubmit = [];
+    for (var i=0; i<shown.length; i++) {
+      // exclude self
+      if (e.editable === shown[i]) {
+        continue;
+      }
+      if (shown[i].blur === 'cancel') {
+        toCancel.push(shown[i]);
+      }
+      if (shown[i].blur === 'submit') {
+        toSubmit.push(shown[i]);
+      }
+    }
+
+    if (toCancel.length || toSubmit.length) {
+      $rootScope.$apply(function() {
+        angular.forEach(toCancel, function(v){ v.scope.$form.$hide(); });
+        angular.forEach(toSubmit, function(v){ v.scope.$form.$submit(); });
+      });
+    }
+  });
 
   //EditableController function
   EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
   function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
     var valueGetter;
-
-    /*
-    checks if attr should be transfered or not
-    */
-    function getTransferAttr(unifiedAttr) {
-      if(unifiedAttr.length > 1) {
-        var nextLetter = unifiedAttr.substring(1, 2);
-        // if starts with `e` + uppercase letter
-        if(unifiedAttr.substring(0, 1) === 'e' && nextLetter === nextLetter.toUpperCase()) {
-          return unifiedAttr.substring(1); // cut `e`
-        }
-      }
-      return false;
-    }
 
     //if control is disabled - it does not participate in waiting process
     var inWaiting;
@@ -38,9 +53,14 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
 
-    //to be overwritten
+    //to be overwritten by directive
     self.inputTpl = '';
     self.directiveName = '';
+
+    //runtime (defaults)
+    self.single = null;
+    self.buttons = 'right'; 
+    self.blur = 'ignore'; // can be 'cancel|submit|ignore'
 
     //init
     self.init = function(single) {
@@ -58,9 +78,14 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
         throw 'You should provide value for `'+self.directiveName+'` in editable element!';
       }
 
-      // hide buttons for non-single
+      // settings for single and non-single
       if (!self.single) {
-        self.attrs.buttons = 'no';
+        // hide buttons for non-single
+        self.buttons = 'no';
+        self.blur = 'ignore';
+      } else {
+        self.buttons = self.attrs.buttons || editableOptions.buttons;
+        self.blur = self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blur);
       }
 
       //moved to show()
@@ -114,7 +139,7 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       self.controlsEl.append(self.inputEl);
 
       //build buttons
-      if(self.attrs.buttons !== 'no') {
+      if(self.buttons !== 'no') {
         self.buttonsEl = angular.element(theme.buttonsTpl);
         self.submitEl = angular.element(theme.submitTpl);
         self.cancelEl = angular.element(theme.cancelTpl);
@@ -199,6 +224,11 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       // hide element
       $element.addClass('editable-hide');
 
+      // add to internal list
+      if(utils.indexOf(shown, self) === -1) {
+        shown.push(self);
+      }
+
       //onshow
       return self.onshow();
     };
@@ -208,6 +238,10 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       //console.log('editable hide', self.name);
       self.editorEl.remove();
       $element.removeClass('editable-hide');
+
+      // remove from internal list
+      utils.arrayRemove(shown, self);
+
       // todo: to think is it really needed or not
       /*
       if($element[0].tagName === 'A') {
@@ -235,9 +269,14 @@ angular.module('xeditable').factory('editableController', ['$q', function($q) {
       });
 
       //autosubmit when no buttons
-      if (self.single && self.attrs.buttons === 'no') {
+      if (self.single && self.buttons === 'no') {
         self.autosubmit();
       }
+
+      // click - mark event as going from editable element
+      self.editorEl.bind('click', function(e) {
+        e.editable = self;
+      });
     };
 
     //setWaiting

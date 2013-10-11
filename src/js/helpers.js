@@ -76,3 +76,24 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
   return promiseCollection;
 
 }]);
+
+angular.module('xeditable').factory('editableUtils', [function() { 
+  return {
+    indexOf: function (array, obj) {
+      if (array.indexOf) return array.indexOf(obj);
+
+      for ( var i = 0; i < array.length; i++) {
+        if (obj === array[i]) return i;
+      }
+      return -1;
+    },
+
+    arrayRemove: function (array, value) {
+      var index = this.indexOf(array, value);
+      if (index >= 0) {
+        array.splice(index, 1);
+      }
+      return value;
+    }
+  };
+}]);
