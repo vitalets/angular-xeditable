@@ -225,9 +225,12 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       $element.addClass('editable-hide');
 
       // add to internal list
-      if(utils.indexOf(shown, self) === -1) {
-        shown.push(self);
-      }
+      // setTimeout needed to prevent closing right after opening (e.g. when trigger by button)
+      setTimeout(function() {
+        if(utils.indexOf(shown, self) === -1) {
+          shown.push(self);
+        }
+      }, 0);
 
       //onshow
       return self.onshow();
