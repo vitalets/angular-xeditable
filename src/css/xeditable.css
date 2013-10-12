@@ -44,7 +44,7 @@
 
 /* hiding element */
 .editable-hide {
-  display: none;
+  display: none !important;
 }
 
 .editable-click,
