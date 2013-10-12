@@ -215,8 +215,11 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       */
       self.render();
 
-      // compile and insert into DOM (compile needed to attach ng-* events from markup)
-      $element.after($compile(self.editorEl)($scope));
+      // insert into DOM
+      $element.after(self.editorEl);
+
+      // compile (needed to attach ng-* events from markup)
+      $compile(self.editorEl)($scope);
 
       // attach listeners (`escape`, autosubmit, etc)
       self.addListeners();
