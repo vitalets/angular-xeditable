@@ -91,6 +91,11 @@ pre.prettyprint {
   min-height: 75px;
 }
 
+
+.fiddle {
+  margin: 19px;
+}
+
 form[name="editableForm"] > div {
   height: auto;
   padding: 5px 0;
