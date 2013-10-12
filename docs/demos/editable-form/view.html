@@ -1,24 +1,23 @@
 <div ng-controller="EditableFormCtrl">
   <form editable-form name="editableForm" onaftersave="saveUser()">
-    
     <div>
       <!-- editable username (text with validation) -->
-      <strong>User name: </strong>
-      <span editable-text="user.name" onbeforesave="checkName($data)">{{ user.name || 'empty' }}</span>
+      <span class="title">User name: </span>
+      <span editable-text="user.name" e-name="name" onbeforesave="checkName($data)" e-required>{{ user.name || 'empty' }}</span>
     </div> 
 
     <div>
       <!-- editable status (select-local) -->
-      <strong>Status: </strong>
-      <span editable-select="user.status" e-ng-options="s.value as s.text for s in statuses">
+      <span class="title">Status: </span>
+      <span editable-select="user.status" e-name="status" e-ng-options="s.value as s.text for s in statuses">
         {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
       </span>
     </div>  
 
     <div>
       <!-- editable group (select-remote) -->
-      <strong>Group: </strong>
-      <span editable-select="user.group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
+      <span class="title">Group: </span>
+      <span editable-select="user.group" e-name="group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
         {{ showGroup() }}
       </span>
     </div>
@@ -38,6 +37,5 @@
         </button>
       </span>
     </div>
-
   </form>  
 </div>  

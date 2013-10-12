@@ -91,22 +91,27 @@ pre.prettyprint {
   min-height: 75px;
 }
 
-
-.fiddle {
-  margin: 19px;
-}
-
-form.fiddle textarea {
-  display: none;
-}
-
 form[name="editableForm"] > div {
   height: auto;
   padding: 5px 0;
 }
 
-form[name="editableForm"] > div > strong {
+form[name="editableForm"] .title {
+  display: inline-block;
+  font-weight: bold;
+  padding-top: 5px;
   vertical-align: top;
+  min-width: 90px;
+}
+
+form[name="editableForm"] .editable {
+  display: inline-block;
+  padding-top: 5px;
+  vertical-align: top;
+}
+
+form[name="editableForm"] select {
+  width: 120px;
 }
 
 div[ng-controller] table tr td {
