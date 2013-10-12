@@ -77,6 +77,8 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         //publich editable controller as `$editable` to be referenced in html
         scope.$editable = eCtrl;
 
+        // add `editable` class to element
+        elem.addClass('editable');
 
         // hasForm
         if(hasForm) {
