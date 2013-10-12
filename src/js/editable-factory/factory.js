@@ -17,8 +17,6 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
       require: [overwrites.directiveName, '?^form'],
       controller: editableController,
       link: function(scope, elem, attrs, ctrl) {
-        //console.log('link directive', attrs[overwrites.directiveName]);
-
         //editable controller
         var eCtrl = ctrl[0];
 
