@@ -21,7 +21,9 @@ nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
             a(href="/test/e2e/docs-test.html") prod-test
 
       form.navbar-form.navbar-right
-        a.btn.btn-primary(href="zip/angular-xeditable-"+version+'.zip') Download #{version} ~ #{size}k
+        a.btn.btn-primary(href="zip/angular-xeditable-"+version+'.zip', style="font-weight:bold")
+          span.glyphicon.glyphicon-save(style="margin-right:10px")
+          | Download #{version} ~ #{size}kb
 
       if env == 'prod'
         div(style="padding-top: 13px")
