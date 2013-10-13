@@ -1,0 +1,89 @@
+{
+    "namespaces": [
+        {
+            "name": "editable-form",
+            "description": "EditableForm directive. Should be defined in <form> containing editable controls.\nIt add some usefull methods to form variable exposed to scope by `name=\"myform\"` attribute.",
+            "access": "",
+            "virtual": false,
+            "properties": [
+                {
+                    "name": "$show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Shows form with editable controls.",
+                    "type": {
+                        "names": [
+                            "method"
+                        ]
+                    }
+                },
+                {
+                    "name": "$hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Hides form with editable controls without saving.",
+                    "type": {
+                        "names": [
+                            "method"
+                        ]
+                    }
+                },
+                {
+                    "name": "$visible",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Form visibility flag.",
+                    "type": {
+                        "names": [
+                            "bool"
+                        ]
+                    }
+                },
+                {
+                    "name": "$waiting",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Form waiting flag. It becomes `true` when form is loading or saving data.",
+                    "type": {
+                        "names": [
+                            "bool"
+                        ]
+                    }
+                },
+                {
+                    "name": "onshow",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Called when form is shown.",
+                    "type": {
+                        "names": [
+                            "attribute"
+                        ]
+                    }
+                },
+                {
+                    "name": "onbeforesave",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Called after all children `onbeforesave` callbacks but before form values\nare saved to model.\nIf at least one children callback returns `non-string` - it will not not be called.\nSee [editable-form description](#editable-form) for details.",
+                    "type": {
+                        "names": [
+                            "attribute"
+                        ]
+                    }
+                },
+                {
+                    "name": "onaftersave",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Called when form values are saved to model.\nSee [editable-form description](#editable-form) for details.",
+                    "type": {
+                        "names": [
+                            "attribute"
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

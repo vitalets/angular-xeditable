@@ -169,6 +169,33 @@ module.exports = function(grunt) {
     }
   });
 
+  //jsdoc
+  //grunt.loadNpmTasks('grunt-jsdoc');
+  grunt.loadNpmTasks('grunt-shell');
+  /*
+  grunt.config('jsdoc', {
+    docs: {
+      src: ['src\/**\/*.js'], 
+      options: {
+        destination: 'console',
+        verbose: true,
+        template: 'node_modules/grunt-jsdoc/node_modules/jsdoc/templates/haruki'
+      }
+    }
+  });
+  */
+  grunt.config('shell', {
+    jsdoc: {
+      options: { 
+        stdout: true,
+        stderr: true,
+        failOnError: true
+      },
+      command: '"node_modules/grunt-jsdoc/node_modules/jsdoc/jsdoc" -c jsdoc.conf.json > docs/jsdoc.json'
+    }
+  });
+  
+
   //metatasks
   grunt.registerTask('build', [
     'jshint',
