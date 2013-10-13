@@ -42,8 +42,8 @@ html(ng-app='app')
     - g.items.push({id: 'validate-remote', text: 'Validate remote', fiddle: 'http://jsfiddle.net/NfPcH/36/'})
 
     - g = groups[4]
-    - g.items.push({id: 'onbeforesave', text: 'Onbeforesave', fiddle: 'http://jsfiddle.net/NfPcH/37/'})
-    - g.items.push({id: 'onaftersave', text: 'Onaftersave', fiddle: 'http://jsfiddle.net/NfPcH/38/'})
+    - g.items.push({id: 'onbeforesave', text: 'Submit via onbeforesave', fiddle: 'http://jsfiddle.net/NfPcH/37/', menutext: 'Onbeforesave'})
+    - g.items.push({id: 'onaftersave', text: 'Submit via onaftersave', fiddle: 'http://jsfiddle.net/NfPcH/38/', menutext: 'Onaftersave'})
 
     - g = groups[5]
     - g.items.push({id: 'editable-form', text: 'Editable form', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/50/'})
@@ -52,9 +52,9 @@ html(ng-app='app')
     - g.items.push({id: 'editable-table', text: 'Editable table', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/44/'})
 
     - g = groups[6]
-    - g.items.push({id: 'bootstrap3', text: 'Bootstrap 3'})
-    - g.items.push({id: 'bootstrap2', text: 'Bootstrap 2'})
-    - g.items.push({id: 'default', text: 'Default'})
+    - g.items.push({id: 'bootstrap3', text: '', menutext: 'Bootstrap 3'})
+    - g.items.push({id: 'bootstrap2', text: '', menutext: 'Bootstrap 2'})
+    - g.items.push({id: 'default', text: '', menutext: 'Default'})
 
     // dev-only-tests
     - groups.push({id: 'dev-text', text: 'Dev Tests', items: [], env: 'dev'})
@@ -72,7 +72,7 @@ html(ng-app='app')
                   ul.nav
                     each item in g.items
                       if (!item.env || item.env === env)
-                        li: a(href="#"+item.id)= item.text
+                        li: a(href="#"+item.id)= item.menutext || item.text
 
         .col-sm-9.col-xs-12
 
