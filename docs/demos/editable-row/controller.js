@@ -47,4 +47,19 @@ app.controller('EditableRowCtrl', function($scope, $filter, $http) {
     angular.extend(data, {id: id});
     return $http.post('/saveUser', data);
   };
+
+  // remove user
+  $scope.removeUser = function(index) {
+    $scope.users.splice(index, 1);
+  };
+
+  // add user
+  $scope.addUser = function() {
+    $scope.users.push({
+      id: $scope.users.length,
+      name: '',
+      status: null,
+      group: null 
+    });
+  };
 });
