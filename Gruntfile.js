@@ -182,7 +182,7 @@ module.exports = function(grunt) {
         stderr: true,
         failOnError: true
       },
-      command: '"node_modules/grunt-jsdoc/node_modules/jsdoc/jsdoc" -c jsdoc.conf.json > docs/jsdoc.json'
+      command: '"node_modules/grunt-jsdoc/node_modules/jsdoc/jsdoc" -c jsdoc.conf.json > jsdoc.json'
     }
   });
   
