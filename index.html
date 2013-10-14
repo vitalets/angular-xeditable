@@ -887,7 +887,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onbeforesave"]=v; }); 
                       <pre>{{ debug["onaftersave"] | json }}</pre>
                       <p><p>Another way to submit data on server is to define <code>onaftersave</code> attribute pointing to some method of scope.
 Useful when you need to update local model first and only then send it to server.
-There is no input parameters as data already in local model (e.g. <code>&lt;a ... onaftersave=&quot;updateUser()&quot;&gt;</code>).</p>
+There are no input parameters as data already in local model.</p>
 <p>The result type of this method can be following:</p>
 <ul>
 <li>anything except <code>string</code>: success, form will be closed</li>
@@ -1047,14 +1047,22 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
   };
 
   $scope.checkName = function(data) {
-    if (data !== 'awesome') {
-      return "Username should be `awesome`";
+    if (data !== 'awesome' && data !== 'error') {
+      return "Username should be `awesome` or `error`";
     }
   };
 
   $scope.saveUser = function() {
-    //$scope.user already updated!
-    return $http.post('/saveUser', $scope.user);
+    // $scope.user already updated!
+    return $http.post('/saveUser', $scope.user).error(function(err) {
+      if(err.field && err.msg) {
+        // err like {field: "name", msg: "Server-side error for this username!"} 
+        $scope.editableForm.$setError(err.field, err.msg);
+      } else { 
+        // unknown error
+        $scope.editableForm.$setError('name', 'Unknown error!');
+      }
+    });
   };
 });</script>
                       <h3>html</h3>
@@ -1133,14 +1141,22 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
   };
 
   $scope.checkName = function(data) {
-    if (data !== 'awesome') {
-      return &quot;Username should be `awesome`&quot;;
+    if (data !== 'awesome' &amp;&amp; data !== 'error') {
+      return &quot;Username should be `awesome` or `error`&quot;;
     }
   };
 
   $scope.saveUser = function() {
-    //$scope.user already updated!
-    return $http.post('/saveUser', $scope.user);
+    // $scope.user already updated!
+    return $http.post('/saveUser', $scope.user).error(function(err) {
+      if(err.field &amp;&amp; err.msg) {
+        // err like {field: &quot;name&quot;, msg: &quot;Server-side error for this username!&quot;} 
+        $scope.editableForm.$setError(err.field, err.msg);
+      } else { 
+        // unknown error
+        $scope.editableForm.$setError('name', 'Unknown error!');
+      }
+    });
   };
 });</pre>
                     </section>
@@ -1668,7 +1684,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       <tr ng-repeat="user in users">
         <td>
           <!-- editable username (text with validation) -->
-          <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data)">
+          <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data, user.id)">
             {{ user.name || 'empty' }}
           </span>
         </td>
@@ -1742,9 +1758,9 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     return selected.length ? selected[0].text : 'Not set';
   };
 
-  $scope.checkName = function(data) {
-    if (data !== 'awesome') {
-      return "Username should be `awesome`";
+  $scope.checkName = function(data, id) {
+    if (id === 2 && data !== 'awesome') {
+      return "Username 2 should be `awesome`";
     }
   };
 
@@ -1771,7 +1787,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       &lt;tr ng-repeat=&quot;user in users&quot;&gt;
         &lt;td&gt;
           &lt;!-- editable username (text with validation) --&gt;
-          &lt;span editable-text=&quot;user.name&quot; e-form=&quot;tableform&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
+          &lt;span editable-text=&quot;user.name&quot; e-form=&quot;tableform&quot; onbeforesave=&quot;checkName($data, user.id)&quot;&gt;
             {{ user.name || 'empty' }}
           &lt;/span&gt;
         &lt;/td&gt;
@@ -1843,9 +1859,9 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     return selected.length ? selected[0].text : 'Not set';
   };
 
-  $scope.checkName = function(data) {
-    if (data !== 'awesome') {
-      return &quot;Username should be `awesome`&quot;;
+  $scope.checkName = function(data, id) {
+    if (id === 2 &amp;&amp; data !== 'awesome') {
+      return &quot;Username 2 should be `awesome`&quot;;
     }
   };
 
@@ -1910,7 +1926,7 @@ a.editable-click:hover {
     color: #47a447;
     border-bottom-color: #47a447;
 }
-</pre><a href="http://jsfiddle.net/NfPcH/48/" target="_blank" class="btn btn-info">View in jsFiddle</a>
+</pre><a href="http://jsfiddle.net/NfPcH/48/" target="_blank" class="btn btn-info">View customized theme in jsFiddle</a>
           <section id="reference"></section>
           <h1>Reference</h1>
           <!-- jade cannot include dynamically-->
@@ -2045,18 +2061,30 @@ to model.<br>If at least one children callback returns <code>non-string</code> -
                     <table width="100%" class="table-bordered table-condensed">
                       <thead>
                         <tr>
-                          <th width="20%">Name</th>
+                          <th width="15%">Method</th>
+                          <th width="35%">Params</th>
                           <th>Description</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td><code>$hide</code></td>
+                          <td><code>$hide()</code></td>
+                          <td><i>none    </i>
+                          </td>
                           <td><p>Hides form with editable controls without saving.</p>
 </td>
                         </tr>
                         <tr>
-                          <td><code>$show</code></td>
+                          <td><code>$setError(name, msg)</code></td>
+                          <td><strong>name</strong><i> (string) </i>name of field<br><strong>msg</strong><i> (string) </i>error message<br>
+                          </td>
+                          <td><p>Shows error message for particular field.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>$show()</code></td>
+                          <td><i>none    </i>
+                          </td>
                           <td><p>Shows form with editable controls.</p>
 </td>
                         </tr>
