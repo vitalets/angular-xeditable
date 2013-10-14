@@ -32,7 +32,7 @@ angular.module('xeditable').factory('editableFormController',
     /**
      * Shows form with editable controls.
      * 
-     * @var {method} $show
+     * @method $show
      * @memberOf editable-form
      */
     $show: function() {
@@ -89,7 +89,7 @@ angular.module('xeditable').factory('editableFormController',
     /**
      * Hides form with editable controls without saving.
      * 
-     * @var {method} $hide
+     * @method $hide
      * @memberOf editable-form
      */
     $hide: function() {

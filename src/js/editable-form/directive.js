@@ -56,7 +56,7 @@ angular.module('xeditable').directive('editableForm',
             /**
              * Called when form is shown.
              * 
-             * @var {attribute} onshow 
+             * @var {method|attribute} onshow 
              * @memberOf editable-form
              */
             if(attrs.onshow) {
@@ -67,11 +67,11 @@ angular.module('xeditable').directive('editableForm',
             if(!attrs.ngSubmit && !attrs.submit) {
               /**
                * Called after all children `onbeforesave` callbacks but before saving form values
-               * to model.
-               * If at least one children callback returns `non-string` - it will not not be called.
-               * See [editable-form description](#editable-form) for details.
+               * to model.  
+               * If at least one children callback returns `non-string` - it will not not be called.  
+               * See [editable-form demo](#editable-form) for details.
                * 
-               * @var {attribute} onbeforesave 
+               * @var {method|attribute} onbeforesave
                * @memberOf editable-form
                * 
                */
@@ -82,10 +82,10 @@ angular.module('xeditable').directive('editableForm',
               }
 
               /**
-               * Called when form values are saved to model.
-               * See [editable-form description](#editable-form) for details.
+               * Called when form values are saved to model.  
+               * See [editable-form demo](#editable-form) for details.
                * 
-               * @var {attribute} onaftersave 
+               * @var {method|attribute} onaftersave 
                * @memberOf editable-form
                * 
                */
