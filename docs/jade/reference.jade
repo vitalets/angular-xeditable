@@ -5,12 +5,22 @@ mixin methods(items)
   table.table-bordered.table-condensed(width="100%")
     thead
       tr
-        th(width="20%") Name
+        th(width="15%") Method
+        th(width="35%") Params
         th Description
     tbody
       each a in items
         tr
           td: code= a.name
+          td
+            if a.parameters.length
+              each p in a.parameters
+                strong= p.name
+                i= ' ('+p.type+') '
+                = p.description
+                br
+            else
+              i none    
           td!= md(a.description)
 
 mixin props(items)
