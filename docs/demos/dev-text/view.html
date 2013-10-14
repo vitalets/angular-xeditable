@@ -1,0 +1,14 @@
+<div ng-controller="DevText">
+  <a href="#" id="e-attrs" editable-text="user.name" e-style="color: green" e:required e_autocomplete="off" e-data-var="var" x-e-placeholder="Enter name" data-e-ng-bind="test" e:ng:submit="test()">
+    {{ (user.name || 'empty') | uppercase }}
+  </a>
+  <a href="#" class="submit" editable-text="user.name" blur="submit">
+    {{ user.name }}
+  </a>
+  <a href="#" class="cancel" editable-text="user.name" blur="cancel">
+    {{ user.name }}
+  </a>
+  <a href="#" class="ignore" editable-text="user.name" blur="ignore">
+    {{ user.name }}
+  </a>
+</div>  

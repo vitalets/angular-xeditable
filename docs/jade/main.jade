@@ -14,83 +14,41 @@ html(ng-app='app')
   body(data-spy="scroll", data-target=".sidebar")
     include navbar.jade
 
-    - var g, groups = []
-    - groups.push({id: 'overview', text: 'Overview', items: []})
-    - groups.push({id: 'getstarted', text: 'Get started', items: []})
-    - groups.push({id: 'text-simple', text: 'Controls', items: []})
-    - groups.push({id: 'validate-local', text: 'Validation', items: []})
-    - groups.push({id: 'onbeforesave', text: 'Submit', items: []})
-    - groups.push({id: 'editable-form', text: 'Forms', items: []})
-    - groups.push({id: 'bootstrap3', text: 'Themes', items: []})
-
-    - g = groups[2]
-    - g.items.push({id: 'text-simple', text: 'Text'})
-    - g.items.push({id: 'text-customize', text: 'Customize input'})
-    - g.items.push({id: 'text-btn', text: 'Trigger manually'})
-    - g.items.push({id: 'select-local', text: 'Select local'})
-    - g.items.push({id: 'select-remote', text: 'Select remote'})
-    - g.items.push({id: 'select-multiple', text: 'Select multiple'})
-    - g.items.push({id: 'select-nobuttons', text: 'Select no buttons'})
-    - g.items.push({id: 'textarea', text: 'Textarea'})
-    - g.items.push({id: 'checkbox', text: 'Checkbox'})
-    - g.items.push({id: 'bsdate', text: 'Date', bs2: 'http://jsfiddle.net/NfPcH/20'})
-
-    - g = groups[3]
-    - g.items.push({id: 'validate-local', text: 'Validate local'})
-    - g.items.push({id: 'validate-remote', text: 'Validate remote'})
-
-    - g = groups[4]
-    - g.items.push({id: 'onbeforesave', text: 'Onbeforesave'})
-    - g.items.push({id: 'onaftersave', text: 'Onaftersave'})
-
-    - g = groups[5]
-    - g.items.push({id: 'editable-form', text: 'Editable form', nodebug: true})
-    - g.items.push({id: 'editable-row', text: 'Editable row', nodebug: true})
-    - g.items.push({id: 'editable-column', text: 'Editable column', nodebug: true})
-    - g.items.push({id: 'editable-table', text: 'Editable table', nodebug: true})
-
-    - g = groups[6]
-    - g.items.push({id: 'bootstrap3', text: 'Bootstrap 3'})
-    - g.items.push({id: 'bootstrap2', text: 'Bootstrap 2'})
-    - g.items.push({id: 'default', text: 'Default'})
-
-
     .container
       .row
-        .col-md-3
+        .col-sm-3.col-xs-12
           .well.sidebar
             ul.nav
-              each g in groups
-                li
-                  a(href="#"+g.id)= g.text
-                  ul.nav
-                    each item in g.items
-                      li: a(href="#"+item.id)= item.text
+              each g in structure
+                if (!g.env || g.env === env)
+                  li
+                    a(href="#"+(g.anchor || g.id))= g.text
+                    ul.nav
+                      each item in g.items
+                        li: a(href="#"+(item.anchor || item.id))= item.menutext || item.text
 
-        .col-md-9
+        .col-sm-9.col-xs-12
 
           mixin demo(item)
             - var brief = item.id
             section(id=brief)
-              h1= item.text
+              h1= item.text || brief
               - var dir = "docs/demos/"+brief
               - var desc = fs.readFileSync(dir+"/desc.md").toString()
               - var view = fs.readFileSync(dir+"/view.html").toString().trim()
-              - var viewDebug = view
-
-              //add bs2 jsfiddle button
-              - if (item.bs2) {
-              -   var s = '<a href="'+item.bs2+'" target="_blank" class="btn btn-info pull-right">View Bootstrap 2 version in jsFiddle</a>\n</div>'
-              -   viewDebug = viewDebug.replace(/<\/div>$/i, s)
-              - }
-
-              //- viewDebug = view.replace(/<\/div>$/i, '<span class="pull-right">user: <pre>{{user|json}}</pre></span>\n</div>')
               - var ctrl = fs.readFileSync(dir+"/controller.js").toString().trim()
+
               // watch change of user to update rootScope for debugging
               - var ctrlDebug = item.nodebug ? ctrl : ctrl.replace(/\}\);$/i, '$scope.$watch("user", function(v) { $scope.$parent.debug["'+brief+'"]=v; }); });')
 
               h3 demo
-              .well.line-example!= viewDebug
+
+              if item.fiddle
+                a.btn.btn-info.fiddle.pull-right(href=item.fiddle, target="_blank")
+                  = item.fiddleText || 'jsFiddle'
+
+              .well.line-example!= view
+
               if !item.nodebug
                 pre!= '{{ debug["'+brief+'"] | json }}'
               p!= md(desc)
@@ -101,22 +59,34 @@ html(ng-app='app')
               h3 controller.js
               pre.prettyprint= ctrl
 
-          section#overview
-            include overview.jade
+          // render
+          - for(var i=0; i<structure.length; i++)
+            - var g = structure[i]
+            - if (g.env !== undefined && g.env !== env) continue;
+            if (g.type === 'demos')  
+              each item in g.items
+                +demo(item)
+            if (g.type !== 'demos')
+              section(id=g.id)
+              h1= g.text
+              // jade cannot include dynamically
+              if g.id === 'overview'
+                include overview.jade
+              if g.id === 'getstarted'
+                include getstarted.jade
+              if g.id === 'themes'
+                include themes.jade
+              if g.id === 'reference'
+                include reference.jade
 
-          section#getstarted
-            include getstarted.jade
 
-          - for(var i=2; i<=5; i++)
-            - var g = groups[i]
-            each item in g.items
-              +demo(item)
-
-          include themes.jade
 
     footer
       hr
-      p &copy; Vitaliy Potapov 2013. Released under the MIT license
+      :markdown
+        If you have question or idea please feel free to [open issue on github](https://github.com/vitalets/angular-xeditable/issues).
+
+      p &copy; Vitaliy Potapov 2013. Released under the MIT license.
 
     if env == 'prod'
       include metrika.html

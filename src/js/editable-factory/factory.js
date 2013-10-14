@@ -17,8 +17,6 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
       require: [overwrites.directiveName, '?^form'],
       controller: editableController,
       link: function(scope, elem, attrs, ctrl) {
-        //console.log('link directive', attrs[overwrites.directiveName]);
-
         //editable controller
         var eCtrl = ctrl[0];
 
@@ -77,6 +75,8 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         //publich editable controller as `$editable` to be referenced in html
         scope.$editable = eCtrl;
 
+        // add `editable` class to element
+        elem.addClass('editable');
 
         // hasForm
         if(hasForm) {
@@ -118,6 +118,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
             elem.addClass('editable-click');
             elem.bind('click', function(e) {
               e.preventDefault();
+              e.editable = eCtrl;
               scope.$apply(function(){
                 scope.$form.$show();
               });

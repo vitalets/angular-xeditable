@@ -62,4 +62,24 @@ describe('text-simple', function() {
     expect(element(s+'form').count()).toBe(0);
   });
 
+  it('should cancel by click on body', function() {
+    var s = '[ng-controller="TextSimpleCtrl"] ';
+    element(s+'a').click();
+
+    expect(element(s+'a').css('display')).toBe('none');
+    expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
+    expect(element(s+'form input[type="text"]:visible').count()).toBe(1);
+
+    // click on input - stil visible
+    element(s+'form input[type="text"]').click();
+    expect(element(s+'a').css('display')).toBe('none');
+    expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
+    expect(element(s+'form input[type="text"]:visible').count()).toBe(1);
+
+    // click on body - close
+    element('body').click();
+    expect(element(s+'a').css('display')).not().toBe('none');
+    expect(element(s+'a').text()).toMatch('awesome user');
+    expect(element(s+'form').count()).toBe(0);
+  });
 });

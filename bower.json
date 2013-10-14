@@ -1,6 +1,6 @@
 {
   "name": "angular-xeditable",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Edit in place for AngularJS",
   "author": "https://github.com/vitalets",
   "license": "MIT",
@@ -19,8 +19,10 @@
     "docs",
     "zip",
     "src",
+    "starter",
     "Gruntfile.js",
     "index.html",
+    "jsdoc.conf.json",
     "package.json"
   ],
   "dependencies": {

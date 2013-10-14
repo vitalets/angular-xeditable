@@ -1,5 +1,7 @@
+:markdown
+  There are several themes that can be used to style editable controls.
+
 section#bootstrap3
-h1 Themes
 h2 Bootstrap 3
 :markdown
   Include [Bootstrap 3](http://getbootstrap.com) CSS
@@ -44,17 +46,32 @@ pre.prettyprint.
 section#default
 h2 Default
 :markdown
-  No includes required!
-  You can customize theme by overwriting it's properties:
+  No additional CSS required.  
+  You can customize theme in `app.run` by overwriting properties:
 
 pre.prettyprint.
   app.run(function(editableOptions, editableThemes) {
-    // change submit button tpl
-    editableThemes['default'].submitTpl = '&lt;button type="submit"&gt;ok&lt;/button&gt;';
     // set `default` theme
     editableOptions.theme = 'default';
+
+    // overwrite submit button template
+    editableThemes['default'].submitTpl = '&lt;button type="submit"&gt;ok&lt;/button&gt;';
   });
 
 :markdown
   Available properties of each theme you can see in source
   [themes.js](https://github.com/vitalets/angular-xeditable/tree/master/src/js/themes.js)
+
+  To change appearance of editable links you should overwrite CSS:
+
+pre.prettyprint.
+  a.editable-click { 
+      color: green;
+      border-bottom: dotted 2px green;
+  }
+  a.editable-click:hover { 
+      color: #47a447;
+      border-bottom-color: #47a447;
+  }
+
+a.btn.btn-info(href="http://jsfiddle.net/NfPcH/48/", target="_blank") View in jsFiddle

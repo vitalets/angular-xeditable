@@ -8,10 +8,32 @@ body {
   margin-left: 0 !important;
 }
 
-.sidebar {
-  position: fixed;
-  top: 70px;
-  width: 230px;
+@media screen and (max-width: 750px) {
+  .sidebar {
+    position: static;
+    margin-top: 65px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 970px) {
+  #socials {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .sidebar {
+    position: fixed;
+    top: 65px;
+    width: 170px;
+  }
+}
+
+@media screen and (min-width: 970px) {
+  .sidebar {
+    width: 220px;
+  }
 }
 
 .sidebar > .nav > li > a {
@@ -29,26 +51,35 @@ body {
   font-weight: bold;
 }
 
-.sidebar > .nav > li > .nav {
-  /*display: none;*/
-  height: 0;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  -webkit-transition: max-height 0.5s ease-in, opacity 0.3s ease-out;
-  /*
-   height: auto can't use transitions
-   http://stackoverflow.com/questions/3508605/css-transition-height-0-to-height-auto
-  */
-  /*-webkit-transition: height 0.5s ease-out;*/
+@media screen and (min-width: 750px) {
+  .sidebar > .nav > li > .nav {
+    /*display: none;*/
+    height: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    -webkit-transition: max-height 0.5s ease-in, opacity 0.3s ease-out;
+    /*
+     height: auto can't use transitions
+     http://stackoverflow.com/questions/3508605/css-transition-height-0-to-height-auto
+    */
+    /*-webkit-transition: height 0.5s ease-out;*/
+  }
+
+  .sidebar > .nav > li.active > .nav {
+    display: block;
+    height: auto;
+    max-height: 350px;
+    opacity: 1;
+  }
 }
 
-.sidebar > .nav > li.active > .nav {
-  display: block;
-  height: auto;
-  max-height: 350px;
-  opacity: 1;
+@media screen and (max-width: 750px) {
+  .sidebar > .nav > li > .nav {
+    display: none;
+  }
 }
+
 
 /* overwrite ugly google-prettify style */
 pre.prettyprint {
@@ -60,13 +91,32 @@ pre.prettyprint {
   min-height: 75px;
 }
 
+
+.fiddle {
+  margin: 19px;
+}
+
 form[name="editableForm"] > div {
   height: auto;
   padding: 5px 0;
 }
 
-form[name="editableForm"] > div > strong {
+form[name="editableForm"] .title {
+  display: inline-block;
+  font-weight: bold;
+  padding-top: 5px;
   vertical-align: top;
+  min-width: 90px;
+}
+
+form[name="editableForm"] .editable {
+  display: inline-block;
+  padding-top: 5px;
+  vertical-align: top;
+}
+
+form[name="editableForm"] select {
+  width: 120px;
 }
 
 div[ng-controller] table tr td {

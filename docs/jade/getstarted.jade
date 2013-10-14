@@ -1,4 +1,3 @@
-h1 Get started
 ol
   li 
     :markdown
@@ -14,15 +13,21 @@ ol
       = '<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">'
 
   li 
-    span Download and extract 
-    a(href="zip/angular-xeditable-"+version+".zip") angular-xeditable zip
+    span Install angular-xeditable via 
+    a(href="http://bower.io", target="_blank") bower
+    span  or  
+    a(href="zip/angular-xeditable-"+version+".zip") download latest zip    
+    pre.prettyprint bower install angular-xeditable 
 
-  li Include js and css in your project
+
+  li Include angular-xeditable into your project
     pre.prettyprint
-      = '<link href="angular-xeditable/css/xeditable.css" rel="stylesheet">\n'
-      = '<script src="angular-xeditable/js/xeditable.js"></script>'
+      = '<link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">\n'
+      = '<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>'
 
-  li Add "xeditable" module to app dependencies
+  li Define angular app and add "xeditable" to dependencies
+    pre.prettyprint
+      = '<html ng-app="app">'
     pre.prettyprint var app = angular.module("app", ["xeditable"]);
 
   li Set theme in app.run:
@@ -30,6 +35,21 @@ ol
       app.run(function(editableOptions) {
         editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
       });
-        
 
-  li You're ready! Follow the guide below
+  li Markup element that should be editable 
+    pre.prettyprint(ng-non-bindable)
+      = '<div ng-controller="Ctrl">\n'
+      = '  <a href="#" editable-text="user.name">{{ user.name || "empty" }}</a>\n'
+      = '</div>'
+
+  li Define controller
+    pre.prettyprint.
+      app.controller('Ctrl', function($scope) {
+        $scope.user = {
+          name: 'awesome user'
+        };  
+      });
+  li Enjoy!
+    div(style="padding-top: 5px")    
+      a.btn.btn-success(href="starter", target="_blank") View starter template
+      a.btn.btn-primary(href="zip/angular-xeditable-starter.zip", style="margin-left: 10px") Download starter zip

@@ -12,6 +12,8 @@ app.controller('ValidateRemoteCtrl', function($scope, $http, $q) {
       } else { // {status: "error", msg: "Username should be `awesome`!"}
         d.resolve(res.msg)
       }
+    }).error(function(e){
+      d.reject('Server error!');
     });
     return d.promise;
   };

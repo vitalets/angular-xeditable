@@ -1,8 +1,9 @@
-/*
-EditableForm directive:
-- wrap form into editable form: add `onshow` attribute, etc
-- read buffered editables
-*/
+/**
+ * EditableForm directive. Should be defined in <form> containing editable controls.  
+ * It add some usefull methods to form variable exposed to scope by `name="myform"` attribute.
+ *
+ * @namespace editable-form
+ */
 angular.module('xeditable').directive('editableForm',
   ['$rootScope', '$parse', 'editableFormController',
   function($rootScope, $parse, editableFormController) {
@@ -14,7 +15,6 @@ angular.module('xeditable').directive('editableForm',
       compile: function() {
         return {
           pre: function(scope, elem, attrs, ctrl) {
-            //console.log('pre form', attrs.name);
             var form = ctrl[0];
             var eForm;
 
@@ -45,7 +45,6 @@ angular.module('xeditable').directive('editableForm',
             }
           },
           post: function(scope, elem, attrs, ctrl) {
-            //console.log('post form', attrs.name);
             var eForm;
 
             if(attrs.editableForm && scope[attrs.editableForm] && scope[attrs.editableForm].$show) {
@@ -54,19 +53,42 @@ angular.module('xeditable').directive('editableForm',
               eForm = ctrl[0];
             }
 
-            //onshow
+            /**
+             * Called when form is shown.
+             * 
+             * @var {method|attribute} onshow 
+             * @memberOf editable-form
+             */
             if(attrs.onshow) {
               eForm.$onshow = angular.bind(eForm, $parse(attrs.onshow), scope);
             }
 
-            //onbeforesave, onaftersave
+            // onbeforesave, onaftersave
             if(!attrs.ngSubmit && !attrs.submit) {
+              /**
+               * Called after all children `onbeforesave` callbacks but before saving form values
+               * to model.  
+               * If at least one children callback returns `non-string` - it will not not be called.  
+               * See [editable-form demo](#editable-form) for details.
+               * 
+               * @var {method|attribute} onbeforesave
+               * @memberOf editable-form
+               * 
+               */
               if(attrs.onbeforesave) {
                 eForm.$onbeforesave = function() {
                   return $parse(attrs.onbeforesave)(scope, {$data: eForm.$data});
                 };
               }
 
+              /**
+               * Called when form values are saved to model.  
+               * See [editable-form demo](#editable-form) for details.
+               * 
+               * @var {method|attribute} onaftersave 
+               * @memberOf editable-form
+               * 
+               */
               if(attrs.onaftersave) {
                 eForm.$onaftersave = function() {
                   return $parse(attrs.onaftersave)(scope, {$data: eForm.$data});

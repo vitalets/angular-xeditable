@@ -9,7 +9,7 @@
     <tr ng-repeat="user in users">
       <td>
         <!-- editable username (text with validation) -->
-        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)">
+        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)" e-required>
           {{ user.name || 'empty' }}
         </span>
       </td>
@@ -34,9 +34,14 @@
           <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$hide()" class="btn btn-default">
             cancel
           </button>
-        </form>  
-        <button class="btn btn-default" ng-show="!rowform.$visible" ng-click="rowform.$show()">edit</button>
+        </form>
+        <div class="buttons" ng-show="!rowform.$visible">  
+          <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+          <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
+        </div>  
       </td>
     </tr>
   </table>
+
+  <button class="btn btn-default" ng-click="addUser()">Add row</button>
 </div>  

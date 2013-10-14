@@ -1,0 +1,19 @@
+{
+    "opts": {
+        "template": "node_modules/grunt-jsdoc/node_modules/jsdoc/templates/haruki",
+        "destination": "console",
+        "recurse": true
+    },
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "source": {
+        "include": ["src"],
+        "includePattern": ".+\\.js(doc)?$"
+    },
+    "plugins": [],
+    "templates": {
+        "cleverLinks": true,
+        "monospaceLinks": false
+    }
+}

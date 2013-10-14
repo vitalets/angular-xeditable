@@ -9,8 +9,8 @@ angular.module('xeditable').factory('editableFormController',
     $addEditable: function(editable) {
       //console.log('add editable', editable.elem, editable.elem.bind);
       this.$editables.push(editable);
+
       //'on' is not supported in angular 1.0.8
-      //editable.elem.on('$destroy', angular.bind(this, this.$removeEditable, editable));
       editable.elem.bind('$destroy', angular.bind(this, this.$removeEditable, editable));
 
       //bind editable's local $form to self (if not bound yet, below form) 
@@ -29,9 +29,13 @@ angular.module('xeditable').factory('editableFormController',
       }
     },
 
+    /**
+     * Shows form with editable controls.
+     * 
+     * @method $show
+     * @memberOf editable-form
+     */
     $show: function() {
-      //console.log('eform show');
-
       this.$visible = true;
 
       var pc = editablePromiseCollection();
@@ -82,6 +86,12 @@ angular.module('xeditable').factory('editableFormController',
       }
     },
 
+    /**
+     * Hides form with editable controls without saving.
+     * 
+     * @method $hide
+     * @memberOf editable-form
+     */
     $hide: function() {
       this.$visible = false;
       angular.forEach(this.$editables, function(editable) {
@@ -105,7 +115,6 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     $submit: function() {
-      //console.log('form submit');
       //clear errors
       this.$setError(null, '');
 
@@ -172,13 +181,24 @@ angular.module('xeditable').factory('editableFormController',
     $onshow: angular.noop,
     $onbeforesave: angular.noop,
     $onaftersave: angular.noop
-
   };
 
   return function() {
     return angular.extend({
       $editables: [],
+      /**
+       * Form visibility flag.
+       * 
+       * @var {bool} $visible
+       * @memberOf editable-form
+       */
       $visible: false,
+      /**
+       * Form waiting flag. It becomes `true` when form is loading or saving data.
+       * 
+       * @var {bool} $waiting
+       * @memberOf editable-form
+       */
       $waiting: false,
       $data: {}
     }, base);
