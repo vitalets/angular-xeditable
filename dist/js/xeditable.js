@@ -133,8 +133,13 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
     });
 }]);
 
+/**
+ * EditableController class. 
+ * Attached to element with `editable-xxx` directive.
+ *
+ * @namespace editable-element
+ */
 /*
-EditableController: attached to editable element
 TODO: this file should be refactored to work more clear without closures!
 */
 angular.module('xeditable').factory('editableController', ['$q', '$document', 'editableUtils', '$rootScope',
@@ -194,7 +199,34 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
 
     //runtime (defaults)
     self.single = null;
+
+    /**
+     * Attributes defined with `e-*` prefix automatically transfered from original element to
+     * control.  
+     * For example, if you set `<span editable-text="user.name" e-style="width: 100px"`>
+     * then input will appear as `<input style="width: 100px">`.  
+     * See [demo](#text-customize).
+     * 
+     * @var {any|attribute} e-*
+     * @memberOf editable-element
+     */ 
+
+    /**
+     * Whether to show ok/cancel buttons. Values: `right|no`.
+     * If set to `no` control automatically submitted when value changed.  
+     * If control is part of form buttons will never be shown. 
+     * 
+     * @var {string|attribute} buttons
+     * @memberOf editable-element
+     */    
     self.buttons = 'right'; 
+    /**
+     * Action when control losses focus. Values: `cancel|submit|ignore`.
+     * If control is part of form `blur` automatically set to `ignore`.  
+     * 
+     * @var {string|attribute} blur
+     * @memberOf editable-element
+     */     
     self.blur = 'ignore'; // can be 'cancel|submit|ignore'
 
     //init
@@ -233,21 +265,39 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
         });
       }
 
-      //onshow
+      /**
+       * Called when control is shown.  
+       * See [demo](#select-remote).
+       * 
+       * @var {method|attribute} onshow
+       * @memberOf editable-element
+       */
       if($attrs.onshow) {
         self.onshow = function() {
           return self.catchError($parse($attrs.onshow)($scope));
         };
       }
 
-      //onbeforesave
+      /**
+       * Called during submit before value is saved to model.  
+       * See [demo](#onbeforesave).
+       * 
+       * @var {method|attribute} onbeforesave
+       * @memberOf editable-element
+       */
       if ($attrs.onbeforesave) {
         self.onbeforesave = function() {
           return self.catchError($parse($attrs.onbeforesave)($scope));
         };
       }
 
-      //onaftersave
+      /**
+       * Called during submit after value is saved to model.  
+       * See [demo](#onaftersave).
+       * 
+       * @var {method|attribute} onaftersave
+       * @memberOf editable-element
+       */
       if ($attrs.onaftersave) {
         self.onaftersave = function() {
           return self.catchError($parse($attrs.onaftersave)($scope));
@@ -677,7 +727,7 @@ angular.module('xeditable').factory('editableFormController',
     /**
      * Shows form with editable controls.
      * 
-     * @var {method} $show
+     * @method $show
      * @memberOf editable-form
      */
     $show: function() {
@@ -734,7 +784,7 @@ angular.module('xeditable').factory('editableFormController',
     /**
      * Hides form with editable controls without saving.
      * 
-     * @var {method} $hide
+     * @method $hide
      * @memberOf editable-form
      */
     $hide: function() {
@@ -851,7 +901,7 @@ angular.module('xeditable').factory('editableFormController',
 }]);
 
 /**
- * EditableForm directive. Should be defined in <form> containing editable controls.
+ * EditableForm directive. Should be defined in <form> containing editable controls.  
  * It add some usefull methods to form variable exposed to scope by `name="myform"` attribute.
  *
  * @namespace editable-form
@@ -908,7 +958,7 @@ angular.module('xeditable').directive('editableForm',
             /**
              * Called when form is shown.
              * 
-             * @var {attribute} onshow 
+             * @var {method|attribute} onshow 
              * @memberOf editable-form
              */
             if(attrs.onshow) {
@@ -919,11 +969,11 @@ angular.module('xeditable').directive('editableForm',
             if(!attrs.ngSubmit && !attrs.submit) {
               /**
                * Called after all children `onbeforesave` callbacks but before saving form values
-               * to model.
-               * If at least one children callback returns `non-string` - it will not not be called.
-               * See [editable-form description](#editable-form) for details.
+               * to model.  
+               * If at least one children callback returns `non-string` - it will not not be called.  
+               * See [editable-form demo](#editable-form) for details.
                * 
-               * @var {attribute} onbeforesave 
+               * @var {method|attribute} onbeforesave
                * @memberOf editable-form
                * 
                */
@@ -934,10 +984,10 @@ angular.module('xeditable').directive('editableForm',
               }
 
               /**
-               * Called when form values are saved to model.
-               * See [editable-form description](#editable-form) for details.
+               * Called when form values are saved to model.  
+               * See [editable-form demo](#editable-form) for details.
                * 
-               * @var {attribute} onaftersave 
+               * @var {method|attribute} onaftersave 
                * @memberOf editable-form
                * 
                */
