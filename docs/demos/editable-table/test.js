@@ -52,38 +52,35 @@ describe('editable-table', function() {
     sleep(delay);
     checkShown();
 
-    //submit incorrect values
+    //submit incorrect values (they set initially)
     element(s+'> div > span > button[type="submit"]').click();
 
     checkShown();
 
-    //error shown
-    expect(element(s+'table tr:eq(1) td:eq(0) .editable-error:visible').count()).toBe(1);
+    //error shown (row 2)
     expect(element(s+'table tr:eq(2) td:eq(0) .editable-error:visible').count()).toBe(1);
-    expect(element(s+'table tr:eq(3) td:eq(0) .editable-error:visible').count()).toBe(1);
-    expect(element(s+'table tr:eq(1) td:eq(0) .editable-error').text()).toMatch('Username should be `awesome`');
+    expect(element(s+'table tr:eq(2) td:eq(0) .editable-error').text()).toMatch('Username 2 should be `awesome`');
 
     //set correct values
-    using(s+'table tr:eq(1) td:eq(0)').input('$data').enter('awesome');
     using(s+'table tr:eq(2) td:eq(0)').input('$data').enter('awesome');
-    using(s+'table tr:eq(3) td:eq(0)').input('$data').enter('awesome');
     using(s+'table tr:eq(1) td:eq(1)').select('$data').option('3'); //status4
     using(s+'table tr:eq(1) td:eq(2)').select('$data').option('0'); //user
 
     element(s+'> div > span > button[type="submit"]').click();
 
     checkWaiting();
+
     //error hidden
-    expect(element(s+'table tr td:eq(0) .editable-error:visible').count()).toBe(0);
+    expect(element(s+'table tr td:eq(2) .editable-error:visible').count()).toBe(0);
 
     sleep(delay);
 
     checkClosed();
 
     //check updated values
-    expect(element(s+'table tr:eq(1) td:eq(0) span[editable-text]').text()).not().toMatch('user1');
+    expect(element(s+'table tr:eq(1) td:eq(0) span[editable-text]').text()).toMatch('user1');
     expect(element(s+'table tr:eq(2) td:eq(0) span[editable-text]').text()).not().toMatch('user2');
-    expect(element(s+'table tr:eq(3) td:eq(0) span[editable-text]').text()).not().toMatch('user3');
+    expect(element(s+'table tr:eq(3) td:eq(0) span[editable-text]').text()).toMatch('user3');
     expect(element(s+'table tr:eq(1) td:eq(1) span[editable-select]').text()).toMatch('status4');
     expect(element(s+'table tr:eq(1) td:eq(2) span[editable-select]').text()).toMatch('user');
   });
