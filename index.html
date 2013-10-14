@@ -1934,6 +1934,25 @@ a.editable-click:hover {
                         </tr>
                       </thead>
                       <tbody>
+                        <tr>
+                          <td><code>onaftersave</code></td>
+                          <td><p>Called when form values are saved to model.
+See <a href="#editable-form">editable-form description</a> for details.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>onbeforesave</code></td>
+                          <td><p>Called after all children <code>onbeforesave</code> callbacks but before saving form values
+to model.
+If at least one children callback returns <code>non-string</code> - it will not not be called.
+See <a href="#editable-form">editable-form description</a> for details.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>onshow</code></td>
+                          <td><p>Called when form is shown.</p>
+</td>
+                        </tr>
                       </tbody>
                     </table>
           <h3>Properties</h3><p>Properties are available when you set <code>name</code> attribute of form: </p>
@@ -1950,6 +1969,18 @@ a.editable-click:hover {
                         </tr>
                       </thead>
                       <tbody>
+                        <tr>
+                          <td><code>$visible</code></td>
+                          <td>bool</td>
+                          <td><p>Form visibility flag.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>$waiting</code></td>
+                          <td>bool</td>
+                          <td><p>Form waiting flag. It becomes <code>true</code> when form is loading or saving data.</p>
+</td>
+                        </tr>
                       </tbody>
                     </table>
           <h3>Methods</h3><p>Methods are available when you set <code>name</code> attribute of form:</p>
@@ -1965,6 +1996,16 @@ a.editable-click:hover {
                         </tr>
                       </thead>
                       <tbody>
+                        <tr>
+                          <td><code>$hide</code></td>
+                          <td><p>Hides form with editable controls without saving.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>$show</code></td>
+                          <td><p>Shows form with editable controls.</p>
+</td>
+                        </tr>
                       </tbody>
                     </table>
         </div>

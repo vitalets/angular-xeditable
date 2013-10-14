@@ -36,7 +36,7 @@ h2 Reference: editable element
 
 section#ref-form
 h2 Reference: editable form
-- var data = jsdoc.namespaces ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-form'})[0] : []
+- var data = jsdoc.namespaces && jsdoc.namespaces.length ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-form'})[0] : []
 
 h3 Attributes
 :markdown
