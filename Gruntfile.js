@@ -128,7 +128,7 @@ module.exports = function(grunt) {
     version: '<%= pkg.version %>',
     size: Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024),
     structure: require('./docs/structure.js'),
-    jsdoc: require('./docs/jsdoc.json')
+    jsdoc: "<%= grunt.file.exists('./jsdoc.json') ? grunt.file.readJSON('./jsdoc.json') : {} %>"
   };
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.config('jade', {
@@ -163,8 +163,15 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.config('watch', {
     jade: {
-      files: ['docs/**/*'],
+      files: ['docs/**/*', 'jsdoc.json'],
       tasks: ['jade:docsdev'],
+      options: {
+        spawn: false
+      }
+    },
+    jsdoc: {
+      files: ['src/**/*.js'],
+      tasks: ['shell:jsdoc'],
       options: {
         spawn: false
       }
@@ -200,6 +207,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('docs', [
+    'shell:jsdoc',                 
     'jade'
   ]);
 
