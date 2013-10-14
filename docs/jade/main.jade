@@ -14,65 +14,18 @@ html(ng-app='app')
   body(data-spy="scroll", data-target=".sidebar")
     include navbar.jade
 
-    - var g, groups = []
-    - groups.push({id: 'overview', text: 'Overview', items: []})
-    - groups.push({id: 'getstarted', text: 'Get started', items: []})
-    - groups.push({id: 'text-simple', text: 'Controls', items: []})
-    - groups.push({id: 'validate-local', text: 'Validation', items: []})
-    - groups.push({id: 'onbeforesave', text: 'Submit', items: []})
-    - groups.push({id: 'editable-form', text: 'Forms', items: []})
-    - groups.push({id: 'bootstrap3', text: 'Themes', items: []})
-
-    - g = groups[2]
-    - g.items.push({id: 'text-simple', text: 'Text', fiddle: 'http://jsfiddle.net/NfPcH/25/'})
-    - g.items.push({id: 'text-customize', text: 'Customize input', fiddle: 'http://jsfiddle.net/NfPcH/26/'})
-    - g.items.push({id: 'text-btn', text: 'Trigger manually', fiddle: 'http://jsfiddle.net/NfPcH/27/'})
-    - g.items.push({id: 'select-local', text: 'Select local', fiddle: 'http://jsfiddle.net/NfPcH/28/'})
-    - g.items.push({id: 'select-remote', text: 'Select remote', fiddle: 'http://jsfiddle.net/NfPcH/29/'})
-    - g.items.push({id: 'select-multiple', text: 'Select multiple', fiddle: 'http://jsfiddle.net/NfPcH/30/'})
-    - g.items.push({id: 'select-nobuttons', text: 'Select no buttons', fiddle: 'http://jsfiddle.net/NfPcH/31/'})
-    - g.items.push({id: 'textarea', text: 'Textarea', fiddle: 'http://jsfiddle.net/NfPcH/32/'})
-    - g.items.push({id: 'checkbox', text: 'Checkbox', fiddle: 'http://jsfiddle.net/NfPcH/33/'})
-    - g.items.push({id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/NfPcH/23/', fiddleText: 'View Bootstrap 2 jsFiddle'})
-    - g.items.push({id: 'bstime', text: 'Time', fiddle: 'http://jsfiddle.net/NfPcH/34/', fiddleText: 'View Bootstrap 2 jsFiddle'})
-    - g.items.push({id: 'typeahead', text: 'Typeahead', fiddle: 'http://jsfiddle.net/NfPcH/46/', fiddleText: 'View Bootstrap 2 jsFiddle'})
-
-    - g = groups[3]
-    - g.items.push({id: 'validate-local', text: 'Validate local', fiddle: 'http://jsfiddle.net/NfPcH/35/'})
-    - g.items.push({id: 'validate-remote', text: 'Validate remote', fiddle: 'http://jsfiddle.net/NfPcH/36/'})
-
-    - g = groups[4]
-    - g.items.push({id: 'onbeforesave', text: 'Submit via onbeforesave', fiddle: 'http://jsfiddle.net/NfPcH/37/', menutext: 'Onbeforesave'})
-    - g.items.push({id: 'onaftersave', text: 'Submit via onaftersave', fiddle: 'http://jsfiddle.net/NfPcH/38/', menutext: 'Onaftersave'})
-
-    - g = groups[5]
-    - g.items.push({id: 'editable-form', text: 'Editable form', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/50/'})
-    - g.items.push({id: 'editable-row', text: 'Editable row', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/43/'})
-    - g.items.push({id: 'editable-column', text: 'Editable column', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/45/'})
-    - g.items.push({id: 'editable-table', text: 'Editable table', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/44/'})
-
-    - g = groups[6]
-    - g.items.push({id: 'bootstrap3', text: '', menutext: 'Bootstrap 3'})
-    - g.items.push({id: 'bootstrap2', text: '', menutext: 'Bootstrap 2'})
-    - g.items.push({id: 'default', text: '', menutext: 'Default'})
-
-    // dev-only-tests
-    - groups.push({id: 'dev-text', text: 'Dev Tests', items: [], env: 'dev'})
-    - g = groups[7]
-    - g.items.push({id: 'dev-text'});
-
     .container
       .row
         .col-sm-3.col-xs-12
           .well.sidebar
             ul.nav
-              each g in groups
+              each g in structure
                 li
-                  a(href="#"+g.id)= g.text
+                  a(href="#"+(g.anchor || g.id))= g.text
                   ul.nav
                     each item in g.items
                       if (!item.env || item.env === env)
-                        li: a(href="#"+item.id)= item.menutext || item.text
+                        li: a(href="#"+(item.anchor || item.id))= item.menutext || item.text
 
         .col-sm-9.col-xs-12
 
@@ -106,24 +59,25 @@ html(ng-app='app')
               h3 controller.js
               pre.prettyprint= ctrl
 
-          section#overview
-            include overview.jade
-
-          section#getstarted
-            include getstarted.jade
-
-          - for(var i=2; i<=5; i++)
-            - var g = groups[i]
-            each item in g.items
-              +demo(item)
-
-          include themes.jade
-
-          // dev-only
-          if(env !== 'prod')
-            each item in groups[7].items
-              +demo(item)
-
+          // render
+          - for(var i=0; i<structure.length; i++)
+            - var g = structure[i]
+            - if (g.env !== undefined && g.env !== env) continue;
+            if (g.type === 'demos')  
+              each item in g.items
+                +demo(item)
+            if (g.type !== 'demos')
+              section(id=g.id)
+              h1= g.text
+              // jade cannot include dynamically
+              if g.id === 'overview'
+                include overview.jade
+              if g.id === 'getstarted'
+                include getstarted.jade
+              if g.id === 'themes'
+                include themes.jade
+              if g.id === 'reference'
+                include reference.jade
 
     footer
       hr

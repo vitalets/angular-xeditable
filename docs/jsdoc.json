@@ -65,7 +65,7 @@
                     "name": "onbeforesave",
                     "access": "",
                     "virtual": false,
-                    "description": "Called after all children `onbeforesave` callbacks but before form values\nare saved to model.\nIf at least one children callback returns `non-string` - it will not not be called.\nSee [editable-form description](#editable-form) for details.",
+                    "description": "Called after all children `onbeforesave` callbacks but before saving form values\nto model.\nIf at least one children callback returns `non-string` - it will not not be called.\nSee [editable-form description](#editable-form) for details.",
                     "type": {
                         "names": [
                             "attribute"

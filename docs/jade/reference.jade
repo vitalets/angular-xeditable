@@ -1,0 +1,68 @@
+p List of all possible attributes, properties and methods.
+
+mixin tbl2(type, data)
+  - var items = data.properties.filter(function(v){return ~v.type.names.indexOf(type)})
+  - items = items.sort(function(a,b){return a.name > b.name ? 1 : -1})
+  table.table-bordered.table-condensed(width="100%")
+    thead
+      tr
+        th(width="20%") Name
+        th Description
+    tbody
+      each a in items
+        tr
+          td: code= a.name
+          td!= md(a.description)
+
+mixin tbl3(data)
+  - var items = data.properties.filter(function(v){return !~v.type.names.indexOf('attribute') && !~v.type.names.indexOf('method')})
+  - items = items.sort(function(a,b){return a.name > b.name ? 1 : -1})
+  table.table-bordered.table-condensed(width="100%")
+    thead
+      tr
+        th(width="15%") Name
+        th(width="15%") Type
+        th Description
+    tbody
+      each a in items
+        tr
+          td: code= a.name
+          td= a.type.names[0]          
+          td!= md(a.description)          
+
+section#ref-element
+h2 Reference: editable element
+
+
+section#ref-form
+h2 Reference: editable form
+- var data = jsdoc.namespaces.filter(function(v){return v.name === 'editable-form'})[0]
+
+
+h3 Attributes
+:markdown
+  Attributes can be defined as:
+pre.prettyprint
+  = '<form editable-form name="myform" [attributes]>\n'
+  = '...\n'
+  = '</form>\n'
++tbl2('attribute', data)
+
+
+h3 Properties
+:markdown
+  Properties are available when you set `name` attribute of form: 
+pre.prettyprint
+  = '<form editable-form name="myform">\n'
+  = '// now myform.[property] is available in template and $scope.myform.[property] - in controller\n'
++tbl3(data)
+
+
+h3 Methods
+:markdown
+  Methods are available when you set `name` attribute of form:
+pre.prettyprint
+  = '<form editable-form name="myform">\n'
+  = '// now myform.[method] is available in template and $scope.myform.[method] - in controller\n'
++tbl2('method', data)
+

@@ -126,7 +126,9 @@ module.exports = function(grunt) {
     fs: require('fs'),
     md: marked,
     version: '<%= pkg.version %>',
-    size: Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024)
+    size: Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024),
+    structure: require('./docs/structure.js'),
+    jsdoc: require('./docs/jsdoc.json')
   };
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.config('jade', {
@@ -169,21 +171,10 @@ module.exports = function(grunt) {
     }
   });
 
-  //jsdoc
-  //grunt.loadNpmTasks('grunt-jsdoc');
+  // jsdoc
+  // grunt jsdoc cant output to plain json
+  // grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-shell');
-  /*
-  grunt.config('jsdoc', {
-    docs: {
-      src: ['src\/**\/*.js'], 
-      options: {
-        destination: 'console',
-        verbose: true,
-        template: 'node_modules/grunt-jsdoc/node_modules/jsdoc/templates/haruki'
-      }
-    }
-  });
-  */
   grunt.config('shell', {
     jsdoc: {
       options: { 

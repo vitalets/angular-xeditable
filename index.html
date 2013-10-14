@@ -37,7 +37,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.5.zip" class="btn btn-primary">Download 0.1.5 ~ 12k</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.5.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.5 ~ 12kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -103,6 +103,8 @@
                   <li><a href="#textarea">Textarea</a></li>
                   <li><a href="#checkbox">Checkbox</a></li>
                   <li><a href="#bsdate">Date</a></li>
+                  <li><a href="#bstime">Time</a></li>
+                  <li><a href="#typeahead">Typeahead</a></li>
                 </ul>
               </li>
               <li><a href="#validate-local">Validation</a>
@@ -132,66 +134,77 @@
                   <li><a href="#default">Default</a></li>
                 </ul>
               </li>
+              <li><a href="#ref-element">Reference</a>
+                <ul class="nav">
+                  <li><a href="#ref-element">Editable element</a></li>
+                  <li><a href="#ref-form">Editable form</a></li>
+                </ul>
+              </li>
+              <li><a href="#dev-text">Dev Tests</a>
+                <ul class="nav">
+                  <li><a href="#dev-text"></a></li>
+                </ul>
+              </li>
             </ul>
           </div>
         </div>
         <div class="col-sm-9 col-xs-12">
-          <section id="overview">
-            <h1>Overview</h1><p><strong>Angular-xeditable</strong> is javascript library that allows you to create edit-in-place elements
+          <!-- render-->
+          <section id="overview"></section>
+          <h1>Overview</h1>
+          <!-- jade cannot include dynamically--><p><strong>Angular-xeditable</strong> is javascript library that allows you to create edit-in-place elements
 in <a href="http://angularjs.org">AngularJS</a> projects.<br>It is based on ideas of <a href="http://vitalets.github.io/x-editable">x-editable</a> but was written from scratch
 to use power of angular and support complex forms / editable grids.</p>
 
-            <h4>Dependencies</h4><p>It does not depend on any libraries except AngularJS itself.<br>For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.</p>
+          <h4>Dependencies</h4><p>Basically it does not depend on any libraries except <a href="http://angularjs.org">AngularJS</a> itself.<br>For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.<br>For some extra controls (e.g. datepicker) you may need to include <a href="http://angular-ui.github.io/bootstrap/">angular-ui bootstrap</a>.</p>
 
-          </section>
-          <section id="getstarted">
-            <h1>Get started</h1>
-            <ol>
-              <li> <p>Include <a href="http://angularjs.org">Angular.js</a> in your project</p>
+          <section id="getstarted"></section>
+          <h1>Get started</h1>
+          <!-- jade cannot include dynamically-->
+          <ol>
+            <li> <p>Include <a href="http://angularjs.org">Angular.js</a> in your project</p>
 
-                <pre class="prettyprint">&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js&quot;&gt;&lt;/script&gt;</pre><p>Optionally include <a href="http://getbootstrap.com">Bootstrap</a> CSS for theming</p>
+              <pre class="prettyprint">&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js&quot;&gt;&lt;/script&gt;</pre><p>Optionally include <a href="http://getbootstrap.com">Bootstrap</a> CSS for theming</p>
 
-                <pre class="prettyprint">&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
-              </li>
-              <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.1.5.zip">download latest zip    </a>
-                <pre class="prettyprint">bower install angular-xeditable </pre>
-              </li>
-              <li>Include angular-xeditable into your project
-                <pre class="prettyprint">&lt;link href=&quot;angular-xeditable/css/xeditable.css&quot; rel=&quot;stylesheet&quot;&gt;
+              <pre class="prettyprint">&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
+            </li>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.1.5.zip">download latest zip    </a>
+              <pre class="prettyprint">bower install angular-xeditable </pre>
+            </li>
+            <li>Include angular-xeditable into your project
+              <pre class="prettyprint">&lt;link href=&quot;angular-xeditable/css/xeditable.css&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;script src=&quot;angular-xeditable/js/xeditable.js&quot;&gt;&lt;/script&gt;</pre>
-              </li>
-              <li>Define angular app and add "xeditable" to dependencies
-                <pre class="prettyprint">&lt;html ng-app=&quot;app&quot;&gt;</pre>
-                <pre class="prettyprint">var app = angular.module("app", ["xeditable"]);</pre>
-              </li>
-              <li>Set theme in app.run:
-                <pre class="prettyprint">app.run(function(editableOptions) {
+            </li>
+            <li>Define angular app and add "xeditable" to dependencies
+              <pre class="prettyprint">&lt;html ng-app=&quot;app&quot;&gt;</pre>
+              <pre class="prettyprint">var app = angular.module("app", ["xeditable"]);</pre>
+            </li>
+            <li>Set theme in app.run:
+              <pre class="prettyprint">app.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });
 </pre>
-              </li>
-              <li>Markup element that should be editable 
-                <pre ng-non-bindable class="prettyprint">&lt;div ng-controller=&quot;Ctrl&quot;&gt;
+            </li>
+            <li>Markup element that should be editable 
+              <pre ng-non-bindable class="prettyprint">&lt;div ng-controller=&quot;Ctrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot;&gt;{{ user.name || &quot;empty&quot; }}&lt;/a&gt;
 &lt;/div&gt;</pre>
-              </li>
-              <li>Define controller
-                <pre class="prettyprint">app.controller('Ctrl', function($scope) {
+            </li>
+            <li>Define controller
+              <pre class="prettyprint">app.controller('Ctrl', function($scope) {
   $scope.user = {
     name: 'awesome user'
   };  
 });</pre>
-              </li>
-              <li>Enjoy!
-                <div style="padding-top: 5px">   <a href="starter" target="_blank" class="btn btn-primary">View starter template</a><a href="zip/angular-xeditable-starter.zip" style="margin-left: 10px" class="btn btn-success">Download starter zip</a></div>
-              </li>
-            </ol>
-          </section>
+            </li>
+            <li>Enjoy!
+              <div style="padding-top: 5px">   <a href="starter" target="_blank" class="btn btn-success">View starter template</a><a href="zip/angular-xeditable-starter.zip" style="margin-left: 10px" class="btn btn-primary">Download starter zip</a></div>
+            </li>
+          </ol>
                     <section id="text-simple">
                       <h1>Text</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/25/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextSimpleCtrl">
   <a href="#" editable-text="user.name">{{ user.name || 'empty' }}</a>
 </div></div>
@@ -218,9 +231,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-simple"]=v; }); }
                     </section>
                     <section id="text-customize">
                       <h1>Customize input</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/26/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextCustomizeCtrl">
   <a href="#" editable-text="user.name" e-style="color: green" e-required e-placeholder="Enter name">
     {{ (user.name || 'empty') | uppercase }}
@@ -252,9 +264,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-customize"]=v; })
                     </section>
                     <section id="text-btn">
                       <h1>Trigger manually</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/27/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextBtnCtrl">
   <span editable-text="user.name" e-form="textBtnForm">
     {{ user.name || 'empty' }}
@@ -291,9 +302,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-btn"]=v; }); });<
                     </section>
                     <section id="select-local">
                       <h1>Select local</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/28/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="SelectLocalCtrl">
   <a href="#" editable-select="user.status" e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
@@ -349,9 +359,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-local"]=v; }); 
                     </section>
                     <section id="select-remote">
                       <h1>Select remote</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/29/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="SelectRemoteCtrl">
   <a href="#" editable-select="user.group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
     {{ user.groupName || 'not set' }}
@@ -414,9 +423,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
                     </section>
                     <section id="select-multiple">
                       <h1>Select multiple</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/30/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="SelectMultipleCtrl">
   <a href="#" editable-select="user.status" e-multiple e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
@@ -480,9 +488,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-multiple"]=v; }
                     </section>
                     <section id="select-nobuttons">
                       <h1>Select no buttons</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/31/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="SelectNobuttonsCtrl">
   <a href="#" editable-select="user.status" buttons="no" e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
@@ -537,9 +544,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-nobuttons"]=v; 
                     </section>
                     <section id="textarea">
                       <h1>Textarea</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/32/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextareaCtrl">
   <a href="#" editable-textarea="user.desc" e-rows="7" e-cols="40">
     <pre>{{ user.desc || 'no description' }}</pre>
@@ -571,9 +577,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["textarea"]=v; }); });<
                     </section>
                     <section id="checkbox">
                       <h1>Checkbox</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/33/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="CheckboxCtrl">
   <a href="#" editable-checkbox="user.remember" e-title="Remember?">
     {{ user.remember && "Remember me!" || "Don't remember" }}
@@ -604,14 +609,12 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checkbox"]=v; }); });<
                     </section>
                     <section id="bsdate">
                       <h1>Date</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/23/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 2 jsFiddle</a>
                       <div class="well line-example"><div ng-controller="BsdateCtrl">
   <a href="#" editable-bsdate="user.dob" e-datepicker-popup="dd-MMMM-yyyy">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
-<a href="http://jsfiddle.net/NfPcH/19" target="_blank" class="btn btn-info pull-right">View Bootstrap 2 version in jsFiddle</a>
 </div></div>
                       <pre>{{ debug["bsdate"] | json }}</pre>
                       <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br>Currently it has only Bootstrap 2 version, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
@@ -640,11 +643,86 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</s
   };
 });</pre>
                     </section>
+                    <section id="bstime">
+                      <h1>Time</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/34/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 2 jsFiddle</a>
+                      <div class="well line-example"><div ng-controller="BstimeCtrl">
+  <a href="#" editable-bstime="user.time" e-show-meridian="false" e-minute-step="10">
+    {{ (user.time | date:"HH:mm") || 'empty' }}
+  </a>
+</div></div>
+                      <pre>{{ debug["bstime"] | json }}</pre>
+                      <p><p>Time control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/timepicker">Angular-ui bootstrap timepicker</a>.<br>Currently it has only Bootstrap 2 version, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
+<pre class="prettyprint">&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<p>Add <code>ui.bootstrap</code> as module dependency:</p>
+<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
+<p>And set <code>editable-bstime</code> attribute in editable element.
+Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-minute-step=&quot;10&quot;</code>.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('BstimeCtrl', function($scope) {
+  $scope.user = {
+    time: new Date(1984, 4, 15, 19, 20)
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["bstime"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;BstimeCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-bstime=&quot;user.time&quot; e-show-meridian=&quot;false&quot; e-minute-step=&quot;10&quot;&gt;
+    {{ (user.time | date:&quot;HH:mm&quot;) || 'empty' }}
+  &lt;/a&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('BstimeCtrl', function($scope) {
+  $scope.user = {
+    time: new Date(1984, 4, 15, 19, 20)
+  };
+});</pre>
+                    </section>
+                    <section id="typeahead">
+                      <h1>Typeahead</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/46/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 2 jsFiddle</a>
+                      <div class="well line-example"><div ng-controller="TypeaheadCtrl">
+  <a href="#" editable-text="user.state" e-typeahead="state for state in states | filter:$viewValue | limitTo:8">
+    {{ user.state || 'empty' }}
+  </a>
+</div></div>
+                      <pre>{{ debug["typeahead"] | json }}</pre>
+                      <p><p>Typeahead control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/typeahead">Angular-ui bootstrap typeahead</a>.<br>Basically it is normal <code>editable-text</code> control with additional <code>e-typeahead</code> attributes.<br>Please note that it works only in Bootstrap 2!<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
+<pre class="prettyprint">&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<p>Then add <code>ui.bootstrap</code> as module dependency:</p>
+<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
+<p>And finally set <code>editable-text</code> attribute pointing to model and <code>e-typeahead</code> attribute pointing to typeahead items.
+Other parameters can be defined via <code>e-typeahead-*</code> syntax, e.g. <code>e-typeahead-wait-ms=&quot;100&quot;</code>.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('TypeaheadCtrl', function($scope) {
+  $scope.user = {
+    state: 'Arizona'
+  };
+
+  $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+$scope.$watch("user", function(v) { $scope.$parent.debug["typeahead"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TypeaheadCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.state&quot; e-typeahead=&quot;state for state in states | filter:$viewValue | limitTo:8&quot;&gt;
+    {{ user.state || 'empty' }}
+  &lt;/a&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('TypeaheadCtrl', function($scope) {
+  $scope.user = {
+    state: 'Arizona'
+  };
+
+  $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+});</pre>
+                    </section>
                     <section id="validate-local">
                       <h1>Validate local</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/35/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="ValidateLocalCtrl">
   <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
     {{ user.name || 'empty' }}
@@ -688,9 +766,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["validate-local"]=v; })
                     </section>
                     <section id="validate-remote">
                       <h1>Validate remote</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/36/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="ValidateRemoteCtrl">
   <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
     {{ user.name || 'empty' }}
@@ -716,6 +793,8 @@ If promise resolves to <strong>string</strong> validation failed.</p>
       } else { // {status: "error", msg: "Username should be `awesome`!"}
         d.resolve(res.msg)
       }
+    }).error(function(e){
+      d.reject('Server error!');
     });
     return d.promise;
   };
@@ -741,16 +820,17 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["validate-remote"]=v; }
       } else { // {status: &quot;error&quot;, msg: &quot;Username should be `awesome`!&quot;}
         d.resolve(res.msg)
       }
+    }).error(function(e){
+      d.reject('Server error!');
     });
     return d.promise;
   };
 });</pre>
                     </section>
                     <section id="onbeforesave">
-                      <h1>Onbeforesave</h1>
-                      <!--add bs2 jsfiddle button-->
+                      <h1>Submit via onbeforesave</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/37/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="OnbeforesaveCtrl">
   <a href="#" editable-text="user.name" onbeforesave="updateUser($data)">
     {{ user.name || 'empty' }}
@@ -801,10 +881,9 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onbeforesave"]=v; }); 
 });</pre>
                     </section>
                     <section id="onaftersave">
-                      <h1>Onaftersave</h1>
-                      <!--add bs2 jsfiddle button-->
+                      <h1>Submit via onaftersave</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/38/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="OnaftersaveCtrl">
   <a href="#" editable-text="user.name" onaftersave="updateUser()">
     {{ user.name || 'empty' }}
@@ -852,30 +931,28 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     </section>
                     <section id="editable-form">
                       <h1>Editable form</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/50/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableFormCtrl">
   <form editable-form name="editableForm" onaftersave="saveUser()">
-    
     <div>
       <!-- editable username (text with validation) -->
-      <strong>User name: </strong>
-      <span editable-text="user.name" onbeforesave="checkName($data)">{{ user.name || 'empty' }}</span>
+      <span class="title">User name: </span>
+      <span editable-text="user.name" e-name="name" onbeforesave="checkName($data)" e-required>{{ user.name || 'empty' }}</span>
     </div> 
 
     <div>
       <!-- editable status (select-local) -->
-      <strong>Status: </strong>
-      <span editable-select="user.status" e-ng-options="s.value as s.text for s in statuses">
+      <span class="title">Status: </span>
+      <span editable-select="user.status" e-name="status" e-ng-options="s.value as s.text for s in statuses">
         {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
       </span>
     </div>  
 
     <div>
       <!-- editable group (select-remote) -->
-      <strong>Group: </strong>
-      <span editable-select="user.group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
+      <span class="title">Group: </span>
+      <span editable-select="user.group" e-name="group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
         {{ showGroup() }}
       </span>
     </div>
@@ -895,7 +972,6 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
         </button>
       </span>
     </div>
-
   </form>  
 </div></div>
                       <p><p>To show several editable elements together and submit at once you should wrap them into <code>&lt;form editable-form name=&quot;myform&quot; ...&gt;</code> tag. The <code>name</code> attribute of form will create variable in scope (normal angular behavior) and <code>editable-form</code> attribute will add a few methods to that variable: </p>
@@ -989,25 +1065,24 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableFormCtrl&quot;&gt;
   &lt;form editable-form name=&quot;editableForm&quot; onaftersave=&quot;saveUser()&quot;&gt;
-    
     &lt;div&gt;
       &lt;!-- editable username (text with validation) --&gt;
-      &lt;strong&gt;User name: &lt;/strong&gt;
-      &lt;span editable-text=&quot;user.name&quot; onbeforesave=&quot;checkName($data)&quot;&gt;{{ user.name || 'empty' }}&lt;/span&gt;
+      &lt;span class=&quot;title&quot;&gt;User name: &lt;/span&gt;
+      &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; onbeforesave=&quot;checkName($data)&quot; e-required&gt;{{ user.name || 'empty' }}&lt;/span&gt;
     &lt;/div&gt; 
 
     &lt;div&gt;
       &lt;!-- editable status (select-local) --&gt;
-      &lt;strong&gt;Status: &lt;/strong&gt;
-      &lt;span editable-select=&quot;user.status&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
+      &lt;span class=&quot;title&quot;&gt;Status: &lt;/span&gt;
+      &lt;span editable-select=&quot;user.status&quot; e-name=&quot;status&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
         {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
       &lt;/span&gt;
     &lt;/div&gt;  
 
     &lt;div&gt;
       &lt;!-- editable group (select-remote) --&gt;
-      &lt;strong&gt;Group: &lt;/strong&gt;
-      &lt;span editable-select=&quot;user.group&quot; onshow=&quot;loadGroups()&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
+      &lt;span class=&quot;title&quot;&gt;Group: &lt;/span&gt;
+      &lt;span editable-select=&quot;user.group&quot; e-name=&quot;group&quot; onshow=&quot;loadGroups()&quot; e-ng-options=&quot;g.id as g.text for g in groups&quot;&gt;
         {{ showGroup() }}
       &lt;/span&gt;
     &lt;/div&gt;
@@ -1027,7 +1102,6 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
         &lt;/button&gt;
       &lt;/span&gt;
     &lt;/div&gt;
-
   &lt;/form&gt;  
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
@@ -1077,9 +1151,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     </section>
                     <section id="editable-row">
                       <h1>Editable row</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/43/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableRowCtrl">
   <table class="table table-bordered table-hover table-condensed" style="width: 80%">
     <tr style="font-weight: bold">
@@ -1091,7 +1164,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     <tr ng-repeat="user in users">
       <td>
         <!-- editable username (text with validation) -->
-        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)">
+        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)" e-required>
           {{ user.name || 'empty' }}
         </span>
       </td>
@@ -1117,10 +1190,13 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
             cancel
           </button>
         </form>  
-        <button class="btn btn-default" ng-show="!rowform.$visible" ng-click="rowform.$show()">edit</button>
+        <button class="btn btn-primary" ng-show="!rowform.$visible" ng-click="rowform.$show()">edit</button>
+        <button class="btn btn-danger" ng-show="!rowform.$visible" ng-click="removeUser($index)">del</button>
       </td>
     </tr>
   </table>
+
+  <button class="btn btn-default" ng-click="addUser()">Add row</button>
 </div></div>
                       <p><p>To create editable row in table you should place editable elements in cells with <code>e-form</code> attribute pointing to form&#39;s name. The form itself can appear later (e.g. in last column) but it will work. Don&#39;t forget to add 
 <code>editable-form</code> attribute to the form. The form behavior is absolutely the same as described in
@@ -1176,6 +1252,21 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     angular.extend(data, {id: id});
     return $http.post('/saveUser', data);
   };
+
+  // remove user
+  $scope.removeUser = function(index) {
+    $scope.users.splice(index, 1);
+  };
+
+  // add user
+  $scope.addUser = function() {
+    $scope.users.push({
+      id: $scope.users.length,
+      name: '',
+      status: null,
+      group: null 
+    });
+  };
 });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableRowCtrl&quot;&gt;
@@ -1189,7 +1280,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     &lt;tr ng-repeat=&quot;user in users&quot;&gt;
       &lt;td&gt;
         &lt;!-- editable username (text with validation) --&gt;
-        &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-form=&quot;rowform&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
+        &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-form=&quot;rowform&quot; onbeforesave=&quot;checkName($data)&quot; e-required&gt;
           {{ user.name || 'empty' }}
         &lt;/span&gt;
       &lt;/td&gt;
@@ -1215,10 +1306,13 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
             cancel
           &lt;/button&gt;
         &lt;/form&gt;  
-        &lt;button class=&quot;btn btn-default&quot; ng-show=&quot;!rowform.$visible&quot; ng-click=&quot;rowform.$show()&quot;&gt;edit&lt;/button&gt;
+        &lt;button class=&quot;btn btn-primary&quot; ng-show=&quot;!rowform.$visible&quot; ng-click=&quot;rowform.$show()&quot;&gt;edit&lt;/button&gt;
+        &lt;button class=&quot;btn btn-danger&quot; ng-show=&quot;!rowform.$visible&quot; ng-click=&quot;removeUser($index)&quot;&gt;del&lt;/button&gt;
       &lt;/td&gt;
     &lt;/tr&gt;
   &lt;/table&gt;
+
+  &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;addUser()&quot;&gt;Add row&lt;/button&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('EditableRowCtrl', function($scope, $filter, $http) {
@@ -1270,13 +1364,27 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     angular.extend(data, {id: id});
     return $http.post('/saveUser', data);
   };
+
+  // remove user
+  $scope.removeUser = function(index) {
+    $scope.users.splice(index, 1);
+  };
+
+  // add user
+  $scope.addUser = function() {
+    $scope.users.push({
+      id: $scope.users.length,
+      name: '',
+      status: null,
+      group: null 
+    });
+  };
 });</pre>
                     </section>
                     <section id="editable-column">
                       <h1>Editable column</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/45/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableColumnCtrl">
   <table class="table table-bordered table-hover table-condensed" style="width: 80%">
     <tr style="font-weight: bold; white-space: nowrap">
@@ -1546,9 +1654,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     </section>
                     <section id="editable-table">
                       <h1>Editable table</h1>
-                      <!--add bs2 jsfiddle button-->
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/44/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableTableCtrl">
   <form editable-form name="tableform" onaftersave="saveTable()">
 
@@ -1753,8 +1860,11 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
   };
 });</pre>
                     </section>
-          <section id="bootstrap3"></section>
+          <section id="themes"></section>
           <h1>Themes</h1>
+          <!-- jade cannot include dynamically--><p>There are several themes that can be used to style editable controls.</p>
+
+          <section id="bootstrap3"></section>
           <h2>Bootstrap 3</h2><p>Include <a href="http://getbootstrap.com">Bootstrap 3</a> CSS</p>
 
           <pre class="prettyprint">&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre><p>Set theme in <code>app.run</code>:</p>
@@ -1780,18 +1890,35 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
 });
 </pre>
           <section id="default"></section>
-          <h2>Default</h2><p>No includes required!
-You can customize theme by overwriting it&#39;s properties:</p>
+          <h2>Default</h2><p>No additional CSS required.<br>You can customize theme in <code>app.run</code> by overwriting properties:</p>
 
           <pre class="prettyprint">app.run(function(editableOptions, editableThemes) {
-  // change submit button tpl
-  editableThemes['default'].submitTpl = '&lt;button type="submit"&gt;ok&lt;/button&gt;';
   // set `default` theme
   editableOptions.theme = 'default';
+  
+  // overwrite submit button template
+  editableThemes['default'].submitTpl = '&lt;button type="submit"&gt;ok&lt;/button&gt;';
 });
 </pre><p>Available properties of each theme you can see in source
 <a href="https://github.com/vitalets/angular-xeditable/tree/master/src/js/themes.js">themes.js</a></p>
+<p>To change appearance of editable links you should overwrite CSS:</p>
 
+          <pre class="prettyprint">a.editable-click { 
+    color: green;
+    border-bottom: dotted 2px green;
+}
+a.editable-click:hover { 
+    color: #47a447;
+    border-bottom-color: #47a447;
+}
+</pre><a href="http://jsfiddle.net/NfPcH/48/" target="_blank" class="btn btn-info">View in jsFiddle</a>
+          <section id="reference"></section>
+          <h1>Reference</h1>
+          <!-- jade cannot include dynamically-->
+          <div id="ref-element"></div>
+          <h2>Reference: editable element</h2>1
+          <div id="ref-form"></div>
+          <h2>Reference: editable form</h2>
         </div>
       </div>
     </div>
