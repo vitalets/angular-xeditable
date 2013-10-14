@@ -32,7 +32,7 @@ angular.module('xeditable').factory('editableFormController',
     /**
      * Shows form with editable controls.
      * 
-     * @method $show
+     * @method $show()
      * @memberOf editable-form
      */
     $show: function() {
@@ -89,7 +89,7 @@ angular.module('xeditable').factory('editableFormController',
     /**
      * Hides form with editable controls without saving.
      * 
-     * @method $hide
+     * @method $hide()
      * @memberOf editable-form
      */
     $hide: function() {
@@ -106,6 +106,14 @@ angular.module('xeditable').factory('editableFormController',
       });
     },
 
+    /**
+     * Shows error message for particular field.
+     * 
+     * @method $setError(name, msg)
+     * @param {string} name name of field
+     * @param {string} msg error message
+     * @memberOf editable-form
+     */
     $setError: function(name, msg) {
       angular.forEach(this.$editables, function(editable) {
         if(!name || editable.name === name) {
