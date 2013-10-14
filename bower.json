@@ -19,8 +19,10 @@
     "docs",
     "zip",
     "src",
+    "starter",
     "Gruntfile.js",
     "index.html",
+    "jsdoc.conf.json",
     "package.json"
   ],
   "dependencies": {
