@@ -1,6 +1,5 @@
 Typeahead control is implemented via [Angular-ui bootstrap typeahead](http://angular-ui.github.io/bootstrap/#/typeahead).  
 Basically it is normal `editable-text` control with additional `e-typeahead` attributes.  
-Please note that it works only in Bootstrap 2!  
 You should include additional `ui-bootstrap-tpls.min.js`:
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js"></script>
