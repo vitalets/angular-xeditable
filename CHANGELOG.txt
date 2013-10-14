@@ -2,8 +2,10 @@ Angular-xeditable changelog
 =============================
 
 
-Version 0.1.5 wip
+Version 0.1.5 Oct 14, 2013
 ----------------------------
+[enh #25] support `ng-dirty | ng-pristine` and other angular form classes (vitalets)
+[enh #23] add `blur` attribute (vitalets)
 [enh] add typeahead control (vitalets)
 [bug #20] support `data-e-*` and `x-e-*` attributes for transfer (vitalets)
 [enh #12] timepicker (vitalets)
