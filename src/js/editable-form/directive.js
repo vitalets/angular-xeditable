@@ -1,5 +1,5 @@
 /**
- * EditableForm directive. Should be defined in <form> containing editable controls.
+ * EditableForm directive. Should be defined in <form> containing editable controls.  
  * It add some usefull methods to form variable exposed to scope by `name="myform"` attribute.
  *
  * @namespace editable-form
