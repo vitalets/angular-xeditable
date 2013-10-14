@@ -1,7 +1,7 @@
 p List of all possible attributes, properties and methods.
 
 mixin tbl2(type, data)
-  - var items = data.properties.filter(function(v){return ~v.type.names.indexOf(type)})
+  - var items = data.properties ? data.properties.filter(function(v){return ~v.type.names.indexOf(type)}) : []
   - items = items.sort(function(a,b){return a.name > b.name ? 1 : -1})
   table.table-bordered.table-condensed(width="100%")
     thead
@@ -15,7 +15,7 @@ mixin tbl2(type, data)
           td!= md(a.description)
 
 mixin tbl3(data)
-  - var items = data.properties.filter(function(v){return !~v.type.names.indexOf('attribute') && !~v.type.names.indexOf('method')})
+  - var items = data.properties ? data.properties.filter(function(v){return !~v.type.names.indexOf('attribute') && !~v.type.names.indexOf('method')}) : []
   - items = items.sort(function(a,b){return a.name > b.name ? 1 : -1})
   table.table-bordered.table-condensed(width="100%")
     thead
@@ -36,8 +36,7 @@ h2 Reference: editable element
 
 section#ref-form
 h2 Reference: editable form
-- var data = jsdoc.namespaces.filter(function(v){return v.name === 'editable-form'})[0]
-
+- var data = jsdoc.namespaces ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-form'})[0] : []
 
 h3 Attributes
 :markdown

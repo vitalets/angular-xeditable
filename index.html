@@ -37,7 +37,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.5.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.5 ~ 12kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.5.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.5 ~ 13kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -1915,10 +1915,58 @@ a.editable-click:hover {
           <section id="reference"></section>
           <h1>Reference</h1>
           <!-- jade cannot include dynamically-->
-          <div id="ref-element"></div>
-          <h2>Reference: editable element</h2>1
-          <div id="ref-form"></div>
+          <p>List of all possible attributes, properties and methods.</p>
+          <section id="ref-element"></section>
+          <h2>Reference: editable element</h2>
+          <section id="ref-form"></section>
           <h2>Reference: editable form</h2>
+          <h3>Attributes</h3><p>Attributes can be defined as:</p>
+
+          <pre class="prettyprint">&lt;form editable-form name=&quot;myform&quot; [attributes]&gt;
+...
+&lt;/form&gt;
+</pre>
+                    <table width="100%" class="table-bordered table-condensed">
+                      <thead>
+                        <tr>
+                          <th width="20%">Name</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+          <h3>Properties</h3><p>Properties are available when you set <code>name</code> attribute of form: </p>
+
+          <pre class="prettyprint">&lt;form editable-form name=&quot;myform&quot;&gt;
+// now myform.[property] is available in template and $scope.myform.[property] - in controller
+</pre>
+                    <table width="100%" class="table-bordered table-condensed">
+                      <thead>
+                        <tr>
+                          <th width="15%">Name</th>
+                          <th width="15%">Type</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+          <h3>Methods</h3><p>Methods are available when you set <code>name</code> attribute of form:</p>
+
+          <pre class="prettyprint">&lt;form editable-form name=&quot;myform&quot;&gt;
+// now myform.[method] is available in template and $scope.myform.[method] - in controller
+</pre>
+                    <table width="100%" class="table-bordered table-condensed">
+                      <thead>
+                        <tr>
+                          <th width="20%">Name</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
         </div>
       </div>
     </div>
