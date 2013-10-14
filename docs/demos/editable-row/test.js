@@ -12,7 +12,7 @@ describe('editable-row', function() {
       expect(element(s+'td:eq(0) span[editable-text]:visible').count()).toBe(1);
       expect(element(s+'td:eq(1) span[editable-select]:visible').count()).toBe(1);
       expect(element(s+'td:eq(2) span[editable-select]:visible').count()).toBe(1);
-      expect(element(s+'td:eq(3) > button:visible').count()).toBe(1);
+      expect(element(s+'td:eq(3) .buttons:visible').count()).toBe(1);
       expect(element(s+'td:eq(3) form button:visible').count()).toBe(0);
       expect(element(s+'select').count()).toBe(0);
       expect(element(s+'input[type="text"]').count()).toBe(0);
@@ -34,7 +34,7 @@ describe('editable-row', function() {
       expect(element(s+'td:eq(0) span[editable-text]:visible').count()).toBe(0);
       expect(element(s+'td:eq(1) span[editable-select]:visible').count()).toBe(0);
       expect(element(s+'td:eq(2) span[editable-select]:visible').count()).toBe(0);
-      expect(element(s+'td:eq(3) > button:visible').count()).toBe(0);
+      expect(element(s+'td:eq(3) .buttons:visible').count()).toBe(0);
       expect(element(s+'td:eq(3) form button:visible:enabled').count()).toBe(2);
       expect(element(s+'select:visible:enabled').count()).toBe(2);
       expect(element(s+'input[type="text"]:visible:enabled').count()).toBe(1);
@@ -43,7 +43,7 @@ describe('editable-row', function() {
     checkClosed();
 
     //show form
-    element(s+'td:eq(3) > button:visible').click();
+    element(s+'td:eq(3) .buttons button.btn-primary:visible').click();
     checkWaiting();
     sleep(delay);
     checkShown();

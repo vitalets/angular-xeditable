@@ -34,9 +34,11 @@
           <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$hide()" class="btn btn-default">
             cancel
           </button>
-        </form>  
-        <button class="btn btn-primary" ng-show="!rowform.$visible" ng-click="rowform.$show()">edit</button>
-        <button class="btn btn-danger" ng-show="!rowform.$visible" ng-click="removeUser($index)">del</button>
+        </form>
+        <div class="buttons" ng-show="!rowform.$visible">  
+          <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+          <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
+        </div>  
       </td>
     </tr>
   </table>
