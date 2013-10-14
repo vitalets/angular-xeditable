@@ -66,8 +66,8 @@ angular.module('xeditable').directive('editableForm',
             // onbeforesave, onaftersave
             if(!attrs.ngSubmit && !attrs.submit) {
               /**
-               * Called after all children `onbeforesave` callbacks but before form values
-               * are saved to model.
+               * Called after all children `onbeforesave` callbacks but before saving form values
+               * to model.
                * If at least one children callback returns `non-string` - it will not not be called.
                * See [editable-form description](#editable-form) for details.
                * 
