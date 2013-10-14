@@ -4,7 +4,9 @@ module.exports = function(grunt) {
 
   //init configuration
   grunt.config.init({
-    pkg: grunt.file.readJSON('package.json')
+    pkg: grunt.file.readJSON('package.json'),
+    require: require,
+    fs: fs
   });
 
   //clean
@@ -126,8 +128,8 @@ module.exports = function(grunt) {
     fs: require('fs'),
     md: marked,
     version: '<%= pkg.version %>',
-    size: Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024),
-    structure: require('./docs/structure.js'),
+    size: "<%= Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024) %>",
+    structure: "<%= require('./docs/js/structure.js') %>",
     //jsdoc: "<%= grunt.file.exists('./jsdoc.json') ? grunt.file.readJSON('./jsdoc.json') : {} %>"
     //jsdoc: "<%= grunt.file.exists('./jsdoc.json') ? JSON.parse(grunt.file.read('./jsdoc.json').toString()) : {} %>"
     jsdoc: '<%= jsdocdata %>'
