@@ -1,7 +1,6 @@
 p List of all possible attributes, properties and methods.
 
-mixin tbl2(type, data)
-  - var items = data.properties ? data.properties.filter(function(v){return ~v.type.names.indexOf(type)}) : []
+mixin methods(items)
   - items = items.sort(function(a,b){return a.name > b.name ? 1 : -1})
   table.table-bordered.table-condensed(width="100%")
     thead
@@ -14,9 +13,8 @@ mixin tbl2(type, data)
           td: code= a.name
           td!= md(a.description)
 
-mixin tbl3(data)
-  - var items = data.properties ? data.properties.filter(function(v){return !~v.type.names.indexOf('attribute') && !~v.type.names.indexOf('method')}) : []
-  - items = items.sort(function(a,b){return a.name > b.name ? 1 : -1})
+mixin props(items)
+  - items.sort(function(a,b){return a.name > b.name ? 1 : -1})
   table.table-bordered.table-condensed(width="100%")
     thead
       tr
@@ -30,13 +28,26 @@ mixin tbl3(data)
           td= a.type.names[0]          
           td!= md(a.description)          
 
+
+
 section#ref-element
 h2 Reference: editable element
+- var ns = jsdoc.namespaces && jsdoc.namespaces.length ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-element'})[0] : []
+
+h3 Attributes
+:markdown
+  Attributes can be defined for any element having `editable-xxx` directive:
+pre.prettyprint(ng-non-bindable)
+  = '<a href="#" editable-text="user.name" [attributes]> {{user.name | "empty"}} </a>'
+- var items = ns.properties ? ns.properties.filter(function(v){return ~v.type.names.indexOf('attribute')}) : []
++props(items)
+
+
 
 
 section#ref-form
 h2 Reference: editable form
-- var data = jsdoc.namespaces && jsdoc.namespaces.length ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-form'})[0] : []
+- var ns = jsdoc.namespaces && jsdoc.namespaces.length ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-form'})[0] : []
 
 h3 Attributes
 :markdown
@@ -45,7 +56,8 @@ pre.prettyprint
   = '<form editable-form name="myform" [attributes]>\n'
   = '...\n'
   = '</form>\n'
-+tbl2('attribute', data)
+- var items = ns.properties ? ns.properties.filter(function(v){return ~v.type.names.indexOf('attribute')}) : []
++props(items)
 
 
 h3 Properties
@@ -54,7 +66,8 @@ h3 Properties
 pre.prettyprint
   = '<form editable-form name="myform">\n'
   = '// now myform.[property] is available in template and $scope.myform.[property] - in controller\n'
-+tbl3(data)
+- var items = ns.properties ? ns.properties.filter(function(v){return !~v.type.names.indexOf('attribute')}) : []
++props(items)
 
 
 h3 Methods
@@ -63,5 +76,6 @@ h3 Methods
 pre.prettyprint
   = '<form editable-form name="myform">\n'
   = '// now myform.[method] is available in template and $scope.myform.[method] - in controller\n'
-+tbl2('method', data)
+- items = ns.functions || []  
++methods(items)
 
