@@ -87,27 +87,24 @@ app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
     }
   });
 
-  //update user
+  //update user (for single field)
   $httpBackend.whenPOST(/\/updateUser/).respond(function(method, url, data) {
     data = angular.fromJson(data);
-    if(data.name === 'error') {
-      return [500, 'Error message']; 
+    if(data.name !== 'awesome') {
+      return [500, 'Server-side error: username should be `awesome`!']; 
     } else {
-      return [200, {status: 'ok'}]; 
+      return [200, 'ok']; 
     }
   });
 
-  //save user
+  //save user (for forms)
   $httpBackend.whenPOST(/\/saveUser/).respond(function(method, url, data) {
     data = angular.fromJson(data);
-    /*
-    if(data.name !== 'awesome') {
-      return [500, 'Username should be `awesome`']; 
+    if(data.name === 'error') {
+      return [500, {field: 'name', msg: 'Server-side error for this username!'}]; 
     } else {
       return [200, {status: 'ok'}]; 
     }
-    */
-    return [200, {status: 'ok'}];
   });
 
   //save column

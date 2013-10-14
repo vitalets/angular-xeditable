@@ -31,13 +31,21 @@ app.controller('EditableFormCtrl', function($scope, $filter, $http) {
   };
 
   $scope.checkName = function(data) {
-    if (data !== 'awesome') {
-      return "Username should be `awesome`";
+    if (data !== 'awesome' && data !== 'error') {
+      return "Username should be `awesome` or `error`";
     }
   };
 
   $scope.saveUser = function() {
-    //$scope.user already updated!
-    return $http.post('/saveUser', $scope.user);
+    // $scope.user already updated!
+    return $http.post('/saveUser', $scope.user).error(function(err) {
+      if(err.field && err.msg) {
+        // err like {field: "name", msg: "Server-side error for this username!"} 
+        $scope.editableForm.$setError(err.field, err.msg);
+      } else { 
+        // unknown error
+        $scope.editableForm.$setError('name', 'Unknown error!');
+      }
+    });
   };
 });
