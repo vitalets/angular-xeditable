@@ -79,9 +79,14 @@ html(ng-app='app')
               if g.id === 'reference'
                 include reference.jade
 
+
+
     footer
       hr
-      p &copy; Vitaliy Potapov 2013. Released under the MIT license
+      :markdown
+        If you have question or idea please feel free to [open issue on github](https://github.com/vitalets/angular-xeditable/issues).
+
+      p &copy; Vitaliy Potapov 2013. Released under the MIT license.
 
     if env == 'prod'
       include metrika.html
