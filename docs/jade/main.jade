@@ -20,11 +20,11 @@ html(ng-app='app')
           .well.sidebar
             ul.nav
               each g in structure
-                li
-                  a(href="#"+(g.anchor || g.id))= g.text
-                  ul.nav
-                    each item in g.items
-                      if (!item.env || item.env === env)
+                if (!g.env || g.env === env)
+                  li
+                    a(href="#"+(g.anchor || g.id))= g.text
+                    ul.nav
+                      each item in g.items
                         li: a(href="#"+(item.anchor || item.id))= item.menutext || item.text
 
         .col-sm-9.col-xs-12

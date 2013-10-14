@@ -140,11 +140,6 @@
                   <li><a href="#ref-form">Editable form</a></li>
                 </ul>
               </li>
-              <li><a href="#dev-text">Dev Tests</a>
-                <ul class="nav">
-                  <li><a href="#dev-text"></a></li>
-                </ul>
-              </li>
             </ul>
           </div>
         </div>
@@ -689,7 +684,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bstime"]=v; }); });</s
   </a>
 </div></div>
                       <pre>{{ debug["typeahead"] | json }}</pre>
-                      <p><p>Typeahead control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/typeahead">Angular-ui bootstrap typeahead</a>.<br>Basically it is normal <code>editable-text</code> control with additional <code>e-typeahead</code> attributes.<br>Please note that it works only in Bootstrap 2!<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
+                      <p><p>Typeahead control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/typeahead">Angular-ui bootstrap typeahead</a>.<br>Basically it is normal <code>editable-text</code> control with additional <code>e-typeahead</code> attributes.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
 <pre class="prettyprint">&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Then add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
