@@ -5,7 +5,7 @@ describe('editable-row', function() {
   });
 
   it('should show form by `edit` button and save new values', function() {
-    var s = '[ng-controller="EditableRowCtrl"] table tr:eq(2) ';
+    var s = '[ng-controller="EditableRowCtrl"] table tr:eq(2) '; //work with user 2
 
     //edit button initially shown, form initially hidden
     function checkClosed() {
@@ -56,7 +56,7 @@ describe('editable-row', function() {
 
     //error shown
     expect(element(s+'td:eq(0) .editable-error:visible').count()).toBe(1);
-    expect(element(s+'td:eq(0) .editable-error').text()).toMatch('Username should be `awesome`');
+    expect(element(s+'td:eq(0) .editable-error').text()).toMatch('Username 2 should be `awesome`');
 
     //set correct values
     using(s+'td:eq(0)').input('$data').enter('awesome');
@@ -71,6 +71,38 @@ describe('editable-row', function() {
     sleep(delay);
 
     checkClosed();
+  });
+
+  it('should add new users', function() {
+    var s = '[ng-controller="EditableRowCtrl"] ';
+
+    // initially 3 rows + header
+    expect(element(s + 'table tr').count()).toBe(4);
+
+    // click add button
+    element(s + '> button').click();
+    expect(element(s + 'table tr').count()).toBe(5);
+
+    // waiting mode
+    var r = s + 'table tr:eq(4) ';
+    expect(element(r + 'span[editable-text]:visible').count()).toBe(0);
+    expect(element(r + 'input[type="text"]:visible:disabled').count()).toBe(1);
+
+    sleep(delay);
+
+    // loaded
+    expect(element(r + 'input[type="text"]:visible:enabled').count()).toBe(1);
+  });
+
+  it('should delete users', function() {
+    var s = '[ng-controller="EditableRowCtrl"] table ';
+
+    // initially 3 rows + header
+    expect(element(s + 'tr').count()).toBe(4);
+
+    // click delete button
+    element(s + 'tr:eq(2) .buttons .btn-danger').click();
+    expect(element(s + 'tr').count()).toBe(3);
   });
 
 });
