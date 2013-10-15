@@ -28,6 +28,9 @@ module.exports = [
 
     {id: 'editable-form', text: 'Forms', type: 'demos', items: [
         {id: 'editable-form', text: 'Editable form', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/60/'},
+    ]},
+
+    {id: 'editable-row', text: 'Tables', type: 'demos', items: [
         {id: 'editable-row', text: 'Editable row', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/51/'},
         {id: 'editable-column', text: 'Editable column', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/45/'},
         {id: 'editable-table', text: 'Editable table', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/61/'}
