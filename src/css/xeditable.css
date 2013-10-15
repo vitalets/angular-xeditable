@@ -35,9 +35,22 @@
   margin-left: 5px;
 }
 
-/* if width: 100% => buttons go outside the box */
+/* in bootstrap width: 100% => buttons go outside the box */
 .editable-input.editable-has-buttons {
   width: auto;
+}
+
+/* ==== editable-bstime ==== */
+
+/* workaround for bootstrap that sets width: 100% and inputs become too wide */
+.editable-bstime .editable-input input[type="text"] {
+  width: 46px;
+}
+
+/* less padding for .well */
+.editable-bstime .well-small {
+  margin-bottom: 0;
+  padding: 10px;
 }
 
 /* ==== element ==== */
