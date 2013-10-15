@@ -2,8 +2,10 @@
 Edit in place for AnguarJS
 
 ## Overview
-This library allows you to create editable elements in [AngularJS](http://angularjs.org) project.  
-It is based on ideas of [x-editable](http://vitalets.github.io/x-editable) but was written from scratch 
+**Angular-xeditable** is a bundle of [AngularJS](http://angularjs.org) directives that allows you to create
+*editable* elements in your projects.  
+Such technique is also known as *click-to-edit* or *edit-in-place*.  
+It is based on ideas of [x-editable](http://vitalets.github.io/x-editable) but was written from scratch
 to use power of angular and support complex forms / editable grids.
 
 ## Demo and docs
@@ -18,17 +20,18 @@ bower install angular-xeditable
 Download latest version from [project homepage](http://vitalets.github.io/angular-xeditable).
 
 ## Dependencies
-It does not depend on any libraries except angular itself.  
-For themes you may need to include [Twitter Bootstrap](http://getbootstrap.com) CSS.
+Basically it does not depend on any libraries except [AngularJS](http://angularjs.org) itself.    
+For themes you may need to include [Twitter Bootstrap](http://getbootstrap.com) CSS.  
+For some extra controls (e.g. datepicker) you may need to include [angular-ui bootstrap](http://angular-ui.github.io/bootstrap/).
 
-## jsFiddle / plunker
-Please use these live templates to demonstrate issues:  
+
+## jsFiddle / Plunker
+Please use these live templates when creating issues:  
 http://jsfiddle.net/NfPcH/3  
 http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 
 ## Roadmap
 
-* date
 * select2
 * checklist
 * comodate
