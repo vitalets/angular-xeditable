@@ -228,8 +228,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
         }
 
         // convert back to lowercase style
-        transferAttr = transferAttr.substring(0, 1) + transferAttr.substring(1).replace(/[A-Z]/g, '-$&');  
-        transferAttr = transferAttr.toLowerCase();
+        transferAttr = transferAttr.substring(0, 1).toLowerCase() + utils.camelToDash(transferAttr.substring(1));  
 
         // workaround for attributes without value (e.g. `multiple = "multiple"`)
         var attrValue = ($attrs[k] === '') ? transferAttr : $attrs[k];
@@ -239,8 +238,10 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       }
 
       self.inputEl.addClass('editable-input');
-
       self.inputEl.attr('ng-model', '$data');
+
+      // add directiveName class to editor, e.g. `editable-text`
+      self.editorEl.addClass(utils.camelToDash(self.directiveName));
 
       if(self.single) {
         self.editorEl.attr('editable-form', '$form');
