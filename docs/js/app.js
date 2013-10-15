@@ -59,8 +59,14 @@ app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
     $rootScope.css = [];
   }
 */
-
+  
   editableOptions.theme = 'bs3';
+  $rootScope.css = ['libs/bootstrap/3.0.0/css/bootstrap.css'];
+  
+  /*
+  editableOptions.theme = 'bs2';
+  $rootScope.css = ['libs/bootstrap/2.3.2/css/bootstrap.css', 'libs/bootstrap/2.3.2/css/bootstrap-responsive.css']; 
+  */
 
   // -- mocks --
 
