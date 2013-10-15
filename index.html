@@ -122,6 +122,10 @@
               <li><a href="#editable-form">Forms</a>
                 <ul class="nav">
                   <li><a href="#editable-form">Editable form</a></li>
+                </ul>
+              </li>
+              <li><a href="#editable-row">Tables</a>
+                <ul class="nav">
                   <li><a href="#editable-row">Editable row</a></li>
                   <li><a href="#editable-column">Editable column</a></li>
                   <li><a href="#editable-table">Editable table</a></li>
@@ -153,6 +157,30 @@ to use power of angular and support complex forms / editable grids.</p>
 
           <h4>Dependencies</h4><p>Basically it does not depend on any libraries except <a href="http://angularjs.org">AngularJS</a> itself.<br>For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.<br>For some extra controls (e.g. datepicker) you may need to include <a href="http://angular-ui.github.io/bootstrap/">angular-ui bootstrap</a>.</p>
 
+          <h4>Controls & Features</h4>
+          <table style="width: 50%; min-width: 200px">
+            <tr>
+              <td style="width: 50%; vertical-align: top"><ul>
+<li><a href="#text-simple">text</a></li>
+<li><a href="#textarea">textarea</a></li>
+<li><a href="#select-local">select</a></li>
+<li><a href="#bsdate">date</a></li>
+<li><a href="#bstime">time</a></li>
+<li><a href="#typeahead">typeahead</a></li>
+</ul>
+
+              </td>
+              <td style="width: 50%; vertical-align: top"><ul>
+<li><a href="#editable-form">complex form</a></li>
+<li><a href="#editable-row">editable row</a></li>
+<li><a href="#editable-column">editable column</a></li>
+<li><a href="#editable-table">editable table</a></li>
+<li><a href="#themes">themes</a></li>
+</ul>
+
+              </td>
+            </tr>
+          </table>
           <section id="getstarted"></section>
           <h1>Get started</h1>
           <!-- jade cannot include dynamically-->
@@ -927,7 +955,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-form">
                       <h1>Editable form</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/52/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/60/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableFormCtrl">
   <form editable-form name="editableForm" onaftersave="saveUser()">
     <div>
@@ -1163,9 +1191,9 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-row">
                       <h1>Editable row</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/51/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/62/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableRowCtrl">
-  <table class="table table-bordered table-hover table-condensed" style="width: 80%">
+  <table class="table table-bordered table-hover table-condensed">
     <tr style="font-weight: bold">
       <td style="width:35%">Name</td>
       <td style="width:20%">Status</td>
@@ -1175,7 +1203,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     <tr ng-repeat="user in users">
       <td>
         <!-- editable username (text with validation) -->
-        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)" e-required>
+        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, user.id)" e-required>
           {{ user.name || 'empty' }}
         </span>
       </td>
@@ -1193,7 +1221,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       </td>
       <td style="white-space: nowrap">
         <!-- form -->
-        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline">
+        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline" ng-init="(inserted == user) && rowform.$show()">
           <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
             save
           </button>
@@ -1254,9 +1282,9 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     return selected.length ? selected[0].text : 'Not set';
   };
 
-  $scope.checkName = function(data) {
-    if (data !== 'awesome') {
-      return "Username should be `awesome`";
+  $scope.checkName = function(data, id) {
+    if (id === 2 && data !== 'awesome') {
+      return "Username 2 should be `awesome`";
     }
   };
 
@@ -1273,17 +1301,18 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
 
   // add user
   $scope.addUser = function() {
-    $scope.users.push({
-      id: $scope.users.length,
+    $scope.inserted = {
+      id: $scope.users.length+1,
       name: '',
       status: null,
       group: null 
-    });
+    };
+    $scope.users.push($scope.inserted);
   };
 });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableRowCtrl&quot;&gt;
-  &lt;table class=&quot;table table-bordered table-hover table-condensed&quot; style=&quot;width: 80%&quot;&gt;
+  &lt;table class=&quot;table table-bordered table-hover table-condensed&quot;&gt;
     &lt;tr style=&quot;font-weight: bold&quot;&gt;
       &lt;td style=&quot;width:35%&quot;&gt;Name&lt;/td&gt;
       &lt;td style=&quot;width:20%&quot;&gt;Status&lt;/td&gt;
@@ -1293,7 +1322,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     &lt;tr ng-repeat=&quot;user in users&quot;&gt;
       &lt;td&gt;
         &lt;!-- editable username (text with validation) --&gt;
-        &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-form=&quot;rowform&quot; onbeforesave=&quot;checkName($data)&quot; e-required&gt;
+        &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-form=&quot;rowform&quot; onbeforesave=&quot;checkName($data, user.id)&quot; e-required&gt;
           {{ user.name || 'empty' }}
         &lt;/span&gt;
       &lt;/td&gt;
@@ -1311,7 +1340,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       &lt;/td&gt;
       &lt;td style=&quot;white-space: nowrap&quot;&gt;
         &lt;!-- form --&gt;
-        &lt;form editable-form name=&quot;rowform&quot; onbeforesave=&quot;saveUser($data, user.id)&quot; ng-show=&quot;rowform.$visible&quot; class=&quot;form-buttons form-inline&quot;&gt;
+        &lt;form editable-form name=&quot;rowform&quot; onbeforesave=&quot;saveUser($data, user.id)&quot; ng-show=&quot;rowform.$visible&quot; class=&quot;form-buttons form-inline&quot; ng-init=&quot;(inserted == user) &amp;&amp; rowform.$show()&quot;&gt;
           &lt;button type=&quot;submit&quot; ng-disabled=&quot;rowform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
             save
           &lt;/button&gt;
@@ -1368,9 +1397,9 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     return selected.length ? selected[0].text : 'Not set';
   };
 
-  $scope.checkName = function(data) {
-    if (data !== 'awesome') {
-      return &quot;Username should be `awesome`&quot;;
+  $scope.checkName = function(data, id) {
+    if (id === 2 &amp;&amp; data !== 'awesome') {
+      return &quot;Username 2 should be `awesome`&quot;;
     }
   };
 
@@ -1387,12 +1416,13 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
 
   // add user
   $scope.addUser = function() {
-    $scope.users.push({
-      id: $scope.users.length,
+    $scope.inserted = {
+      id: $scope.users.length+1,
       name: '',
       status: null,
       group: null 
-    });
+    };
+    $scope.users.push($scope.inserted);
   };
 });</pre>
                     </section>
@@ -1670,7 +1700,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-table">
                       <h1>Editable table</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/44/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/61/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableTableCtrl">
   <form editable-form name="tableform" onaftersave="saveTable()">
 
