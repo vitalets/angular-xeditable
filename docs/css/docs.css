@@ -125,6 +125,10 @@ div[ng-controller] table tr td {
   vertical-align: middle;
 }
 
+div[ng-controller="EditableRowCtrl"] table {
+  width: 80%;
+}
+
 section {
   padding-top: 40px;
 }
