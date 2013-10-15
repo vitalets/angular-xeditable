@@ -15,11 +15,11 @@ angular.module('xeditable').directive('editableBstime', ['editableDirectiveFacto
         // so we wrap it into DIV
         var div = angular.element('<div class="well well-small" style="display:inline-block;"></div>');
 
-        // move ng-model
+        // move ng-model to wrapping div
         div.attr('ng-model', this.inputEl.attr('ng-model'));
         this.inputEl.removeAttr('ng-model');
 
-        // move ng-change
+        // move ng-change to wrapping div
         if(this.attrs.eNgChange) {
           div.attr('ng-change', this.inputEl.attr('ng-change'));
           this.inputEl.removeAttr('ng-change');
