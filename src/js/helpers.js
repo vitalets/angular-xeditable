@@ -94,6 +94,17 @@ angular.module('xeditable').factory('editableUtils', [function() {
         array.splice(index, 1);
       }
       return value;
+    },
+
+    camelToDash: function(str) {
+      //return str.replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1-$2');
+      return str.replace(/[A-Z]/g, '-$&').toLowerCase();
+    },
+
+    dashToCamel: function(str) {
+      return str.replace(/\-([a-z])/g, function (s, chr) {
+        return chr.toUpperCase();
+      });
     }
   };
 }]);
