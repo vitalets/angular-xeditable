@@ -27,7 +27,7 @@
       </td>
       <td style="white-space: nowrap">
         <!-- form -->
-        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline" ng-init="(inserted == user) && rowform.$show()">
+        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline" >
           <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
             save
           </button>
@@ -35,7 +35,7 @@
             cancel
           </button>
         </form>
-        <div class="buttons" ng-show="!rowform.$visible">  
+        <div class="buttons" ng-show="!rowform.$visible" ng-init="(inserted == user) && rowform.$show()">  
           <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
           <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
         </div>  
