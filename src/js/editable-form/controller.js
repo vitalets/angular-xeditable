@@ -36,6 +36,10 @@ angular.module('xeditable').factory('editableFormController',
      * @memberOf editable-form
      */
     $show: function() {
+      if (this.$visible) {
+        return;
+      }
+
       this.$visible = true;
 
       var pc = editablePromiseCollection();
@@ -93,6 +97,9 @@ angular.module('xeditable').factory('editableFormController',
      * @memberOf editable-form
      */
     $hide: function() {
+      if (!this.$visible) {
+        return;
+      }      
       this.$visible = false;
       angular.forEach(this.$editables, function(editable) {
         editable.hide();
@@ -123,6 +130,10 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     $submit: function() {
+      if (this.$waiting) {
+        return;
+      } 
+
       //clear errors
       this.$setError(null, '');
 
@@ -147,7 +158,6 @@ angular.module('xeditable').factory('editableFormController',
 
       //save
       function checkSelf(childrenTrue){
-        //console.log('childrenTrue', childrenTrue);
         var pc = editablePromiseCollection();
         pc.when(this.$onbeforesave());
         pc.then({
@@ -160,7 +170,6 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     $save: function() {
-      //console.log('form save', this.$data);
       //save each editable
       angular.forEach(this.$editables, function(editable) {
         editable.save();

@@ -4,6 +4,7 @@ Angular-xeditable changelog
 
 Version 0.1.6 wip
 ----------------------------
+[bug] second immediate call of $show dulicates controls (vitalets)
 
 
 Version 0.1.5 Oct 14, 2013

@@ -17,6 +17,8 @@ describe('editable-form', function() {
 
     //show form
     element(s+'form > div > button').click();
+    //second click to test that controls not dublicated!
+    element(s+'form > div > button').click();
 
     //form shown in disabled state (loading)
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
@@ -93,6 +95,10 @@ describe('editable-form', function() {
     using(s+'form > div:eq(0)').input('$data').enter('awesome');
     using(s+'form > div:eq(1)').select('$data').option('3'); //status4
     using(s+'form > div:eq(2)').select('$data').option('0'); //user
+
+    //click submit
+    element(s+'form > div > span button[type="submit"]').click();
+    //second click to check that it works correctly
     element(s+'form > div > span button[type="submit"]').click();
 
     //saving
