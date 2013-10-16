@@ -18,6 +18,12 @@ angular.module('xeditable').directive('editableForm',
             var form = ctrl[0];
             var eForm;
 
+            /*
+            Maybe it's better attach editable controller to form's controller not in pre()
+            but in controller itself. 
+            This allows to use ng-init already in <form> tag, otherwise we can't (in FF).
+            */
+
             //if `editableForm` has value - publish smartly under this value
             //this is required only for single editor form that is created and removed
             if(attrs.editableForm) {
