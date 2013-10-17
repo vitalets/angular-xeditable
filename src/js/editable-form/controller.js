@@ -17,6 +17,11 @@ angular.module('xeditable').factory('editableFormController',
       if (!editable.scope.$form) {
         editable.scope.$form = this;
       }
+
+      //if form already shown - call show() of new editable
+      if (this.$visible) {
+        editable.catchError(editable.show());
+      }
     },
 
     $removeEditable: function(editable) {
