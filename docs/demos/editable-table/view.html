@@ -1,5 +1,5 @@
 <div ng-controller="EditableTableCtrl">
-  <form editable-form name="tableform" onaftersave="saveTable()">
+  <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
 
     <!-- table -->
     <table class="table table-bordered table-hover table-condensed">
@@ -41,7 +41,7 @@
     <div class="buttons" ng-show="tableform.$visible">
       <button type="button" ng-disabled="tableform.$waiting" ng-click="addUser()" class="btn btn-default pull-right">add row</button>
       <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
-      <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$hide()" class="btn btn-default">cancel
+      <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">cancel
       </button>
     </div> 
     

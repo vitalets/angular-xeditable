@@ -66,9 +66,19 @@ app.controller('EditableTableCtrl', function($scope, $filter, $http, $q) {
     });
   };
 
-  // cancel edits
-  $scope.cancelTable = function() {
-    //todo: need form.$cancel hook to be implemented!
+  // cancel all changes
+  $scope.cancel = function() {
+    for (var i = $scope.users.length; i--;) {
+      var user = $scope.users[i];    
+      // undelete
+      if (user.isDeleted) {
+        delete user.isDeleted;
+      }
+      // remove new 
+      if (user.isNew) {
+        $scope.users.splice(i, 1);
+      }      
+    };
   };
 
   // save edits
@@ -76,12 +86,10 @@ app.controller('EditableTableCtrl', function($scope, $filter, $http, $q) {
     var results = [];
     for (var i = $scope.users.length; i--;) {
       var user = $scope.users[i];
-
       // actually delete user
       if (user.isDeleted) {
         $scope.users.splice(i, 1);
       }
-
       // mark as not new 
       if (user.isNew) {
         user.isNew = false;
