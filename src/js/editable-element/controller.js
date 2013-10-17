@@ -286,7 +286,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
         }
       }, 0);
 
-      //onshow
+      // onshow
       return self.onshow();
     };
 
