@@ -125,8 +125,15 @@ div[ng-controller] table tr td {
   vertical-align: middle;
 }
 
-div[ng-controller="EditableRowCtrl"] table {
+div[ng-controller="EditableRowCtrl"] table,
+div[ng-controller="EditableTableCtrl"] table {
   width: 80%;
+  margin-bottom: 5px;
+}
+
+div[ng-controller="EditableTableCtrl"] .buttons {
+   white-space: nowrap;
+   width: 80%;
 }
 
 section {

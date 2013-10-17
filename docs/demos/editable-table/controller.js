@@ -42,12 +42,55 @@ app.controller('EditableTableCtrl', function($scope, $filter, $http, $q) {
     }
   };
 
+  // filter users to show
+  $scope.filterUser = function(user) {
+    return user.isDeleted !== true;
+  };
+
+  // mark user as deleted
+  $scope.deleteUser = function(id) {
+    var filtered = $filter('filter')($scope.users, {id: id});
+    if (filtered.length) {
+      filtered[0].isDeleted = true;
+    }
+  };
+
+  // add user
+  $scope.addUser = function() {
+    $scope.users.push({
+      id: $scope.users.length+1,
+      name: '',
+      status: null,
+      group: null,
+      isNew: true
+    });
+  };
+
+  // cancel edits
+  $scope.cancelTable = function() {
+    //todo: need form.$cancel hook to be implemented!
+  };
+
+  // save edits
   $scope.saveTable = function() {
-    //$scope.users already updated
     var results = [];
-    angular.forEach($scope.users, function(user) {
-      results.push($http.post('/saveUser', user));
-    })
+    for (var i = $scope.users.length; i--;) {
+      var user = $scope.users[i];
+
+      // actually delete user
+      if (user.isDeleted) {
+        $scope.users.splice(i, 1);
+      }
+
+      // mark as not new 
+      if (user.isNew) {
+        user.isNew = false;
+      }
+
+      // send on server
+      results.push($http.post('/saveUser', user));      
+    }
+
     return $q.all(results);
   };
 });

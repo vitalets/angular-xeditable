@@ -2,13 +2,14 @@
   <form editable-form name="tableform" onaftersave="saveTable()">
 
     <!-- table -->
-    <table class="table table-bordered table-hover table-condensed" style="width: 80%">
+    <table class="table table-bordered table-hover table-condensed">
       <tr style="font-weight: bold">
         <td style="width:40%">Name</td>
         <td style="width:30%">Status</td>
         <td style="width:30%">Group</td>
+        <td style="width:30%"><span ng-show="tableform.$visible">Action</span></td>
       </tr>
-      <tr ng-repeat="user in users">
+      <tr ng-repeat="user in users | filter:filterUser">
         <td>
           <!-- editable username (text with validation) -->
           <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data, user.id)">
@@ -27,20 +28,22 @@
             {{ showGroup(user) }}
           </span>
         </td>
+        <td><button type="button" ng-show="tableform.$visible" ng-click="deleteUser(user.id)" class="btn btn-danger pull-right">Del</button></td>
       </tr>
     </table>
 
     <!-- buttons -->
-    <div style="white-space: nowrap">
+    <div class="buttons">
       <button type="button" class="btn btn-default" ng-show="!tableform.$visible" ng-click="tableform.$show()">
         edit
       </button>
-      <span ng-show="tableform.$visible">
-        <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
-        <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$hide()" class="btn btn-default">cancel
-        </button>
-      </span>  
     </div>
+    <div class="buttons" ng-show="tableform.$visible">
+      <button type="button" ng-disabled="tableform.$waiting" ng-click="addUser()" class="btn btn-default pull-right">add row</button>
+      <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
+      <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$hide()" class="btn btn-default">cancel
+      </button>
+    </div> 
     
   </form>
 </div>  
