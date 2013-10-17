@@ -77,7 +77,7 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
 
 }]);
 
-angular.module('xeditable').factory('editableUtils', [function() { 
+angular.module('xeditable').factory('editableUtils', [function() {
   return {
     indexOf: function (array, obj) {
       if (array.indexOf) return array.indexOf(obj);
@@ -96,15 +96,22 @@ angular.module('xeditable').factory('editableUtils', [function() {
       return value;
     },
 
+    // copy from https://github.com/angular/angular.js/blob/master/src/Angular.js
     camelToDash: function(str) {
-      //return str.replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1-$2');
-      return str.replace(/[A-Z]/g, '-$&').toLowerCase();
+      var SNAKE_CASE_REGEXP = /[A-Z]/g;
+      return str.replace(SNAKE_CASE_REGEXP, function(letter, pos) {
+        return (pos ? '-' : '') + letter.toLowerCase();
+      });
     },
 
     dashToCamel: function(str) {
-      return str.replace(/\-([a-z])/g, function (s, chr) {
-        return chr.toUpperCase();
-      });
+      var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
+      var MOZ_HACK_REGEXP = /^moz([A-Z])/;
+      return str.
+        replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
+          return offset ? letter.toUpperCase() : letter;
+        }).
+        replace(MOZ_HACK_REGEXP, 'Moz$1');
     }
   };
 }]);
