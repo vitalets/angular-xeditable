@@ -106,10 +106,33 @@ angular.module('xeditable').factory('editableFormController',
         return;
       }      
       this.$visible = false;
+      // self hide
+      this.$onhide();
+      // children's hide
       angular.forEach(this.$editables, function(editable) {
         editable.hide();
       });
     },
+
+    /**
+     * Hides form with editable controls without saving.
+     * 
+     * @method $hide()
+     * @memberOf editable-form
+     */
+    $cancel: function() {
+      if (!this.$visible) {
+        return;
+      }      
+      // self cancel
+      this.$oncancel();
+      // children's cancel      
+      angular.forEach(this.$editables, function(editable) {
+        editable.cancel();
+      });
+      // self hide
+      this.$hide();
+    },    
 
     $setWaiting: function(value) {
       this.$waiting = !!value;
@@ -175,7 +198,7 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     $save: function() {
-      //save each editable
+      // write model for each editable
       angular.forEach(this.$editables, function(editable) {
         editable.save();
       });
@@ -201,6 +224,8 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     $onshow: angular.noop,
+    $oncancel: angular.noop,
+    $onhide: angular.noop,
     $onbeforesave: angular.noop,
     $onaftersave: angular.noop
   };

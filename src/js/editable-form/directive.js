@@ -69,6 +69,26 @@ angular.module('xeditable').directive('editableForm',
               eForm.$onshow = angular.bind(eForm, $parse(attrs.onshow), scope);
             }
 
+            /**
+             * Called when form hides after both save or cancel.
+             * 
+             * @var {method|attribute} onhide 
+             * @memberOf editable-form
+             */
+            if(attrs.onhide) {
+              eForm.$onhide = angular.bind(eForm, $parse(attrs.onhide), scope);
+            }
+
+            /**
+             * Called when form is cancelled.
+             * 
+             * @var {method|attribute} oncancel 
+             * @memberOf editable-form
+             */
+            if(attrs.oncancel) {
+              eForm.$oncancel = angular.bind(eForm, $parse(attrs.oncancel), scope);
+            }                        
+
             // onbeforesave, onaftersave
             if(!attrs.ngSubmit && !attrs.submit) {
               /**

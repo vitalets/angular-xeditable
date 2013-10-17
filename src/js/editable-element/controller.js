@@ -148,6 +148,30 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       }
 
       /**
+       * Called when control is hidden after both save or cancel.  
+       * 
+       * @var {method|attribute} onhide
+       * @memberOf editable-element
+       */
+      if($attrs.onhide) {
+        self.onhide = function() {
+          return $parse($attrs.onhide)($scope);
+        };
+      }
+
+      /**
+       * Called when control is cancelled.  
+       * 
+       * @var {method|attribute} oncancel
+       * @memberOf editable-element
+       */
+      if($attrs.oncancel) {
+        self.oncancel = function() {
+          return $parse($attrs.oncancel)($scope);
+        };
+      }          
+
+      /**
        * Called during submit before value is saved to model.  
        * See [demo](#onbeforesave).
        * 
@@ -303,12 +327,22 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       // remove from internal list
       utils.arrayRemove(shown, self);
 
+      // onhide
+      return self.onhide();
+
       // todo: to think is it really needed or not
       /*
       if($element[0].tagName === 'A') {
         $element[0].focus();
       }
       */
+    };
+
+    // cancel
+    self.cancel = function() {
+      // oncancel
+      self.oncancel();
+      // don't call hide() here as it called in form's code
     };
 
     /*
@@ -423,6 +457,8 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
     self.autosubmit = angular.noop;
 
     self.onshow = angular.noop;
+    self.onhide = angular.noop;
+    self.oncancel = angular.noop;
     self.onbeforesave = angular.noop;
     self.onaftersave = angular.noop;
   }
