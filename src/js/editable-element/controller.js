@@ -15,13 +15,16 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
 
   // bind click to body: cancel|submit editables
   $document.bind('click', function(e) {
+
     var toCancel = [];
     var toSubmit = [];
     for (var i=0; i<shown.length; i++) {
       // exclude self
-      if (e.editable === shown[i]) {
+      if (shown[i].clicked) {
+        shown[i].clicked = false;
         continue;
       }
+
       if (shown[i].blur === 'cancel') {
         toCancel.push(shown[i]);
       }
@@ -57,6 +60,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
+    self.clicked = false; //used to check in document click handler if control was clicked or not
 
     //to be overwritten by directive
     self.inputTpl = '';
@@ -311,7 +315,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
     Called after show to attach listeners
     */
     self.addListeners = function() {
-      //bind keyup
+      // bind keyup for `escape`
       self.inputEl.bind('keyup', function(e) {
           if(!self.single) {
             return;
@@ -325,14 +329,14 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
           }
       });
 
-      //autosubmit when no buttons
+      // autosubmit when `no buttons`
       if (self.single && self.buttons === 'no') {
         self.autosubmit();
       }
 
-      // click - mark event as going from editable element
+      // click - mark element as clicked to exclude in document click handler
       self.editorEl.bind('click', function(e) {
-        e.editable = self;
+        self.clicked = true;
       });
     };
 

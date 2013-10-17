@@ -4,6 +4,7 @@ Angular-xeditable changelog
 
 Version 0.1.6 wip
 ----------------------------
+[bug #29] include jquery before angular breaks single forms (vitalets)
 [enh] show control if added to already visible form (vitalets)
 [bug] second immediate call of $show dulicates controls (vitalets)
 
