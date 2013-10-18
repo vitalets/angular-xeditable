@@ -4,15 +4,15 @@ describe('editable-table', function() {
     browser().navigateTo(mainUrl);
   });
 
-  it('should show form by `edit` button and save new values', function() {
+  iit('should show form by `edit` button and save new values', function() {
     var s = '[ng-controller="EditableTableCtrl"] > form ';
 
     //edit button initially shown, form initially hidden
     function checkClosed() {
-      expect(element(s+'table span[editable-text]:visible').count()).toBe(3);
-      expect(element(s+'table span[editable-select]:visible').count()).toBe(6);
-      expect(element(s+'> div:eq(0) > button:visible').count()).toBe(1);
-      expect(element(s+'> div:eq(1) > button:visible').count()).toBe(0);
+      expect(element(s+'table span[editable-text]:visible').count()).toBeGreaterThan(2);
+      expect(element(s+'table span[editable-select]:visible').count()).toBeGreaterThan(5);
+      expect(element(s+'.btn-edit button:visible').count()).toBe(1);
+      expect(element(s+'.btn-form button:visible').count()).toBe(0);
       expect(element(s+'input[type="text"]').count()).toBe(0);
       expect(element(s+'select').count()).toBe(0);
     }
@@ -21,20 +21,20 @@ describe('editable-table', function() {
     function checkWaiting() {
       expect(element(s+'table span[editable-text]:visible').count()).toBe(0);
       expect(element(s+'table span[editable-select]:visible').count()).toBe(0);
-      expect(element(s+'> div:eq(0) button:visible').count()).toBe(0);
-      expect(element(s+'> div:eq(1) button:visible:disabled').count()).toBe(3);
-      expect(element(s+'input[type="text"]:visible:disabled').count()).toBe(3);
-      expect(element(s+'select:visible:disabled').count()).toBe(6);
+      expect(element(s+'.btn-edit button:visible').count()).toBe(0);
+      expect(element(s+'.btn-form button:visible:disabled').count()).toBe(3);
+      expect(element(s+'input[type="text"]:visible:disabled').count()).toBeGreaterThan(2);
+      expect(element(s+'select:visible:disabled').count()).toBeGreaterThan(5);
     }
 
     //form enabled when data loaded
     function checkShown() {
       expect(element(s+'table span[editable-text]:visible').count()).toBe(0);
       expect(element(s+'table span[editable-select]:visible').count()).toBe(0);
-      expect(element(s+'> div:eq(0) button:visible').count()).toBe(0);
-      expect(element(s+'> div:eq(1) button:visible:enabled').count()).toBe(3);
-      expect(element(s+'input[type="text"]:visible:enabled').count()).toBe(3);
-      expect(element(s+'select:visible:enabled').count()).toBe(6);
+      expect(element(s+'.btn-edit button:visible').count()).toBe(0);
+      expect(element(s+'.btn-form button:visible:enabled').count()).toBe(3);
+      expect(element(s+'input[type="text"]:visible:enabled').count()).toBeGreaterThan(2);
+      expect(element(s+'select:visible:enabled').count()).toBeGreaterThan(5);
     }
 
     //check initial values
@@ -47,13 +47,13 @@ describe('editable-table', function() {
     checkClosed();
 
     //show form
-    element(s+'> div:eq(0) button').click();
+    element(s+'.btn-edit button').click();
     checkWaiting();
     sleep(delay);
     checkShown();
 
     //submit incorrect values (they set initially)
-    element(s+'> div:eq(1) button[type="submit"]').click();
+    element(s+'.btn-form button[type="submit"]').click();
 
     checkShown();
 
@@ -62,11 +62,22 @@ describe('editable-table', function() {
     expect(element(s+'table tr:eq(2) td:eq(0) .editable-error').text()).toMatch('Username 2 should be `awesome`');
 
     //set correct values
-    using(s+'table tr:eq(2) td:eq(0)').input('$data').enter('awesome');
-    using(s+'table tr:eq(1) td:eq(1)').select('$data').option('3'); //status4
-    using(s+'table tr:eq(1) td:eq(2)').select('$data').option('0'); //user
+    using(s+'table tr:eq(2) td:eq(0)').input('$data').enter('awesome'); //user2: name = awesome
+    using(s+'table tr:eq(1) td:eq(1)').select('$data').option('3'); //user1: status = status4
+    using(s+'table tr:eq(1) td:eq(2)').select('$data').option('0'); //user1: group = user
 
-    element(s+'> div:eq(1) button[type="submit"]').click();
+    //add 2 new rows
+    expect(element(s+'table tr').count()).toBe(4);
+    element(s+'.btn-form button.pull-right').click();
+    element(s+'.btn-form button.pull-right').click();
+    expect(element(s+'table tr').count()).toBe(6);
+
+    //delete row 3
+    element(s+'table tr:eq(3) td:eq(3) button').click();
+    expect(element(s+'table tr').count()).toBe(5);
+
+    //submit
+    element(s+'.btn-form button[type="submit"]').click();
 
     checkWaiting();
 
@@ -79,13 +90,12 @@ describe('editable-table', function() {
 
     //check updated values
     expect(element(s+'table tr:eq(1) td:eq(0) span[editable-text]').text()).toMatch('user1');
-    expect(element(s+'table tr:eq(2) td:eq(0) span[editable-text]').text()).not().toMatch('user2');
-    expect(element(s+'table tr:eq(3) td:eq(0) span[editable-text]').text()).toMatch('user3');
     expect(element(s+'table tr:eq(1) td:eq(1) span[editable-select]').text()).toMatch('status4');
     expect(element(s+'table tr:eq(1) td:eq(2) span[editable-select]').text()).toMatch('user');
+    expect(element(s+'table tr:eq(2) td:eq(0) span[editable-text]').text()).not().toMatch('user2');
+    expect(element(s+'table tr:eq(3) td:eq(0) span[editable-text]').text()).toMatch('empty');    
   });
 
-  // todo: write test for new row creation / delete
   // todo: write test for cancel button
 
 });

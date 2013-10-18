@@ -33,12 +33,12 @@
     </table>
 
     <!-- buttons -->
-    <div class="buttons">
+    <div class="btn-edit">
       <button type="button" class="btn btn-default" ng-show="!tableform.$visible" ng-click="tableform.$show()">
         edit
       </button>
     </div>
-    <div class="buttons" ng-show="tableform.$visible">
+    <div class="btn-form" ng-show="tableform.$visible">
       <button type="button" ng-disabled="tableform.$waiting" ng-click="addUser()" class="btn btn-default pull-right">add row</button>
       <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
       <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">cancel

@@ -131,7 +131,8 @@ div[ng-controller="EditableTableCtrl"] table {
   margin-bottom: 5px;
 }
 
-div[ng-controller="EditableTableCtrl"] .buttons {
+div[ng-controller="EditableTableCtrl"] .btn-edit,
+div[ng-controller="EditableTableCtrl"] .btn-form {
    white-space: nowrap;
    width: 80%;
 }
