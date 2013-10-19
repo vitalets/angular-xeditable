@@ -9,7 +9,7 @@ module.exports = [
         {id: 'select-remote', text: 'Select remote', fiddle: 'http://jsfiddle.net/NfPcH/29/'},
         {id: 'select-multiple', text: 'Select multiple', fiddle: 'http://jsfiddle.net/NfPcH/30/'},
         {id: 'select-nobuttons', text: 'Select no buttons', fiddle: 'http://jsfiddle.net/NfPcH/31/'},
-        {id: 'html5-inputs', text: 'HTML5 inputs', fiddle: ''},
+        {id: 'html5-inputs', text: 'HTML5 inputs', fiddle: 'http://jsfiddle.net/NfPcH/77/'},
         {id: 'textarea', text: 'Textarea', fiddle: 'http://jsfiddle.net/NfPcH/32/'},
         {id: 'checkbox', text: 'Checkbox', fiddle: 'http://jsfiddle.net/NfPcH/33/'},
         {id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/NfPcH/23/', fiddleText: 'View Bootstrap 2 jsFiddle'},
@@ -28,13 +28,13 @@ module.exports = [
     ]},
 
     {id: 'editable-form', text: 'Forms', type: 'demos', items: [
-        {id: 'editable-form', text: 'Editable form', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/60/'},
+        {id: 'editable-form', text: 'Editable form', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/81/'},
     ]},
 
     {id: 'editable-row', text: 'Tables', type: 'demos', items: [
-        {id: 'editable-row', text: 'Editable row', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/62/'},
-        {id: 'editable-column', text: 'Editable column', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/45/'},
-        {id: 'editable-table', text: 'Editable table', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/61/'}
+        {id: 'editable-row', text: 'Editable row', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/79/'},
+        {id: 'editable-column', text: 'Editable column', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/80/'},
+        {id: 'editable-table', text: 'Editable table', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/78/'}
     ]},
 
     {id: 'themes', anchor: 'bootstrap3', text: 'Themes', items: [

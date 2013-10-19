@@ -126,6 +126,7 @@ div[ng-controller] table tr td {
 }
 
 div[ng-controller="EditableRowCtrl"] table,
+div[ng-controller="EditableColumnCtrl"] table,
 div[ng-controller="EditableTableCtrl"] table {
   width: 80%;
   margin-bottom: 5px;
