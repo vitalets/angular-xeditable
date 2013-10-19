@@ -82,6 +82,44 @@ angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFac
       }
     });
 }]);
+/*
+Input types: text|email|tel|number|url|search|color|date|datetime|time|month|week
+*/
+
+(function() {
+
+  var types = 'text|email|tel|number|url|search|color|date|datetime|time|month|week'.split('|');
+
+  //todo: datalist
+  
+  // generate directives
+  angular.forEach(types, function(type) {
+    var directiveName = 'editable'+type.charAt(0).toUpperCase() + type.slice(1);
+    angular.module('xeditable').directive(directiveName, ['editableDirectiveFactory',
+      function(editableDirectiveFactory) {
+        return editableDirectiveFactory({
+          directiveName: directiveName,
+          inputTpl: '<input type="'+type+'">'
+        });
+    }]);
+  });
+
+  //`range` is bit specific
+  angular.module('xeditable').directive('editableRange', ['editableDirectiveFactory',
+    function(editableDirectiveFactory) {
+      return editableDirectiveFactory({
+        directiveName: 'editableRange',
+        inputTpl: '<input type="range" id="range" name="range">',
+        render: function() {
+          this.parent.render.call(this);
+          this.inputEl.after('<output>{{$data}}</output>');
+        }        
+      });
+  }]);
+
+}());
+
+
 //select
 angular.module('xeditable').directive('editableSelect', ['editableDirectiveFactory',
   function(editableDirectiveFactory) {
@@ -96,14 +134,6 @@ angular.module('xeditable').directive('editableSelect', ['editableDirectiveFacto
           });
         });
       }
-    });
-}]);
-//text
-angular.module('xeditable').directive('editableText', ['editableDirectiveFactory',
-  function(editableDirectiveFactory) {
-    return editableDirectiveFactory({
-      directiveName: 'editableText',
-      inputTpl: '<input type="text">'
     });
 }]);
 //textarea
@@ -150,6 +180,10 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
 
   // bind click to body: cancel|submit editables
   $document.bind('click', function(e) {
+    // ignore right/middle button click
+    if (e.which !== 1) {
+      return;
+    }
 
     var toCancel = [];
     var toSubmit = [];
@@ -505,11 +539,16 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
 
       // click - mark element as clicked to exclude in document click handler
       self.editorEl.bind('click', function(e) {
+        // ignore right/middle button click
+        if (e.which !== 1) {
+          return;
+        }
+
         self.clicked = true;
       });
     };
 
-    //setWaiting
+    // setWaiting
     self.setWaiting = function(value) {
       if (value) {
         //participate in waiting only if not disabled

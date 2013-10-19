@@ -37,7 +37,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.6.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.6 ~ 13kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.6.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.6 ~ 15kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -100,6 +100,7 @@
                   <li><a href="#select-remote">Select remote</a></li>
                   <li><a href="#select-multiple">Select multiple</a></li>
                   <li><a href="#select-nobuttons">Select no buttons</a></li>
+                  <li><a href="#html5-inputs">HTML5 inputs</a></li>
                   <li><a href="#textarea">Textarea</a></li>
                   <li><a href="#checkbox">Checkbox</a></li>
                   <li><a href="#bsdate">Date</a></li>
@@ -161,11 +162,12 @@ to use power of angular and support complex forms / editable grids.</p>
           <table style="width: 50%; min-width: 200px">
             <tr>
               <td style="width: 50%; vertical-align: top"><ul>
-<li><a href="#text-simple">text</a></li>
+<li><a href="#text-simple">text</a>        </li>
 <li><a href="#textarea">textarea</a></li>
 <li><a href="#select-local">select</a></li>
 <li><a href="#bsdate">date</a></li>
 <li><a href="#bstime">time</a></li>
+<li><a href="#html5-inputs">html5 inputs</a>        </li>
 <li><a href="#typeahead">typeahead</a></li>
 </ul>
 
@@ -232,8 +234,7 @@ to use power of angular and support complex forms / editable grids.</p>
   <a href="#" editable-text="user.name">{{ user.name || 'empty' }}</a>
 </div></div>
                       <pre>{{ debug["text-simple"] | json }}</pre>
-                      <p><p>To make element editable via textbox just add <code>editable-text</code> attribute 
-pointing to model in scope.</p>
+                      <p><p>To make element editable via textbox just add <code>editable-text=&quot;model.field&quot;</code> attribute.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('TextSimpleCtrl', function($scope) {
@@ -563,6 +564,92 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-nobuttons"]=v; 
     var selected = $filter('filter')($scope.statuses, {value: $scope.user.status});
     return ($scope.user.status &amp;&amp; selected.length) ? selected[0].text : 'Not set';
   };
+});</pre>
+                    </section>
+                    <section id="html5-inputs">
+                      <h1>HTML5 inputs</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/77/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <div class="well line-example"><div ng-controller="Html5InputsCtrl">
+  <div>Email: <a href="#" editable-email="user.email">{{ user.email || 'empty' }}</a></div>
+  <div>Tel: <a href="#" editable-tel="user.tel" e-pattern="\d{3}\-\d{2}\-\d{2}" e-title="xxx-xx-xx">{{ user.tel || 'empty' }}</a></div>
+  <div>Number: <a href="#" editable-number="user.number" e-min="18">{{ user.number || 'empty' }}</a></div>  
+  <div>Range: <a href="#" editable-range="user.range" e-step="5">{{ user.range || 'empty' }}</a></div>  
+  <div>Url: <a href="#" editable-url="user.url">{{ user.url || 'empty' }}</a></div>  
+  <div>Search: <a href="#" editable-search="user.search">{{ user.search || 'empty' }}</a></div>  
+  <div>Color: <a href="#" editable-color="user.color">{{ user.color || 'empty' }}</a></div>  
+  <div>Date: <a href="#" editable-date="user.date">{{ user.date || 'empty' }}</a></div>  
+  <div>Time: <a href="#" editable-time="user.time">{{ user.time || 'empty' }}</a></div>  
+  <div>Datetime: <a href="#" editable-datetime="user.datetime">{{ user.datetime || 'empty' }}</a></div>  
+  <div>Month: <a href="#" editable-month="user.month">{{ user.month || 'empty' }}</a></div>  
+  <div>Week: <a href="#" editable-week="user.week">{{ user.week || 'empty' }}</a></div>  
+</div></div>
+                      <pre>{{ debug["html5-inputs"] | json }}</pre>
+                      <p><p>Following HTML5 types are supported via <code>editable-xxx</code> directive:</p>
+<ul>
+<li>email</li>
+<li>tel</li>
+<li>number</li>
+<li>search</li>
+<li>range</li>
+<li>url</li>
+<li>color</li>
+<li>date</li>
+<li>datetime</li>
+<li>time</li>
+<li>month</li>
+<li>week</li>
+</ul>
+<p>Please <a href="http://caniuse.com/">check browser support</a> before using particular type in your project.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('Html5InputsCtrl', function($scope) {
+  $scope.user = {
+    email: 'email@example.com',
+    tel: '123-45-67',
+    number: 29,
+    range: 10,
+    url: 'http://example.com',
+    search: 'blabla',
+    color: '#6a4415',
+    date: null,
+    time: '12:30',
+    datetime: null,
+    month: null,
+    week: null
+  };  
+$scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;Html5InputsCtrl&quot;&gt;
+  &lt;div&gt;Email: &lt;a href=&quot;#&quot; editable-email=&quot;user.email&quot;&gt;{{ user.email || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Tel: &lt;a href=&quot;#&quot; editable-tel=&quot;user.tel&quot; e-pattern=&quot;\d{3}\-\d{2}\-\d{2}&quot; e-title=&quot;xxx-xx-xx&quot;&gt;{{ user.tel || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Number: &lt;a href=&quot;#&quot; editable-number=&quot;user.number&quot; e-min=&quot;18&quot;&gt;{{ user.number || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Range: &lt;a href=&quot;#&quot; editable-range=&quot;user.range&quot; e-step=&quot;5&quot;&gt;{{ user.range || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Url: &lt;a href=&quot;#&quot; editable-url=&quot;user.url&quot;&gt;{{ user.url || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Search: &lt;a href=&quot;#&quot; editable-search=&quot;user.search&quot;&gt;{{ user.search || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Color: &lt;a href=&quot;#&quot; editable-color=&quot;user.color&quot;&gt;{{ user.color || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Date: &lt;a href=&quot;#&quot; editable-date=&quot;user.date&quot;&gt;{{ user.date || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Time: &lt;a href=&quot;#&quot; editable-time=&quot;user.time&quot;&gt;{{ user.time || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Datetime: &lt;a href=&quot;#&quot; editable-datetime=&quot;user.datetime&quot;&gt;{{ user.datetime || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Month: &lt;a href=&quot;#&quot; editable-month=&quot;user.month&quot;&gt;{{ user.month || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Week: &lt;a href=&quot;#&quot; editable-week=&quot;user.week&quot;&gt;{{ user.week || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('Html5InputsCtrl', function($scope) {
+  $scope.user = {
+    email: 'email@example.com',
+    tel: '123-45-67',
+    number: 29,
+    range: 10,
+    url: 'http://example.com',
+    search: 'blabla',
+    color: '#6a4415',
+    date: null,
+    time: '12:30',
+    datetime: null,
+    month: null,
+    week: null
+  };  
 });</pre>
                     </section>
                     <section id="textarea">
@@ -974,7 +1061,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-form">
                       <h1>Editable form</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/60/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/81/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableFormCtrl">
   <form editable-form name="editableForm" onaftersave="saveUser()">
     <div>
@@ -999,7 +1086,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       </span>
     </div>
 
-    <div>
+    <div class="buttons">
       <!-- button to show form -->
       <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
         Edit
@@ -1137,7 +1224,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       &lt;/span&gt;
     &lt;/div&gt;
 
-    &lt;div&gt;
+    &lt;div class=&quot;buttons&quot;&gt;
       &lt;!-- button to show form --&gt;
       &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;editableForm.$show()&quot; ng-show=&quot;!editableForm.$visible&quot;&gt;
         Edit
@@ -1210,7 +1297,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-row">
                       <h1>Editable row</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/62/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/79/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableRowCtrl">
   <table class="table table-bordered table-hover table-condensed">
     <tr style="font-weight: bold">
@@ -1448,9 +1535,9 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-column">
                       <h1>Editable column</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/45/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/80/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableColumnCtrl">
-  <table class="table table-bordered table-hover table-condensed" style="width: 80%">
+  <table class="table table-bordered table-hover table-condensed">
     <tr style="font-weight: bold; white-space: nowrap">
 
       <!-- username header -->
@@ -1585,7 +1672,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
 });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableColumnCtrl&quot;&gt;
-  &lt;table class=&quot;table table-bordered table-hover table-condensed&quot; style=&quot;width: 80%&quot;&gt;
+  &lt;table class=&quot;table table-bordered table-hover table-condensed&quot;&gt;
     &lt;tr style=&quot;font-weight: bold; white-space: nowrap&quot;&gt;
 
       &lt;!-- username header --&gt;
@@ -1719,7 +1806,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-table">
                       <h1>Editable table</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/61/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/78/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableTableCtrl">
   <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
 
