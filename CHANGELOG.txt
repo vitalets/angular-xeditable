@@ -4,6 +4,7 @@ Angular-xeditable changelog
 
 Version 0.1.6 wip
 ----------------------------
+[enh] add HTML5 inputs (vitalets)
 [bug] ignore right button mouse click (vitalets)
 [enh #26] introduce `oncancel` and `onhide` hooks (vitalets)
 [bug #29] include jquery before angular breaks single forms (vitalets)

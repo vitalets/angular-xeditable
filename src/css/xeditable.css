@@ -53,6 +53,15 @@
   padding: 10px;
 }
 
+/* ==== editable-range ==== */
+
+.editable-range output {
+  display: inline-block;
+  min-width: 30px;
+  vertical-align: top;
+  text-align: center;
+}
+
 /* ==== element ==== */
 
 /* hiding element */
