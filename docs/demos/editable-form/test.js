@@ -10,8 +10,8 @@ describe('editable-form', function() {
     //edit button initially shown, form initially hidden
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(1);
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(2);
-    expect(element(s+'form > div > button:visible').count()).toBe(1);
-    expect(element(s+'form > div > span button:visible').count()).toBe(0);
+    expect(element(s+'.buttons > button:visible').count()).toBe(1);
+    expect(element(s+'.buttons > span:visible').count()).toBe(0);
     expect(element(s+'select').count()).toBe(0);
     expect(element(s+'input[type="text"]').count()).toBe(0);
 
@@ -23,8 +23,8 @@ describe('editable-form', function() {
     //form shown in disabled state (loading)
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(0);
-    expect(element(s+'form > div > button:visible').count()).toBe(0);
-    expect(element(s+'form > div > span button:visible:disabled').count()).toBe(2);
+    expect(element(s+'.buttons > button:visible').count()).toBe(0);
+    expect(element(s+'.buttons > span button:disabled').count()).toBe(2);
     expect(element(s+'select:disabled:visible').count()).toBe(2);
     expect(element(s+'input[type="text"]:disabled:visible').count()).toBe(1);
 
@@ -33,8 +33,8 @@ describe('editable-form', function() {
     //form enabled when data loaded
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(0);
-    expect(element(s+'form > div > button:visible').count()).toBe(0);
-    expect(element(s+'form > div > span button:visible:enabled').count()).toBe(2);
+    expect(element(s+'.buttons > button:visible').count()).toBe(0);
+    expect(element(s+'.buttons > span button:enabled').count()).toBe(2);
     expect(element(s+'select:enabled:visible').count()).toBe(2);
     expect(element(s+'input[type="text"]:enabled:visible').count()).toBe(1);
 
@@ -44,8 +44,8 @@ describe('editable-form', function() {
     //form closed
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(1);
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(2);
-    expect(element(s+'form > div > button:visible').count()).toBe(1);
-    expect(element(s+'form > div > span button:visible').count()).toBe(0);
+    expect(element(s+'.buttons > button:visible').count()).toBe(1);
+    expect(element(s+'.buttons > span:visible').count()).toBe(0);
     expect(element(s+'select').count()).toBe(0);
     expect(element(s+'input[type="text"]').count()).toBe(0);
   });
@@ -60,7 +60,7 @@ describe('editable-form', function() {
 
     //set incorrect values (field's onbeforesave error)
     using(s+'form > div:eq(0)').input('$data').enter('username2');
-    element(s+'form > div > span button[type="submit"]').click();
+    element(s+'.buttons > span button[type="submit"]').click();
 
     //error shown
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
@@ -71,15 +71,15 @@ describe('editable-form', function() {
 
     //set incorrect values (form's onaftersave error)
     using(s+'form > div:eq(0)').input('$data').enter('error');
-    element(s+'form > div > span button[type="submit"]').click();
+    element(s+'.buttons > span button[type="submit"]').click();
 
     //saving
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(0);
-    expect(element(s+'form > div > button:visible').count()).toBe(0);
-    expect(element(s+'form > div > span button:visible:disabled').count()).toBe(2);
+    expect(element(s+'.buttons > button:visible').count()).toBe(0);
+    expect(element(s+'.buttons > span button:disabled').count()).toBe(2);
     expect(element(s+'select:disabled:visible').count()).toBe(2);
-    expect(element(s+'input[type="text"]:disabled:visible').count()).toBe(1);
+    expect(element(s+'input[type="text"]:disabled').count()).toBe(1);
     expect(element(s+'form > div:eq(0) .editable-error:visible').count()).toBe(0);
 
     sleep(delay);
@@ -88,7 +88,7 @@ describe('editable-form', function() {
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(0);
     expect(element(s+'select:enabled:visible').count()).toBe(2);
-    expect(element(s+'input[type="text"]:enabled:visible').count()).toBe(1);
+    expect(element(s+'input[type="text"]:enabled').count()).toBe(1);
     expect(element(s+'form > div:eq(0) .editable-error').text()).toMatch('Server-side error');
 
     //set correct values
@@ -97,17 +97,17 @@ describe('editable-form', function() {
     using(s+'form > div:eq(2)').select('$data').option('0'); //user
 
     //click submit
-    element(s+'form > div > span button[type="submit"]').click();
+    element(s+'.buttons > span button[type="submit"]').click();
     //second click to check that it works correctly
-    element(s+'form > div > span button[type="submit"]').click();
+    element(s+'.buttons > span button[type="submit"]').click();
 
     //saving
+    expect(element(s+'.buttons > span button:disabled').count()).toBe(2);
+    expect(element(s+'select:disabled').count()).toBe(2);
+    expect(element(s+'input[type="text"]:disabled').count()).toBe(1);
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(0);
-    expect(element(s+'form > div > button:visible').count()).toBe(0);
-    expect(element(s+'form > div > span button:visible:disabled').count()).toBe(2);
-    expect(element(s+'select:disabled:visible').count()).toBe(2);
-    expect(element(s+'input[type="text"]:disabled:visible').count()).toBe(1);
+    expect(element(s+'.buttons > button:visible').count()).toBe(0);
     expect(element(s+'form > div:eq(0) .editable-error:visible').count()).toBe(0);
 
     sleep(delay);
@@ -119,8 +119,8 @@ describe('editable-form', function() {
     expect(element(s+'form > div > span[editable-select]:visible:eq(0)').text()).toMatch('status4');
     expect(element(s+'form > div > span[editable-select]:visible:eq(1)').text()).toMatch('user');
 
-    expect(element(s+'form > div > button:visible').count()).toBe(1);
-    expect(element(s+'form > div > span button:visible').count()).toBe(0);
+    expect(element(s+'.buttons > button:visible').count()).toBe(1);
+    expect(element(s+'.buttons > span:visible').count()).toBe(0);
     expect(element(s+'select').count()).toBe(0);
     expect(element(s+'input[type="text"]').count()).toBe(0);
   });
