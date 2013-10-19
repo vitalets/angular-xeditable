@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.5
+angular-xeditable - 0.1.6
 Edit-in-place for angular.js
-Build date: 2013-10-14 
+Build date: 2013-10-19 
 */
 /*
 angular-xeditable module
@@ -42,11 +42,11 @@ angular.module('xeditable').directive('editableBstime', ['editableDirectiveFacto
         // so we wrap it into DIV
         var div = angular.element('<div class="well well-small" style="display:inline-block;"></div>');
 
-        // move ng-model
+        // move ng-model to wrapping div
         div.attr('ng-model', this.inputEl.attr('ng-model'));
         this.inputEl.removeAttr('ng-model');
 
-        // move ng-change
+        // move ng-change to wrapping div
         if(this.attrs.eNgChange) {
           div.attr('ng-change', this.inputEl.attr('ng-change'));
           this.inputEl.removeAttr('ng-change');
@@ -150,13 +150,16 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
 
   // bind click to body: cancel|submit editables
   $document.bind('click', function(e) {
+
     var toCancel = [];
     var toSubmit = [];
     for (var i=0; i<shown.length; i++) {
       // exclude self
-      if (e.editable === shown[i]) {
+      if (shown[i].clicked) {
+        shown[i].clicked = false;
         continue;
       }
+
       if (shown[i].blur === 'cancel') {
         toCancel.push(shown[i]);
       }
@@ -192,6 +195,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
+    self.clicked = false; //used to check in document click handler if control was clicked or not
 
     //to be overwritten by directive
     self.inputTpl = '';
@@ -279,6 +283,30 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       }
 
       /**
+       * Called when control is hidden after both save or cancel.  
+       * 
+       * @var {method|attribute} onhide
+       * @memberOf editable-element
+       */
+      if($attrs.onhide) {
+        self.onhide = function() {
+          return $parse($attrs.onhide)($scope);
+        };
+      }
+
+      /**
+       * Called when control is cancelled.  
+       * 
+       * @var {method|attribute} oncancel
+       * @memberOf editable-element
+       */
+      if($attrs.oncancel) {
+        self.oncancel = function() {
+          return $parse($attrs.oncancel)($scope);
+        };
+      }          
+
+      /**
        * Called during submit before value is saved to model.  
        * See [demo](#onbeforesave).
        * 
@@ -363,8 +391,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
         }
 
         // convert back to lowercase style
-        transferAttr = transferAttr.substring(0, 1) + transferAttr.substring(1).replace(/[A-Z]/g, '-$&');  
-        transferAttr = transferAttr.toLowerCase();
+        transferAttr = transferAttr.substring(0, 1).toLowerCase() + utils.camelToDash(transferAttr.substring(1));  
 
         // workaround for attributes without value (e.g. `multiple = "multiple"`)
         var attrValue = ($attrs[k] === '') ? transferAttr : $attrs[k];
@@ -374,8 +401,10 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       }
 
       self.inputEl.addClass('editable-input');
-
       self.inputEl.attr('ng-model', '$data');
+
+      // add directiveName class to editor, e.g. `editable-text`
+      self.editorEl.addClass(utils.camelToDash(self.directiveName));
 
       if(self.single) {
         self.editorEl.attr('editable-form', '$form');
@@ -420,7 +449,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
         }
       }, 0);
 
-      //onshow
+      // onshow
       return self.onshow();
     };
 
@@ -433,6 +462,9 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       // remove from internal list
       utils.arrayRemove(shown, self);
 
+      // onhide
+      return self.onhide();
+
       // todo: to think is it really needed or not
       /*
       if($element[0].tagName === 'A') {
@@ -441,11 +473,18 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       */
     };
 
+    // cancel
+    self.cancel = function() {
+      // oncancel
+      self.oncancel();
+      // don't call hide() here as it called in form's code
+    };
+
     /*
     Called after show to attach listeners
     */
     self.addListeners = function() {
-      //bind keyup
+      // bind keyup for `escape`
       self.inputEl.bind('keyup', function(e) {
           if(!self.single) {
             return;
@@ -454,19 +493,19 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
           switch(e.keyCode) {
             // hide on `escape` press
             case 27:
-              self.scope.$form.$hide();
+              self.scope.$form.$cancel();
             break;
           }
       });
 
-      //autosubmit when no buttons
+      // autosubmit when `no buttons`
       if (self.single && self.buttons === 'no') {
         self.autosubmit();
       }
 
-      // click - mark event as going from editable element
+      // click - mark element as clicked to exclude in document click handler
       self.editorEl.bind('click', function(e) {
-        e.editable = self;
+        self.clicked = true;
       });
     };
 
@@ -553,6 +592,8 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
     self.autosubmit = angular.noop;
 
     self.onshow = angular.noop;
+    self.onhide = angular.noop;
+    self.oncancel = angular.noop;
     self.onbeforesave = angular.noop;
     self.onaftersave = angular.noop;
   }
@@ -712,6 +753,11 @@ angular.module('xeditable').factory('editableFormController',
       if (!editable.scope.$form) {
         editable.scope.$form = this;
       }
+
+      //if form already shown - call show() of new editable
+      if (this.$visible) {
+        editable.catchError(editable.show());
+      }
     },
 
     $removeEditable: function(editable) {
@@ -727,10 +773,14 @@ angular.module('xeditable').factory('editableFormController',
     /**
      * Shows form with editable controls.
      * 
-     * @method $show
+     * @method $show()
      * @memberOf editable-form
      */
     $show: function() {
+      if (this.$visible) {
+        return;
+      }
+
       this.$visible = true;
 
       var pc = editablePromiseCollection();
@@ -784,15 +834,41 @@ angular.module('xeditable').factory('editableFormController',
     /**
      * Hides form with editable controls without saving.
      * 
-     * @method $hide
+     * @method $hide()
      * @memberOf editable-form
      */
     $hide: function() {
+      if (!this.$visible) {
+        return;
+      }      
       this.$visible = false;
+      // self hide
+      this.$onhide();
+      // children's hide
       angular.forEach(this.$editables, function(editable) {
         editable.hide();
       });
     },
+
+    /**
+     * Hides form with editable controls without saving.
+     * 
+     * @method $hide()
+     * @memberOf editable-form
+     */
+    $cancel: function() {
+      if (!this.$visible) {
+        return;
+      }      
+      // self cancel
+      this.$oncancel();
+      // children's cancel      
+      angular.forEach(this.$editables, function(editable) {
+        editable.cancel();
+      });
+      // self hide
+      this.$hide();
+    },    
 
     $setWaiting: function(value) {
       this.$waiting = !!value;
@@ -801,6 +877,14 @@ angular.module('xeditable').factory('editableFormController',
       });
     },
 
+    /**
+     * Shows error message for particular field.
+     * 
+     * @method $setError(name, msg)
+     * @param {string} name name of field
+     * @param {string} msg error message
+     * @memberOf editable-form
+     */
     $setError: function(name, msg) {
       angular.forEach(this.$editables, function(editable) {
         if(!name || editable.name === name) {
@@ -810,6 +894,10 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     $submit: function() {
+      if (this.$waiting) {
+        return;
+      } 
+
       //clear errors
       this.$setError(null, '');
 
@@ -834,7 +922,6 @@ angular.module('xeditable').factory('editableFormController',
 
       //save
       function checkSelf(childrenTrue){
-        //console.log('childrenTrue', childrenTrue);
         var pc = editablePromiseCollection();
         pc.when(this.$onbeforesave());
         pc.then({
@@ -847,8 +934,7 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     $save: function() {
-      //console.log('form save', this.$data);
-      //save each editable
+      // write model for each editable
       angular.forEach(this.$editables, function(editable) {
         editable.save();
       });
@@ -874,6 +960,8 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     $onshow: angular.noop,
+    $oncancel: angular.noop,
+    $onhide: angular.noop,
     $onbeforesave: angular.noop,
     $onaftersave: angular.noop
   };
@@ -920,6 +1008,12 @@ angular.module('xeditable').directive('editableForm',
             var form = ctrl[0];
             var eForm;
 
+            /*
+            Maybe it's better attach editable controller to form's controller not in pre()
+            but in controller itself. 
+            This allows to use ng-init already in <form> tag, otherwise we can't (in FF).
+            */
+
             //if `editableForm` has value - publish smartly under this value
             //this is required only for single editor form that is created and removed
             if(attrs.editableForm) {
@@ -964,6 +1058,26 @@ angular.module('xeditable').directive('editableForm',
             if(attrs.onshow) {
               eForm.$onshow = angular.bind(eForm, $parse(attrs.onshow), scope);
             }
+
+            /**
+             * Called when form hides after both save or cancel.
+             * 
+             * @var {method|attribute} onhide 
+             * @memberOf editable-form
+             */
+            if(attrs.onhide) {
+              eForm.$onhide = angular.bind(eForm, $parse(attrs.onhide), scope);
+            }
+
+            /**
+             * Called when form is cancelled.
+             * 
+             * @var {method|attribute} oncancel 
+             * @memberOf editable-form
+             */
+            if(attrs.oncancel) {
+              eForm.$oncancel = angular.bind(eForm, $parse(attrs.oncancel), scope);
+            }                        
 
             // onbeforesave, onaftersave
             if(!attrs.ngSubmit && !attrs.submit) {
@@ -1088,7 +1202,7 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
 
 }]);
 
-angular.module('xeditable').factory('editableUtils', [function() { 
+angular.module('xeditable').factory('editableUtils', [function() {
   return {
     indexOf: function (array, obj) {
       if (array.indexOf) return array.indexOf(obj);
@@ -1105,6 +1219,24 @@ angular.module('xeditable').factory('editableUtils', [function() {
         array.splice(index, 1);
       }
       return value;
+    },
+
+    // copy from https://github.com/angular/angular.js/blob/master/src/Angular.js
+    camelToDash: function(str) {
+      var SNAKE_CASE_REGEXP = /[A-Z]/g;
+      return str.replace(SNAKE_CASE_REGEXP, function(letter, pos) {
+        return (pos ? '-' : '') + letter.toLowerCase();
+      });
+    },
+
+    dashToCamel: function(str) {
+      var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
+      var MOZ_HACK_REGEXP = /^moz([A-Z])/;
+      return str.
+        replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
+          return offset ? letter.toUpperCase() : letter;
+        }).
+        replace(MOZ_HACK_REGEXP, 'Moz$1');
     }
   };
 }]);
@@ -1128,7 +1260,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       errorTpl:     '<div class="editable-error" ng-show="$error">{{$error}}</div>',
       buttonsTpl:   '<span class="editable-buttons"></span>',
       submitTpl:    '<button type="submit">save</button>',
-      cancelTpl:    '<button type="button" ng-click="$form.$hide()">cancel</button>'
+      cancelTpl:    '<button type="button" ng-click="$form.$cancel()">cancel</button>'
     },
 
     //bs2
@@ -1140,7 +1272,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       errorTpl:    '<div class="editable-error help-block" ng-show="$error">{{$error}}</div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span class="icon-ok icon-white"></span></button>',
-      cancelTpl:   '<button type="button" class="btn" ng-click="$form.$hide()">'+
+      cancelTpl:   '<button type="button" class="btn" ng-click="$form.$cancel()">'+
                       '<span class="icon-remove"></span>'+
                    '</button>'
 
@@ -1155,7 +1287,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       errorTpl:    '<div class="editable-error help-block" ng-show="$error">{{$error}}</div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span></button>',
-      cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$hide()">'+
+      cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
                      '<span class="glyphicon glyphicon-remove"></span>'+
                    '</button>',
 

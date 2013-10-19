@@ -37,7 +37,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.5.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.5 ~ 13kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.6.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.6 ~ 13kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -191,7 +191,7 @@ to use power of angular and support complex forms / editable grids.</p>
 
               <pre class="prettyprint">&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.1.5.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.1.6.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -640,7 +640,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checkbox"]=v; }); });<
   </a>
 </div></div>
                       <pre>{{ debug["bsdate"] | json }}</pre>
-                      <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br>Currently it has only Bootstrap 2 version, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
+                      <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br><strong>Currently it has only Bootstrap 2 version</strong>, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
 <pre class="prettyprint">&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
@@ -676,12 +676,31 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</s
   </a>
 </div></div>
                       <pre>{{ debug["bstime"] | json }}</pre>
-                      <p><p>Time control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/timepicker">Angular-ui bootstrap timepicker</a>.<br>Currently it has only Bootstrap 2 version, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
+                      <p><p>Time control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/timepicker">Angular-ui bootstrap timepicker</a>.<br><strong>Currently it has only Bootstrap 2 version</strong>, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
 <pre class="prettyprint">&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
 <p>And set <code>editable-bstime</code> attribute in editable element.
 Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-minute-step=&quot;10&quot;</code>.</p>
+<p>To get it working with <strong>Bootstrap 3</strong> you should add following css:</p>
+<pre><code>/* temporary workaround for display editable-bstime in bs3 - up/down symbols not shown */
+.editable-bstime .editable-input i.icon-chevron-up:before {
+  content: &#39;\e113&#39;;
+}
+.editable-bstime .editable-input i.icon-chevron-down:before {
+  content: &#39;\e114&#39;;
+}
+.editable-bstime .editable-input i.icon-chevron-up,
+.editable-bstime .editable-input i.icon-chevron-down {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: &#39;Glyphicons Halflings&#39;;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+}</code></pre>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('BstimeCtrl', function($scope) {
@@ -990,7 +1009,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
         <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
           Save
         </button>
-        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$hide()">
+        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
           Cancel
         </button>
       </span>
@@ -1000,7 +1019,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                       <p><p>To show several editable elements together and submit at once you should wrap them into <code>&lt;form editable-form name=&quot;myform&quot; ...&gt;</code> tag. The <code>name</code> attribute of form will create variable in scope (normal angular behavior) and <code>editable-form</code> attribute will add a few methods to that variable: </p>
 <ul>
 <li>$show()</li>
-<li>$hide()</li>
+<li>$cancel()</li>
 <li>$visible</li>
 <li>$waiting</li>
 </ul>
@@ -1128,7 +1147,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
         &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot; ng-disabled=&quot;editableForm.$waiting&quot;&gt;
           Save
         &lt;/button&gt;
-        &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-disabled=&quot;editableForm.$waiting&quot; ng-click=&quot;editableForm.$hide()&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-disabled=&quot;editableForm.$waiting&quot; ng-click=&quot;editableForm.$cancel()&quot;&gt;
           Cancel
         &lt;/button&gt;
       &lt;/span&gt;
@@ -1221,15 +1240,15 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       </td>
       <td style="white-space: nowrap">
         <!-- form -->
-        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline" ng-init="(inserted == user) && rowform.$show()">
+        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline" >
           <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
             save
           </button>
-          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$hide()" class="btn btn-default">
+          <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
             cancel
           </button>
         </form>
-        <div class="buttons" ng-show="!rowform.$visible">  
+        <div class="buttons" ng-show="!rowform.$visible" ng-init="(inserted == user) && rowform.$show()">  
           <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
           <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
         </div>  
@@ -1340,15 +1359,15 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       &lt;/td&gt;
       &lt;td style=&quot;white-space: nowrap&quot;&gt;
         &lt;!-- form --&gt;
-        &lt;form editable-form name=&quot;rowform&quot; onbeforesave=&quot;saveUser($data, user.id)&quot; ng-show=&quot;rowform.$visible&quot; class=&quot;form-buttons form-inline&quot; ng-init=&quot;(inserted == user) &amp;&amp; rowform.$show()&quot;&gt;
+        &lt;form editable-form name=&quot;rowform&quot; onbeforesave=&quot;saveUser($data, user.id)&quot; ng-show=&quot;rowform.$visible&quot; class=&quot;form-buttons form-inline&quot; &gt;
           &lt;button type=&quot;submit&quot; ng-disabled=&quot;rowform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
             save
           &lt;/button&gt;
-          &lt;button type=&quot;button&quot; ng-disabled=&quot;rowform.$waiting&quot; ng-click=&quot;rowform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;
+          &lt;button type=&quot;button&quot; ng-disabled=&quot;rowform.$waiting&quot; ng-click=&quot;rowform.$cancel()&quot; class=&quot;btn btn-default&quot;&gt;
             cancel
           &lt;/button&gt;
         &lt;/form&gt;
-        &lt;div class=&quot;buttons&quot; ng-show=&quot;!rowform.$visible&quot;&gt;  
+        &lt;div class=&quot;buttons&quot; ng-show=&quot;!rowform.$visible&quot; ng-init=&quot;(inserted == user) &amp;&amp; rowform.$show()&quot;&gt;  
           &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;rowform.$show()&quot;&gt;edit&lt;/button&gt;
           &lt;button class=&quot;btn btn-danger&quot; ng-click=&quot;removeUser($index)&quot;&gt;del&lt;/button&gt;
         &lt;/div&gt;  
@@ -1441,7 +1460,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
           <button type="submit" ng-disabled="nameform.$waiting" class="btn btn-primary">
             save
           </button>
-          <button type="button" ng-disabled="nameform.$waiting" ng-click="nameform.$hide()" class="btn btn-default">
+          <button type="button" ng-disabled="nameform.$waiting" ng-click="nameform.$cancel()" class="btn btn-default">
             cancel
           </button>
         </form>  
@@ -1457,7 +1476,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
           <button type="submit" ng-disabled="statusform.$waiting" class="btn btn-primary">
             save
           </button>
-          <button type="button" ng-disabled="statusform.$waiting" ng-click="statusform.$hide()" class="btn btn-default">
+          <button type="button" ng-disabled="statusform.$waiting" ng-click="statusform.$cancel()" class="btn btn-default">
             cancel
           </button>
         </form>  
@@ -1473,7 +1492,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
           <button type="submit" ng-disabled="groupform.$waiting" class="btn btn-primary">
             save
           </button>
-          <button type="button" ng-disabled="groupform.$waiting" ng-click="groupform.$hide()" class="btn btn-default">
+          <button type="button" ng-disabled="groupform.$waiting" ng-click="groupform.$cancel()" class="btn btn-default">
             cancel
           </button>
         </form>  
@@ -1576,7 +1595,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
           &lt;button type=&quot;submit&quot; ng-disabled=&quot;nameform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
             save
           &lt;/button&gt;
-          &lt;button type=&quot;button&quot; ng-disabled=&quot;nameform.$waiting&quot; ng-click=&quot;nameform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;
+          &lt;button type=&quot;button&quot; ng-disabled=&quot;nameform.$waiting&quot; ng-click=&quot;nameform.$cancel()&quot; class=&quot;btn btn-default&quot;&gt;
             cancel
           &lt;/button&gt;
         &lt;/form&gt;  
@@ -1592,7 +1611,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
           &lt;button type=&quot;submit&quot; ng-disabled=&quot;statusform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
             save
           &lt;/button&gt;
-          &lt;button type=&quot;button&quot; ng-disabled=&quot;statusform.$waiting&quot; ng-click=&quot;statusform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;
+          &lt;button type=&quot;button&quot; ng-disabled=&quot;statusform.$waiting&quot; ng-click=&quot;statusform.$cancel()&quot; class=&quot;btn btn-default&quot;&gt;
             cancel
           &lt;/button&gt;
         &lt;/form&gt;  
@@ -1608,7 +1627,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
           &lt;button type=&quot;submit&quot; ng-disabled=&quot;groupform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
             save
           &lt;/button&gt;
-          &lt;button type=&quot;button&quot; ng-disabled=&quot;groupform.$waiting&quot; ng-click=&quot;groupform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;
+          &lt;button type=&quot;button&quot; ng-disabled=&quot;groupform.$waiting&quot; ng-click=&quot;groupform.$cancel()&quot; class=&quot;btn btn-default&quot;&gt;
             cancel
           &lt;/button&gt;
         &lt;/form&gt;  
@@ -1702,16 +1721,17 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/61/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableTableCtrl">
-  <form editable-form name="tableform" onaftersave="saveTable()">
+  <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
 
     <!-- table -->
-    <table class="table table-bordered table-hover table-condensed" style="width: 80%">
+    <table class="table table-bordered table-hover table-condensed">
       <tr style="font-weight: bold">
         <td style="width:40%">Name</td>
         <td style="width:30%">Status</td>
         <td style="width:30%">Group</td>
+        <td style="width:30%"><span ng-show="tableform.$visible">Action</span></td>
       </tr>
-      <tr ng-repeat="user in users">
+      <tr ng-repeat="user in users | filter:filterUser">
         <td>
           <!-- editable username (text with validation) -->
           <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data, user.id)">
@@ -1730,24 +1750,26 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
             {{ showGroup(user) }}
           </span>
         </td>
+        <td><button type="button" ng-show="tableform.$visible" ng-click="deleteUser(user.id)" class="btn btn-danger pull-right">Del</button></td>
       </tr>
     </table>
 
     <!-- buttons -->
-    <div style="white-space: nowrap">
+    <div class="btn-edit">
       <button type="button" class="btn btn-default" ng-show="!tableform.$visible" ng-click="tableform.$show()">
         edit
       </button>
-      <span ng-show="tableform.$visible">
-        <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
-        <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$hide()" class="btn btn-default">cancel
-        </button>
-      </span>  
     </div>
+    <div class="btn-form" ng-show="tableform.$visible">
+      <button type="button" ng-disabled="tableform.$waiting" ng-click="addUser()" class="btn btn-default pull-right">add row</button>
+      <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
+      <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">cancel</button>
+    </div> 
     
   </form>
 </div></div>
-                      <p><p>Just wrap the whole table into <code>&lt;form&gt;</code> tag with <code>editable-form</code> attribute.</p>
+                      <p><p>Just wrap the whole table into <code>&lt;form&gt;</code> tag with <code>editable-form</code> attribute.
+Note that using <code>oncancel</code> hook allows you to revert all changes and put table into original state.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('EditableTableCtrl', function($scope, $filter, $http, $q) {
@@ -1794,27 +1816,79 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     }
   };
 
+  // filter users to show
+  $scope.filterUser = function(user) {
+    return user.isDeleted !== true;
+  };
+
+  // mark user as deleted
+  $scope.deleteUser = function(id) {
+    var filtered = $filter('filter')($scope.users, {id: id});
+    if (filtered.length) {
+      filtered[0].isDeleted = true;
+    }
+  };
+
+  // add user
+  $scope.addUser = function() {
+    $scope.users.push({
+      id: $scope.users.length+1,
+      name: '',
+      status: null,
+      group: null,
+      isNew: true
+    });
+  };
+
+  // cancel all changes
+  $scope.cancel = function() {
+    for (var i = $scope.users.length; i--;) {
+      var user = $scope.users[i];    
+      // undelete
+      if (user.isDeleted) {
+        delete user.isDeleted;
+      }
+      // remove new 
+      if (user.isNew) {
+        $scope.users.splice(i, 1);
+      }      
+    };
+  };
+
+  // save edits
   $scope.saveTable = function() {
-    //$scope.users already updated
     var results = [];
-    angular.forEach($scope.users, function(user) {
-      results.push($http.post('/saveUser', user));
-    })
+    for (var i = $scope.users.length; i--;) {
+      var user = $scope.users[i];
+      // actually delete user
+      if (user.isDeleted) {
+        $scope.users.splice(i, 1);
+      }
+      // mark as not new 
+      if (user.isNew) {
+        user.isNew = false;
+      }
+
+      // send on server
+      results.push($http.post('/saveUser', user));      
+    }
+
     return $q.all(results);
   };
 });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableTableCtrl&quot;&gt;
-  &lt;form editable-form name=&quot;tableform&quot; onaftersave=&quot;saveTable()&quot;&gt;
+  &lt;form editable-form name=&quot;tableform&quot; onaftersave=&quot;saveTable()&quot; oncancel=&quot;cancel()&quot;&gt;
 
     &lt;!-- table --&gt;
-    &lt;table class=&quot;table table-bordered table-hover table-condensed&quot; style=&quot;width: 80%&quot;&gt;
+    &lt;table class=&quot;table table-bordered table-hover table-condensed&quot;&gt;
       &lt;tr style=&quot;font-weight: bold&quot;&gt;
         &lt;td style=&quot;width:40%&quot;&gt;Name&lt;/td&gt;
         &lt;td style=&quot;width:30%&quot;&gt;Status&lt;/td&gt;
         &lt;td style=&quot;width:30%&quot;&gt;Group&lt;/td&gt;
+        &lt;td style=&quot;width:30%&quot;&gt;&lt;span ng-show=&quot;tableform.$visible&quot;&gt;Action&lt;/span&gt;&lt;/td&gt;
       &lt;/tr&gt;
-      &lt;tr ng-repeat=&quot;user in users&quot;&gt;
+      &lt;tr ng-repeat=&quot;user in users | filter:filterUser&quot;&gt;
         &lt;td&gt;
           &lt;!-- editable username (text with validation) --&gt;
           &lt;span editable-text=&quot;user.name&quot; e-form=&quot;tableform&quot; onbeforesave=&quot;checkName($data, user.id)&quot;&gt;
@@ -1833,20 +1907,21 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
             {{ showGroup(user) }}
           &lt;/span&gt;
         &lt;/td&gt;
+        &lt;td&gt;&lt;button type=&quot;button&quot; ng-show=&quot;tableform.$visible&quot; ng-click=&quot;deleteUser(user.id)&quot; class=&quot;btn btn-danger pull-right&quot;&gt;Del&lt;/button&gt;&lt;/td&gt;
       &lt;/tr&gt;
     &lt;/table&gt;
 
     &lt;!-- buttons --&gt;
-    &lt;div style=&quot;white-space: nowrap&quot;&gt;
+    &lt;div class=&quot;btn-edit&quot;&gt;
       &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-show=&quot;!tableform.$visible&quot; ng-click=&quot;tableform.$show()&quot;&gt;
         edit
       &lt;/button&gt;
-      &lt;span ng-show=&quot;tableform.$visible&quot;&gt;
-        &lt;button type=&quot;submit&quot; ng-disabled=&quot;tableform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;save&lt;/button&gt;
-        &lt;button type=&quot;button&quot; ng-disabled=&quot;tableform.$waiting&quot; ng-click=&quot;tableform.$hide()&quot; class=&quot;btn btn-default&quot;&gt;cancel
-        &lt;/button&gt;
-      &lt;/span&gt;  
     &lt;/div&gt;
+    &lt;div class=&quot;btn-form&quot; ng-show=&quot;tableform.$visible&quot;&gt;
+      &lt;button type=&quot;button&quot; ng-disabled=&quot;tableform.$waiting&quot; ng-click=&quot;addUser()&quot; class=&quot;btn btn-default pull-right&quot;&gt;add row&lt;/button&gt;
+      &lt;button type=&quot;submit&quot; ng-disabled=&quot;tableform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;save&lt;/button&gt;
+      &lt;button type=&quot;button&quot; ng-disabled=&quot;tableform.$waiting&quot; ng-click=&quot;tableform.$cancel()&quot; class=&quot;btn btn-default&quot;&gt;cancel&lt;/button&gt;
+    &lt;/div&gt; 
     
   &lt;/form&gt;
 &lt;/div&gt;</pre>
@@ -1895,12 +1970,63 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     }
   };
 
+  // filter users to show
+  $scope.filterUser = function(user) {
+    return user.isDeleted !== true;
+  };
+
+  // mark user as deleted
+  $scope.deleteUser = function(id) {
+    var filtered = $filter('filter')($scope.users, {id: id});
+    if (filtered.length) {
+      filtered[0].isDeleted = true;
+    }
+  };
+
+  // add user
+  $scope.addUser = function() {
+    $scope.users.push({
+      id: $scope.users.length+1,
+      name: '',
+      status: null,
+      group: null,
+      isNew: true
+    });
+  };
+
+  // cancel all changes
+  $scope.cancel = function() {
+    for (var i = $scope.users.length; i--;) {
+      var user = $scope.users[i];    
+      // undelete
+      if (user.isDeleted) {
+        delete user.isDeleted;
+      }
+      // remove new 
+      if (user.isNew) {
+        $scope.users.splice(i, 1);
+      }      
+    };
+  };
+
+  // save edits
   $scope.saveTable = function() {
-    //$scope.users already updated
     var results = [];
-    angular.forEach($scope.users, function(user) {
-      results.push($http.post('/saveUser', user));
-    })
+    for (var i = $scope.users.length; i--;) {
+      var user = $scope.users[i];
+      // actually delete user
+      if (user.isDeleted) {
+        $scope.users.splice(i, 1);
+      }
+      // mark as not new 
+      if (user.isNew) {
+        user.isNew = false;
+      }
+
+      // send on server
+      results.push($http.post('/saveUser', user));      
+    }
+
     return $q.all(results);
   };
 });</pre>
@@ -2010,6 +2136,18 @@ then input will appear as <code>&lt;input style=&quot;width: 100px&quot;&gt;</co
 </td>
                         </tr>
                         <tr>
+                          <td><code>oncancel</code></td>
+                          <td>method</td>
+                          <td><p>Called when control is cancelled.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>onhide</code></td>
+                          <td>method</td>
+                          <td><p>Called when control is hidden after both save or cancel.</p>
+</td>
+                        </tr>
+                        <tr>
                           <td><code>onshow</code></td>
                           <td>method</td>
                           <td><p>Called when control is shown.<br>See <a href="#select-remote">demo</a>.</p>
@@ -2045,6 +2183,18 @@ then input will appear as <code>&lt;input style=&quot;width: 100px&quot;&gt;</co
                           <td>method</td>
                           <td><p>Called after all children <code>onbeforesave</code> callbacks but before saving form values
 to model.<br>If at least one children callback returns <code>non-string</code> - it will not not be called.<br>See <a href="#editable-form">editable-form demo</a> for details.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>oncancel</code></td>
+                          <td>method</td>
+                          <td><p>Called when form is cancelled.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>onhide</code></td>
+                          <td>method</td>
+                          <td><p>Called when form hides after both save or cancel.</p>
 </td>
                         </tr>
                         <tr>
@@ -2097,6 +2247,13 @@ to model.<br>If at least one children callback returns <code>non-string</code> -
                         </tr>
                       </thead>
                       <tbody>
+                        <tr>
+                          <td><code>$hide()</code></td>
+                          <td><i>none    </i>
+                          </td>
+                          <td><p>Hides form with editable controls without saving.</p>
+</td>
+                        </tr>
                         <tr>
                           <td><code>$hide()</code></td>
                           <td><i>none    </i>
