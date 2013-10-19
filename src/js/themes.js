@@ -17,7 +17,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       errorTpl:     '<div class="editable-error" ng-show="$error">{{$error}}</div>',
       buttonsTpl:   '<span class="editable-buttons"></span>',
       submitTpl:    '<button type="submit">save</button>',
-      cancelTpl:    '<button type="button" ng-click="$form.$hide()">cancel</button>'
+      cancelTpl:    '<button type="button" ng-click="$form.$cancel()">cancel</button>'
     },
 
     //bs2
@@ -29,7 +29,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       errorTpl:    '<div class="editable-error help-block" ng-show="$error">{{$error}}</div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span class="icon-ok icon-white"></span></button>',
-      cancelTpl:   '<button type="button" class="btn" ng-click="$form.$hide()">'+
+      cancelTpl:   '<button type="button" class="btn" ng-click="$form.$cancel()">'+
                       '<span class="icon-remove"></span>'+
                    '</button>'
 
@@ -44,7 +44,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       errorTpl:    '<div class="editable-error help-block" ng-show="$error">{{$error}}</div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span></button>',
-      cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$hide()">'+
+      cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
                      '<span class="glyphicon glyphicon-remove"></span>'+
                    '</button>',
 

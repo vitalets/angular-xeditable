@@ -358,7 +358,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
           switch(e.keyCode) {
             // hide on `escape` press
             case 27:
-              self.scope.$form.$hide();
+              self.scope.$form.$cancel();
             break;
           }
       });

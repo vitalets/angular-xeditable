@@ -1,7 +1,7 @@
 To show several editable elements together and submit at once you should wrap them into `<form editable-form name="myform" ...>` tag. The `name` attribute of form will create variable in scope (normal angular behavior) and `editable-form` attribute will add a few methods to that variable: 
 
 - $show()
-- $hide()
+- $cancel()
 - $visible
 - $waiting
 
