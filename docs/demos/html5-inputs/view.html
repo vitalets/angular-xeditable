@@ -1,0 +1,14 @@
+<div ng-controller="Html5InputsCtrl">
+  <div>Email: <a href="#" editable-email="user.email">{{ user.email || 'empty' }}</a></div>
+  <div>Tel: <a href="#" editable-tel="user.tel" e-pattern="\d{3}\-\d{2}\-\d{2}" e-title="xxx-xx-xx">{{ user.tel || 'empty' }}</a></div>
+  <div>Number: <a href="#" editable-number="user.number" e-min="18">{{ user.number || 'empty' }}</a></div>  
+  <div>Range: <a href="#" editable-range="user.range" e-step="5">{{ user.range || 'empty' }}</a></div>  
+  <div>Url: <a href="#" editable-url="user.url">{{ user.url || 'empty' }}</a></div>  
+  <div>Search: <a href="#" editable-search="user.search">{{ user.search || 'empty' }}</a></div>  
+  <div>Color: <a href="#" editable-color="user.color">{{ user.color || 'empty' }}</a></div>  
+  <div>Date: <a href="#" editable-date="user.date">{{ user.date || 'empty' }}</a></div>  
+  <div>Time: <a href="#" editable-time="user.time">{{ user.time || 'empty' }}</a></div>  
+  <div>Datetime: <a href="#" editable-datetime="user.datetime">{{ user.datetime || 'empty' }}</a></div>  
+  <div>Month: <a href="#" editable-month="user.month">{{ user.month || 'empty' }}</a></div>  
+  <div>Week: <a href="#" editable-week="user.week">{{ user.week || 'empty' }}</a></div>  
+</div>  

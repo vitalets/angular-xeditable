@@ -9,6 +9,7 @@ module.exports = [
         {id: 'select-remote', text: 'Select remote', fiddle: 'http://jsfiddle.net/NfPcH/29/'},
         {id: 'select-multiple', text: 'Select multiple', fiddle: 'http://jsfiddle.net/NfPcH/30/'},
         {id: 'select-nobuttons', text: 'Select no buttons', fiddle: 'http://jsfiddle.net/NfPcH/31/'},
+        {id: 'html5-inputs', text: 'HTML5 inputs', fiddle: ''},
         {id: 'textarea', text: 'Textarea', fiddle: 'http://jsfiddle.net/NfPcH/32/'},
         {id: 'checkbox', text: 'Checkbox', fiddle: 'http://jsfiddle.net/NfPcH/33/'},
         {id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/NfPcH/23/', fiddleText: 'View Bootstrap 2 jsFiddle'},

@@ -69,7 +69,7 @@ body {
   .sidebar > .nav > li.active > .nav {
     display: block;
     height: auto;
-    max-height: 350px;
+    max-height: 400px;
     opacity: 1;
   }
 }
@@ -135,6 +135,14 @@ div[ng-controller="EditableTableCtrl"] .btn-edit,
 div[ng-controller="EditableTableCtrl"] .btn-form {
    white-space: nowrap;
    width: 80%;
+}
+
+div[ng-controller="Html5InputsCtrl"] > div {
+   height: 35px;
+}
+
+div[ng-controller="Html5InputsCtrl"] > div > * {
+   vertical-align: top;
 }
 
 section {

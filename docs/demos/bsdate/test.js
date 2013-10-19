@@ -4,7 +4,7 @@ describe('bsdate', function() {
     browser().navigateTo(mainUrl);
   });
 
-  iit('should show editor and submit new value', function() {
+  it('should show editor and submit new value', function() {
     var s = '[ng-controller="BsdateCtrl"] ';
 
     expect(element(s+'a[editable-bsdate]').css('display')).not().toBe('none');
