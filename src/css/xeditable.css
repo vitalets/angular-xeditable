@@ -62,6 +62,12 @@
   text-align: center;
 }
 
+/* ==== editable-color ==== */
+
+.editable-color input[type="color"] {
+  min-width: 40px;
+}
+
 /* ==== element ==== */
 
 /* hiding element */
