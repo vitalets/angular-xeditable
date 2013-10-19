@@ -59,7 +59,7 @@ describe('html5-inputs', function() {
     });
 
     // check final state
-    checkValues(data1);  pause();  
+    checkValues(data1);
   });
 
 });
