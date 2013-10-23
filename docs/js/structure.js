@@ -49,6 +49,7 @@ module.exports = [
     ]},
 
     {id: 'dev-text', text: 'Dev Tests', type: 'demos', env: 'dev', items: [
-        {id: 'dev-text'}
+        {id: 'dev-text'},
+        {id: 'dev-form'}
     ]}
 ];
