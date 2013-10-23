@@ -1,8 +1,12 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.1.7 wip
+----------------------------
 
-Version 0.1.6 wip
+
+
+Version 0.1.6 Oct 19, 2013
 ----------------------------
 [enh] add HTML5 inputs (vitalets)
 [bug] ignore right button mouse click (vitalets)
