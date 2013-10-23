@@ -65,7 +65,7 @@
 /* ==== editable-color ==== */
 
 .editable-color input[type="color"] {
-  min-width: 40px;
+  width: 50px;
 }
 
 /* ==== element ==== */
