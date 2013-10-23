@@ -3,7 +3,7 @@ Angular-xeditable changelog
 
 Version 0.1.7 wip
 ----------------------------
-
+[bug #37] setWaiting function overrides ng-disabled and ng-enabled (vitalets)
 
 
 Version 0.1.6 Oct 19, 2013
