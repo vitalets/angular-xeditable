@@ -15,6 +15,7 @@ describe('select-multiple', function() {
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
     expect(element(s+'form select:visible:enabled').count()).toBe(1);
     expect(element(s+'form select option').count()).toBe(4);
+    expect(element(s+'form select option:selected').count()).toBe(2);
     expect(element(s+'form select').val()).toMatch('["1","3"]');
 
     using(s).select('$data').options('1', '2');
