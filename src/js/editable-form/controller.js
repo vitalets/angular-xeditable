@@ -136,6 +136,8 @@ angular.module('xeditable').factory('editableFormController',
 
     $setWaiting: function(value) {
       this.$waiting = !!value;
+      // we can't just set $waiting variable and use it via ng-disabled in children
+      // because in editable-row form is not accessible
       angular.forEach(this.$editables, function(editable) {
         editable.setWaiting(!!value);
       });

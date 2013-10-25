@@ -387,7 +387,9 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
     self.setWaiting = function(value) {
       if (value) {
         //participate in waiting only if not disabled
-        inWaiting = !self.inputEl.attr('disabled');
+        inWaiting = !self.inputEl.attr('disabled') &&
+                    !self.inputEl.attr('ng-disabled') &&
+                    !self.inputEl.attr('ng-enabled');
         if (inWaiting) {
           self.inputEl.attr('disabled', 'disabled');
           if(self.buttonsEl) {
