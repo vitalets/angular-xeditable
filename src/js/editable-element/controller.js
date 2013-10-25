@@ -288,8 +288,9 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
 
     //show
     self.show = function() {
-      // set value
-      self.scope.$data = angular.copy(valueGetter($scope.$parent));
+      // set value. copy not needed.
+      // self.scope.$data = angular.copy(valueGetter($scope.$parent));
+      self.scope.$data = valueGetter($scope.$parent);
 
       /*
       Originally render() was inside init() method, but some directives polluting editorEl,
