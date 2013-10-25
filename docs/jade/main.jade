@@ -25,7 +25,7 @@ html(ng-app='app')
                     a(href="#"+(g.anchor || g.id))= g.text
                     ul.nav
                       each item in g.items
-                        li: a(href="#"+(item.anchor || item.id))= item.menutext || item.text
+                        li: a(href="#"+(item.anchor || item.id))= item.menutext || item.text || item.id
 
         .col-sm-9.col-xs-12
 

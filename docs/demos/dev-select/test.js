@@ -4,8 +4,8 @@ describe('select-multiple', function() {
     browser().navigateTo(mainUrl);
   });
 
-  it('should show options and submit new value', function() {
-    var s = '[ng-controller="SelectMultipleCtrl"] ';
+  it('should show options defined without value', function() {
+    var s = '[ng-controller="DevSelectCtrl"] ';
 
     expect(element(s+'a').text()).toMatch('status2');
     expect(element(s+'a').text()).toMatch('status4');
@@ -15,6 +15,7 @@ describe('select-multiple', function() {
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
     expect(element(s+'form select:visible:enabled').count()).toBe(1);
     expect(element(s+'form select option').count()).toBe(4);
+    expect(element(s+'form select option:selected').count()).toBe(2);
     expect(element(s+'form select').val()).toMatch('["1","3"]');
 
     using(s).select('$data').options('1', '2');

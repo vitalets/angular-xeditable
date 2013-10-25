@@ -7,11 +7,14 @@ app.controller('DevSelectCtrl', function($scope, $filter) {
   ]; 
 
   $scope.user = {
-    //status: [2, 4]
-    status: [$scope.statuses[0], $scope.statuses[2]]
+    status: [$scope.statuses[1], $scope.statuses[3]]
   }; 
 
   $scope.showStatus = function() {
-    return $scope.user.status.join(', ') : 'Not set';
+    var texts = [];
+    angular.forEach($scope.user.status, function(s) { 
+      texts.push(s.text);
+    });    
+    return texts.join(', ') || 'Not set';
   };
 });
