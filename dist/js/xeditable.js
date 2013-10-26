@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.6
+angular-xeditable - 0.1.7
 Edit-in-place for angular.js
-Build date: 2013-10-19 
+Build date: 2013-10-26 
 */
 /*
 angular-xeditable module
@@ -453,8 +453,9 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
 
     //show
     self.show = function() {
-      // set value
-      self.scope.$data = angular.copy(valueGetter($scope.$parent));
+      // set value. copy not needed.
+      // self.scope.$data = angular.copy(valueGetter($scope.$parent));
+      self.scope.$data = valueGetter($scope.$parent);
 
       /*
       Originally render() was inside init() method, but some directives polluting editorEl,
@@ -552,7 +553,9 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
     self.setWaiting = function(value) {
       if (value) {
         //participate in waiting only if not disabled
-        inWaiting = !self.inputEl.attr('disabled');
+        inWaiting = !self.inputEl.attr('disabled') &&
+                    !self.inputEl.attr('ng-disabled') &&
+                    !self.inputEl.attr('ng-enabled');
         if (inWaiting) {
           self.inputEl.attr('disabled', 'disabled');
           if(self.buttonsEl) {
@@ -844,6 +847,13 @@ angular.module('xeditable').factory('editableFormController',
       });
     },
 
+    /**
+     * Sets focus on form field specified by `name`.
+     * 
+     * @method $activate(name)
+     * @param {string} name name of field
+     * @memberOf editable-form
+     */
     $activate: function(name) {
       var i;
       if (this.$editables.length) {
@@ -890,9 +900,9 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     /**
-     * Hides form with editable controls without saving.
+     * Triggers `oncancel` event and calls `$hide()`.
      * 
-     * @method $hide()
+     * @method $cancel()
      * @memberOf editable-form
      */
     $cancel: function() {
@@ -911,6 +921,8 @@ angular.module('xeditable').factory('editableFormController',
 
     $setWaiting: function(value) {
       this.$waiting = !!value;
+      // we can't just set $waiting variable and use it via ng-disabled in children
+      // because in editable-row form is not accessible
       angular.forEach(this.$editables, function(editable) {
         editable.setWaiting(!!value);
       });
@@ -1111,12 +1123,22 @@ angular.module('xeditable').directive('editableForm',
             /**
              * Called when form is cancelled.
              * 
-             * @var {method|attribute} oncancel 
+             * @var {method|attribute} oncancel
              * @memberOf editable-form
              */
             if(attrs.oncancel) {
               eForm.$oncancel = angular.bind(eForm, $parse(attrs.oncancel), scope);
-            }                        
+            }
+
+            /**
+             * Whether form initially rendered in shown state.
+             *
+             * @var {bool|attribute} shown
+             * @memberOf editable-form
+             */
+            if(attrs.shown && $parse(attrs.shown)(scope)) {
+              eForm.$show();
+            }
 
             // onbeforesave, onaftersave
             if(!attrs.ngSubmit && !attrs.submit) {

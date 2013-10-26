@@ -37,7 +37,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.6.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.6 ~ 15kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.7.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.7 ~ 15kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -193,7 +193,7 @@ to use power of angular and support complex forms / editable grids.</p>
 
               <pre class="prettyprint">&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.1.6.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.1.7.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -1297,7 +1297,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-row">
                       <h1>Editable row</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/79/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/93/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableRowCtrl">
   <table class="table table-bordered table-hover table-condensed">
     <tr style="font-weight: bold">
@@ -1327,7 +1327,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       </td>
       <td style="white-space: nowrap">
         <!-- form -->
-        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline" >
+        <form editable-form name="rowform" onbeforesave="saveUser($data, user.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == user">
           <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
             save
           </button>
@@ -1335,7 +1335,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
             cancel
           </button>
         </form>
-        <div class="buttons" ng-show="!rowform.$visible" ng-init="(inserted == user) && rowform.$show()">  
+        <div class="buttons" ng-show="!rowform.$visible">
           <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
           <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
         </div>  
@@ -1446,7 +1446,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
       &lt;/td&gt;
       &lt;td style=&quot;white-space: nowrap&quot;&gt;
         &lt;!-- form --&gt;
-        &lt;form editable-form name=&quot;rowform&quot; onbeforesave=&quot;saveUser($data, user.id)&quot; ng-show=&quot;rowform.$visible&quot; class=&quot;form-buttons form-inline&quot; &gt;
+        &lt;form editable-form name=&quot;rowform&quot; onbeforesave=&quot;saveUser($data, user.id)&quot; ng-show=&quot;rowform.$visible&quot; class=&quot;form-buttons form-inline&quot; shown=&quot;inserted == user&quot;&gt;
           &lt;button type=&quot;submit&quot; ng-disabled=&quot;rowform.$waiting&quot; class=&quot;btn btn-primary&quot;&gt;
             save
           &lt;/button&gt;
@@ -1454,7 +1454,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
             cancel
           &lt;/button&gt;
         &lt;/form&gt;
-        &lt;div class=&quot;buttons&quot; ng-show=&quot;!rowform.$visible&quot; ng-init=&quot;(inserted == user) &amp;&amp; rowform.$show()&quot;&gt;  
+        &lt;div class=&quot;buttons&quot; ng-show=&quot;!rowform.$visible&quot;&gt;
           &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;rowform.$show()&quot;&gt;edit&lt;/button&gt;
           &lt;button class=&quot;btn btn-danger&quot; ng-click=&quot;removeUser($index)&quot;&gt;del&lt;/button&gt;
         &lt;/div&gt;  
@@ -2290,6 +2290,12 @@ to model.<br>If at least one children callback returns <code>non-string</code> -
                           <td><p>Called when form is shown.</p>
 </td>
                         </tr>
+                        <tr>
+                          <td><code>shown</code></td>
+                          <td>bool</td>
+                          <td><p>Whether form initially rendered in shown state.</p>
+</td>
+                        </tr>
                       </tbody>
                     </table>
           <h3>Properties</h3><p>Properties are available when you set <code>name</code> attribute of form: </p>
@@ -2335,10 +2341,17 @@ to model.<br>If at least one children callback returns <code>non-string</code> -
                       </thead>
                       <tbody>
                         <tr>
-                          <td><code>$hide()</code></td>
+                          <td><code>$activate(name)</code></td>
+                          <td><strong>name</strong><i> (string) </i>name of field<br>
+                          </td>
+                          <td><p>Sets focus on form field specified by <code>name</code>.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>$cancel()</code></td>
                           <td><i>none    </i>
                           </td>
-                          <td><p>Hides form with editable controls without saving.</p>
+                          <td><p>Triggers <code>oncancel</code> event and calls <code>$hide()</code>.</p>
 </td>
                         </tr>
                         <tr>
