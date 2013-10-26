@@ -69,6 +69,13 @@ angular.module('xeditable').factory('editableFormController',
       });
     },
 
+    /**
+     * Sets focus on form field specified by `name`.
+     * 
+     * @method $activate(name)
+     * @param {string} name name of field
+     * @memberOf editable-form
+     */
     $activate: function(name) {
       var i;
       if (this.$editables.length) {
@@ -115,7 +122,7 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     /**
-     * Triggers oncancel event and calls $hide().
+     * Triggers `oncancel` event and calls `$hide()`.
      * 
      * @method $cancel()
      * @memberOf editable-form
