@@ -82,12 +82,22 @@ angular.module('xeditable').directive('editableForm',
             /**
              * Called when form is cancelled.
              * 
-             * @var {method|attribute} oncancel 
+             * @var {method|attribute} oncancel
              * @memberOf editable-form
              */
             if(attrs.oncancel) {
               eForm.$oncancel = angular.bind(eForm, $parse(attrs.oncancel), scope);
-            }                        
+            }
+
+            /**
+             * Whether form initially rendered in shown state.
+             *
+             * @var {bool|attribute} shown
+             * @memberOf editable-form
+             */
+            if(attrs.shown && $parse(attrs.shown)(scope)) {
+              eForm.$show();
+            }
 
             // onbeforesave, onaftersave
             if(!attrs.ngSubmit && !attrs.submit) {
