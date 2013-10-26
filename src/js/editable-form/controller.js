@@ -115,9 +115,9 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     /**
-     * Hides form with editable controls without saving.
+     * Triggers oncancel event and calls $hide().
      * 
-     * @method $hide()
+     * @method $cancel()
      * @memberOf editable-form
      */
     $cancel: function() {
