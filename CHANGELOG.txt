@@ -1,10 +1,10 @@
 Angular-xeditable changelog
 =============================
 
-Version 0.1.7 wip
+Version 0.1.7 Oct 26, 2013
 ----------------------------
 [enh] add `shown` attribute of editable form (vitalets)
-[bug #38] select multiple with just lable ng-options (vitalets)
+[bug #38] select multiple with label-only ng-options (vitalets)
 [bug #37] setWaiting function overrides ng-disabled and ng-enabled (vitalets)
 
 
