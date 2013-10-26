@@ -2,6 +2,8 @@ module.exports = function(grunt) {
   var fs = require('fs');
   var extend = require('util')._extend;
 
+  grunt.util.linefeed = '\n';
+
   //init configuration
   grunt.config.init({
     pkg: grunt.file.readJSON('package.json')
