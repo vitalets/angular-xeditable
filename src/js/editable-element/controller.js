@@ -7,43 +7,9 @@
 /*
 TODO: this file should be refactored to work more clear without closures!
 */
-angular.module('xeditable').factory('editableController', ['$q', '$document', 'editableUtils', '$rootScope',
-  function($q, $document, utils, $rootScope) {
-
-  // array of opened editable controls
-  var shown = [];
-
-  // bind click to body: cancel|submit editables
-  $document.bind('click', function(e) {
-    // ignore right/middle button click
-    if (e.which !== 1) {
-      return;
-    }
-
-    var toCancel = [];
-    var toSubmit = [];
-    for (var i=0; i<shown.length; i++) {
-      // exclude self
-      if (shown[i].clicked) {
-        shown[i].clicked = false;
-        continue;
-      }
-
-      if (shown[i].blur === 'cancel') {
-        toCancel.push(shown[i]);
-      }
-      if (shown[i].blur === 'submit') {
-        toSubmit.push(shown[i]);
-      }
-    }
-
-    if (toCancel.length || toSubmit.length) {
-      $rootScope.$apply(function() {
-        angular.forEach(toCancel, function(v){ v.scope.$form.$hide(); });
-        angular.forEach(toSubmit, function(v){ v.scope.$form.$submit(); });
-      });
-    }
-  });
+angular.module('xeditable').factory('editableController', 
+  ['$q', 'editableUtils',
+  function($q, editableUtils) {
 
   //EditableController function
   EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
@@ -64,7 +30,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
-    self.clicked = false; //used to check in document click handler if control was clicked or not
+   // self.clicked = false; //used to check in document click handler if control was clicked or not
 
     //to be overwritten by directive
     self.inputTpl = '';
@@ -95,12 +61,13 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
     self.buttons = 'right'; 
     /**
      * Action when control losses focus. Values: `cancel|submit|ignore`.
-     * If control is part of form `blur` automatically set to `ignore`.  
+     * Has sense only for single editable element.
+     * Otherwise, if control is part of form - you should set `blur` of form, not of individual element.
      * 
      * @var {string|attribute} blur
      * @memberOf editable-element
      */     
-    self.blur = 'ignore'; // can be 'cancel|submit|ignore'
+    // no real `blur` property as it is transfered to editable form
 
     //init
     self.init = function(single) {
@@ -122,14 +89,9 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       if (!self.single) {
         // hide buttons for non-single
         self.buttons = 'no';
-        self.blur = 'ignore';
       } else {
         self.buttons = self.attrs.buttons || editableOptions.buttons;
-        self.blur = self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blur);
       }
-
-      //moved to show()
-      //self.render();
 
       //if name defined --> watch changes and update $data in form
       if($attrs.eName) {
@@ -260,7 +222,7 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
         }
 
         // convert back to lowercase style
-        transferAttr = transferAttr.substring(0, 1).toLowerCase() + utils.camelToDash(transferAttr.substring(1));  
+        transferAttr = transferAttr.substring(0, 1).toLowerCase() + editableUtils.camelToDash(transferAttr.substring(1));  
 
         // workaround for attributes without value (e.g. `multiple = "multiple"`)
         var attrValue = ($attrs[k] === '') ? transferAttr : $attrs[k];
@@ -273,10 +235,12 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       self.inputEl.attr('ng-model', '$data');
 
       // add directiveName class to editor, e.g. `editable-text`
-      self.editorEl.addClass(utils.camelToDash(self.directiveName));
+      self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
 
       if(self.single) {
         self.editorEl.attr('editable-form', '$form');
+        // transfer `blur` to form
+        self.editorEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
       }
 
       //apply `postrender` method of theme
@@ -311,36 +275,17 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
       // hide element
       $element.addClass('editable-hide');
 
-      // add to internal list
-      // setTimeout needed to prevent closing right after opening (e.g. when trigger by button)
-      setTimeout(function() {
-        if(utils.indexOf(shown, self) === -1) {
-          shown.push(self);
-        }
-      }, 0);
-
       // onshow
       return self.onshow();
     };
 
     //hide
     self.hide = function() {
-      //console.log('editable hide', self.name);
       self.editorEl.remove();
       $element.removeClass('editable-hide');
 
-      // remove from internal list
-      utils.arrayRemove(shown, self);
-
       // onhide
       return self.onhide();
-
-      // todo: to think is it really needed or not
-      /*
-      if($element[0].tagName === 'A') {
-        $element[0].focus();
-      }
-      */
     };
 
     // cancel
@@ -380,14 +325,16 @@ angular.module('xeditable').factory('editableController', ['$q', '$document', 'e
           return;
         }
 
-        self.clicked = true;
+        if (self.scope.$form.$visible) {
+          self.scope.$form._clicked = true;
+        }
       });
     };
 
     // setWaiting
     self.setWaiting = function(value) {
       if (value) {
-        //participate in waiting only if not disabled
+        // participate in waiting only if not disabled
         inWaiting = !self.inputEl.attr('disabled') &&
                     !self.inputEl.attr('ng-disabled') &&
                     !self.inputEl.attr('ng-enabled');

@@ -2,8 +2,51 @@
 Returns editableForm controller
 */
 angular.module('xeditable').factory('editableFormController', 
-  ['$parse', 'editablePromiseCollection',
-  function($parse, editablePromiseCollection) {
+  ['$parse', '$document', '$rootScope', 'editablePromiseCollection', 'editableUtils',
+  function($parse, $document, $rootScope, editablePromiseCollection, editableUtils) {
+
+  // array of opened editable forms
+  var shown = [];
+
+  // bind click to body: cancel|submit|ignore forms
+  $document.bind('click', function(e) {
+    // ignore right/middle button click
+    if (e.which !== 1) {
+      return;
+    }
+
+    var toCancel = [];
+    var toSubmit = [];
+    for (var i=0; i<shown.length; i++) {
+
+      // exclude clicked
+      if (shown[i]._clicked) {
+        shown[i]._clicked = false;
+        continue;
+      }
+
+      // exclude waiting
+      if (shown[i].$waiting) {
+        continue;
+      }
+
+      if (shown[i]._blur === 'cancel') {
+        toCancel.push(shown[i]);
+      }
+
+      if (shown[i]._blur === 'submit') {
+        toSubmit.push(shown[i]);
+      }
+    }
+
+    if (toCancel.length || toSubmit.length) {
+      $rootScope.$apply(function() {
+        angular.forEach(toCancel, function(v){ v.$cancel(); });
+        angular.forEach(toSubmit, function(v){ v.$submit(); });
+      });
+    }
+  });
+ 
 
   var base = {
     $addEditable: function(editable) {
@@ -67,6 +110,16 @@ angular.module('xeditable').factory('editableFormController',
         onFalse: angular.bind(this, this.$activate), 
         onString: angular.bind(this, this.$activate)
       });
+
+      // add to internal list of shown forms
+      // setTimeout needed to prevent closing right after opening (e.g. when trigger by button)
+      setTimeout(angular.bind(this, function() {
+        // clear `clicked` to get ready for clicks on visible form
+        this._clicked = false;
+        if(editableUtils.indexOf(shown, this) === -1) {
+          shown.push(this);
+        }
+      }), 0);      
     },
 
     /**
@@ -119,6 +172,9 @@ angular.module('xeditable').factory('editableFormController',
       angular.forEach(this.$editables, function(editable) {
         editable.hide();
       });
+
+      // remove from internal list of shown forms
+      editableUtils.arrayRemove(shown, this);
     },
 
     /**
@@ -256,7 +312,9 @@ angular.module('xeditable').factory('editableFormController',
        * @memberOf editable-form
        */
       $waiting: false,
-      $data: {}
+      $data: {},
+      _clicked: false,
+      _blur: null
     }, base);
   };
 }]);

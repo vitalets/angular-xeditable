@@ -5,8 +5,8 @@
  * @namespace editable-form
  */
 angular.module('xeditable').directive('editableForm',
-  ['$rootScope', '$parse', 'editableFormController',
-  function($rootScope, $parse, editableFormController) {
+  ['$rootScope', '$parse', 'editableFormController', 'editableOptions',
+  function($rootScope, $parse, editableFormController, editableOptions) {
     return {
       restrict: 'A',
       require: ['form'],
@@ -17,12 +17,6 @@ angular.module('xeditable').directive('editableForm',
           pre: function(scope, elem, attrs, ctrl) {
             var form = ctrl[0];
             var eForm;
-
-            /*
-            Maybe it's better attach editable controller to form's controller not in pre()
-            but in controller itself. 
-            This allows to use ng-init already in <form> tag, otherwise we can't (in FF).
-            */
 
             //if `editableForm` has value - publish smartly under this value
             //this is required only for single editor form that is created and removed
@@ -99,6 +93,15 @@ angular.module('xeditable').directive('editableForm',
               eForm.$show();
             }
 
+            /**
+             * Action when form losses focus. Values: `cancel|submit|ignore`.
+             * Default is `ignore`.
+             * 
+             * @var {string|attribute} blur
+             * @memberOf editable-form
+             */
+            eForm._blur = attrs.blur || editableOptions.blurForm;
+
             // onbeforesave, onaftersave
             if(!attrs.ngSubmit && !attrs.submit) {
               /**
@@ -138,6 +141,20 @@ angular.module('xeditable').directive('editableForm',
                 });
               });
             }
+
+
+            // click - mark form as clicked to exclude in document click handler
+            elem.bind('click', function(e) {
+              // ignore right/middle button click
+              if (e.which !== 1) {
+                return;
+              }
+
+              if (eForm.$visible) {
+                eForm._clicked = true;
+              }
+            });   
+
           }
         };
       }

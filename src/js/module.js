@@ -5,6 +5,7 @@ angular.module('xeditable', [])
 .value('editableOptions', {
   theme: 'default', //bs2, bs3,
   buttons: 'right',
-  blur: 'cancel'
+  blurElem: 'cancel',
+  blurForm: 'ignore'
 });
 

@@ -19,6 +19,8 @@ describe('editable-form', function() {
     element(s+'form > div > button').click();
     //second click to test that controls not dublicated!
     element(s+'form > div > button').click();
+    //also click outside to check blur = ignore
+    element('body').click();
 
     //form shown in disabled state (loading)
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);
@@ -29,6 +31,9 @@ describe('editable-form', function() {
     expect(element(s+'input[type="text"]:disabled:visible').count()).toBe(1);
 
     sleep(delay);
+
+    //also click outside to check blur = ignore
+    element('body').click();    
 
     //form enabled when data loaded
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(0);

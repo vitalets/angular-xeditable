@@ -3,6 +3,7 @@ Angular-xeditable changelog
 
 Version 0.1.8 wip
 ----------------------------
+[enh] add `blur` attribute of editable form (vitalets)
 
 
 Version 0.1.7 Oct 26, 2013
