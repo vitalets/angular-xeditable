@@ -1,7 +1,15 @@
-/*
-angular-xeditable module
-*/
+/**
+ * Angular-xeditable module 
+ *
+ */
 angular.module('xeditable', [])
+
+
+/**
+ * Default options. 
+ *
+ * @namespace editable-options
+ */
 .value('editableOptions', {
   /**
    * Theme. Possible values `bs3`, `bs2`, `default`.
@@ -35,4 +43,3 @@ angular.module('xeditable', [])
    */
   blurForm: 'ignore'
 });
-
