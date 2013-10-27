@@ -1,6 +1,10 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.1.8 wip
+----------------------------
+
+
 Version 0.1.7 Oct 26, 2013
 ----------------------------
 [enh] add `shown` attribute of editable form (vitalets)
