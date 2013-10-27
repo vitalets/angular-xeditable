@@ -30,7 +30,6 @@ angular.module('xeditable').factory('editableController',
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
-   // self.clicked = false; //used to check in document click handler if control was clicked or not
 
     //to be overwritten by directive
     self.inputTpl = '';
