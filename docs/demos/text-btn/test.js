@@ -36,4 +36,17 @@ describe('text-btn', function() {
     expect(element(s+'> button').css('display')).not().toBe('none');
   });
 
+  /*
+  it('should close correctly by escape', function() {
+    var s = '[ng-controller="TextBtnCtrl"] ';
+
+    expect(element(s+'span:eq(0)').text()).toMatch('awesome user');
+
+    //open by ext btn
+    element(s+'> button').click();
+
+    //`escape` can't be simulated here
+  });
+  */
+
 });

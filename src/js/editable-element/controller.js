@@ -304,10 +304,13 @@ angular.module('xeditable').factory('editableController',
             return;
           }
 
+          // todo: move this to editable-form!
           switch(e.keyCode) {
             // hide on `escape` press
             case 27:
-              self.scope.$form.$cancel();
+              self.scope.$apply(function() {
+                self.scope.$form.$cancel();
+              });
             break;
           }
       });
