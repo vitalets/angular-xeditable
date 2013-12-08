@@ -58,6 +58,7 @@ angular.module('xeditable').factory('editableThemes', function() {
           case 'editableText':
           case 'editableSelect':
           case 'editableTextarea':
+          case 'editableEmail':
             this.inputEl.addClass('form-control');
             if(this.theme.inputClass) {
               // don`t apply `input-sm` and `input-lg` to select multiple
