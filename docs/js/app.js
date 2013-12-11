@@ -66,6 +66,9 @@ app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
   */
 
   editableOptions.theme = 'bs3';
+  editableOptions.activate = 'focus';
+
+
   $rootScope.css = ['libs/bootstrap/3.0.0/css/bootstrap.css'];
 
  

@@ -10,6 +10,7 @@ angular.module('xeditable', [])
  *
  * @namespace editable-options
  */
+//todo: maybe better have editableDefaults, not options...
 .value('editableOptions', {
   /**
    * Theme. Possible values `bs3`, `bs2`, `default`.
@@ -41,5 +42,13 @@ angular.module('xeditable', [])
    * @var {string} blurForm
    * @memberOf editable-options
    */
-  blurForm: 'ignore'
+  blurForm: 'ignore',
+  /**
+   * How input elements get activated. Possible values: `focus|select|none`.
+   *
+   * @var {string} activate
+   * @memberOf editable-options
+   */
+  activate: 'focus'
+
 });
