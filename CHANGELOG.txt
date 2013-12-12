@@ -3,6 +3,7 @@ Angular-xeditable changelog
 
 Version 0.1.8 wip
 ----------------------------
+[enh #53] apply bs3 style to html5 inputs (Aminix, vitalets)
 [enh #43] add `activate` prop to editableOptions to set activations method: focus|select (vitalets)
 [enh] add `blur` attribute of editable form (vitalets)
 

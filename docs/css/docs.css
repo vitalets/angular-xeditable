@@ -140,10 +140,11 @@ div[ng-controller="EditableTableCtrl"] .btn-form {
 
 div[ng-controller="Html5InputsCtrl"] > div {
    height: 35px;
+   line-height: 35px;
 }
 
 div[ng-controller="Html5InputsCtrl"] > div > * {
-   vertical-align: top;
+   vertical-align: middle;
 }
 
 section {

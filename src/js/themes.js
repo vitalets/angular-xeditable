@@ -59,6 +59,15 @@ angular.module('xeditable').factory('editableThemes', function() {
           case 'editableSelect':
           case 'editableTextarea':
           case 'editableEmail':
+          case 'editableTel':
+          case 'editableNumber':
+          case 'editableUrl':
+          case 'editableSearch':
+          case 'editableDate':
+          case 'editableDatetime':
+          case 'editableTime':
+          case 'editableMonth':
+          case 'editableWeek':
             this.inputEl.addClass('form-control');
             if(this.theme.inputClass) {
               // don`t apply `input-sm` and `input-lg` to select multiple
