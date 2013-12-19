@@ -33,9 +33,10 @@ http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 ## Roadmap
 
 * select2
-* checklist
-* comodate
-* popup mode
+* [checklist](https://github.com/vitalets/checklist-model)
+* [combodate](https://github.com/vitalets/combodate)
+* popup mode (waiting https://github.com/angular-ui/bootstrap/pull/1391)
+* internally move to [lazy-model](https://github.com/vitalets/lazy-model)
 
 ## License
 MIT
