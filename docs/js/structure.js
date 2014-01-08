@@ -14,7 +14,7 @@ module.exports = [
         {id: 'typeahead', text: 'Typeahead', fiddle: 'http://jsfiddle.net/NfPcH/46/', fiddleText: 'View Bootstrap 2 jsFiddle'}
     ]},
 
-    {id: 'text-customize', text: 'Technics', type: 'demos', items: [
+    {id: 'text-customize', text: 'Techniques', type: 'demos', items: [
         {id: 'text-customize', text: 'Customize input', fiddle: 'http://jsfiddle.net/NfPcH/26/'},
         {id: 'text-btn', text: 'Trigger manually', fiddle: 'http://jsfiddle.net/NfPcH/27/'},
         {id: 'select-nobuttons', text: 'Hide buttons', fiddle: 'http://jsfiddle.net/NfPcH/31/'},
