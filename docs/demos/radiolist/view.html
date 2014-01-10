@@ -1,0 +1,5 @@
+<div ng-controller="RadiolistCtrl">
+  <a href="#" editable-radiolist="user.status" e-ng-options="s.value as s.text for s in statuses">
+    {{ showStatus() }}
+  </a>
+</div>  

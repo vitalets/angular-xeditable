@@ -1,14 +1,12 @@
-/*
-Helpers
-*/
-
-/*
-Collect results of function calls. Shows waiting if there are promises. 
-Finally, applies callbacks if:
-- onTrue(): all results are true and all promises resolved to true
-- onFalse(): at least one result is false or promise resolved to false
-- onString(): at least one result is string or promise rejected or promise resolved to string
-*/
+/**
+ * editablePromiseCollection
+ *  
+ * Collect results of function calls. Shows waiting if there are promises. 
+ * Finally, applies callbacks if:
+ * - onTrue(): all results are true and all promises resolved to true
+ * - onFalse(): at least one result is false or promise resolved to false
+ * - onString(): at least one result is string or promise rejected or promise resolved to string
+ */
 angular.module('xeditable').factory('editablePromiseCollection', ['$q', function($q) { 
 
   function promiseCollection() {
@@ -77,6 +75,9 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
 
 }]);
 
+/**
+ * editableUtils
+ */
 angular.module('xeditable').factory('editableUtils', [function() {
   return {
     indexOf: function (array, obj) {
@@ -114,4 +115,56 @@ angular.module('xeditable').factory('editableUtils', [function() {
         replace(MOZ_HACK_REGEXP, 'Moz$1');
     }
   };
+}]);
+
+/**
+ * editableNgOptionsParser
+ *
+ * see: https://github.com/angular/angular.js/blob/master/src/ng/directive/select.js#L131
+ */
+angular.module('xeditable').factory('editableNgOptionsParser', [
+  function() {
+                        //0000111110000000000022220000000000000000000000333300000000000000444444444444444000000000555555555555555000000066666666666666600000000000000007777000000000000000000088888
+  var NG_OPTIONS_REGEXP = /^\s*(.*?)(?:\s+as\s+(.*?))?(?:\s+group\s+by\s+(.*))?\s+for\s+(?:([\$\w][\$\w]*)|(?:\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)))\s+in\s+(.*?)(?:\s+track\s+by\s+(.*?))?$/;
+ 
+  function parser(optionsExp) {
+    var match;
+
+    if (! (match = optionsExp.match(NG_OPTIONS_REGEXP))) {
+      throw 'ng-options parse error';
+    }
+
+    var 
+        displayFn = match[2] || match[1],
+        valueName = match[4] || match[6],
+        keyName = match[5],
+        groupByFn = match[3] || '',
+        valueFn = match[2] ? match[1] : valueName,
+        valuesFn = match[7],
+        track = match[8],
+        trackFn = track ? match[8] : null;
+
+    var ngRepeat;
+    if (keyName === undefined) { // array
+      ngRepeat = valueName + ' in ' + valuesFn;
+      if (track !== undefined) {
+        ngRepeat += ' track by '+trackFn;
+      }
+    } else { // object
+      ngRepeat = '('+keyName+', '+valueName+') in '+valuesFn;
+    }
+    
+    // group not supported yet
+    return {
+      ngRepeat: ngRepeat,
+      locals: {
+        valueName: valueName,
+        keyName: keyName,
+        valueFn: valueFn,
+        displayFn: displayFn
+      }
+    };
+  }
+
+  return parser;
 }]);

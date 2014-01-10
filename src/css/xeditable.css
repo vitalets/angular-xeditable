@@ -68,6 +68,13 @@
   width: 50px;
 }
 
+/* ==== editable-radiolist ==== */
+
+.editable-radiolist label span {
+  margin-left: 7px;
+  margin-right: 10px;
+}
+
 /* ==== element ==== */
 
 /* hiding element */

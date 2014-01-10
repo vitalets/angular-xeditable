@@ -5,10 +5,10 @@ module.exports = [
         {id: 'text-simple', text: 'Text', fiddle: 'http://jsfiddle.net/NfPcH/25/'},
         {id: 'select-local', text: 'Select local', fiddle: 'http://jsfiddle.net/NfPcH/28/'},
         {id: 'select-remote', text: 'Select remote', fiddle: 'http://jsfiddle.net/NfPcH/29/'},
-        {id: 'select-multiple', text: 'Select multiple', fiddle: 'http://jsfiddle.net/NfPcH/30/'},
         {id: 'html5-inputs', text: 'HTML5 inputs', fiddle: 'http://jsfiddle.net/NfPcH/82/'},
         {id: 'textarea', text: 'Textarea', fiddle: 'http://jsfiddle.net/NfPcH/32/'},
         {id: 'checkbox', text: 'Checkbox', fiddle: 'http://jsfiddle.net/NfPcH/33/'},
+        {id: 'radiolist', text: 'Radiolist', fiddle: ''},
         {id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/NfPcH/23/', fiddleText: 'View Bootstrap 2 jsFiddle'},
         {id: 'bstime', text: 'Time', fiddle: 'http://jsfiddle.net/NfPcH/34/', fiddleText: 'View Bootstrap 2 jsFiddle'},
         {id: 'typeahead', text: 'Typeahead', fiddle: 'http://jsfiddle.net/NfPcH/46/', fiddleText: 'View Bootstrap 2 jsFiddle'}
@@ -18,6 +18,7 @@ module.exports = [
         {id: 'text-customize', text: 'Customize input', fiddle: 'http://jsfiddle.net/NfPcH/26/'},
         {id: 'text-btn', text: 'Trigger manually', fiddle: 'http://jsfiddle.net/NfPcH/27/'},
         {id: 'select-nobuttons', text: 'Hide buttons', fiddle: 'http://jsfiddle.net/NfPcH/31/'},
+        {id: 'select-multiple', text: 'Select multiple', fiddle: 'http://jsfiddle.net/NfPcH/30/'},
         {id: 'validate-local', text: 'Validate local', fiddle: 'http://jsfiddle.net/NfPcH/35/'},
         {id: 'validate-remote', text: 'Validate remote', fiddle: 'http://jsfiddle.net/NfPcH/36/'}
     ]},
