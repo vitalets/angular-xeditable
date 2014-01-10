@@ -1,7 +1,7 @@
 Angular-xeditable changelog
 =============================
 
-Version 0.1.8 wip
+Version 0.1.8 Jan 10, 2014
 ----------------------------
 [enh] added checklist directive (vitalets)
 [enh #35] added radiolist directive (vitalets)
