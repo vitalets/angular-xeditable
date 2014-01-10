@@ -534,7 +534,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checkbox"]=v; }); });<
                     <section id="checklist">
                       <h1>Checklist</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/558/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="ChecklistCtrl">
   <a href="#" editable-checklist="user.status" e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
@@ -605,7 +605,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checklist"]=v; }); });
                     <section id="radiolist">
                       <h1>Radiolist</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3>
+                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/559/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="RadiolistCtrl">
   <a href="#" editable-radiolist="user.status" e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
