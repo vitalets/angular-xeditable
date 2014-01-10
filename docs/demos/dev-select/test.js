@@ -1,4 +1,4 @@
-describe('select-multiple', function() {
+describe('dev-select-multiple', function() {
 
   beforeEach(function() {
     browser().navigateTo(mainUrl);

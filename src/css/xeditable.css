@@ -68,8 +68,13 @@
   width: 50px;
 }
 
+
+/* ==== editable-checkbox ==== */
+/* ==== editable-checklist ==== */
 /* ==== editable-radiolist ==== */
 
+.editable-checkbox label span,
+.editable-checklist label span,
 .editable-radiolist label span {
   margin-left: 7px;
   margin-right: 10px;

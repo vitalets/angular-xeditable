@@ -8,6 +8,7 @@ module.exports = [
         {id: 'html5-inputs', text: 'HTML5 inputs', fiddle: 'http://jsfiddle.net/NfPcH/82/'},
         {id: 'textarea', text: 'Textarea', fiddle: 'http://jsfiddle.net/NfPcH/32/'},
         {id: 'checkbox', text: 'Checkbox', fiddle: 'http://jsfiddle.net/NfPcH/33/'},
+        {id: 'checklist', text: 'Checklist', fiddle: ''},
         {id: 'radiolist', text: 'Radiolist', fiddle: ''},
         {id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/NfPcH/23/', fiddleText: 'View Bootstrap 2 jsFiddle'},
         {id: 'bstime', text: 'Time', fiddle: 'http://jsfiddle.net/NfPcH/34/', fiddleText: 'View Bootstrap 2 jsFiddle'},

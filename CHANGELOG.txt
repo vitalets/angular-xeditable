@@ -3,6 +3,7 @@ Angular-xeditable changelog
 
 Version 0.1.8 wip
 ----------------------------
+[enh] added checklist directive (vitalets)
 [enh #35] added radiolist directive (vitalets)
 [bug #62] validate error not works with angular symbol changed (vitalets)
 [enh #53] apply bs3 style to html5 inputs (Aminix, vitalets)

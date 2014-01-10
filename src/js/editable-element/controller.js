@@ -35,6 +35,11 @@ angular.module('xeditable').factory('editableController',
     self.inputTpl = '';
     self.directiveName = '';
 
+    // with majority of controls copy is not needed, but..
+    // copy MUST NOT be used for `select-multiple` with objects as items
+    // copy MUST be used for `checklist`
+    self.useCopy = false;
+
     //runtime (defaults)
     self.single = null;
 
@@ -249,11 +254,19 @@ angular.module('xeditable').factory('editableController',
 
     };
 
+    // with majority of controls copy is not needed, but..
+    // copy MUST NOT be used for `select-multiple` with objects as items
+    // copy MUST be used for `checklist`
+    self.setLocalValue = function() {
+      self.scope.$data = self.useCopy ? 
+        angular.copy(valueGetter($scope.$parent)) : 
+        valueGetter($scope.$parent);
+    };
+
     //show
     self.show = function() {
-      // set value. copy not needed.
-      // self.scope.$data = angular.copy(valueGetter($scope.$parent));
-      self.scope.$data = valueGetter($scope.$parent);
+      // set value of scope.$data
+      self.setLocalValue();
 
       /*
       Originally render() was inside init() method, but some directives polluting editorEl,

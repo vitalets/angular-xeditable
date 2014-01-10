@@ -1,4 +1,4 @@
-ddescribe('radiolist', function() {
+describe('radiolist', function() {
 
   beforeEach(function() {
     browser().navigateTo(mainUrl);
