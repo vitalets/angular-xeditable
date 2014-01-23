@@ -333,7 +333,8 @@ angular.module('xeditable').factory('editableController',
         self.autosubmit();
       }
 
-      // click - mark element as clicked to exclude in document click handler
+      // click - mark element as clicked to exclude in document click handler 
+      // that closes all opened editables
       self.editorEl.bind('click', function(e) {
         // ignore right/middle button click
         if (e.which !== 1) {
@@ -369,7 +370,12 @@ angular.module('xeditable').factory('editableController',
       }
     };
 
+    /*
+    Set focus OR select whole text (depends on `editableOptions.activate` value)
+    */
     self.activate = function() {
+      // we need setTimeout here, because otherwise it does not work.
+      // seems, angular catches focusing somehow. This can be researched..
       setTimeout(function() {
         var el = self.inputEl[0];
         if (editableOptions.activate === 'focus' && el.focus) {
@@ -381,6 +387,10 @@ angular.module('xeditable').factory('editableController',
       }, 0);
     };
 
+    /*
+    Used internally in `catchError` and externally in form controller 
+    to put into error state and display error message
+    */
     self.setError = function(msg) {
       if(!angular.isObject(msg)) {
         $scope.$error = msg;
@@ -415,6 +425,9 @@ angular.module('xeditable').factory('editableController',
       return result;
     };
 
+    /*
+    Put value to original model
+    */
     self.save = function() {
       valueGetter.assign($scope.$parent, angular.copy(self.scope.$data));
 
