@@ -65,8 +65,7 @@ angular.module('xeditable').factory('editableController',
     self.buttons = 'right'; 
     /**
      * Action when control losses focus. Values: `cancel|submit|ignore`.
-     * Has sense only for single editable element.
-     * Otherwise, if control is part of form - you should set `blur` of form, not of individual element.
+     * If control is part of form - you should set `blur` of form, not of individual element.
      * 
      * @var {string|attribute} blur
      * @memberOf editable-element
