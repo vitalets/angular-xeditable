@@ -39,7 +39,7 @@ mixin props(items)
           td!= md(a.description)          
 
 
-
+// element
 section#ref-element
 h2 Reference: editable element
 - var ns = jsdoc.namespaces && jsdoc.namespaces.length ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-element'})[0] : []
@@ -54,7 +54,7 @@ pre.prettyprint(ng-non-bindable)
 
 
 
-
+// form
 section#ref-form
 h2 Reference: editable form
 - var ns = jsdoc.namespaces && jsdoc.namespaces.length ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-form'})[0] : []
@@ -88,4 +88,19 @@ pre.prettyprint
   = '// now myform.[method] is available in template and $scope.myform.[method] - in controller\n'
 - items = ns.functions || []  
 +methods(items)
+
+// editableOptions
+section#ref-options
+h2 Reference: editableOptions
+- var ns = jsdoc.namespaces && jsdoc.namespaces.length ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-options'})[0] : []
+
+:markdown
+  Default options that can be defined in `app.run`:
+pre.prettyprint
+  | app.run(function(editableOptions) {
+  |   editableOptions.theme = 'bs3';
+  |   editableOptions.blurElem = 'submit';
+  | });
+- var items = ns.properties || []
++props(items)
 
