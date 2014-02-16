@@ -836,7 +836,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-customize"]=v; })
 </div></div>
                       <pre>{{ debug["text-btn"] | json }}</pre>
                       <p><p>To trigger edit-in-place by external button you should define <code>e-form</code> attribute.
-Value of it is the name of variable to be created in scope that allows you to show / hide editor manually.</p>
+Value of it is the name of variable to be created in scope that allows you to show / hide editor manually. You can also define <code>e-clickable</code> if you still want the element to be clickable.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('TextBtnCtrl', function($scope) {
