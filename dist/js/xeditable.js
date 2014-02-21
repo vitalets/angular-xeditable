@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.8
+angular-xeditable - 0.1.8.1
 Edit-in-place for angular.js
-Build date: 2014-01-10 
+Build date: 2014-02-20 
 */
 /**
  * Angular-xeditable module 
@@ -823,7 +823,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
           }
 
           // bind click - if no external form defined
-          if(!attrs.eForm) {
+          if(!attrs.eForm || attrs.eClickable) {
             elem.addClass('editable-click');
             elem.bind('click', function(e) {
               e.preventDefault();
