@@ -7,7 +7,6 @@ Editable themes:
 Note: in postrender() `this` is instance of editableController
 */
 angular.module('xeditable').factory('editableThemes', function() {
-
   var themes = {
     //default
     'default': {
@@ -48,7 +47,6 @@ angular.module('xeditable').factory('editableThemes', function() {
       cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
                      '<span></span>'+
                    '</button>',
-
 
       //bs3 specific prop to change buttons class: btn-sm, btn-lg
       buttonsClass: '',
