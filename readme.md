@@ -24,7 +24,7 @@ Install-Package Angular.Xeditable
 ````
 Or, in a command line (with nuget.exe in your path):
 ````
-nuget.exe install Angular.Analytics.[ModuleName]
+nuget.exe install Angular.Xeditable
 ````
 #### Manual
 Download latest version from [project homepage](http://vitalets.github.io/angular-xeditable).
