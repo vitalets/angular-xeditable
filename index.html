@@ -19,6 +19,8 @@
     <script src="libs/bootstrap/3.0.0/js/bootstrap.js"></script>
     <!--angular-ui-bootstrap-->
     <script src="libs/angular-ui/bootstrap/ui-bootstrap-tpls-0.6.0.min.js"></script>
+    <!--moment-->
+    <script src="libs/moment.min.2.5.0.js"></script>
     <!--google-code-prettify-->
     <script src="libs/google-code-prettify/run_prettify.js"></script>
     <!--checklist-model-->
@@ -39,7 +41,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.8.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.8 ~ 17kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.8.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.8 ~ 23kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -105,6 +107,7 @@
                   <li><a href="#radiolist">Radiolist</a></li>
                   <li><a href="#bsdate">Date</a></li>
                   <li><a href="#bstime">Time</a></li>
+                  <li><a href="#combodate">DateTime</a></li>
                   <li><a href="#typeahead">Typeahead</a></li>
                 </ul>
               </li>
@@ -173,6 +176,7 @@ to use power of angular and support complex forms / editable grids.</p>
 <li><a href="#radiolist">radio</a></li>
 <li><a href="#bsdate">date</a></li>
 <li><a href="#bstime">time</a></li>
+<li><a href="#combodate">datetime</a></li>
 <li><a href="#html5-inputs">html5 inputs</a>        </li>
 <li><a href="#typeahead">typeahead</a></li>
 </ul>
@@ -746,6 +750,38 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bstime"]=v; }); });</s
                       <pre class="prettyprint">app.controller('BstimeCtrl', function($scope) {
   $scope.user = {
     time: new Date(1984, 4, 15, 19, 20)
+  };
+});</pre>
+                    </section>
+                    <section id="combodate">
+                      <h1>DateTime</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="CombodateCtrl">
+  <a href="#" editable-combodate="user.dob">
+    {{ (user.dob | date:"medium") || 'empty' }}
+  </a>
+</div></div>
+                      <pre>{{ debug["combodate"] | json }}</pre>
+                      <p><p>You should include additional <code>moment.js</code>:</p>
+<p>And set <code>editable-combodate</code> attribute in editable element.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('CombodateCtrl', function($scope) {
+  $scope.user = {
+    dob: new Date(1984, 4, 15)
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["combodate"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;CombodateCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-combodate=&quot;user.dob&quot;&gt;
+    {{ (user.dob | date:&quot;medium&quot;) || 'empty' }}
+  &lt;/a&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('CombodateCtrl', function($scope) {
+  $scope.user = {
+    dob: new Date(1984, 4, 15)
   };
 });</pre>
                     </section>
