@@ -219,17 +219,15 @@ angular.module('xeditable').factory('editableCombodate', [function() {
       
       this.initCombos();
       
-      //update original input on change
-      var combo = this;
-      this.$widget.find('select').bind('change', function(e) {
-
-        // update days count if month or year changes
-        if (combo.options.smartDays) {
+      if (this.options.smartDays) {
+        var combo = this;
+        this.$widget.find('select').bind('change', function(e) {
+          // update days count if month or year changes
           if (angular.element(e.target).hasClass('month') || angular.element(e.target).hasClass('year')) {
             combo.fillCombo('day');
           }
-        }
-      });
+        });        
+      }
 
       this.$widget.find('select').css('width', 'auto');
 
