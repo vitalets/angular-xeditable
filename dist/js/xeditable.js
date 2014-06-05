@@ -1512,7 +1512,11 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
   return parser;
 }]);
 
-
+/**
+ * editableCombodate
+ *
+ * angular version of https://github.com/vitalets/combodate
+ */
 angular.module('xeditable').factory('editableCombodate', [function() {
   function Combodate(element, options) {
     this.$element = angular.element(element);
