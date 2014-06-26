@@ -1,7 +1,7 @@
 {
   "name": "angular-xeditable",
   "repo": "olduwansteve/angular-xeditable",
-  "description": "Edit in place for angular",
+  "description": "Edit in place for AngularJS http://vitalets.github.io/angular-xeditable",
   "version": "0.1.9",
   "keywords": ["edit", "in-place", "xeditable", "angularjs", "angular"],
   "scripts": ["dist/js/xeditable.js"],
