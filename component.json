@@ -1,0 +1,11 @@
+{
+  "name": "angular-xeditable",
+  "repo": "olduwansteve/angular-xeditable",
+  "description": "Edit in place for angular",
+  "version": "0.1.9",
+  "keywords": ["edit", "in-place", "xeditable", "angularjs", "angular"],
+  "scripts": ["dist/js/xeditable.js"],
+  "styles": ["dist/css/xeditable.css"],
+  "dependencies":{},
+  "license": "MIT"
+}
