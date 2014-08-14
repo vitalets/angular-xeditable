@@ -263,6 +263,8 @@ angular.module('xeditable').factory('editableController',
         valueGetter($scope.$parent);
     };
 
+    var newScope = null;
+    
     //show
     self.show = function() {
       // set value of scope.$data
@@ -278,6 +280,9 @@ angular.module('xeditable').factory('editableController',
       // insert into DOM
       $element.after(self.editorEl);
 
+      //create new scope
+      newScope = $scope.$new();
+      
       // compile (needed to attach ng-* events from markup)
       $compile(self.editorEl)($scope);
 
@@ -293,6 +298,8 @@ angular.module('xeditable').factory('editableController',
 
     //hide
     self.hide = function() {
+      newScope.$destroy();
+
       self.editorEl.remove();
       $element.removeClass('editable-hide');
 
