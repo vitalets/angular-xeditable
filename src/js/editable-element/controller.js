@@ -284,7 +284,7 @@ angular.module('xeditable').factory('editableController',
       newScope = $scope.$new();
       
       // compile (needed to attach ng-* events from markup)
-      $compile(self.editorEl)($scope);
+      $compile(self.editorEl)(newScope);
 
       // attach listeners (`escape`, autosubmit, etc)
       self.addListeners();
