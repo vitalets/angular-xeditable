@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.8
 Edit-in-place for angular.js
-Build date: 2014-01-10 
+Build date: 2014-09-02 
 */
 /**
  * Angular-xeditable module 
@@ -497,7 +497,7 @@ angular.module('xeditable').factory('editableController',
       }
 
       self.inputEl.addClass('editable-input');
-      self.inputEl.attr('ng-model', '$data');
+      self.inputEl.attr('ng-model', '$parent.$data');
 
       // add directiveName class to editor, e.g. `editable-text`
       self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
@@ -524,6 +524,8 @@ angular.module('xeditable').factory('editableController',
         valueGetter($scope.$parent);
     };
 
+    var newScope = null;
+    
     //show
     self.show = function() {
       // set value of scope.$data
@@ -539,6 +541,9 @@ angular.module('xeditable').factory('editableController',
       // insert into DOM
       $element.after(self.editorEl);
 
+      //create new scope
+      newScope = $scope.$new();
+      
       // compile (needed to attach ng-* events from markup)
       $compile(self.editorEl)($scope);
 
@@ -554,6 +559,8 @@ angular.module('xeditable').factory('editableController',
 
     //hide
     self.hide = function() {
+      newScope.$destroy();
+
       self.editorEl.remove();
       $element.removeClass('editable-hide');
 
