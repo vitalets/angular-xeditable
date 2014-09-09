@@ -8,8 +8,8 @@ angular.module('xeditable').factory('editableFormController',
   // array of opened editable forms
   var shown = [];
 
-  // bind click to body: cancel|submit|ignore forms
-  $document.bind('click', function(e) {
+  // bind mouseup to body: cancel|submit|ignore forms
+  $document.bind('mouseup', function(e) {
     // ignore right/middle button click
     if (e.which !== 1) {
       return;
