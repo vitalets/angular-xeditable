@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.8
 Edit-in-place for angular.js
-Build date: 2014-09-24 
+Build date: 2014-09-25 
 */
 /**
  * Angular-xeditable module 
@@ -906,7 +906,7 @@ angular.module('xeditable').factory('editableFormController',
         toCancel.push(shown[i]);
       }
 
-      if (shown[i]._blur === 'submit') {
+      if (shown[i]._blur === 'submit' && isBlur(shown[i], e)) {
         toSubmit.push(shown[i]);
       }
     }

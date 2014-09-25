@@ -64,7 +64,7 @@ angular.module('xeditable').factory('editableFormController',
         toCancel.push(shown[i]);
       }
 
-      if (shown[i]._blur === 'submit') {
+      if (shown[i]._blur === 'submit' && isBlur(shown[i], e)) {
         toSubmit.push(shown[i]);
       }
     }
