@@ -41,7 +41,7 @@ angular.module('xeditable').factory('editableFormController',
   // bind click to body: cancel|submit|ignore forms
   $document.bind('click', function(e) {
     // ignore right/middle button click
-    if (e.which !== 1) {
+    if (e.which !== 1 || e.isDefaultPrevented()) {
       return;
     }
 
