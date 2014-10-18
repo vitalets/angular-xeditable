@@ -12,8 +12,8 @@ angular.module('xeditable').factory('editableController',
   function($q, editableUtils) {
 
   //EditableController function
-  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
-  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
+  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q'];
+  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q) {
     var valueGetter;
 
     //if control is disabled - it does not participate in waiting process
@@ -30,6 +30,9 @@ angular.module('xeditable').factory('editableController',
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
+
+    //will be undefined if icon_set is default and theme is default
+    self.icon_set = editableOptions.icon_set === 'default' ? editableIcons.default[editableOptions.theme] : editableIcons.external[editableOptions.icon_set];
 
     //to be overwritten by directive
     self.inputTpl = '';
@@ -191,6 +194,10 @@ angular.module('xeditable').factory('editableController',
         self.buttonsEl = angular.element(theme.buttonsTpl);
         self.submitEl = angular.element(theme.submitTpl);
         self.cancelEl = angular.element(theme.cancelTpl);
+        if(self.icon_set) {
+          self.submitEl.find('span').addClass(self.icon_set.ok);
+          self.cancelEl.find('span').addClass(self.icon_set.cancel);
+        }
         self.buttonsEl.append(self.submitEl).append(self.cancelEl);
         self.controlsEl.append(self.buttonsEl);
         
@@ -236,7 +243,7 @@ angular.module('xeditable').factory('editableController',
       }
 
       self.inputEl.addClass('editable-input');
-      self.inputEl.attr('ng-model', '$data');
+      self.inputEl.attr('ng-model', '$parent.$data');
 
       // add directiveName class to editor, e.g. `editable-text`
       self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
@@ -263,6 +270,8 @@ angular.module('xeditable').factory('editableController',
         valueGetter($scope.$parent);
     };
 
+    var newScope = null;
+    
     //show
     self.show = function() {
       // set value of scope.$data
@@ -278,8 +287,11 @@ angular.module('xeditable').factory('editableController',
       // insert into DOM
       $element.after(self.editorEl);
 
+      //create new scope
+      newScope = $scope.$new();
+      
       // compile (needed to attach ng-* events from markup)
-      $compile(self.editorEl)($scope);
+      $compile(self.editorEl)(newScope);
 
       // attach listeners (`escape`, autosubmit, etc)
       self.addListeners();
@@ -293,6 +305,8 @@ angular.module('xeditable').factory('editableController',
 
     //hide
     self.hide = function() {
+      newScope.$destroy();
+
       self.editorEl.remove();
       $element.removeClass('editable-hide');
 

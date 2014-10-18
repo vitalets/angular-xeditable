@@ -20,6 +20,13 @@ angular.module('xeditable', [])
    */  
   theme: 'default',
   /**
+   * Icon Set. Possible values `font-awesome`, `default`.
+   * 
+   * @var {string} icon set
+   * @memberOf editable-options
+   */  
+  icon_set: 'default',
+  /**
    * Whether to show buttons for single editalbe element.  
    * Possible values `right` (default), `no`.
    * 

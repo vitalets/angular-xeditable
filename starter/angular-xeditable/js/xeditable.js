@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.8
 Edit-in-place for angular.js
-Build date: 2014-01-10 
+Build date: 2014-09-30 
 */
 /**
  * Angular-xeditable module 
@@ -24,6 +24,13 @@ angular.module('xeditable', [])
    * @memberOf editable-options
    */  
   theme: 'default',
+  /**
+   * Icon Set. Possible values `font-awesome`, `default`.
+   * 
+   * @var {string} icon set
+   * @memberOf editable-options
+   */  
+  icon_set: 'default',
   /**
    * Whether to show buttons for single editalbe element.  
    * Possible values `right` (default), `no`.
@@ -273,8 +280,8 @@ angular.module('xeditable').factory('editableController',
   function($q, editableUtils) {
 
   //EditableController function
-  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
-  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
+  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q'];
+  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q) {
     var valueGetter;
 
     //if control is disabled - it does not participate in waiting process
@@ -291,6 +298,9 @@ angular.module('xeditable').factory('editableController',
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
+
+    //will be undefined if icon_set is default and theme is default
+    self.icon_set = editableOptions.icon_set === 'default' ? editableIcons.default[editableOptions.theme] : editableIcons.external[editableOptions.icon_set];
 
     //to be overwritten by directive
     self.inputTpl = '';
@@ -452,6 +462,10 @@ angular.module('xeditable').factory('editableController',
         self.buttonsEl = angular.element(theme.buttonsTpl);
         self.submitEl = angular.element(theme.submitTpl);
         self.cancelEl = angular.element(theme.cancelTpl);
+        if(self.icon_set) {
+          self.submitEl.find('span').addClass(self.icon_set.ok);
+          self.cancelEl.find('span').addClass(self.icon_set.cancel);
+        }
         self.buttonsEl.append(self.submitEl).append(self.cancelEl);
         self.controlsEl.append(self.buttonsEl);
         
@@ -497,7 +511,7 @@ angular.module('xeditable').factory('editableController',
       }
 
       self.inputEl.addClass('editable-input');
-      self.inputEl.attr('ng-model', '$data');
+      self.inputEl.attr('ng-model', '$parent.$data');
 
       // add directiveName class to editor, e.g. `editable-text`
       self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
@@ -524,6 +538,8 @@ angular.module('xeditable').factory('editableController',
         valueGetter($scope.$parent);
     };
 
+    var newScope = null;
+    
     //show
     self.show = function() {
       // set value of scope.$data
@@ -539,8 +555,11 @@ angular.module('xeditable').factory('editableController',
       // insert into DOM
       $element.after(self.editorEl);
 
+      //create new scope
+      newScope = $scope.$new();
+      
       // compile (needed to attach ng-* events from markup)
-      $compile(self.editorEl)($scope);
+      $compile(self.editorEl)(newScope);
 
       // attach listeners (`escape`, autosubmit, etc)
       self.addListeners();
@@ -554,6 +573,8 @@ angular.module('xeditable').factory('editableController',
 
     //hide
     self.hide = function() {
+      newScope.$destroy();
+
       self.editorEl.remove();
       $element.removeClass('editable-hide');
 
@@ -1495,6 +1516,37 @@ angular.module('xeditable').factory('editableNgOptionsParser', [
 }]);
 
 /*
+Editable icons:
+- default
+- font-awesome
+
+*/
+angular.module('xeditable').factory('editableIcons', function() {
+
+  var icons = {
+    //Icon-set to use, defaults to bootstrap icons
+    default: {
+      'bs2': {
+        ok: 'icon-ok icon-white',
+        cancel: 'icon-remove'
+      },
+      'bs3': {
+        ok: 'glyphicon glyphicon-ok',
+        cancel: 'glyphicon glyphicon-remove'
+      }
+    },
+    external: {
+      'font-awesome': {
+        ok: 'fa fa-check',
+        cancel: 'fa fa-times'
+      }
+    }
+  };
+
+  return icons;
+});
+
+/*
 Editable themes:
 - default
 - bootstrap 2
@@ -1524,9 +1576,9 @@ angular.module('xeditable').factory('editableThemes', function() {
       inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
-      submitTpl:   '<button type="submit" class="btn btn-primary"><span class="icon-ok icon-white"></span></button>',
+      submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
       cancelTpl:   '<button type="button" class="btn" ng-click="$form.$cancel()">'+
-                      '<span class="icon-remove"></span>'+
+                      '<span></span>'+
                    '</button>'
 
     },
@@ -1539,9 +1591,9 @@ angular.module('xeditable').factory('editableThemes', function() {
       inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
-      submitTpl:   '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span></button>',
+      submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
       cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
-                     '<span class="glyphicon glyphicon-remove"></span>'+
+                     '<span></span>'+
                    '</button>',
 
       //bs3 specific prop to change buttons class: btn-sm, btn-lg
