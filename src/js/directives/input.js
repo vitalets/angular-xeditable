@@ -4,7 +4,7 @@ Input types: text|email|tel|number|url|search|color|date|datetime|time|month|wee
 
 (function() {
 
-  var types = 'text|email|tel|number|url|search|color|date|datetime|time|month|week'.split('|');
+  var types = 'text|password|email|tel|number|url|search|color|date|datetime|time|month|week'.split('|');
 
   //todo: datalist
   
