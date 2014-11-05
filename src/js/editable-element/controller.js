@@ -172,6 +172,7 @@ angular.module('xeditable').factory('editableController',
       // Initially this method called with newVal = undefined, oldVal = undefined
       // so no need initially call handleEmpty() explicitly
       $scope.$parent.$watch($attrs[self.directiveName], function(newVal, oldVal) {
+        self.setLocalValue();
         self.handleEmpty();
       });
     };
