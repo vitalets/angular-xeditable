@@ -115,6 +115,10 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
 
           // bind click - if no external form defined
           if(!attrs.eForm) {
+            // check first if the editable attribute allows edition
+            if (attrs.editable && $parse(attrs.editable)(scope) === false) {
+              return;
+            }
             elem.addClass('editable-click');
             elem.bind('click', function(e) {
               e.preventDefault();
