@@ -75,7 +75,7 @@ h3 Properties
   Properties are available when you set `name` attribute of form: 
 pre.prettyprint
   = '<form editable-form name="myform">\n'
-  = '// now myform.[property] is available in template and $scope.myform.[property] - in controller\n'
+  = '// now myform[property] is available in template and $scope.myform[property] - in controller\n'
 - var items = ns.properties ? ns.properties.filter(function(v){return !~v.type.names.indexOf('attribute')}) : []
 +props(items)
 
@@ -85,7 +85,7 @@ h3 Methods
   Methods are available when you set `name` attribute of form:
 pre.prettyprint
   = '<form editable-form name="myform">\n'
-  = '// now myform.[method] is available in template and $scope.myform.[method] - in controller\n'
+  = '// now myform[method] is available in template and $scope.myform[method] - in controller\n'
 - items = ns.functions || []  
 +methods(items)
 
