@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.8
 Edit-in-place for angular.js
-Build date: 2014-01-10 
+Build date: 2014-03-14 
 */
 /**
  * Angular-xeditable module 
@@ -490,7 +490,8 @@ angular.module('xeditable').factory('editableController',
         transferAttr = transferAttr.substring(0, 1).toLowerCase() + editableUtils.camelToDash(transferAttr.substring(1));  
 
         // workaround for attributes without value (e.g. `multiple = "multiple"`)
-        var attrValue = ($attrs[k] === '') ? transferAttr : $attrs[k];
+        // except for 'e-value'
+        var attrValue = (transferAttr !== 'value' && $attrs[k] === '') ? transferAttr : $attrs[k];
 
         // set attributes to input
         self.inputEl.attr(transferAttr, attrValue);
