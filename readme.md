@@ -1,5 +1,5 @@
 # Angular-xeditable
-Edit in place for AnguarJS
+Edit in place for AngularJS
 
 ## Overview
 **Angular-xeditable** is a bundle of [AngularJS](http://angularjs.org) directives that allows you to create
