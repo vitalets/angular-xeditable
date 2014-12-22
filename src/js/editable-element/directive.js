@@ -11,8 +11,8 @@ Inside it does several things:
 Depends on: editableController, editableFormFactory
 */
 angular.module('xeditable').factory('editableDirectiveFactory',
-['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController',
-function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController) {
+['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController', 'editableOptions'
+function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController, editableOptions) {
 
   //directive object
   return function(overwrites) {
@@ -116,7 +116,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
           // bind click - if no external form defined
           if(!attrs.eForm) {
             elem.addClass('editable-click');
-            elem.bind('click', function(e) {
+            elem.bind(editableOptions.activationEvent, function(e) {
               e.preventDefault();
               e.editable = eCtrl;
               scope.$apply(function(){
