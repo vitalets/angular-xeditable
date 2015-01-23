@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.8
 Edit-in-place for angular.js
-Build date: 2014-01-10 
+Build date: 2015-01-23 
 */
 /**
  * Angular-xeditable module 
@@ -54,9 +54,17 @@ angular.module('xeditable', [])
    * @var {string} activate
    * @memberOf editable-options
    */
-  activate: 'focus'
+  activate: 'focus',
+  /**
+   * Whether to disable x-editable. Can be overloaded on each element.
+   *
+   * @var {boolean} isDisabled
+   * @memberOf editable-options
+   */
+   isDisabled: false
 
 });
+
 /*
 Angular-ui bootstrap datepicker
 http://angular-ui.github.io/bootstrap/#/datepicker
@@ -326,8 +334,7 @@ angular.module('xeditable').factory('editableController',
     self.buttons = 'right'; 
     /**
      * Action when control losses focus. Values: `cancel|submit|ignore`.
-     * Has sense only for single editable element.
-     * Otherwise, if control is part of form - you should set `blur` of form, not of individual element.
+     * If control is part of form - you should set `blur` of form, not of individual element.
      * 
      * @var {string|attribute} blur
      * @memberOf editable-element
@@ -594,7 +601,8 @@ angular.module('xeditable').factory('editableController',
         self.autosubmit();
       }
 
-      // click - mark element as clicked to exclude in document click handler
+      // click - mark element as clicked to exclude in document click handler 
+      // that closes all opened editables
       self.editorEl.bind('click', function(e) {
         // ignore right/middle button click
         if (e.which !== 1) {
@@ -630,7 +638,12 @@ angular.module('xeditable').factory('editableController',
       }
     };
 
+    /*
+    Set focus OR select whole text (depends on `editableOptions.activate` value)
+    */
     self.activate = function() {
+      // we need setTimeout here, because otherwise it does not work.
+      // seems, angular catches focusing somehow. This can be researched..
       setTimeout(function() {
         var el = self.inputEl[0];
         if (editableOptions.activate === 'focus' && el.focus) {
@@ -642,6 +655,10 @@ angular.module('xeditable').factory('editableController',
       }, 0);
     };
 
+    /*
+    Used internally in `catchError` and externally in form controller 
+    to put into error state and display error message
+    */
     self.setError = function(msg) {
       if(!angular.isObject(msg)) {
         $scope.$error = msg;
@@ -676,6 +693,9 @@ angular.module('xeditable').factory('editableController',
       return result;
     };
 
+    /*
+    Put value to original model
+    */
     self.save = function() {
       valueGetter.assign($scope.$parent, angular.copy(self.scope.$data));
 
@@ -720,8 +740,8 @@ Inside it does several things:
 Depends on: editableController, editableFormFactory
 */
 angular.module('xeditable').factory('editableDirectiveFactory',
-['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController',
-function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController) {
+['$parse', '$compile', 'editableThemes', 'editableOptions', '$rootScope', '$document', 'editableController', 'editableFormController',
+function($parse, $compile, editableThemes, editableOptions, $rootScope, $document, editableController, editableFormController) {
 
   //directive object
   return function(overwrites) {
@@ -785,6 +805,16 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
 
         // merge overwrites to base editable controller
         angular.extend(eCtrl, overwrites);
+
+
+	// x-editable can be disabled using editableOption or edit-disabled attribute
+        var disabled = angular.isDefined(attrs.editDisabled) ?
+          scope.$eval(attrs.editDisabled) :
+          editableOptions.isDisabled;
+
+        if (disabled) {
+          return;
+        }
 
         // init editable ctrl
         eCtrl.init(!hasForm);
