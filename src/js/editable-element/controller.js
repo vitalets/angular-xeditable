@@ -236,7 +236,9 @@ angular.module('xeditable').factory('editableController',
       }
 
       self.inputEl.addClass('editable-input');
-      self.inputEl.attr('ng-model', '$data');
+      if (self.inputEl.attr('ng-model') === undefined) {
+        self.inputEl.attr('ng-model', '$data');
+      }
 
       // add directiveName class to editor, e.g. `editable-text`
       self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
