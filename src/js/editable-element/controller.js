@@ -373,6 +373,14 @@ angular.module('xeditable').factory('editableController',
       setTimeout(function() {
         var el = self.inputEl[0];
         if (editableOptions.activate === 'focus' && el.focus) {
+          if(caretPosition){
+            el.onfocus = function(){
+              var that = this;
+              setTimeout(function(){
+                that.setSelectionRange(caretPosition,caretPosition);
+              });
+            };
+          }
           el.focus();
         }
         if (editableOptions.activate === 'select' && el.select) {
