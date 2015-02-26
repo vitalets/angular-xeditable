@@ -151,7 +151,7 @@ angular.module('xeditable').factory('editableFormController',
         }
 
         //by default activate first field
-        this.$editables[0].activate(this.$editables[0].elem[0].selectionStart);
+        this.$editables[0].activate(this.$editables[0].elem[0].selectionStart, this.$editables[0].elem[0].selectionEnd);
       }
     },
 
