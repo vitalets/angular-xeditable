@@ -10,8 +10,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 			render: function() {
 				/** This basically renders a datepicker as in the example shown in 
 				**  http://angular-ui.github.io/bootstrap/#/datepicker
-				**  The attributes are all the same as in the bootstrap-ui datepicker,
-				**  except datepicker-popup-x-editable which is used as datepicker-popup
+				**  The attributes are all the same as in the bootstrap-ui datepicker with e- as prefix
 				**/
 				this.parent.render.call(this);
 
