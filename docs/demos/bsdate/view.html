@@ -1,5 +1,5 @@
 <div ng-controller="BsdateCtrl">
-  <a href="#" editable-bsdate="user.dob" e-datepicker-popup="dd-MMMM-yyyy">
+  <a href="#" editable-bsdate="user.dob" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datepicker-popup="dd-MMMM-yyyy">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
 </div>
