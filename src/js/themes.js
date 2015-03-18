@@ -65,6 +65,7 @@ angular.module('xeditable').factory('editableThemes', function() {
           case 'editableSearch':
           case 'editableDate':
           case 'editableDatetime':
+          case 'editableBsdate':
           case 'editableTime':
           case 'editableMonth':
           case 'editableWeek':
