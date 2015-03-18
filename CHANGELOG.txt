@@ -1,6 +1,9 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.1.81 Feb 20, 2014
+[enh] allow clicking on elements with manual trigger with e-clickable
+
 Version 0.1.8 Jan 10, 2014
 ----------------------------
 [enh] added checklist directive (vitalets)
