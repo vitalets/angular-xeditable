@@ -1,0 +1,5 @@
+<div ng-controller="CombodateCtrl">
+  <a href="#" editable-combodate="user.dob">
+    {{ (user.dob | date:"medium") || 'empty' }}
+  </a>
+</div>
