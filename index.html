@@ -41,7 +41,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-			<form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.8.1.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.8.1 ~ 23kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.8.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.8 ~ 19kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -667,13 +667,13 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["radiolist"]=v; }); });
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/23/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 2 jsFiddle</a>
                       <div class="well line-example"><div ng-controller="BsdateCtrl">
-  <a href="#" editable-bsdate="user.dob" e-datepicker-popup="dd-MMMM-yyyy">
+  <a href="#" editable-bsdate="user.dob" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datepicker-popup="dd-MMMM-yyyy">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
 </div></div>
                       <pre>{{ debug["bsdate"] | json }}</pre>
                       <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
-<pre class="prettyprint">&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<pre class="prettyprint">&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
 <p>And set <code>editable-bsdate</code> attribute in editable element.
@@ -681,21 +681,39 @@ Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-datepi
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('BsdateCtrl', function($scope) {
-  $scope.user = {
-    dob: new Date(1984, 4, 15)
-  };
+	$scope.user = {
+		dob: new Date(1984, 4, 15)
+	};
+
+	$scope.opened = {};
+
+	$scope.open = function($event, elementOpened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+
+		$scope.opened[elementOpened] = !$scope.opened[elementOpened];
+	};
 $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;BsdateCtrl&quot;&gt;
-  &lt;a href=&quot;#&quot; editable-bsdate=&quot;user.dob&quot; e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-bsdate=&quot;user.dob&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;&gt;
     {{ (user.dob | date:&quot;dd/MM/yyyy&quot;) || 'empty' }}
   &lt;/a&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('BsdateCtrl', function($scope) {
-  $scope.user = {
-    dob: new Date(1984, 4, 15)
-  };
+	$scope.user = {
+		dob: new Date(1984, 4, 15)
+	};
+
+	$scope.opened = {};
+
+	$scope.open = function($event, elementOpened) {
+		$event.preventDefault();
+		$event.stopPropagation();
+
+		$scope.opened[elementOpened] = !$scope.opened[elementOpened];
+	};
 });</pre>
                     </section>
                     <section id="bstime">
