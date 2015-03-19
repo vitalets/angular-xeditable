@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.8.1
+angular-xeditable - 0.1.8
 Edit-in-place for angular.js
-Build date: 2014-02-20 
+Build date: 2015-03-19 
 */
 /**
  * Angular-xeditable module 
@@ -24,6 +24,13 @@ angular.module('xeditable', [])
    * @memberOf editable-options
    */  
   theme: 'default',
+  /**
+   * Icon Set. Possible values `font-awesome`, `default`.
+   * 
+   * @var {string} icon set
+   * @memberOf editable-options
+   */  
+  icon_set: 'default',
   /**
    * Whether to show buttons for single editalbe element.  
    * Possible values `right` (default), `no`.
@@ -54,9 +61,19 @@ angular.module('xeditable', [])
    * @var {string} activate
    * @memberOf editable-options
    */
-  activate: 'focus'
+  activate: 'focus',
+  
+  /**
+   * Event, on which the edit mode gets activated. 
+   * Can be any event.
+   *
+   * @var {string} activationEvent
+   * @memberOf editable-options
+   */
+  activationEvent: 'click'
 
 });
+
 /*
 Angular-ui bootstrap datepicker
 http://angular-ui.github.io/bootstrap/#/datepicker
@@ -69,8 +86,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 			render: function() {
 				/** This basically renders a datepicker as in the example shown in 
 				**  http://angular-ui.github.io/bootstrap/#/datepicker
-				**  The attributes are all the same as in the bootstrap-ui datepicker,
-				**  except datepicker-popup-x-editable which is used as datepicker-popup
+				**  The attributes are all the same as in the bootstrap-ui datepicker with e- as prefix
 				**/
 				this.parent.render.call(this);
 
@@ -159,7 +175,7 @@ angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFac
         this.parent.render.call(this);
         if(this.attrs.eTitle) {
           this.inputEl.wrap('<label></label>');
-          this.inputEl.after(angular.element('<span></span>').text(this.attrs.eTitle));
+          this.inputEl.parent().append(this.attrs.eTitle);
         }
       },
       autosubmit: function() {
@@ -174,6 +190,7 @@ angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFac
       }
     });
 }]);
+
 // checklist
 angular.module('xeditable').directive('editableChecklist', [
   'editableDirectiveFactory',
@@ -264,7 +281,7 @@ angular.module('xeditable').directive('editableRadiolist', [
         this.parent.render.call(this);
         var parsed = editableNgOptionsParser(this.attrs.eNgOptions);
         var html = '<label ng-repeat="'+parsed.ngRepeat+'">'+
-          '<input type="radio" ng-model="$parent.$data" value="{{'+parsed.locals.valueFn+'}}">'+
+          '<input type="radio" ng-disabled="' + this.attrs.eNgDisabled + '" ng-model="$parent.$data" value="{{'+parsed.locals.valueFn+'}}">'+
           '<span ng-bind="'+parsed.locals.displayFn+'"></span></label>';
 
         this.inputEl.removeAttr('ng-model');
@@ -283,6 +300,7 @@ angular.module('xeditable').directive('editableRadiolist', [
       }
     });
 }]);
+
 //select
 angular.module('xeditable').directive('editableSelect', ['editableDirectiveFactory',
   function(editableDirectiveFactory) {
@@ -340,8 +358,8 @@ angular.module('xeditable').factory('editableController',
   function($q, editableUtils) {
 
   //EditableController function
-  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableOptions', '$rootScope', '$compile', '$q'];
-  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableOptions, $rootScope, $compile, $q) {
+  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q'];
+  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q) {
     var valueGetter;
 
     //if control is disabled - it does not participate in waiting process
@@ -358,6 +376,9 @@ angular.module('xeditable').factory('editableController',
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
+
+    //will be undefined if icon_set is default and theme is default
+    self.icon_set = editableOptions.icon_set === 'default' ? editableIcons.default[editableOptions.theme] : editableIcons.external[editableOptions.icon_set];
 
     //to be overwritten by directive
     self.inputTpl = '';
@@ -500,6 +521,7 @@ angular.module('xeditable').factory('editableController',
       // Initially this method called with newVal = undefined, oldVal = undefined
       // so no need initially call handleEmpty() explicitly
       $scope.$parent.$watch($attrs[self.directiveName], function(newVal, oldVal) {
+        self.setLocalValue();
         self.handleEmpty();
       });
     };
@@ -519,6 +541,10 @@ angular.module('xeditable').factory('editableController',
         self.buttonsEl = angular.element(theme.buttonsTpl);
         self.submitEl = angular.element(theme.submitTpl);
         self.cancelEl = angular.element(theme.cancelTpl);
+        if(self.icon_set) {
+          self.submitEl.find('span').addClass(self.icon_set.ok);
+          self.cancelEl.find('span').addClass(self.icon_set.cancel);
+        }
         self.buttonsEl.append(self.submitEl).append(self.cancelEl);
         self.controlsEl.append(self.buttonsEl);
         
@@ -665,7 +691,7 @@ angular.module('xeditable').factory('editableController',
       // click - mark element as clicked to exclude in document click handler
       self.editorEl.bind('click', function(e) {
         // ignore right/middle button click
-        if (e.which !== 1) {
+        if (e.which && e.which !== 1) {
           return;
         }
 
@@ -698,10 +724,19 @@ angular.module('xeditable').factory('editableController',
       }
     };
 
-    self.activate = function() {
+    self.activate = function(start, end) {
       setTimeout(function() {
         var el = self.inputEl[0];
         if (editableOptions.activate === 'focus' && el.focus) {
+          if(start){
+            end = end || start;
+            el.onfocus = function(){
+              var that = this;
+              setTimeout(function(){
+                that.setSelectionRange(start,end);
+              });
+            };
+          }
           el.focus();
         }
         if (editableOptions.activate === 'select' && el.select) {
@@ -745,7 +780,8 @@ angular.module('xeditable').factory('editableController',
     };
 
     self.save = function() {
-      valueGetter.assign($scope.$parent, angular.copy(self.scope.$data));
+      valueGetter.assign($scope.$parent,
+          self.useCopy ? angular.copy(self.scope.$data) : self.scope.$data);
 
       // no need to call handleEmpty here as we are watching change of model value
       // self.handleEmpty();
@@ -788,8 +824,8 @@ Inside it does several things:
 Depends on: editableController, editableFormFactory
 */
 angular.module('xeditable').factory('editableDirectiveFactory',
-['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController',
-function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController) {
+['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController', 'editableOptions',
+function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController, editableOptions) {
 
   //directive object
   return function(overwrites) {
@@ -887,13 +923,13 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
 
           // if `e-form` provided, publish local $form in scope
           if(attrs.eForm) {
-            scope.$parent[attrs.eForm] = scope.$form;
+            $parse(attrs.eForm).assign(scope, scope.$form);
           }
 
           // bind click - if no external form defined
           if(!attrs.eForm || attrs.eClickable) {
             elem.addClass('editable-click');
-            elem.bind('click', function(e) {
+            elem.bind(editableOptions.activationEvent, function(e) {
               e.preventDefault();
               e.editable = eCtrl;
               scope.$apply(function(){
@@ -921,7 +957,7 @@ angular.module('xeditable').factory('editableFormController',
   // bind click to body: cancel|submit|ignore forms
   $document.bind('click', function(e) {
     // ignore right/middle button click
-    if (e.which !== 1) {
+    if (e.which && e.which !== 1) {
       return;
     }
 
@@ -1061,7 +1097,7 @@ angular.module('xeditable').factory('editableFormController',
         }
 
         //by default activate first field
-        this.$editables[0].activate();
+        this.$editables[0].activate(this.$editables[0].elem[0].selectionStart, this.$editables[0].elem[0].selectionEnd);
       }
     },
 
@@ -1104,7 +1140,10 @@ angular.module('xeditable').factory('editableFormController',
         editable.cancel();
       });
       // self hide
-      this.$hide();
+      var that = this;
+      setTimeout(function(){
+        that.$hide();
+      });
     },    
 
     $setWaiting: function(value) {
@@ -1377,7 +1416,7 @@ angular.module('xeditable').directive('editableForm',
             // click - mark form as clicked to exclude in document click handler
             elem.bind('click', function(e) {
               // ignore right/middle button click
-              if (e.which !== 1) {
+              if (e.which && e.which !== 1) {
                 return;
               }
 
@@ -2016,6 +2055,37 @@ angular.module('xeditable').factory('editableCombodate', [function() {
 }]);
 
 /*
+Editable icons:
+- default
+- font-awesome
+
+*/
+angular.module('xeditable').factory('editableIcons', function() {
+
+  var icons = {
+    //Icon-set to use, defaults to bootstrap icons
+    default: {
+      'bs2': {
+        ok: 'icon-ok icon-white',
+        cancel: 'icon-remove'
+      },
+      'bs3': {
+        ok: 'glyphicon glyphicon-ok',
+        cancel: 'glyphicon glyphicon-remove'
+      }
+    },
+    external: {
+      'font-awesome': {
+        ok: 'fa fa-check',
+        cancel: 'fa fa-times'
+      }
+    }
+  };
+
+  return icons;
+});
+
+/*
 Editable themes:
 - default
 - bootstrap 2
@@ -2045,9 +2115,9 @@ angular.module('xeditable').factory('editableThemes', function() {
       inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
-      submitTpl:   '<button type="submit" class="btn btn-primary"><span class="icon-ok icon-white"></span></button>',
+      submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
       cancelTpl:   '<button type="button" class="btn" ng-click="$form.$cancel()">'+
-                      '<span class="icon-remove"></span>'+
+                      '<span></span>'+
                    '</button>'
 
     },
@@ -2060,9 +2130,9 @@ angular.module('xeditable').factory('editableThemes', function() {
       inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
-      submitTpl:   '<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span></button>',
+      submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
       cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
-                     '<span class="glyphicon glyphicon-remove"></span>'+
+                     '<span></span>'+
                    '</button>',
 
       //bs3 specific prop to change buttons class: btn-sm, btn-lg
@@ -2082,6 +2152,7 @@ angular.module('xeditable').factory('editableThemes', function() {
           case 'editableSearch':
           case 'editableDate':
           case 'editableDatetime':
+          case 'editableBsdate':
           case 'editableTime':
           case 'editableMonth':
           case 'editableWeek':
@@ -2096,6 +2167,8 @@ angular.module('xeditable').factory('editableThemes', function() {
               this.inputEl.addClass(this.theme.inputClass);
             }
           break;
+          case 'editableCheckbox':
+              this.editorEl.addClass('checkbox');
         }
 
         //apply buttonsClass (bs3 specific!)

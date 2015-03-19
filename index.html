@@ -41,7 +41,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.8.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.8 ~ 19kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.8.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.8 ~ 17kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -150,7 +150,6 @@
                 <ul class="nav">
                   <li><a href="#ref-element">Editable element</a></li>
                   <li><a href="#ref-form">Editable form</a></li>
-                  <li><a href="#ref-options">Editable options</a></li>
                 </ul>
               </li>
             </ul>
@@ -204,7 +203,7 @@ to use power of angular and support complex forms / editable grids.</p>
 
               <pre class="prettyprint">&lt;link href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.1.8.1.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.1.8.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -2497,7 +2496,7 @@ to model.<br>If at least one children callback returns <code>non-string</code> -
           <h3>Properties</h3><p>Properties are available when you set <code>name</code> attribute of form: </p>
 
           <pre class="prettyprint">&lt;form editable-form name=&quot;myform&quot;&gt;
-// now myform.[property] is available in template and $scope.myform.[property] - in controller
+// now myform[property] is available in template and $scope.myform[property] - in controller
 </pre>
                     <table width="100%" class="table-bordered table-condensed">
                       <thead>
@@ -2525,7 +2524,7 @@ to model.<br>If at least one children callback returns <code>non-string</code> -
           <h3>Methods</h3><p>Methods are available when you set <code>name</code> attribute of form:</p>
 
           <pre class="prettyprint">&lt;form editable-form name=&quot;myform&quot;&gt;
-// now myform.[method] is available in template and $scope.myform.[method] - in controller
+// now myform[method] is available in template and $scope.myform[method] - in controller
 </pre>
                     <table width="100%" class="table-bordered table-condensed">
                       <thead>
@@ -2570,107 +2569,6 @@ to model.<br>If at least one children callback returns <code>non-string</code> -
                           </td>
                           <td><p>Shows form with editable controls.</p>
 </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    
-                    
-          <section id="ref-options"></section>
-          <h2>Reference: Editable options</h2>
-          <h3>Change Options</h3>
-          <p>Options can be edited the following way:</p>
-          <pre class="prettyprint">
-app.run(function(editableOptions) {
-  editableOptions.&lt;name&gt; = &lt;value&gt;;
-});
-          </pre>
-          <h3>Available Options</h3>
-          <table width="100%" class="table-bordered table-condensed">
-                      <thead>
-                        <tr>
-                          <th width="15%">Name</th>
-                          <th>Type</th>
-                          <th>Possible Values</th>
-                          <th>Default</th>
-                          <th>Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><code>theme</code></td>
-                          <td>string</td>
-                          <td>
-                            <p>
-                                <code>'bs3'</code><br>
-                                <code>'bs2'</code><br>
-                                <code>'default'</code>
-                            </p>
-                          </td>
-                          <td><code>'default'</code></td>
-                          <td><p>Set the Theme for all editable-elements.</p></td>
-                        </tr>
-                        <tr>
-                          <td><code>buttons</code></td>
-                          <td>string</td>
-                          <td>
-                            <p>
-                                <code>'right'</code><br>
-                                <code>'no'</code>
-                            </p>
-                          </td>
-                          <td><code>'right'</code></td>
-                          <td><p><i>See <a href="#ref-element">Reference: editable element</a></i></p></td>
-                        </tr>
-                        <tr>
-                          <td><code>blurElem</code></td>
-                          <td>string</td>
-                          <td>
-                            <p>
-                                <code>'cancel'</code><br>
-                                <code>'submit'</code><br>
-                                <code>'ignore'</code>
-                            </p>
-                          </td>
-                          <td><code>'cancel'</code></td>
-                          <td><p><i>See <a href="#ref-element">Reference: editable element</a></i></p></td>
-                        </tr>
-                        <tr>
-                          <td><code>blurForm</code></td>
-                          <td>string</td>
-                          <td>
-                            <p>
-                                <code>'cancel'</code><br>
-                                <code>'submit'</code><br>
-                                <code>'ignore'</code>
-                            </p>
-                          </td>
-                          <td><code>'ignore'</code></td>
-                          <td><p><i>See <a href="#ref-form">Reference: editable form</a></i></p></td>
-                        </tr>
-                        <tr>
-                          <td><code>activate</code></td>
-                          <td>string</td>
-                          <td>
-                            <p>
-                                <code>'focus'</code><br>
-                                <code>'select'</code><br>
-                                <code>'none'</code>
-                            </p>
-                          </td>
-                          <td><code>'focus'</code></td>
-                          <td><p>How input elements get activated.</p></td>
-                        </tr>
-                        <tr>
-                          <td><code>activationEvent</code></td>
-                          <td>string</td>
-                          <td>
-                            <p>
-                                <i>any Event</i><br>
-                                p.e. <code>click</code>, <code>dblclick</code>, <code>mouseover</code>, ...
-                            </p>
-                          </td>
-                          <td><code>'click'</code></td>
-                          <td><p>Event, on which the edit mode gets activated.</p></td>
                         </tr>
                       </tbody>
                     </table>
