@@ -146,7 +146,7 @@ angular.module('xeditable').directive('editableForm',
             // click - mark form as clicked to exclude in document click handler
             elem.bind('click', function(e) {
               // ignore right/middle button click
-              if (e.which !== 1) {
+              if (e.which && e.which !== 1) {
                 return;
               }
 
