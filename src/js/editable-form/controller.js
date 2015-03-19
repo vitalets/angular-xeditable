@@ -151,7 +151,7 @@ angular.module('xeditable').factory('editableFormController',
         }
 
         //by default activate first field
-        this.$editables[0].activate();
+        this.$editables[0].activate(this.$editables[0].elem[0].selectionStart, this.$editables[0].elem[0].selectionEnd);
       }
     },
 
@@ -194,7 +194,10 @@ angular.module('xeditable').factory('editableFormController',
         editable.cancel();
       });
       // self hide
-      this.$hide();
+      var that = this;
+      setTimeout(function(){
+        that.$hide();
+      });
     },    
 
     $setWaiting: function(value) {
