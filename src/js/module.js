@@ -57,5 +57,14 @@ angular.module('xeditable', [])
    * @memberOf editable-options
    */
   activate: 'focus'
+  
+  /**
+   * Event, on which the edit mode gets activated. 
+   * Can be any event.
+   *
+   * @var {string} activationEvent
+   * @memberOf editable-options
+   */
+  activationEvent: 'click'
 
 });
