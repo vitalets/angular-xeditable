@@ -11,8 +11,8 @@ Inside it does several things:
 Depends on: editableController, editableFormFactory
 */
 angular.module('xeditable').factory('editableDirectiveFactory',
-['$parse', '$compile', 'editableThemes', '$rootScope', '$document', 'editableController', 'editableFormController',
-function($parse, $compile, editableThemes, $rootScope, $document, editableController, editableFormController) {
+['$parse', '$compile', 'editableThemes', 'editableOptions', '$rootScope', '$document', 'editableController', 'editableFormController',
+function($parse, $compile, editableThemes, editableOptions, $rootScope, $document, editableController, editableFormController) {
 
   //directive object
   return function(overwrites) {
@@ -76,6 +76,16 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
 
         // merge overwrites to base editable controller
         angular.extend(eCtrl, overwrites);
+
+
+	// x-editable can be disabled using editableOption or edit-disabled attribute
+        var disabled = angular.isDefined(attrs.editDisabled) ?
+          scope.$eval(attrs.editDisabled) :
+          editableOptions.isDisabled;
+
+        if (disabled) {
+          return;
+        }
 
         // init editable ctrl
         eCtrl.init(!hasForm);
