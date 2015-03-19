@@ -80,6 +80,8 @@ angular.module('xeditable').factory('editableThemes', function() {
               this.inputEl.addClass(this.theme.inputClass);
             }
           break;
+          case 'editableCheckbox':
+              this.editorEl.addClass('checkbox');
         }
 
         //apply buttonsClass (bs3 specific!)

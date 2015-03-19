@@ -175,6 +175,7 @@ angular.module('xeditable').factory('editableController',
       // Initially this method called with newVal = undefined, oldVal = undefined
       // so no need initially call handleEmpty() explicitly
       $scope.$parent.$watch($attrs[self.directiveName], function(newVal, oldVal) {
+        self.setLocalValue();
         self.handleEmpty();
       });
     };
@@ -344,7 +345,7 @@ angular.module('xeditable').factory('editableController',
       // click - mark element as clicked to exclude in document click handler
       self.editorEl.bind('click', function(e) {
         // ignore right/middle button click
-        if (e.which !== 1) {
+        if (e.which && e.which !== 1) {
           return;
         }
 
@@ -377,10 +378,19 @@ angular.module('xeditable').factory('editableController',
       }
     };
 
-    self.activate = function() {
+    self.activate = function(start, end) {
       setTimeout(function() {
         var el = self.inputEl[0];
         if (editableOptions.activate === 'focus' && el.focus) {
+          if(start){
+            end = end || start;
+            el.onfocus = function(){
+              var that = this;
+              setTimeout(function(){
+                that.setSelectionRange(start,end);
+              });
+            };
+          }
           el.focus();
         }
         if (editableOptions.activate === 'select' && el.select) {

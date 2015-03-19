@@ -18,6 +18,10 @@ bower install angular-xeditable
 ````
 #### Manual
 Download latest version from [project homepage](http://vitalets.github.io/angular-xeditable).
+#### Insert dependency 
+````
+var app = angular.module("app", ["xeditable"]);
+````
 
 ## Dependencies
 Basically it does not depend on any libraries except [AngularJS](http://angularjs.org) itself.    

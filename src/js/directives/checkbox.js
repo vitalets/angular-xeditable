@@ -8,7 +8,7 @@ angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFac
         this.parent.render.call(this);
         if(this.attrs.eTitle) {
           this.inputEl.wrap('<label></label>');
-          this.inputEl.after(angular.element('<span></span>').text(this.attrs.eTitle));
+          this.inputEl.parent().append(this.attrs.eTitle);
         }
       },
       autosubmit: function() {
