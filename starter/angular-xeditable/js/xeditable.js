@@ -954,10 +954,40 @@ angular.module('xeditable').factory('editableFormController',
   // array of opened editable forms
   var shown = [];
 
+  //Check if the child element correspond or is a descendant of the parent element
+  var isSelfOrDescendant = function (parent, child) {
+    if (child == parent) {
+      return true;
+    }
+
+    var node = child.parentNode;
+    while (node !== null) {
+      if (node == parent) {
+        return true;
+      }
+      node = node.parentNode;
+    }
+    return false;
+  };
+  
+  //Check if it is a real blur : if the click event appear on a shown editable elem, this is not a blur.
+  var isBlur = function(shown, event) {
+    var isBlur = true;
+
+    var editables = shown.$editables;
+    angular.forEach(editables, function(v){
+      var element = v.editorEl[0];
+      if (isSelfOrDescendant(element, event.target))
+        isBlur = false;
+      
+    });
+    return isBlur;
+  };
+  
   // bind click to body: cancel|submit|ignore forms
   $document.bind('click', function(e) {
     // ignore right/middle button click
-    if (e.which && e.which !== 1) {
+    if ((e.which && e.which !== 1) || e.isDefaultPrevented()) {
       return;
     }
 
@@ -976,11 +1006,11 @@ angular.module('xeditable').factory('editableFormController',
         continue;
       }
 
-      if (shown[i]._blur === 'cancel') {
+      if (shown[i]._blur === 'cancel' && isBlur(shown[i], e)) {
         toCancel.push(shown[i]);
       }
 
-      if (shown[i]._blur === 'submit') {
+      if (shown[i]._blur === 'submit' && isBlur(shown[i], e)) {
         toSubmit.push(shown[i]);
       }
     }
