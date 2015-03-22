@@ -1,7 +1,31 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.1.9 Mar 22, 2015
+----------------------------
+[enh #258] Support for bootstrap-ui datepicker (Painyjames)
+[enh #251] added setTimeout() to call $hide on another stack (enapupe)
+[enh #235] Made possible disabled of x-editable using global option of directive at... (hammat)
+[bug #225] fix #225 'Feature: choose event to activate edit mode' (wetternest)
+[enh #224] Added support for ng-disabled to radiolist (OneMuppet)
+[bug #219] Support file inputs as a directive (bdgamble)
+[bug #216] Fix IE8 accidental onblur. (arcadeJHS)
+[bug #215] Fix checkbox form alignment (mdarveau)
+[enh #212] Make e-form more flexible, when there isn't parent form element (pr0da)
+[bug #207] docs(reference): fix properties and methods examples (AdirAmsalem)
+[bug #130] Fix for issue #130 - Updating form view value. (joseaquino)
+[bug #176] Fix bug #176 : Blur should not be triggered when it happens on edited form inputs (julienboulay)
+[bug #162] Fix blur="submit" does not work on IE8
+[bug #158] Fix scope memory leak  (maynier)
+[enh #131] Implemented combodate (jjlpinto)
+[enh #113] add input:password to directives (DLoT)
+[bug #112] Fixed angular.copy issue (roymiloh)
+[enh #102] Add the ability to choose external icon sets. Support font awesome (bholzer)
+[bug #97] `e-value` fix (mp-jgoetzinger)
+[enh #91] Applying 'form-control to bsdate in bs3 (paulmand3l)
+
 Version 0.1.81 Feb 20, 2014
+----------------------------
 [enh] allow clicking on elements with manual trigger with e-clickable
 
 Version 0.1.8 Jan 10, 2014
