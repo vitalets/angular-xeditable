@@ -57,6 +57,13 @@ angular.module('xeditable', [])
    * @memberOf editable-options
    */
   activate: 'focus',
+  /**
+   * Whether to disable x-editable. Can be overloaded on each element.
+   *
+   * @var {boolean} isDisabled
+   * @memberOf editable-options
+   */
+   isDisabled: false,
   
   /**
    * Event, on which the edit mode gets activated. 

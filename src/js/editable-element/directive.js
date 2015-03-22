@@ -77,6 +77,15 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         // merge overwrites to base editable controller
         angular.extend(eCtrl, overwrites);
 
+        // x-editable can be disabled using editableOption or edit-disabled attribute
+        var disabled = angular.isDefined(attrs.editDisabled) ?
+          scope.$eval(attrs.editDisabled) :
+          editableOptions.isDisabled;
+
+        if (disabled) {
+          return;
+        }
+        
         // init editable ctrl
         eCtrl.init(!hasForm);
 
