@@ -224,10 +224,7 @@ angular.module('xeditable').factory('editableFormController',
         editable.cancel();
       });
       // self hide
-      var that = this;
-      setTimeout(function(){
-        that.$hide();
-      });
+      this.$hide();
     },    
 
     $setWaiting: function(value) {

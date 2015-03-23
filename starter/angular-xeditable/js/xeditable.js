@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.9
 Edit-in-place for angular.js
-Build date: 2015-03-22 
+Build date: 2015-03-23 
 */
 /**
  * Angular-xeditable module 
@@ -1193,10 +1193,7 @@ angular.module('xeditable').factory('editableFormController',
         editable.cancel();
       });
       // self hide
-      var that = this;
-      setTimeout(function(){
-        that.$hide();
-      });
+      this.$hide();
     },    
 
     $setWaiting: function(value) {
