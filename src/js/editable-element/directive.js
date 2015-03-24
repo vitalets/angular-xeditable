@@ -119,7 +119,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
 
           // if `e-form` provided, publish local $form in scope
           if(attrs.eForm) {
-            $parse(attrs.eForm).assign(scope, scope.$form);
+            scope.$parent[attrs.eForm] = scope.$form;
           }
 
           // bind click - if no external form defined
