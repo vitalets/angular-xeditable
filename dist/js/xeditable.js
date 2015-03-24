@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.9
 Edit-in-place for angular.js
-Build date: 2015-03-23 
+Build date: 2015-03-24 
 */
 /**
  * Angular-xeditable module 
@@ -946,7 +946,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
 
           // if `e-form` provided, publish local $form in scope
           if(attrs.eForm) {
-            $parse(attrs.eForm).assign(scope, scope.$form);
+            scope.$parent[attrs.eForm] = scope.$form;
           }
 
           // bind click - if no external form defined
