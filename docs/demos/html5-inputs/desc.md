@@ -9,6 +9,7 @@ Following HTML5 types are supported via `editable-xxx` directive:
 * color
 * date
 * datetime
+* datetime-local
 * time
 * month
 * week

@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.9
 Edit-in-place for angular.js
-Build date: 2015-03-24 
+Build date: 2015-03-26 
 */
 /**
  * Angular-xeditable module 
@@ -239,18 +239,18 @@ angular.module('xeditable').directive('editableCombodate', ['editableDirectiveFa
   }
 ]);
 /*
-Input types: text|email|tel|number|url|search|color|date|datetime|time|month|week
+Input types: text|email|tel|number|url|search|color|date|datetime|datetime-local|time|month|week
 */
 
 (function() {
 
-  var types = 'text|password|email|tel|number|url|search|color|date|datetime|time|month|week|file'.split('|');
+  var types = 'text|password|email|tel|number|url|search|color|date|datetime|datetime-local|time|month|week|file'.split('|');
 
   //todo: datalist
-  
+
   // generate directives
   angular.forEach(types, function(type) {
-    var directiveName = 'editable'+type.charAt(0).toUpperCase() + type.slice(1);
+    var directiveName = 'editable' + type.split('-').map(function (part) { return part.charAt(0).toUpperCase() + part.slice(1); }).join('');
     angular.module('xeditable').directive(directiveName, ['editableDirectiveFactory',
       function(editableDirectiveFactory) {
         return editableDirectiveFactory({

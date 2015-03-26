@@ -391,16 +391,17 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
                       <div class="well line-example"><div ng-controller="Html5InputsCtrl">
   <div>Email: <a href="#" editable-email="user.email">{{ user.email || 'empty' }}</a></div>
   <div>Tel: <a href="#" editable-tel="user.tel" e-pattern="\d{3}\-\d{2}\-\d{2}" e-title="xxx-xx-xx">{{ user.tel || 'empty' }}</a></div>
-  <div>Number: <a href="#" editable-number="user.number" e-min="18">{{ user.number || 'empty' }}</a></div>  
-  <div>Range: <a href="#" editable-range="user.range" e-step="5">{{ user.range || 'empty' }}</a></div>  
-  <div>Url: <a href="#" editable-url="user.url">{{ user.url || 'empty' }}</a></div>  
-  <div>Search: <a href="#" editable-search="user.search">{{ user.search || 'empty' }}</a></div>  
-  <div>Color: <a href="#" editable-color="user.color">{{ user.color || 'empty' }}</a></div>  
-  <div>Date: <a href="#" editable-date="user.date">{{ user.date || 'empty' }}</a></div>  
-  <div>Time: <a href="#" editable-time="user.time">{{ user.time || 'empty' }}</a></div>  
-  <div>Datetime: <a href="#" editable-datetime="user.datetime">{{ user.datetime || 'empty' }}</a></div>  
-  <div>Month: <a href="#" editable-month="user.month">{{ user.month || 'empty' }}</a></div>  
-  <div>Week: <a href="#" editable-week="user.week">{{ user.week || 'empty' }}</a></div>  
+  <div>Number: <a href="#" editable-number="user.number" e-min="18">{{ user.number || 'empty' }}</a></div>
+  <div>Range: <a href="#" editable-range="user.range" e-step="5">{{ user.range || 'empty' }}</a></div>
+  <div>Url: <a href="#" editable-url="user.url">{{ user.url || 'empty' }}</a></div>
+  <div>Search: <a href="#" editable-search="user.search">{{ user.search || 'empty' }}</a></div>
+  <div>Color: <a href="#" editable-color="user.color">{{ user.color || 'empty' }}</a></div>
+  <div>Date: <a href="#" editable-date="user.date">{{ user.date || 'empty' }}</a></div>
+  <div>Time: <a href="#" editable-time="user.time">{{ user.time || 'empty' }}</a></div>
+  <div>Datetime: <a href="#" editable-datetime="user.datetime">{{ user.datetime || 'empty' }}</a></div>
+  <div>Datetime-local: <a href="#" editable-datetime-local="user['datetime-local']">{{ user['datetime-local'] || 'empty' }}</a></div>
+  <div>Month: <a href="#" editable-month="user.month">{{ user.month || 'empty' }}</a></div>
+  <div>Week: <a href="#" editable-week="user.week">{{ user.week || 'empty' }}</a></div>
 </div></div>
                       <pre>{{ debug["html5-inputs"] | json }}</pre>
                       <p><p>Following HTML5 types are supported via <code>editable-xxx</code> directive:</p>
@@ -414,6 +415,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
 <li>color</li>
 <li>date</li>
 <li>datetime</li>
+<li>datetime-local</li>
 <li>time</li>
 <li>month</li>
 <li>week</li>
@@ -433,6 +435,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
     date: null,
     time: '12:30',
     datetime: null,
+    'datetime-local': null,
     month: null,
     week: null
   };  
@@ -441,16 +444,17 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;Html5InputsCtrl&quot;&gt;
   &lt;div&gt;Email: &lt;a href=&quot;#&quot; editable-email=&quot;user.email&quot;&gt;{{ user.email || 'empty' }}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Tel: &lt;a href=&quot;#&quot; editable-tel=&quot;user.tel&quot; e-pattern=&quot;\d{3}\-\d{2}\-\d{2}&quot; e-title=&quot;xxx-xx-xx&quot;&gt;{{ user.tel || 'empty' }}&lt;/a&gt;&lt;/div&gt;
-  &lt;div&gt;Number: &lt;a href=&quot;#&quot; editable-number=&quot;user.number&quot; e-min=&quot;18&quot;&gt;{{ user.number || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Range: &lt;a href=&quot;#&quot; editable-range=&quot;user.range&quot; e-step=&quot;5&quot;&gt;{{ user.range || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Url: &lt;a href=&quot;#&quot; editable-url=&quot;user.url&quot;&gt;{{ user.url || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Search: &lt;a href=&quot;#&quot; editable-search=&quot;user.search&quot;&gt;{{ user.search || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Color: &lt;a href=&quot;#&quot; editable-color=&quot;user.color&quot;&gt;{{ user.color || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Date: &lt;a href=&quot;#&quot; editable-date=&quot;user.date&quot;&gt;{{ user.date || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Time: &lt;a href=&quot;#&quot; editable-time=&quot;user.time&quot;&gt;{{ user.time || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Datetime: &lt;a href=&quot;#&quot; editable-datetime=&quot;user.datetime&quot;&gt;{{ user.datetime || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Month: &lt;a href=&quot;#&quot; editable-month=&quot;user.month&quot;&gt;{{ user.month || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Week: &lt;a href=&quot;#&quot; editable-week=&quot;user.week&quot;&gt;{{ user.week || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Number: &lt;a href=&quot;#&quot; editable-number=&quot;user.number&quot; e-min=&quot;18&quot;&gt;{{ user.number || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Range: &lt;a href=&quot;#&quot; editable-range=&quot;user.range&quot; e-step=&quot;5&quot;&gt;{{ user.range || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Url: &lt;a href=&quot;#&quot; editable-url=&quot;user.url&quot;&gt;{{ user.url || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Search: &lt;a href=&quot;#&quot; editable-search=&quot;user.search&quot;&gt;{{ user.search || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Color: &lt;a href=&quot;#&quot; editable-color=&quot;user.color&quot;&gt;{{ user.color || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Date: &lt;a href=&quot;#&quot; editable-date=&quot;user.date&quot;&gt;{{ user.date || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Time: &lt;a href=&quot;#&quot; editable-time=&quot;user.time&quot;&gt;{{ user.time || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Datetime: &lt;a href=&quot;#&quot; editable-datetime=&quot;user.datetime&quot;&gt;{{ user.datetime || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Datetime-local: &lt;a href=&quot;#&quot; editable-datetime-local=&quot;user['datetime-local']&quot;&gt;{{ user['datetime-local'] || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Month: &lt;a href=&quot;#&quot; editable-month=&quot;user.month&quot;&gt;{{ user.month || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Week: &lt;a href=&quot;#&quot; editable-week=&quot;user.week&quot;&gt;{{ user.week || 'empty' }}&lt;/a&gt;&lt;/div&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('Html5InputsCtrl', function($scope) {
@@ -465,6 +469,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
     date: null,
     time: '12:30',
     datetime: null,
+    'datetime-local': null,
     month: null,
     week: null
   };  

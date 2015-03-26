@@ -17,6 +17,7 @@ describe('html5-inputs', function() {
       date: null,
       time: '12:30',
       datetime: null,
+      'datetime-local': null,
       month: null,
       week: null
     };
@@ -32,6 +33,7 @@ describe('html5-inputs', function() {
       date: null,
       time: '12:40',
       datetime: null,
+      'datetime-local': null,
       month: null,
       week: null
     };
