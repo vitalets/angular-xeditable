@@ -83,7 +83,7 @@ function($parse, $compile, editableThemes, editableOptions, $rootScope, $documen
           scope.$eval(attrs.editDisabled) :
           editableOptions.isDisabled;
           return disabled;
-        }
+        };
 
         // init editable ctrl
         eCtrl.init(!hasForm);
