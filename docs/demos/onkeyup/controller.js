@@ -1,6 +1,5 @@
 app.controller('OnkeyUpCtrl', function($scope, $http) {
   $scope.user = {
-    id: 1,
     name: 'awesome user'
   };
 

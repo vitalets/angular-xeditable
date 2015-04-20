@@ -125,6 +125,10 @@
                 <ul class="nav">
                   <li><a href="#onbeforesave">Onbeforesave</a></li>
                   <li><a href="#onaftersave">Onaftersave</a></li>
+                </ul>
+              </li>
+              <li><a href="#onkeyup">Validation</a>
+                <ul class="nav">
                   <li><a href="#onkeyup">Onkeyup</a></li>
                 </ul>
               </li>
@@ -1249,7 +1253,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="onkeyup">
                       <h1>Validation via onkeyup</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="#" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/s5wothmw/2/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="OnkeyUpCtrl">
   <a href="#" editable-text="user.name" onkeyup="checkUser($data)">
     {{ user.name || 'empty' }}
@@ -1258,13 +1262,12 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                       <pre>{{ debug["onkeyup"] | json }}</pre>
                       <p><p>One way to do validation during typing is to define a <code>onkeyup</code> attribute pointing to some method of scope.
 Useful when you need to show warnings or errors during the process of typing into the input form.
-New value can be passed as <code>$data</code> parameter (e.g. <code>&lt;a ... onkeyup=&quot;updateUser($data)&quot;&gt;</code>).</p>
-<p>This attribute does not affect the save mechanism, without the onbedore save attribute, you will still be able to update the local model, even if errors are shown in the error dialog.</p>
+New value can be passed as <code>$data</code> parameter (e.g. <code>&lt;a ... onkeyup=&quot;checkUser($data)&quot;&gt;</code>).</p>
+<p>This attribute does not affect the save mechanism, without the onbeforesave attribute, you will still be able to update the local model, even if errors are shown in the error dialog.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('OnkeyUpCtrl', function($scope, $http) {
   $scope.user = {
-    id: 1,
     name: 'awesome user'
   };
 
@@ -1283,7 +1286,6 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onkeyup"]=v; }); });</
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('OnkeyUpCtrl', function($scope, $http) {
   $scope.user = {
-    id: 1,
     name: 'awesome user'
   };
 
