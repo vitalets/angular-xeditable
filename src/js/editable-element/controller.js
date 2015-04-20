@@ -454,7 +454,6 @@ angular.module('xeditable').factory('editableController',
         //set result to string: to let form know that there was error
         result = result.data;
       } else if (angular.isString(result)) {
-        console.log('error is being returned');
         this.setError(result);
       } else {
         //clean up the errors as there is no error.
