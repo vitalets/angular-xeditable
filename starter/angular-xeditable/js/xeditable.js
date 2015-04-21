@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.8
 Edit-in-place for angular.js
-Build date: 2015-01-23 
+Build date: 2015-04-21 
 */
 /**
  * Angular-xeditable module 
@@ -248,7 +248,48 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
       inputTpl: '<textarea></textarea>',
       addListeners: function() {
         var self = this;
-        self.parent.addListeners.call(self);
+        // self.parent.addListeners.call(self);
+        // The above line should be uncommented, and the copy/paste from it that I've put below
+        // is a great dirty hack, but I can't figure out the issue.
+        // self.parent.addListeners.call(self);
+        // submit textarea by ctrl+enter even with buttons
+        if (self.single && self.buttons !== 'no') {
+          self.autosubmit();
+        }
+        self.inputEl.bind('keyup', function(e) {
+          if (!self.single) {
+            return;
+          }
+
+          // todo: move this to editable-form!
+          switch (e.keyCode) {
+            // hide on `escape` press
+            case 27:
+              self.scope.$apply(function() {
+                self.scope.$form.$cancel();
+              });
+              break;
+          }
+        });
+
+        // autosubmit when `no buttons`
+        if (self.single && self.buttons === 'no') {
+          self.autosubmit();
+        }
+
+        // click - mark element as clicked to exclude in document click handler
+        // that closes all opened editables
+        self.editorEl.bind('click', function(e) {
+          // ignore right/middle button click
+          if (e.which !== 1) {
+            return;
+          }
+
+          if (self.scope.$form.$visible) {
+            self.scope.$form._clicked = true;
+          }
+        });
+
         // submit textarea by ctrl+enter even with buttons
         if (self.single && self.buttons !== 'no') {
           self.autosubmit();
@@ -751,120 +792,127 @@ function($parse, $compile, editableThemes, editableOptions, $rootScope, $documen
       require: [overwrites.directiveName, '?^form'],
       controller: editableController,
       link: function(scope, elem, attrs, ctrl) {
-        // editable controller
-        var eCtrl = ctrl[0];
+        //Watch for change of edit-disabled on element
+          scope.$watch(attrs.editDisabled, function(newValue) {
 
-        // form controller
-        var eFormCtrl;
+          // editable controller
+          var eCtrl = ctrl[0];
 
-        // this variable indicates is element is bound to some existing form, 
-        // or it's single element who's form will be generated automatically
-        // By default consider single element without any linked form.ß
-        var hasForm = false;
-     
-        // element wrapped by form
-        if(ctrl[1]) {
-          eFormCtrl = ctrl[1];
-          hasForm = true;
-        } else if(attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
-          var getter = $parse(attrs.eForm)(scope);
-          if(getter) { // form exists in scope (above), e.g. editable column
-            eFormCtrl = getter;
+          // form controller
+          var eFormCtrl;
+
+          // this variable indicates is element is bound to some existing form,
+          // or it's single element who's form will be generated automatically
+          // By default consider single element without any linked form.ß
+          var hasForm = false;
+
+          // element wrapped by form
+          if(ctrl[1]) {
+            eFormCtrl = ctrl[1];
             hasForm = true;
-          } else { // form exists below or not exist at all: check document.forms
-            for(var i=0; i<$document[0].forms.length;i++){
-              if($document[0].forms[i].name === attrs.eForm) {
-                // form is below and not processed yet
-                eFormCtrl = null;
-                hasForm = true;
-                break;
+          } else if(attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
+            var getter = $parse(attrs.eForm)(scope);
+            if(getter) { // form exists in scope (above), e.g. editable column
+              eFormCtrl = getter;
+              hasForm = true;
+            } else { // form exists below or not exist at all: check document.forms
+              for(var i=0; i<$document[0].forms.length;i++){
+                if($document[0].forms[i].name === attrs.eForm) {
+                  // form is below and not processed yet
+                  eFormCtrl = null;
+                  hasForm = true;
+                  break;
+                }
               }
             }
           }
-        }
 
-        /*
-        if(hasForm && !attrs.eName) {
-          throw 'You should provide `e-name` for editable element inside form!';
-        }
-        */
+          /*
+          if(hasForm && !attrs.eName) {
+            throw 'You should provide `e-name` for editable element inside form!';
+          }
+          */
 
-        //check for `editable-form` attr in form
-        /*
-        if(eFormCtrl && ) {
-          throw 'You should provide `e-name` for editable element inside form!';
-        }
-        */
+          //check for `editable-form` attr in form
+          /*
+          if(eFormCtrl && ) {
+            throw 'You should provide `e-name` for editable element inside form!';
+          }
+          */
 
-        // store original props to `parent` before merge
-        angular.forEach(overwrites, function(v, k) {
-          if(eCtrl[k] !== undefined) {
-            eCtrl.parent[k] = eCtrl[k];
+          // store original props to `parent` before merge
+          angular.forEach(overwrites, function(v, k) {
+            if(eCtrl[k] !== undefined) {
+              eCtrl.parent[k] = eCtrl[k];
+            }
+          });
+
+          // merge overwrites to base editable controller
+          angular.extend(eCtrl, overwrites);
+
+
+          // x-editable can be disabled using editableOption or edit-disabled attribute
+          var disabled = angular.isDefined(attrs.editDisabled) ?
+            scope.$eval(attrs.editDisabled) :
+            editableOptions.isDisabled;
+
+          if (disabled) {
+            //Return element to uneditable state before returning.
+            elem.removeClass('editable');
+            elem.removeClass('editable-click');
+            elem.unbind('click');
+            return;
+          }
+
+          // init editable ctrl
+          eCtrl.init(!hasForm);
+
+          // publich editable controller as `$editable` to be referenced in html
+          scope.$editable = eCtrl;
+
+          // add `editable` class to element
+          elem.addClass('editable');
+
+          // hasForm
+          if(hasForm) {
+            if(eFormCtrl) {
+              scope.$form = eFormCtrl;
+              if(!scope.$form.$addEditable) {
+                throw 'Form with editable elements should have `editable-form` attribute.';
+              }
+              scope.$form.$addEditable(eCtrl);
+            } else {
+              // future form (below): add editable controller to buffer and add to form later
+              $rootScope.$$editableBuffer = $rootScope.$$editableBuffer || {};
+              $rootScope.$$editableBuffer[attrs.eForm] = $rootScope.$$editableBuffer[attrs.eForm] || [];
+              $rootScope.$$editableBuffer[attrs.eForm].push(eCtrl);
+              scope.$form = null; //will be re-assigned later
+            }
+          // !hasForm
+          } else {
+            // create editableform controller
+            scope.$form = editableFormController();
+            // add self to editable controller
+            scope.$form.$addEditable(eCtrl);
+
+            // if `e-form` provided, publish local $form in scope
+            if(attrs.eForm) {
+              scope.$parent[attrs.eForm] = scope.$form;
+            }
+
+            // bind click - if no external form defined
+            if(!attrs.eForm) {
+              elem.addClass('editable-click');
+              elem.bind('click', function(e) {
+                e.preventDefault();
+                e.editable = eCtrl;
+                scope.$apply(function(){
+                  scope.$form.$show();
+                });
+              });
+            }
           }
         });
-
-        // merge overwrites to base editable controller
-        angular.extend(eCtrl, overwrites);
-
-
-	// x-editable can be disabled using editableOption or edit-disabled attribute
-        var disabled = angular.isDefined(attrs.editDisabled) ?
-          scope.$eval(attrs.editDisabled) :
-          editableOptions.isDisabled;
-
-        if (disabled) {
-          return;
-        }
-
-        // init editable ctrl
-        eCtrl.init(!hasForm);
-
-        // publich editable controller as `$editable` to be referenced in html
-        scope.$editable = eCtrl;
-
-        // add `editable` class to element
-        elem.addClass('editable');
-
-        // hasForm
-        if(hasForm) {
-          if(eFormCtrl) {
-            scope.$form = eFormCtrl;
-            if(!scope.$form.$addEditable) {
-              throw 'Form with editable elements should have `editable-form` attribute.';
-            }
-            scope.$form.$addEditable(eCtrl);
-          } else {
-            // future form (below): add editable controller to buffer and add to form later
-            $rootScope.$$editableBuffer = $rootScope.$$editableBuffer || {};
-            $rootScope.$$editableBuffer[attrs.eForm] = $rootScope.$$editableBuffer[attrs.eForm] || [];
-            $rootScope.$$editableBuffer[attrs.eForm].push(eCtrl);
-            scope.$form = null; //will be re-assigned later
-          }
-        // !hasForm
-        } else {
-          // create editableform controller
-          scope.$form = editableFormController();
-          // add self to editable controller
-          scope.$form.$addEditable(eCtrl);
-
-          // if `e-form` provided, publish local $form in scope
-          if(attrs.eForm) {
-            scope.$parent[attrs.eForm] = scope.$form;
-          }
-
-          // bind click - if no external form defined
-          if(!attrs.eForm) {
-            elem.addClass('editable-click');
-            elem.bind('click', function(e) {
-              e.preventDefault();
-              e.editable = eCtrl;
-              scope.$apply(function(){
-                scope.$form.$show();
-              });
-            });
-          }
-        }
-
       }
     };
   };

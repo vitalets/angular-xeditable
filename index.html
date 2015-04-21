@@ -39,7 +39,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.8.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.8 ~ 17kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.8.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.8 ~ 18kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -147,6 +147,7 @@
                 <ul class="nav">
                   <li><a href="#ref-element">Editable element</a></li>
                   <li><a href="#ref-form">Editable form</a></li>
+                  <li><a href="#ref-options">Editable options</a></li>
                 </ul>
               </li>
             </ul>
@@ -2307,6 +2308,7 @@ a.editable-click:hover {
           <h1>Reference</h1>
           <!-- jade cannot include dynamically-->
           <p>List of all possible attributes, properties and methods.</p>
+          <!-- element-->
           <section id="ref-element"></section>
           <h2>Reference: editable element</h2>
           <h3>Attributes</h3><p>Attributes can be defined for any element having <code>editable-xxx</code> directive:</p>
@@ -2325,8 +2327,7 @@ a.editable-click:hover {
                           <td><code>blur</code></td>
                           <td>string</td>
                           <td><p>Action when control losses focus. Values: <code>cancel|submit|ignore</code>.
-Has sense only for single editable element.
-Otherwise, if control is part of form - you should set <code>blur</code> of form, not of individual element.</p>
+If control is part of form - you should set <code>blur</code> of form, not of individual element.</p>
 </td>
                         </tr>
                         <tr>
@@ -2376,6 +2377,7 @@ then input will appear as <code>&lt;input style=&quot;width: 100px&quot;&gt;</co
                         </tr>
                       </tbody>
                     </table>
+          <!-- form-->
           <section id="ref-form"></section>
           <h2>Reference: editable form</h2>
           <h3>Attributes</h3><p>Attributes can be defined as:</p>
@@ -2514,6 +2516,61 @@ to model.<br>If at least one children callback returns <code>non-string</code> -
                           <td><i>none    </i>
                           </td>
                           <td><p>Shows form with editable controls.</p>
+</td>
+                        </tr>
+                      </tbody>
+                    </table>
+          <!-- editableOptions-->
+          <section id="ref-options"></section>
+          <h2>Reference: editableOptions</h2><p>Default options that can be defined in <code>app.run</code>:</p>
+
+          <pre class="prettyprint">app.run(function(editableOptions) {
+  editableOptions.theme = 'bs3';
+  editableOptions.blurElem = 'submit';
+});</pre>
+                    <table width="100%" class="table-bordered table-condensed">
+                      <thead>
+                        <tr>
+                          <th width="15%">Name</th>
+                          <th width="15%">Type</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>activate</code></td>
+                          <td>string</td>
+                          <td><p>How input elements get activated. Possible values: <code>focus|select|none</code>.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>blurElem</code></td>
+                          <td>string</td>
+                          <td><p>Default value for <code>blur</code> attribute of single editable element.<br>Can be <code>cancel|submit|ignore</code>.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>blurForm</code></td>
+                          <td>string</td>
+                          <td><p>Default value for <code>blur</code> attribute of editable form.<br>Can be <code>cancel|submit|ignore</code>.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>buttons</code></td>
+                          <td>string</td>
+                          <td><p>Whether to show buttons for single editalbe element.<br>Possible values <code>right</code> (default), <code>no</code>.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>isDisabled</code></td>
+                          <td>boolean</td>
+                          <td><p>Whether to disable x-editable. Can be overloaded on each element.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>theme</code></td>
+                          <td>string</td>
+                          <td><p>Theme. Possible values <code>bs3</code>, <code>bs2</code>, <code>default</code>.</p>
 </td>
                         </tr>
                       </tbody>
