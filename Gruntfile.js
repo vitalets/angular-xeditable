@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   var fs = require('fs');
   var extend = require('util')._extend;
 
@@ -9,9 +9,25 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json')
   });
 
+  //meteor
+  grunt.loadNpmTasks('grunt-exec');
+  grunt.config('exec', {
+    'meteor-init': {
+      command: [
+          'type meteor >/dev/null 2>&1 || { curl https://install.meteor.com/ | sh; }'
+        ].join(';')
+    },
+    'meteor-publish': {
+      command: 'meteor publish'
+    }
+  });
+
+  grunt.registerTask('meteor-publish', ['exec:meteor-init', 'exec:meteor-publish']);
+
   //clean
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.config('clean', {
+    meteor: ['.build.*', 'versions.json'],
     dist: 'dist',
     starter: 'starter/angular-xeditable'
   });
@@ -19,7 +35,7 @@ module.exports = function(grunt) {
   //js hint
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.config('jshint', {
-    options: { },
+    options: {},
     all: [
       'Gruntfile.js',
       'src/js/**/*.js'
@@ -27,8 +43,8 @@ module.exports = function(grunt) {
   });
 
   var banner = '/*!\n<%= pkg.name %> - <%= pkg.version %>\n' +
-              '<%= pkg.description %>\n'+
-              'Build date: <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n';
+    '<%= pkg.description %>\n' +
+    'Build date: <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n';
 
   //cssmin
   grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -38,7 +54,8 @@ module.exports = function(grunt) {
         banner: banner
       },
       files: [{
-        dest: 'dist/css/xeditable.css', src: ['src/css/xeditable.css']
+        dest: 'dist/css/xeditable.css',
+        src: ['src/css/xeditable.css']
       }]
     }
   });
@@ -83,7 +100,7 @@ module.exports = function(grunt) {
   //copy
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.config('copy', {
-    starter:  {
+    starter: {
       expand: true,
       cwd: 'dist/',
       src: '**',
@@ -116,7 +133,7 @@ module.exports = function(grunt) {
 
   //jade
   var marked_ = require('marked');
-  var marked = function(text) {
+  var marked = function (text) {
     var tok = marked_.lexer(text);
     text = marked_.parser(tok);
     // workaround to replace marked `<pre><code>` with '<pre class="prettyprint">'
@@ -137,16 +154,26 @@ module.exports = function(grunt) {
     docs: {
       options: {
         pretty: true,
-        data: extend(extend({}, jadeData), {env: 'prod'})
+        data: extend(extend({}, jadeData), {
+          env: 'prod'
+        })
       },
-      files: [{src: 'docs/jade/main.jade', dest: 'index.html'}]
+      files: [{
+        src: 'docs/jade/main.jade',
+        dest: 'index.html'
+      }]
     },
     docsdev: {
       options: {
         pretty: true,
-        data: extend(extend({}, jadeData), {env: 'dev'})
+        data: extend(extend({}, jadeData), {
+          env: 'dev'
+        })
       },
-      files: [{src: 'docs/jade/main.jade', dest: 'dev.html'}]
+      files: [{
+        src: 'docs/jade/main.jade',
+        dest: 'dev.html'
+      }]
     }
   });
 
@@ -186,7 +213,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.config('shell', {
     jsdoc: {
-      options: { 
+      options: {
         stdout: true,
         stderr: true,
         failOnError: true
@@ -196,13 +223,15 @@ module.exports = function(grunt) {
   });
 
   // loadjsdoc
-  grunt.config.set('jsdocdata', {namespaces: []});
-  grunt.registerTask('loadjsdoc', function() {
+  grunt.config.set('jsdocdata', {
+    namespaces: []
+  });
+  grunt.registerTask('loadjsdoc', function () {
     if (grunt.file.exists('./jsdoc.json')) {
       grunt.config.set('jsdocdata', require('./jsdoc.json'));
     }
-  });  
-  
+  });
+
 
   //metatasks
   grunt.registerTask('build', [
