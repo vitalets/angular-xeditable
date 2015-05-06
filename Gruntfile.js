@@ -38,7 +38,7 @@ module.exports = function(grunt) {
         banner: banner
       },
       files: [{
-        dest: 'dist/css/xeditable.css', src: ['src/css/xeditable.css']
+        dest: 'dist/css/xeditable.min.css', src: ['src/css/xeditable.css']
       }]
     }
   });
@@ -83,6 +83,10 @@ module.exports = function(grunt) {
   //copy
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.config('copy', {
+    css: {
+      src: 'src/css/xeditable.css',
+      dest: 'dist/css/xeditable.css'
+    },
     starter:  {
       expand: true,
       cwd: 'dist/',
@@ -186,7 +190,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.config('shell', {
     jsdoc: {
-      options: { 
+      options: {
         stdout: true,
         stderr: true,
         failOnError: true
@@ -201,8 +205,8 @@ module.exports = function(grunt) {
     if (grunt.file.exists('./jsdoc.json')) {
       grunt.config.set('jsdocdata', require('./jsdoc.json'));
     }
-  });  
-  
+  });
+
 
   //metatasks
   grunt.registerTask('build', [
