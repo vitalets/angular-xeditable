@@ -30,7 +30,7 @@ angular.module('xeditable').factory('editableFormController',
 
     var editables = shown.$editables;
     angular.forEach(editables, function(v){
-      var element = v.editorEl[0];
+      var element = v.formEl[0];
       if (isSelfOrDescendant(element, event.target))
         isBlur = false;
       

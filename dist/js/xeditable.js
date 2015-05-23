@@ -1,5 +1,5 @@
 /*!
-angular-xeditable - 4.0.1
+angular-xeditable - 4.0.2
 Edit-in-place for angular.js
 Build date: 2015-05-23 
 */
@@ -379,6 +379,7 @@ angular.module('xeditable').factory('editableController',
     self.attrs = $attrs;
     self.inputEl = null;
     self.editorEl = null;
+    self.formEl = null;
     self.single = true;
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
@@ -565,10 +566,11 @@ angular.module('xeditable').factory('editableController',
       //build editor
       self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
       if (self.single) {
-        self.editorEl.find('form').append(self.controlsEl);
+        self.formEl = self.editorEl.find('form');
       } else {
-        self.editorEl.append(self.controlsEl);
+        self.formEl = self.editorEl;
       }
+      self.formEl.append(self.controlsEl);
 
       // transfer `e-*|data-e-*|x-e-*` attributes
       for(var k in $attrs.$attr) {
@@ -603,14 +605,15 @@ angular.module('xeditable').factory('editableController',
 
       self.inputEl.addClass('editable-input');
       self.inputEl.attr('ng-model', '$data');
+      self.inputEl.attr('name', $attrs.name);
 
       // add directiveName class to editor, e.g. `editable-text`
-      self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
+      self.formEl.addClass(editableUtils.camelToDash(self.directiveName));
 
       if(self.single) {
-        self.editorEl.attr('editable-form', '$form');
+        self.formEl.attr('editable-form', '$form');
         // transfer `blur` to form
-        self.editorEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
+        self.formEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
       }
 
       //apply `postrender` method of theme
@@ -701,7 +704,7 @@ angular.module('xeditable').factory('editableController',
       }
 
       // click - mark element as clicked to exclude in document click handler
-      self.editorEl.bind('click', function(e) {
+      self.formEl.bind('click', function(e) {
         // ignore right/middle button click
         if (e.which && e.which !== 1) {
           return;
@@ -997,7 +1000,7 @@ angular.module('xeditable').factory('editableFormController',
 
     var editables = shown.$editables;
     angular.forEach(editables, function(v){
-      var element = v.editorEl[0];
+      var element = v.formEl[0];
       if (isSelfOrDescendant(element, event.target))
         isBlur = false;
       
@@ -2216,7 +2219,7 @@ angular.module('xeditable').factory('editableThemes', function() {
             }
           break;
           case 'editableCheckbox':
-              this.editorEl.addClass('checkbox');
+              this.formEl.addClass('checkbox');
         }
 
         //apply buttonsClass (bs3 specific!)
