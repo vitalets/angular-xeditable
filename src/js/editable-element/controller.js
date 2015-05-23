@@ -211,7 +211,11 @@ angular.module('xeditable').factory('editableController',
 
       //build editor
       self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
-      self.editorEl.append(self.controlsEl);
+      if (self.single) {
+        self.editorEl.find('form').append(self.controlsEl);
+      } else {
+        self.editorEl.append(self.controlsEl);
+      }
 
       // transfer `e-*|data-e-*|x-e-*` attributes
       for(var k in $attrs.$attr) {
