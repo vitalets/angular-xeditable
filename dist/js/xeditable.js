@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.9
+angular-xeditable - 4.0.1
 Edit-in-place for angular.js
-Build date: 2015-03-26 
+Build date: 2015-05-23 
 */
 /**
  * Angular-xeditable module 
@@ -564,7 +564,11 @@ angular.module('xeditable').factory('editableController',
 
       //build editor
       self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
-      self.editorEl.append(self.controlsEl);
+      if (self.single) {
+        self.editorEl.find('form').append(self.controlsEl);
+      } else {
+        self.editorEl.append(self.controlsEl);
+      }
 
       // transfer `e-*|data-e-*|x-e-*` attributes
       for(var k in $attrs.$attr) {
