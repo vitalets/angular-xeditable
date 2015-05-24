@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 4.0.2
+angular-xeditable - 4.0.3
 Edit-in-place for angular.js
-Build date: 2015-05-23 
+Build date: 2015-05-24 
 */
 /**
  * Angular-xeditable module 
@@ -506,8 +506,8 @@ angular.module('xeditable').factory('editableController',
        * @memberOf editable-element
        */
       if ($attrs.onbeforesave) {
-        self.onbeforesave = function() {
-          return self.catchError($parse($attrs.onbeforesave)($scope));
+        self.onbeforesave = function(event) {
+          return self.catchError($parse($attrs.onbeforesave)($scope, {$event: event}));
         };
       }
 
@@ -519,8 +519,8 @@ angular.module('xeditable').factory('editableController',
        * @memberOf editable-element
        */
       if ($attrs.onaftersave) {
-        self.onaftersave = function() {
-          return self.catchError($parse($attrs.onaftersave)($scope));
+        self.onaftersave = function(event) {
+          return self.catchError($parse($attrs.onaftersave)($scope, {$event: event}));
         };
       }
 
@@ -1222,7 +1222,7 @@ angular.module('xeditable').factory('editableFormController',
       });
     },
 
-    $submit: function() {
+    $submit: function(event) {
       if (this.$waiting) {
         return;
       } 
@@ -1233,7 +1233,7 @@ angular.module('xeditable').factory('editableFormController',
       //children onbeforesave
       var pc = editablePromiseCollection();
       angular.forEach(this.$editables, function(editable) {
-        pc.when(editable.onbeforesave());
+        pc.when(editable.onbeforesave(event));
       });
 
       /*
@@ -1272,7 +1272,7 @@ angular.module('xeditable').factory('editableFormController',
       var pc = editablePromiseCollection();
       pc.when(this.$onaftersave());
       angular.forEach(this.$editables, function(editable) {
-        pc.when(editable.onaftersave());
+        pc.when(editable.onaftersave(event));
       });
 
       /*
@@ -1458,7 +1458,7 @@ angular.module('xeditable').directive('editableForm',
               elem.bind('submit', function(event) {
                 event.preventDefault();
                 scope.$apply(function() {
-                  eForm.$submit();
+                  eForm.$submit(event);
                 });
               });
             }
