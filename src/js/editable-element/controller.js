@@ -153,8 +153,8 @@ angular.module('xeditable').factory('editableController',
        * @memberOf editable-element
        */
       if ($attrs.onbeforesave) {
-        self.onbeforesave = function() {
-          return self.catchError($parse($attrs.onbeforesave)($scope));
+        self.onbeforesave = function(event) {
+          return self.catchError($parse($attrs.onbeforesave)($scope, {$event: event}));
         };
       }
 
@@ -166,8 +166,8 @@ angular.module('xeditable').factory('editableController',
        * @memberOf editable-element
        */
       if ($attrs.onaftersave) {
-        self.onaftersave = function() {
-          return self.catchError($parse($attrs.onaftersave)($scope));
+        self.onaftersave = function(event) {
+          return self.catchError($parse($attrs.onaftersave)($scope, {$event: event}));
         };
       }
 
