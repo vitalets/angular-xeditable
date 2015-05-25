@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 4.0.3
+angular-xeditable - 4.0.6
 Edit-in-place for angular.js
-Build date: 2015-05-24 
+Build date: 2015-05-25 
 */
 /**
  * Angular-xeditable module 
@@ -954,7 +954,8 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
           if(!attrs.eForm || attrs.eClickable) {
             elem.addClass('editable-click');
             elem.bind(editableOptions.activationEvent, function(e) {
-              e.preventDefault();
+              // JSS commented out cause it prevents other forms from closing
+              //e.preventDefault();
               e.editable = eCtrl;
               scope.$apply(function(){
                 scope.$form.$show();
