@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.1.9
 Edit-in-place for angular.js
-Build date: 2015-03-26 
+Build date: 2015-05-26 
 */
 /**
  * Angular-xeditable module 
@@ -247,7 +247,7 @@ Input types: text|email|tel|number|url|search|color|date|datetime|datetime-local
   var types = 'text|password|email|tel|number|url|search|color|date|datetime|datetime-local|time|month|week|file'.split('|');
 
   //todo: datalist
-
+  
   // generate directives
   angular.forEach(types, function(type) {
     var directiveName = 'editable' + type.split('-').map(function (part) { return part.charAt(0).toUpperCase() + part.slice(1); }).join('');
@@ -598,7 +598,7 @@ angular.module('xeditable').factory('editableController',
       }
 
       self.inputEl.addClass('editable-input');
-      self.inputEl.attr('ng-model', '$parent.$data');
+      self.inputEl.attr('ng-model', '$data');
 
       // add directiveName class to editor, e.g. `editable-text`
       self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
@@ -625,8 +625,6 @@ angular.module('xeditable').factory('editableController',
         valueGetter($scope.$parent);
     };
 
-    var newScope = null;
-
     //show
     self.show = function() {
       // set value of scope.$data
@@ -642,11 +640,8 @@ angular.module('xeditable').factory('editableController',
       // insert into DOM
       $element.after(self.editorEl);
 
-      //create new scope
-      newScope = $scope.$new();
-
       // compile (needed to attach ng-* events from markup)
-      $compile(self.editorEl)(newScope);
+      $compile(self.editorEl)($scope);
 
       // attach listeners (`escape`, autosubmit, etc)
       self.addListeners();
@@ -660,7 +655,6 @@ angular.module('xeditable').factory('editableController',
 
     //hide
     self.hide = function() {
-      newScope.$destroy();
       
       self.editorEl.remove();
       $element.removeClass('editable-hide');

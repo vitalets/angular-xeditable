@@ -245,7 +245,7 @@ angular.module('xeditable').factory('editableController',
       }
 
       self.inputEl.addClass('editable-input');
-      self.inputEl.attr('ng-model', '$parent.$data');
+      self.inputEl.attr('ng-model', '$data');
 
       // add directiveName class to editor, e.g. `editable-text`
       self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
@@ -272,8 +272,6 @@ angular.module('xeditable').factory('editableController',
         valueGetter($scope.$parent);
     };
 
-    var newScope = null;
-
     //show
     self.show = function() {
       // set value of scope.$data
@@ -289,11 +287,8 @@ angular.module('xeditable').factory('editableController',
       // insert into DOM
       $element.after(self.editorEl);
 
-      //create new scope
-      newScope = $scope.$new();
-
       // compile (needed to attach ng-* events from markup)
-      $compile(self.editorEl)(newScope);
+      $compile(self.editorEl)($scope);
 
       // attach listeners (`escape`, autosubmit, etc)
       self.addListeners();
@@ -307,7 +302,6 @@ angular.module('xeditable').factory('editableController',
 
     //hide
     self.hide = function() {
-      newScope.$destroy();
       
       self.editorEl.remove();
       $element.removeClass('editable-hide');
