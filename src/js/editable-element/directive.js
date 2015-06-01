@@ -33,10 +33,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         // By default consider single element without any linked form.ß
         var hasForm = false;
      
-        var isSingle = false;
-        if(attrs.eSingle !== undefined) {
-          isSingle = true;
-        }
+        var isSingle = attrs.eSingle !== undefined;
 
         // element wrapped by form
         if(ctrl[1]) {
