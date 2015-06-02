@@ -33,12 +33,10 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         // By default consider single element without any linked form.ß
         var hasForm = false;
      
-        var isSingle = attrs.eSingle !== undefined;
-
         // element wrapped by form
         if(ctrl[1]) {
           eFormCtrl = ctrl[1];
-          hasForm = !isSingle;
+          hasForm = attrs.eSingle === undefined;
         } else if(attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
           var getter = $parse(attrs.eForm)(scope);
           if(getter) { // form exists in scope (above), e.g. editable column
