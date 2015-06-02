@@ -1,0 +1,14 @@
+
+#########################################
+PUT THIS IN THE REST OF THE DOCUMENTATION
+#########################################
+
+Just use one of this snippets to add an Awesomplete widget to your template:
+
+<!-- Suggestions from the list argument -->
+<span editable-awesomplete="data.name" e-name="name"
+    e-required>{{ data.name }}</span>
+ 
+<!-- Suggestions from the data-list attribute -->
+<span editable-awesomplete="data.name" e-data-list="JavaScript, Python"
+    e-name="name" e-required>{{ data.name }}</span>
