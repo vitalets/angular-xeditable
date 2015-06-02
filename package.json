@@ -1,7 +1,7 @@
 {
   "name": "angular-xeditable",
   "description": "Edit-in-place for angular.js",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "homepage": "https://vitalets.github.io/angular-xeditable",
   "author": {
     "name": "Vitaliy Potapov",
@@ -31,5 +31,5 @@
     "marked": "~0.2.9",
     "grunt-jsdoc": "~0.4.1",
     "grunt-shell": "~0.5.0"
-  }
+  }  
 }

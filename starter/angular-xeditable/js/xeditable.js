@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.9
+angular-xeditable - 0.1.10
 Edit-in-place for angular.js
-Build date: 2015-03-26 
+Build date: 2016-02-16 
 */
 /**
  * Angular-xeditable module 
@@ -228,9 +228,20 @@ angular.module('xeditable').directive('editableCombodate', ['editableDirectiveFa
       inputTpl: '<input type="text">',
       render: function() {
         this.parent.render.call(this);
-        var combodate = editableCombodate.getInstance(this.inputEl, {value: new Date(this.scope.$data)});
 
+        var options = {
+          value: new Date(this.scope.$data)
+        };
         var self = this;
+        angular.forEach(["format", "template", "minYear", "maxYear", "yearDescending", "minuteStep", "secondStep", "firstItem", "errorClass", "customClass", "roundTime", "smartDays"], function(name) {
+
+          var attrName = "e" + name.charAt(0).toUpperCase() + name.slice(1);
+          if (attrName in self.attrs) {
+            options[name] = self.attrs[attrName];
+          }
+        });
+
+        var combodate = editableCombodate.getInstance(this.inputEl, options);
         combodate.$widget.find('select').bind('change', function(e) {
           self.scope.$data = (new Date(combodate.getValue())).toISOString();
         });
@@ -238,6 +249,7 @@ angular.module('xeditable').directive('editableCombodate', ['editableDirectiveFa
     });
   }
 ]);
+
 /*
 Input types: text|email|tel|number|url|search|color|date|datetime|time|month|week
 */
@@ -857,7 +869,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         // element wrapped by form
         if(ctrl[1]) {
           eFormCtrl = ctrl[1];
-          hasForm = true;
+          hasForm = attrs.eSingle === undefined;
         } else if(attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
           var getter = $parse(attrs.eForm)(scope);
           if(getter) { // form exists in scope (above), e.g. editable column
@@ -1040,6 +1052,11 @@ angular.module('xeditable').factory('editableFormController',
     }
   });
  
+  $rootScope.$on('closeEdit', function() {
+    for(var i=0; i < shown.length; i++) {
+      shown[i].$hide();
+    }
+  }); 
 
   var base = {
     $addEditable: function(editable) {
@@ -1058,6 +1075,7 @@ angular.module('xeditable').factory('editableFormController',
       if (this.$visible) {
         editable.catchError(editable.show());
       }
+      editable.catchError(editable.setWaiting(this.$waiting));
     },
 
     $removeEditable: function(editable) {
