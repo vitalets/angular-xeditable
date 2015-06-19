@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 4.0.6
+angular-xeditable - 4.0.7
 Edit-in-place for angular.js
-Build date: 2015-05-25 
+Build date: 2015-06-18 
 */
 /**
  * Angular-xeditable module 
@@ -244,7 +244,7 @@ Input types: text|email|tel|number|url|search|color|date|datetime|time|month|wee
 
 (function() {
 
-  var types = 'text|password|email|tel|number|url|search|color|date|datetime|time|month|week|file'.split('|');
+  var types = 'text|password|email|tel|number|url|search|color|date|datetime-local|time|month|week|file'.split('|');
 
   //todo: datalist
   
