@@ -4,7 +4,7 @@ Input types: text|email|tel|number|url|search|color|date|datetime|time|month|wee
 
 (function() {
 
-  var types = 'text|password|email|tel|number|url|search|color|date|datetime-local|time|month|week|file'.split('|');
+  var types = 'text|password|email|tel|number|url|search|color|date|datetime|time|month|week|file'.split('|');
 
   //todo: datalist
   
@@ -15,7 +15,7 @@ Input types: text|email|tel|number|url|search|color|date|datetime|time|month|wee
       function(editableDirectiveFactory) {
         return editableDirectiveFactory({
           directiveName: directiveName,
-          inputTpl: '<input type="'+type+'">'
+          inputTpl: '<input type="' + (type === 'datetime' ? 'datetime-local' : type) + '" />'
         });
     }]);
   });
