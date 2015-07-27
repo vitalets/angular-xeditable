@@ -43,4 +43,4 @@ http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 * internally move to [lazy-model](https://github.com/vitalets/lazy-model)
 
 ## License
-MIT
+[MIT](LICENSE)
