@@ -91,6 +91,9 @@ angular.module('xeditable').directive('editableForm',
              */
             if(attrs.shown && $parse(attrs.shown)(scope)) {
               eForm.$show();
+              if (attrs.alwaysshown && $parse(attrs.alwaysshown)(scope)) {
+                eForm.$alwaysShown = true;
+              }
             }
 
             /**
