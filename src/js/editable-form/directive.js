@@ -91,9 +91,17 @@ angular.module('xeditable').directive('editableForm',
              */
             if(attrs.shown && $parse(attrs.shown)(scope)) {
               eForm.$show();
-              if (attrs.alwaysshown && $parse(attrs.alwaysshown)(scope)) {
-                eForm.$alwaysShown = true;
-              }
+            }
+
+            /**
+             * Whether form always rendered in shown state.
+             *
+             * @var {bool|attribute} alwaysshown
+             * @memberOf editable-form
+             */
+            if (attrs.alwaysshown && $parse(attrs.alwaysshown)(scope)) {
+              eForm.$show();
+              eForm.$alwaysShown = true;
             }
 
             /**
