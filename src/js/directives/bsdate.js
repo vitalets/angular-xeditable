@@ -44,6 +44,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 				inputDatePicker.attr('close-on-date-selection', this.attrs.eCloseOnDateSelection || true);
 				inputDatePicker.attr('date-picker-append-to-body', this.attrs.eDatePickerAppendToBody || false);
 				inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
+				inputDatePicker.attr('on-open-focus', this.attrs.eOnOpenFocus || true);
 
 				buttonDatePicker.attr('ng-click',this.attrs.eNgClick);
 
