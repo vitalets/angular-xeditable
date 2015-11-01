@@ -16,7 +16,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       inputTpl:     '',
       errorTpl:     '<div class="editable-error" ng-show="$error" ng-bind="$error"></div>',
       buttonsTpl:   '<span class="editable-buttons"></span>',
-      submitTpl:    '<button type="submit">save</button>',
+      submitTpl:    '<button type="button" ng-click="$form.$submit()">save</button>',
       cancelTpl:    '<button type="button" ng-click="$form.$cancel()">cancel</button>'
     },
 
@@ -28,7 +28,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
-      submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
+      submitTpl:   '<button type="button" ng-click="$form.$submit()" class="btn btn-primary"><span></span></button>',
       cancelTpl:   '<button type="button" class="btn" ng-click="$form.$cancel()">'+
                       '<span></span>'+
                    '</button>'
@@ -43,7 +43,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       inputTpl:    '',
       errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
-      submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
+      submitTpl:   '<button type="button" ng-click="$form.$submit()" class="btn btn-primary"><span></span></button>',
       cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
                      '<span></span>'+
                    '</button>',

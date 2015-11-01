@@ -681,18 +681,18 @@ Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-datepi
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('BsdateCtrl', function($scope) {
-  $scope.user = {
-    dob: new Date(1984, 4, 15)
-  };
+	$scope.user = {
+		dob: new Date(1984, 4, 15)
+	};
 
-  $scope.opened = {};
+	$scope.opened = {};
 
-  $scope.open = function($event, elementOpened) {
-    $event.preventDefault();
-    $event.stopPropagation();
+	$scope.open = function($event, elementOpened) {
+		$event.preventDefault();
+		$event.stopPropagation();
 
-    $scope.opened[elementOpened] = !$scope.opened[elementOpened];
-  };
+		$scope.opened[elementOpened] = !$scope.opened[elementOpened];
+	};
 $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;BsdateCtrl&quot;&gt;
@@ -702,18 +702,18 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</s
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('BsdateCtrl', function($scope) {
-  $scope.user = {
-    dob: new Date(1984, 4, 15)
-  };
+	$scope.user = {
+		dob: new Date(1984, 4, 15)
+	};
 
-  $scope.opened = {};
+	$scope.opened = {};
 
-  $scope.open = function($event, elementOpened) {
-    $event.preventDefault();
-    $event.stopPropagation();
+	$scope.open = function($event, elementOpened) {
+		$event.preventDefault();
+		$event.stopPropagation();
 
-    $scope.opened[elementOpened] = !$scope.opened[elementOpened];
-  };
+		$scope.opened[elementOpened] = !$scope.opened[elementOpened];
+	};
 });</pre>
                     </section>
                     <section id="bstime">
@@ -1246,7 +1246,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
 });</pre>
                     </section>
                     <section id="editable-form">
-                      <h1>Editable form (with single item example)</h1>
+                      <h1>Editable form</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/81/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableFormCtrl">
@@ -1272,13 +1272,6 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
         {{ showGroup() }}
       </span>
     </div>
-
-    <div>
-      <div>Below is an example of how to edit a single item inside of a form</div>
-      <!-- editable single Item user (text with validation) -->
-      <span class="title">User name: </span>
-      <a href="#" editable-text="user.name" e-name="name" e-single onbeforesave="checkName($data)" e-required>{{ user.name || 'empty' }}</a>
-    </div> 
 
     <div class="buttons">
       <!-- button to show form -->
@@ -1339,10 +1332,6 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
 <li><code>not string</code>: form will be closed</li>
 </ul>
 <p>Commonly you should define <code>onbeforesave</code> for child elements to perform validation and <code>onaftersave</code> for whole form to send data on server.</p>
-<p>Additionally, a user will need to have a single editable element when the entire application is wrapped in a global form tag.  To enable this single item to be edited add <code>e-single</code> to the directive.
-<ul>
-<li> <code>&lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-single e-required&gt;AngularElementHere&lt;/a&gt;</code></li>
-</ul>
 <p>Please have a look at examples.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
@@ -1421,13 +1410,6 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
         {{ showGroup() }}
       &lt;/span&gt;
     &lt;/div&gt;
-
-    &lt;div&gt;
-      &lt;div&gt;Below is an example of how to edit a single item inside of a form&lt;/div&gt;
-      &lt;!-- editable single Item user (text with validation) --&gt;
-      &lt;span class=&quot;title&quot;&gt;User name: &lt;/span&gt;
-      &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-single onbeforesave=&quot;checkName($data)&quot; e-required&gt;{{ user.name || &#39;empty&#39; }}&lt;/a&gt;
-    &lt;/div&gt; 
 
     &lt;div class=&quot;buttons&quot;&gt;
       &lt;!-- button to show form --&gt;
