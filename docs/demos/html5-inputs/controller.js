@@ -10,6 +10,7 @@ app.controller('Html5InputsCtrl', function($scope) {
     date: null,
     time: '12:30',
     datetime: null,
+    'datetime-local': null,
     month: null,
     week: null
   };  
