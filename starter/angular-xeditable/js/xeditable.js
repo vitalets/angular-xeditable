@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.9
+angular-xeditable - 0.1.10
 Edit-in-place for angular.js
-Build date: 2015-03-26 
+Build date: 2016-01-12 
 */
 /**
  * Angular-xeditable module 
@@ -101,10 +101,10 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 				var buttonDatePicker = angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
 				var buttonWrapper = angular.element('<span class="input-group-btn"></span>');
 
-				inputDatePicker.attr('datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy/MM/dd' );
+				inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy/MM/dd' );
 				inputDatePicker.attr('is-open', this.attrs.eIsOpen);
 				inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
-				inputDatePicker.attr('datepicker-popup', this.attrs.eDatepickerPopup);
+				inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopup);
 				inputDatePicker.attr('datepicker-mode', this.attrs.eDatepickerMode || 'day');
 				inputDatePicker.attr('min-date', this.attrs.eMinDate);
 				inputDatePicker.attr('max-date', this.attrs.eMaxDate);
@@ -148,7 +148,7 @@ angular.module('xeditable').directive('editableBstime', ['editableDirectiveFacto
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableBstime',
-      inputTpl: '<timepicker></timepicker>',
+      inputTpl: '<uib-timepicker></uib-timepicker>',
       render: function() {
         this.parent.render.call(this);
 
@@ -857,7 +857,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         // element wrapped by form
         if(ctrl[1]) {
           eFormCtrl = ctrl[1];
-          hasForm = true;
+          hasForm = attrs.eSingle === undefined;
         } else if(attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
           var getter = $parse(attrs.eForm)(scope);
           if(getter) { // form exists in scope (above), e.g. editable column
@@ -1058,6 +1058,7 @@ angular.module('xeditable').factory('editableFormController',
       if (this.$visible) {
         editable.catchError(editable.show());
       }
+      editable.catchError(editable.setWaiting(this.$waiting));
     },
 
     $removeEditable: function(editable) {
