@@ -15,7 +15,7 @@ Input types: text|email|tel|number|url|search|color|date|datetime|time|month|wee
       function(editableDirectiveFactory) {
         return editableDirectiveFactory({
           directiveName: directiveName,
-          inputTpl: '<input type="'+type+'">'
+          inputTpl: '<input type="' + (type === 'datetime' ? 'datetime-local' : type) + '" />'
         });
     }]);
   });

@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.9
+angular-xeditable - 4.0.8
 Edit-in-place for angular.js
-Build date: 2015-03-26 
+Build date: 2015-06-18 
 */
 /**
  * Angular-xeditable module 
@@ -255,7 +255,7 @@ Input types: text|email|tel|number|url|search|color|date|datetime|time|month|wee
       function(editableDirectiveFactory) {
         return editableDirectiveFactory({
           directiveName: directiveName,
-          inputTpl: '<input type="'+type+'">'
+          inputTpl: '<input type="' + (type === 'datetime' ? 'datetime-local' : type) + '" />'
         });
     }]);
   });
@@ -379,6 +379,7 @@ angular.module('xeditable').factory('editableController',
     self.attrs = $attrs;
     self.inputEl = null;
     self.editorEl = null;
+    self.formEl = null;
     self.single = true;
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
@@ -505,8 +506,8 @@ angular.module('xeditable').factory('editableController',
        * @memberOf editable-element
        */
       if ($attrs.onbeforesave) {
-        self.onbeforesave = function() {
-          return self.catchError($parse($attrs.onbeforesave)($scope));
+        self.onbeforesave = function(event) {
+          return self.catchError($parse($attrs.onbeforesave)($scope, {$event: event}));
         };
       }
 
@@ -518,8 +519,8 @@ angular.module('xeditable').factory('editableController',
        * @memberOf editable-element
        */
       if ($attrs.onaftersave) {
-        self.onaftersave = function() {
-          return self.catchError($parse($attrs.onaftersave)($scope));
+        self.onaftersave = function(event) {
+          return self.catchError($parse($attrs.onaftersave)($scope, {$event: event}));
         };
       }
 
@@ -564,7 +565,12 @@ angular.module('xeditable').factory('editableController',
 
       //build editor
       self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
-      self.editorEl.append(self.controlsEl);
+      if (self.single) {
+        self.formEl = self.editorEl.find('form');
+      } else {
+        self.formEl = self.editorEl;
+      }
+      self.formEl.append(self.controlsEl);
 
       // transfer `e-*|data-e-*|x-e-*` attributes
       for(var k in $attrs.$attr) {
@@ -599,14 +605,15 @@ angular.module('xeditable').factory('editableController',
 
       self.inputEl.addClass('editable-input');
       self.inputEl.attr('ng-model', '$data');
+      self.inputEl.attr('name', $attrs.name);
 
       // add directiveName class to editor, e.g. `editable-text`
-      self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
+      self.formEl.addClass(editableUtils.camelToDash(self.directiveName));
 
       if(self.single) {
-        self.editorEl.attr('editable-form', '$form');
+        self.formEl.attr('editable-form', '$form');
         // transfer `blur` to form
-        self.editorEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
+        self.formEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
       }
 
       //apply `postrender` method of theme
@@ -697,7 +704,7 @@ angular.module('xeditable').factory('editableController',
       }
 
       // click - mark element as clicked to exclude in document click handler
-      self.editorEl.bind('click', function(e) {
+      self.formEl.bind('click', function(e) {
         // ignore right/middle button click
         if (e.which && e.which !== 1) {
           return;
@@ -947,7 +954,8 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
           if(!attrs.eForm || attrs.eClickable) {
             elem.addClass('editable-click');
             elem.bind(editableOptions.activationEvent, function(e) {
-              e.preventDefault();
+              // JSS commented out cause it prevents other forms from closing
+              //e.preventDefault();
               e.editable = eCtrl;
               scope.$apply(function(){
                 scope.$form.$show();
@@ -993,7 +1001,7 @@ angular.module('xeditable').factory('editableFormController',
 
     var editables = shown.$editables;
     angular.forEach(editables, function(v){
-      var element = v.editorEl[0];
+      var element = v.formEl[0];
       if (isSelfOrDescendant(element, event.target))
         isBlur = false;
       
@@ -1215,7 +1223,7 @@ angular.module('xeditable').factory('editableFormController',
       });
     },
 
-    $submit: function() {
+    $submit: function(event) {
       if (this.$waiting) {
         return;
       } 
@@ -1226,7 +1234,7 @@ angular.module('xeditable').factory('editableFormController',
       //children onbeforesave
       var pc = editablePromiseCollection();
       angular.forEach(this.$editables, function(editable) {
-        pc.when(editable.onbeforesave());
+        pc.when(editable.onbeforesave(event));
       });
 
       /*
@@ -1265,7 +1273,7 @@ angular.module('xeditable').factory('editableFormController',
       var pc = editablePromiseCollection();
       pc.when(this.$onaftersave());
       angular.forEach(this.$editables, function(editable) {
-        pc.when(editable.onaftersave());
+        pc.when(editable.onaftersave(event));
       });
 
       /*
@@ -1451,7 +1459,7 @@ angular.module('xeditable').directive('editableForm',
               elem.bind('submit', function(event) {
                 event.preventDefault();
                 scope.$apply(function() {
-                  eForm.$submit();
+                  eForm.$submit(event);
                 });
               });
             }
@@ -2212,7 +2220,7 @@ angular.module('xeditable').factory('editableThemes', function() {
             }
           break;
           case 'editableCheckbox':
-              this.editorEl.addClass('checkbox');
+              this.formEl.addClass('checkbox');
         }
 
         //apply buttonsClass (bs3 specific!)

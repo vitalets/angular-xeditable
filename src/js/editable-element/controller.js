@@ -26,6 +26,7 @@ angular.module('xeditable').factory('editableController',
     self.attrs = $attrs;
     self.inputEl = null;
     self.editorEl = null;
+    self.formEl = null;
     self.single = true;
     self.error = '';
     self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
@@ -152,8 +153,8 @@ angular.module('xeditable').factory('editableController',
        * @memberOf editable-element
        */
       if ($attrs.onbeforesave) {
-        self.onbeforesave = function() {
-          return self.catchError($parse($attrs.onbeforesave)($scope));
+        self.onbeforesave = function(event) {
+          return self.catchError($parse($attrs.onbeforesave)($scope, {$event: event}));
         };
       }
 
@@ -165,8 +166,8 @@ angular.module('xeditable').factory('editableController',
        * @memberOf editable-element
        */
       if ($attrs.onaftersave) {
-        self.onaftersave = function() {
-          return self.catchError($parse($attrs.onaftersave)($scope));
+        self.onaftersave = function(event) {
+          return self.catchError($parse($attrs.onaftersave)($scope, {$event: event}));
         };
       }
 
@@ -211,7 +212,12 @@ angular.module('xeditable').factory('editableController',
 
       //build editor
       self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
-      self.editorEl.append(self.controlsEl);
+      if (self.single) {
+        self.formEl = self.editorEl.find('form');
+      } else {
+        self.formEl = self.editorEl;
+      }
+      self.formEl.append(self.controlsEl);
 
       // transfer `e-*|data-e-*|x-e-*` attributes
       for(var k in $attrs.$attr) {
@@ -246,14 +252,15 @@ angular.module('xeditable').factory('editableController',
 
       self.inputEl.addClass('editable-input');
       self.inputEl.attr('ng-model', '$data');
+      self.inputEl.attr('name', $attrs.name);
 
       // add directiveName class to editor, e.g. `editable-text`
-      self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
+      self.formEl.addClass(editableUtils.camelToDash(self.directiveName));
 
       if(self.single) {
-        self.editorEl.attr('editable-form', '$form');
+        self.formEl.attr('editable-form', '$form');
         // transfer `blur` to form
-        self.editorEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
+        self.formEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
       }
 
       //apply `postrender` method of theme
@@ -344,7 +351,7 @@ angular.module('xeditable').factory('editableController',
       }
 
       // click - mark element as clicked to exclude in document click handler
-      self.editorEl.bind('click', function(e) {
+      self.formEl.bind('click', function(e) {
         // ignore right/middle button click
         if (e.which && e.which !== 1) {
           return;

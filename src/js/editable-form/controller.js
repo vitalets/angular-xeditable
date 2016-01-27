@@ -30,7 +30,7 @@ angular.module('xeditable').factory('editableFormController',
 
     var editables = shown.$editables;
     angular.forEach(editables, function(v){
-      var element = v.editorEl[0];
+      var element = v.formEl[0];
       if (isSelfOrDescendant(element, event.target))
         isBlur = false;
       
@@ -253,7 +253,7 @@ angular.module('xeditable').factory('editableFormController',
       });
     },
 
-    $submit: function() {
+    $submit: function(event) {
       if (this.$waiting) {
         return;
       } 
@@ -264,7 +264,7 @@ angular.module('xeditable').factory('editableFormController',
       //children onbeforesave
       var pc = editablePromiseCollection();
       angular.forEach(this.$editables, function(editable) {
-        pc.when(editable.onbeforesave());
+        pc.when(editable.onbeforesave(event));
       });
 
       /*
@@ -303,7 +303,7 @@ angular.module('xeditable').factory('editableFormController',
       var pc = editablePromiseCollection();
       pc.when(this.$onaftersave());
       angular.forEach(this.$editables, function(editable) {
-        pc.when(editable.onaftersave());
+        pc.when(editable.onaftersave(event));
       });
 
       /*
