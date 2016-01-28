@@ -41,7 +41,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">Github</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.9.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.9 ~ 26kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.9.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.9 ~ 27kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -125,6 +125,11 @@
                 <ul class="nav">
                   <li><a href="#onbeforesave">Onbeforesave</a></li>
                   <li><a href="#onaftersave">Onaftersave</a></li>
+                </ul>
+              </li>
+              <li><a href="#onkeyup">Validation</a>
+                <ul class="nav">
+                  <li><a href="#onkeyup">Onkeyup</a></li>
                 </ul>
               </li>
               <li><a href="#editable-form">Forms</a>
@@ -1242,6 +1247,52 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
 
   $scope.updateUser = function() {
     return $http.post('/updateUser', $scope.user);
+  };
+});</pre>
+                    </section>
+                    <section id="onkeyup">
+                      <h1>Validation via onkeyup</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3><a href="http://jsfiddle.net/s5wothmw/2/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <div class="well line-example"><div ng-controller="OnkeyUpCtrl">
+  <a href="#" editable-text="user.name" onkeyup="checkUser($data)">
+    {{ user.name || 'empty' }}
+  </a>
+</div></div>
+                      <pre>{{ debug["onkeyup"] | json }}</pre>
+                      <p><p>One way to do validation during typing is to define a <code>onkeyup</code> attribute pointing to some method of scope.
+Useful when you need to show warnings or errors during the process of typing into the input form.
+New value can be passed as <code>$data</code> parameter (e.g. <code>&lt;a ... onkeyup=&quot;checkUser($data)&quot;&gt;</code>).</p>
+<p>This attribute does not affect the save mechanism, without the onbeforesave attribute, you will still be able to update the local model, even if errors are shown in the error dialog.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('OnkeyUpCtrl', function($scope, $http) {
+  $scope.user = {
+    name: 'awesome user'
+  };
+
+  $scope.checkUser = function(data) {
+  	if(data.length === 0){
+  		return 'The user field is empty';
+  	}
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["onkeyup"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;OnkeyUpCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onkeyup=&quot;checkUser($data)&quot;&gt;
+    {{ user.name || 'empty' }}
+  &lt;/a&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('OnkeyUpCtrl', function($scope, $http) {
+  $scope.user = {
+    name: 'awesome user'
+  };
+
+  $scope.checkUser = function(data) {
+  	if(data.length === 0){
+  		return 'The user field is empty';
+  	}
   };
 });</pre>
                     </section>
@@ -2438,6 +2489,13 @@ then input will appear as <code>&lt;input style=&quot;width: 100px&quot;&gt;</co
                           <td><code>onhide</code></td>
                           <td>method</td>
                           <td><p>Called when control is hidden after both save or cancel.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>onkeyup</code></td>
+                          <td>method</td>
+                          <td><p>Called after every key press which is not escape or enter.
+See <a href="#onkeyup">demo</a>.</p>
 </td>
                         </tr>
                         <tr>

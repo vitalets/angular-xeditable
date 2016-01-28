@@ -30,6 +30,10 @@ module.exports = [
         {id: 'onaftersave', text: 'Submit via onaftersave', fiddle: 'http://jsfiddle.net/NfPcH/38/', menutext: 'Onaftersave'}
     ]},
 
+    {id: 'onkeyup', text: 'Validation', type: 'demos', items: [
+        {id: 'onkeyup', text: 'Validation via onkeyup', fiddle:'http://jsfiddle.net/s5wothmw/2/', menutext: 'Onkeyup'}
+    ]},
+
     {id: 'editable-form', text: 'Forms', type: 'demos', items: [
         {id: 'editable-form', text: 'Editable form', nodebug: true, fiddle: 'http://jsfiddle.net/NfPcH/81/'},
     ]},

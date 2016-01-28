@@ -170,6 +170,18 @@ angular.module('xeditable').factory('editableController',
         };
       }
 
+      /**
+       * Called after every key press which is not escape or enter.
+       * See [demo](#onkeyup).
+       * @var {method|attribute} onkeyup
+       * @memberOf editable-element
+       */
+      if ($attrs.onkeyup) {
+        self.onkeyup = function() {
+          return self.catchError($parse($attrs.onkeyup)($scope));
+        };
+      }
+
       // watch change of model to update editable element
       // now only add/remove `editable-empty` class.
       // Initially this method called with newVal = undefined, oldVal = undefined
@@ -334,7 +346,16 @@ angular.module('xeditable').factory('editableController',
               self.scope.$apply(function() {
                 self.scope.$form.$cancel();
               });
-            break;
+              break;
+            default:
+              // if the onkeyup property is specified then run the onkeyup method.  
+              if($attrs.onkeyup){
+                self.scope.$apply(function () {
+                  self.onkeyup();
+                });
+                
+              }
+
           }
       });
 
@@ -407,9 +428,13 @@ angular.module('xeditable').factory('editableController',
       }
     };
 
+    self.clearError = function(){
+      this.setError(null, '');
+    };
+
     /*
     Checks that result is string or promise returned string and shows it as error message
-    Applied to onshow, onbeforesave, onaftersave
+    Applied to onshow, onbeforesave, onaftersave, onkeyup
     */
     self.catchError = function(result, noPromise) {
       if (angular.isObject(result) && noPromise !== true) {
@@ -430,6 +455,9 @@ angular.module('xeditable').factory('editableController',
         result = result.data;
       } else if (angular.isString(result)) {
         this.setError(result);
+      } else {
+        //clean up the errors as there is no error.
+        this.clearError();
       }
       return result;
     };
@@ -461,6 +489,7 @@ angular.module('xeditable').factory('editableController',
     self.oncancel = angular.noop;
     self.onbeforesave = angular.noop;
     self.onaftersave = angular.noop;
+    self.onkeyup = angular.noop;
   }
 
   return EditableController;
