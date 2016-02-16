@@ -73,7 +73,7 @@ module.exports = function(grunt) {
   grunt.config('uglify', {
     options: {
       banner: banner
-    },
+   },
     dist: {
       src: ['<%= concat.dist.dest %>'],
       dest: 'dist/js/xeditable.min.js'
@@ -128,14 +128,16 @@ module.exports = function(grunt) {
     return text;
   };
 
+
+
   var jadeData = {
     fs: require('fs'),
     md: marked,
     version: '<%= pkg.version %>',
-    size: Math.floor(fs.statSync('dist/js/xeditable.min.js').size / 1024),
     structure: require('./docs/js/structure.js'),
     jsdoc: '<%= jsdocdata %>'
   };
+
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.config('jade', {
     docs: {
