@@ -2218,6 +2218,7 @@ angular.module('xeditable').factory('editableThemes', function() {
           case 'editableTime':
           case 'editableMonth':
           case 'editableWeek':
+          default:
             this.inputEl.addClass('form-control');
             if(this.theme.inputClass) {
               // don`t apply `input-sm` and `input-lg` to select multiple
