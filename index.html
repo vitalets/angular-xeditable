@@ -400,7 +400,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
   <div>Time: <a href="#" editable-time="user.time">{{ user.time || 'empty' }}</a></div>  
   <div>Datetime: <a href="#" editable-datetime="user.datetime">{{ user.datetime || 'empty' }}</a></div>  
   <div>Month: <a href="#" editable-month="user.month">{{ user.month || 'empty' }}</a></div>  
-  <div>Week: <a href="#" editable-week="user.week">{{ user.week || 'empty' }}</a></div>  
+  <div>Week: <a href="#" editable-week="user.week">{{ user.week || 'empty' }}</a></div>
+  <div>Password: <a href="#" editable-password="user.password">{{ user.password || 'empty' }}</a></div>
 </div></div>
                       <pre>{{ debug["html5-inputs"] | json }}</pre>
                       <p><p>Following HTML5 types are supported via <code>editable-xxx</code> directive:</p>
@@ -417,6 +418,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
 <li>time</li>
 <li>month</li>
 <li>week</li>
+<li>password</li>
 </ul>
 <p>Please <a href="http://caniuse.com/">check browser support</a> before using particular type in your project.</p>
 </p>
@@ -434,7 +436,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
     time: '12:30',
     datetime: null,
     month: null,
-    week: null
+    week: null,
+    password: 'password'
   };  
 $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); });</script>
                       <h3>html</h3>
@@ -450,7 +453,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
   &lt;div&gt;Time: &lt;a href=&quot;#&quot; editable-time=&quot;user.time&quot;&gt;{{ user.time || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
   &lt;div&gt;Datetime: &lt;a href=&quot;#&quot; editable-datetime=&quot;user.datetime&quot;&gt;{{ user.datetime || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
   &lt;div&gt;Month: &lt;a href=&quot;#&quot; editable-month=&quot;user.month&quot;&gt;{{ user.month || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Week: &lt;a href=&quot;#&quot; editable-week=&quot;user.week&quot;&gt;{{ user.week || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Week: &lt;a href=&quot;#&quot; editable-week=&quot;user.week&quot;&gt;{{ user.week || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Password: &lt;a href=&quot;#&quot; editable-password=&quot;user.password&quot;&gt;{{ user.password || 'empty' }}&lt;/a&gt;&lt;/div&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('Html5InputsCtrl', function($scope) {
@@ -466,7 +470,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
     time: '12:30',
     datetime: null,
     month: null,
-    week: null
+    week: null,
+    password: 'password'
   };  
 });</pre>
                     </section>
