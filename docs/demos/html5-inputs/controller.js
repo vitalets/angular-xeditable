@@ -11,6 +11,7 @@ app.controller('Html5InputsCtrl', function($scope) {
     time: '12:30',
     datetime: null,
     month: null,
-    week: null
+    week: null,
+    password: 'password'
   };  
 });
