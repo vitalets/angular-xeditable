@@ -213,6 +213,14 @@ angular.module('xeditable').factory('editableController',
       self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
       self.editorEl.append(self.controlsEl);
 
+
+      if($attrs.editablePlaceholder) {
+        option = '<option value="" disabled selected style="display: none;">';
+        option += $attrs.editablePlaceholder;
+        option += '</option>';
+        self.inputEl.append(option);
+      }
+
       // transfer `e-*|data-e-*|x-e-*` attributes
       for(var k in $attrs.$attr) {
         if(k.length <= 1) {
