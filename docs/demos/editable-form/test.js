@@ -98,8 +98,8 @@ describe('editable-form', function() {
 
     //set correct values
     using(s+'form > div:eq(0)').input('$data').enter('awesome');
-    using(s+'form > div:eq(1)').select('$data').option('3'); //status4
-    using(s+'form > div:eq(2)').select('$data').option('0'); //user
+    using(s+'form > div:eq(1)').select('$data').option('number:3'); //status4
+    using(s+'form > div:eq(2)').select('$data').option('number:1'); //user
 
     //click submit
     element(s+'.buttons > span button[type="submit"]').click();
@@ -121,7 +121,7 @@ describe('editable-form', function() {
     expect(element(s+'form > div > span[editable-text]:visible').count()).toBe(1);
     expect(element(s+'form > div > span[editable-select]:visible').count()).toBe(2);
     expect(element(s+'form > div > span[editable-text]:visible').text()).toMatch('awesome');
-    expect(element(s+'form > div > span[editable-select]:visible:eq(0)').text()).toMatch('status4');
+    expect(element(s+'form > div > span[editable-select]:visible:eq(0)').text()).toMatch('status3');
     expect(element(s+'form > div > span[editable-select]:visible:eq(1)').text()).toMatch('user');
 
     expect(element(s+'.buttons > button:visible').count()).toBe(1);

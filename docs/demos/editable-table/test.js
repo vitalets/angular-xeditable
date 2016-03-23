@@ -68,8 +68,8 @@ describe('editable-table', function() {
 
     //set correct values
     using(s+'table tr:eq(2) td:eq(0)').input('$data').enter('awesome'); //user2: name = awesome
-    using(s+'table tr:eq(1) td:eq(1)').select('$data').option('3'); //user1: status = status4
-    using(s+'table tr:eq(1) td:eq(2)').select('$data').option('0'); //user1: group = user
+    using(s+'table tr:eq(1) td:eq(1)').select('$data').option('number:3'); //user1: status = status4
+    using(s+'table tr:eq(1) td:eq(2)').select('$data').option('number:1'); //user1: group = user
 
     //add 2 new rows
     expect(element(s+'table tr').count()).toBe(4);
@@ -95,7 +95,7 @@ describe('editable-table', function() {
 
     //check updated values
     expect(element(s+'table tr:eq(1) td:eq(0) span[editable-text]').text()).toMatch('user1');
-    expect(element(s+'table tr:eq(1) td:eq(1) span[editable-select]').text()).toMatch('status4');
+    expect(element(s+'table tr:eq(1) td:eq(1) span[editable-select]').text()).toMatch('status3');
     expect(element(s+'table tr:eq(1) td:eq(2) span[editable-select]').text()).toMatch('user');
     expect(element(s+'table tr:eq(2) td:eq(0) span[editable-text]').text()).not().toMatch('user2');
     expect(element(s+'table tr:eq(3) td:eq(0) span[editable-text]').text()).toMatch('empty');    
@@ -113,8 +113,8 @@ describe('editable-table', function() {
 
     //set correct values
     using(s+'table tr:eq(2) td:eq(0)').input('$data').enter('awesome'); //user2: name = awesome
-    using(s+'table tr:eq(1) td:eq(1)').select('$data').option('3'); //user1: status = status4
-    using(s+'table tr:eq(1) td:eq(2)').select('$data').option('0'); //user1: group = user
+    using(s+'table tr:eq(1) td:eq(1)').select('$data').option('number:3'); //user1: status = status4
+    using(s+'table tr:eq(1) td:eq(2)').select('$data').option('number:1'); //user1: group = user
 
     //add 2 new rows
     expect(element(s+'table tr').count()).toBe(4);

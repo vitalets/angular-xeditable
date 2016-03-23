@@ -1,5 +1,5 @@
 <div ng-controller="TypeaheadCtrl">
-  <a href="#" editable-text="user.state" e-typeahead="state for state in states | filter:$viewValue | limitTo:8">
+  <a href="#" editable-text="user.state" e-uib-typeahead="state for state in states | filter:$viewValue | limitTo:8">
     {{ user.state || 'empty' }}
   </a>
 </div>

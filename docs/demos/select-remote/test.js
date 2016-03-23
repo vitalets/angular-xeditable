@@ -20,9 +20,9 @@ describe('select-remote', function() {
     expect(element(s+'button:enabled:visible').count()).toBe(2);
     expect(element(s+'form select:visible').count()).toBe(1);
     expect(element(s+'button:visible').count()).toBe(2);
-    expect(element(s+'form select').val()).toBe('3');
+    expect(element(s+'form select').val()).toBe('number:4');
 
-    using(s).select('$data').option('2');
+    using(s).select('$data').option('number:3');
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');
