@@ -6,10 +6,10 @@
   <div>Url: <a href="#" editable-url="user.url">{{ user.url || 'empty' }}</a></div>  
   <div>Search: <a href="#" editable-search="user.search">{{ user.search || 'empty' }}</a></div>  
   <div>Color: <a href="#" editable-color="user.color">{{ user.color || 'empty' }}</a></div>  
-  <div>Date: <a href="#" editable-date="user.date">{{ user.date || 'empty' }}</a></div>  
-  <div>Time: <a href="#" editable-time="user.time">{{ user.time || 'empty' }}</a></div>  
+  <div>Date: <a href="#" editable-date="user.date">{{ (user.date | date: "yyyy-MM-dd") || 'empty' }}</a></div>
+  <div>Time: <a href="#" editable-time="user.time">{{ (user.time | date: "HH:mm") || 'empty' }}</a></div>
   <div>Datetime: <a href="#" editable-datetime="user.datetime">{{ user.datetime || 'empty' }}</a></div>  
-  <div>Month: <a href="#" editable-month="user.month">{{ user.month || 'empty' }}</a></div>  
-  <div>Week: <a href="#" editable-week="user.week">{{ user.week || 'empty' }}</a></div>
+  <div>Month: <a href="#" editable-month="user.month">{{ (user.month | date: "yyyy-MM") || 'empty' }}</a></div>
+  <div>Week: <a href="#" editable-week="user.week">{{ (user.week | date: "yyyy-Www") || 'empty'}}</a></div>
   <div>Password: <a href="#" editable-password="user.password">{{ user.password || 'empty' }}</a></div>
 </div>  

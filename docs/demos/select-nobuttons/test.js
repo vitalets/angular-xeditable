@@ -15,10 +15,10 @@ describe('select-nobuttons', function() {
     expect(element(s+'form select:visible:enabled').count()).toBe(1);
     expect(element(s+'form select option').count()).toBe(4);
     expect(element(s+'form button:visible').count()).toBe(0);
-    expect(element(s+'form select').val()).toBe('1');
+    expect(element(s+'form select').val()).toBe('number:2');
 
     //set new value
-    using(s).select('$data').option('2');
+    using(s).select('$data').option('number:3');
 
     expect(element(s+'a').css('display')).not().toBe('none');
     expect(element(s+'a').text()).toMatch('status3');

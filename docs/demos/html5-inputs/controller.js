@@ -8,7 +8,7 @@ app.controller('Html5InputsCtrl', function($scope) {
     search: 'blabla',
     color: '#6a4415',
     date: null,
-    time: '12:30',
+    time: new Date(1970, 0, 1, 12, 30),
     datetime: null,
     month: null,
     week: null,

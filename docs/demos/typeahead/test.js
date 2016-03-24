@@ -21,12 +21,12 @@ describe('typeahead', function() {
 
     //type 'a'
     using(s).input('$data').enter('a');
-    expect(element(s+'form ul.typeahead.dropdown-menu:visible').count()).toBe(1);
-    expect(element(s+'form ul.typeahead.dropdown-menu > li').count()).toBe(8);
+    expect(element(s+'form ul.dropdown-menu:visible').count()).toBe(1);
+    expect(element(s+'form ul.dropdown-menu > li').count()).toBe(8);
 
     //click 4 - California
-    element(s+'form ul.typeahead.dropdown-menu > li:eq(4)').click();
-    expect(element(s+'form ul.typeahead.dropdown-menu:visible').count()).toBe(0);
+    element(s+'form ul.dropdown-menu > li:eq(4)').click();
+    expect(element(s+'form ul.dropdown-menu:visible').count()).toBe(0);
     expect(element(s+'form input[type="text"]').val()).toBe('California');
 
     //submit

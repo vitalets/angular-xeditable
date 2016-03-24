@@ -2,11 +2,11 @@ Typeahead control is implemented via [Angular-ui bootstrap typeahead](http://ang
 Basically it is normal `editable-text` control with additional `e-typeahead` attributes.  
 You should include additional `ui-bootstrap-tpls.min.js`:
 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"></script>
 
 Then add `ui.bootstrap` as module dependency:
 
 	var app = angular.module("app", ["xeditable", "ui.bootstrap"]);
 
-And finally set `editable-text` attribute pointing to model and `e-typeahead` attribute pointing to typeahead items.
+And finally set `editable-text` attribute pointing to model and `e-uib-typeahead` attribute pointing to typeahead items.
 Other parameters can be defined via `e-typeahead-*` syntax, e.g. `e-typeahead-wait-ms="100"`.

@@ -60,8 +60,8 @@ describe('editable-row', function() {
 
     //set correct values
     using(s+'td:eq(0)').input('$data').enter('awesome');
-    using(s+'td:eq(1)').select('$data').option('3'); //status4
-    using(s+'td:eq(2)').select('$data').option('0'); //user
+    using(s+'td:eq(1)').select('$data').option('number:3'); //status4
+    using(s+'td:eq(2)').select('$data').option('number:1'); //user
     element(s+'td:eq(3) form button[type="submit"]').click();
 
     checkWaiting();
