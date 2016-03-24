@@ -7,12 +7,23 @@
     "name": "Vitaliy Potapov",
     "email": "noginsk@rambler.ru"
   },
+  "main": "dist/js/xeditable.js",
+  "style": "dist/css/xeditable.css",
   "repository": {
     "type": "git",
     "url": "git://github.com/vitalets/angular-xeditable.git"
   },
   "engines": {
     "node": ">= 0.8.0"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {
+    "angular": "~1.x",
+    "bootstrap": "^3.1.1",
+    "jquery": "^1.11.1",
+    "moment": "^2.5.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -31,5 +42,9 @@
     "marked": "~0.2.9",
     "grunt-jsdoc": "~0.4.1",
     "grunt-shell": "~0.5.0"
-  }  
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vitalets/angular-xeditable/issues"
+  }
 }
