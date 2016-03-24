@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.1.10
+angular-xeditable - 0.1.11
 Edit-in-place for angular.js
-Build date: 2016-02-16 
+Build date: 2016-03-24 
 */
 /**
  * Angular-xeditable module 
@@ -2152,6 +2152,7 @@ Editable themes:
 - default
 - bootstrap 2
 - bootstrap 3
+- semantic-ui
 
 Note: in postrender() `this` is instance of editableController
 */
@@ -2218,6 +2219,7 @@ angular.module('xeditable').factory('editableThemes', function() {
           case 'editableTime':
           case 'editableMonth':
           case 'editableWeek':
+          case 'editablePassword':
             this.inputEl.addClass('form-control');
             if(this.theme.inputClass) {
               // don`t apply `input-sm` and `input-lg` to select multiple
@@ -2238,6 +2240,20 @@ angular.module('xeditable').factory('editableThemes', function() {
           this.buttonsEl.find('button').addClass(this.theme.buttonsClass);
         }
       }
+    },
+    
+    //semantic-ui
+    'semantic': {
+      formTpl:     '<form class="editable-wrap ui form" ng-class="{\'error\': $error}" role="form"></form>',
+      noformTpl:   '<span class="editable-wrap"></span>',
+      controlsTpl: '<div class="editable-controls ui fluid input" ng-class="{\'error\': $error}"></div>',
+      inputTpl:    '',
+      errorTpl:    '<div class="editable-error ui error message" ng-show="$error" ng-bind="$error"></div>',
+      buttonsTpl:  '<span class="mini ui buttons"></span>',
+      submitTpl:   '<button type="submit" class="ui primary button"><i class="ui check icon"></i></button>',
+      cancelTpl:   '<button type="button" class="ui button" ng-click="$form.$cancel()">'+
+                      '<i class="ui cancel icon"></i>'+
+                   '</button>'
     }
   };
 
