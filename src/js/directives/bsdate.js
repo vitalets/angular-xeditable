@@ -45,15 +45,15 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 				inputDatePicker.attr('date-picker-append-to-body', this.attrs.eDatePickerAppendToBody || false);
 				inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
 
-				buttonDatePicker.attr('ng-click',this.attrs.eNgClick);
-
-				buttonWrapper.append(buttonDatePicker);
 				this.inputEl.prepend(inputDatePicker);
-				this.inputEl.append(buttonWrapper);
-
 				this.inputEl.removeAttr('class');
-				this.inputEl.attr('class','input-group');
 
+				if (this.attrs.buttons !== 'no') {
+					buttonDatePicker.attr('ng-click', this.attrs.eNgClick);
+					buttonWrapper.append(buttonDatePicker);
+					this.inputEl.append(buttonWrapper);
+					this.inputEl.attr('class', 'input-group');
+				}
 			}
     });
 }]);
