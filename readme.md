@@ -16,6 +16,10 @@ to use power of angular and support complex forms / editable grids.
 ````
 bower install angular-xeditable
 ````
+#### NPM
+````
+npm install angular-xeditable
+````
 #### Manual
 Download latest version from [project homepage](http://vitalets.github.io/angular-xeditable).
 #### Insert dependency 
