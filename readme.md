@@ -1,4 +1,7 @@
 # Angular-xeditable
+
+[![npm](https://img.shields.io/npm/v/angular-xeditable.svg)]() [![Bower](https://img.shields.io/bower/v/angular-xeditable.svg)]()
+
 Edit in place for AngularJS
 
 ## Overview
