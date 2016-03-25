@@ -1,6 +1,19 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.1.11 Mar 24, 2016
+----------------------------
+[bug #424] Fix support for password fields (ckosloski)
+[enh #411] Added semantic-ui theme (ka7eh)
+
+Version 0.1.10 Feb 16, 2016
+----------------------------
+[enh #408] Allow passing min/maxYear to combodate (dolzenko)
+[bug #377] Fix radiolist issues when not using default angular symbol (Kevlys)
+[bug #353] Make new editables added to a form match the waiting state of the form (coreypobrien)
+[bug #314] Fix for unable to use single xeditable form elements without whole form editing (mitcht)
+[enh #294] Add minified versions of css to the dist (NameFILIP)
+
 Version 0.1.9 Mar 22, 2015
 ----------------------------
 [enh #258] Support for bootstrap-ui datepicker (Painyjames)
