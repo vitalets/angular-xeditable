@@ -182,6 +182,7 @@ angular.module('xeditable').factory('editableCombodate', [function() {
       throw 'Combodate should be applied to INPUT element';
     }
 
+    var currentYear = new Date().getFullYear();
     this.defaults = {
       //in this format value stored in original input
       format: 'YYYY-MM-DD HH:mm',
@@ -190,7 +191,7 @@ angular.module('xeditable').factory('editableCombodate', [function() {
       //initial value, can be `new Date()`
       value: null,
       minYear: 1970,
-      maxYear: 2015,
+      maxYear: currentYear,
       yearDescending: true,
       minuteStep: 5,
       secondStep: 1,
