@@ -1,0 +1,30 @@
+<div ng-controller="UiSelectCtrl">
+  <form data-editable-form name="uiSelectForm">
+    <div editable-ui-select="user.state" data-e-form="uiSelectForm" data-e-name="state" name="state" theme="bootstrap" data-e-ng-model="user.state" data-e-style="min-width:300px;">
+      {{user.state}}
+      <editable-ui-select-match placeholder="State">
+          {{$select.selected}}
+      </editable-ui-select-match>
+      <editable-ui-select-choices repeat="state in states | filter: $select.search track by $index">
+        {{state}}
+      </editable-ui-select-choices>
+    </div>
+    <br/>
+    <div class="buttons">
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
+        Edit
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="uiSelectForm.$visible">
+        <br/>
+        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
+          Save
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
+          Cancel
+        </button>
+      </span>
+    </div>
+  </form>
+</div>
