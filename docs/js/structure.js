@@ -13,7 +13,8 @@ module.exports = [
         {id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/NfPcH/23/', fiddleText: 'View Bootstrap 2 jsFiddle'},
         {id: 'bstime', text: 'Time', fiddle: 'http://jsfiddle.net/NfPcH/34/', fiddleText: 'View Bootstrap 2 jsFiddle'},
         {id: 'combodate', text: 'DateTime', fiddle: '', fiddleText: 'No jsFiddle'},
-        {id: 'typeahead', text: 'Typeahead', fiddle: 'http://jsfiddle.net/NfPcH/46/', fiddleText: 'View Bootstrap 2 jsFiddle'}
+        {id: 'typeahead', text: 'Typeahead', fiddle: 'http://jsfiddle.net/NfPcH/46/', fiddleText: 'View Bootstrap 2 jsFiddle'},
+        {id: 'uiselect', text: 'UI-Select', fiddle: '', fiddleText: 'No jsFiddle'}
     ]},
 
     {id: 'text-customize', text: 'Techniques', type: 'demos', items: [
