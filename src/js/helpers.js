@@ -420,7 +420,7 @@ angular.module('xeditable').factory('editableCombodate', [function() {
     fillMinute: function() {
       var items = this.fillCommon('m'), name, i,
       twoDigit = this.options.template.indexOf('mm') !== -1;
-
+      this.options.minuteStep = parseInt(this.options.minuteStep, 10);
       for(i=0; i<=59; i+= this.options.minuteStep) {
         name = twoDigit ? this.leadZero(i) : i;
         items.push([i, name]);
@@ -434,7 +434,7 @@ angular.module('xeditable').factory('editableCombodate', [function() {
     fillSecond: function() {
       var items = this.fillCommon('s'), name, i,
       twoDigit = this.options.template.indexOf('ss') !== -1;
-
+      this.options.secondStep = parseInt(this.options.secondStep, 10);
       for(i=0; i<=59; i+= this.options.secondStep) {
         name = twoDigit ? this.leadZero(i) : i;
         items.push([i, name]);
