@@ -98,9 +98,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 				this.parent.render.call(this);
 
 				var inputDatePicker = angular.element('<input type="text" class="form-control" ng-model="$data"/>');
-				var buttonDatePicker = angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
-				var buttonWrapper = angular.element('<span class="input-group-btn"></span>');
-
+				
 				inputDatePicker.attr('datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy/MM/dd' );
 				inputDatePicker.attr('is-open', this.attrs.eIsOpen);
 				inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
@@ -128,11 +126,18 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 				inputDatePicker.attr('date-picker-append-to-body', this.attrs.eDatePickerAppendToBody || false);
 				inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
 
-				buttonDatePicker.attr('ng-click',this.attrs.eNgClick);
-
-				buttonWrapper.append(buttonDatePicker);
 				this.inputEl.prepend(inputDatePicker);
-				this.inputEl.append(buttonWrapper);
+
+		                var showCalendarButton = angular.isDefined(this.attrs.eShowCalendarButton) ? eval(this.attrs.eShowCalendarButton) : true;
+		                if(showCalendarButton){
+		
+		                    var buttonDatePicker = angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
+		                    var buttonWrapper = angular.element('<span class="input-group-btn"></span>');
+		
+		                    buttonDatePicker.attr('ng-click',this.attrs.eNgClick);
+		                    buttonWrapper.append(buttonDatePicker);
+		                    this.inputEl.append(buttonWrapper);
+		                }
 
 				this.inputEl.removeAttr('class');
 				this.inputEl.attr('class','input-group');
