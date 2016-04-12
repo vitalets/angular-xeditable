@@ -4,7 +4,8 @@ Angular-xeditable changelog
 Version 0.1.11 Mar 24, 2016
 ----------------------------
 [bug #424] Fix support for password fields (ckosloski)
-[enh #411] Added semantic-ui theme (ka7eh)
+[enh #411] Add semantic-ui theme (ka7eh)
+[bug #238] Fix editable-select to work properly with objects
 
 Version 0.1.10 Feb 16, 2016
 ----------------------------
