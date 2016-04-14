@@ -1,6 +1,17 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.1.12 Apr 14, 2016
+----------------------------
+[enh #448] Add support for ui-select (ckosloski)
+[enh #448] Current date as default max date on combodate (Jmenache)
+[enh #443] Updated to use Angular 1.5.0, bootstrap 3.3.6, ui-bootstrap 1.2.4 (ckosloski)
+[bug #435] Fix typeahed not working with ui-boostrap (ckosloski)
+[bug #428] Fix datepicker doesn't popup (ckosloski)
+[bug #415] Fix isDefaultPrevented check in editableForm prevents blur (mgerring)
+[bug #317] Fix implementation for datepicker (ckosloski)
+
+
 Version 0.1.11 Mar 24, 2016
 ----------------------------
 [bug #424] Fix support for password fields (ckosloski)
