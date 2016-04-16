@@ -2,7 +2,7 @@ Time control is implemented via [Angular-ui bootstrap timepicker](http://angular
 **Currently it has only Bootstrap 2 version**, Bootstrap 3 version is [in progress](https://github.com/angular-ui/bootstrap/issues?milestone=6).  
 You should include additional `ui-bootstrap-tpls.min.js`:
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js"></script>
 
 Add `ui.bootstrap` as module dependency:
 

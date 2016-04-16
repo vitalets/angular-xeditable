@@ -2,7 +2,7 @@ Typeahead control is implemented via [Angular-ui bootstrap typeahead](http://ang
 Basically it is normal `editable-text` control with additional `e-typeahead` attributes.  
 You should include additional `ui-bootstrap-tpls.min.js`:
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js"></script>
 
 Then add `ui.bootstrap` as module dependency:
 
