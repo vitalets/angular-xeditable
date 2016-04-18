@@ -22,8 +22,6 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                 inputDatePicker.attr('is-open', this.attrs.eIsOpen);
                 inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
                 inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopup);
-                inputDatePicker.attr('min-date', this.attrs.eMinDate);
-                inputDatePicker.attr('max-date', this.attrs.eMaxDate);
                 inputDatePicker.attr('year-range', this.attrs.eYearRange || 20);
                 inputDatePicker.attr('show-button-bar', this.attrs.eShowButtonBar || true);
                 inputDatePicker.attr('current-text', this.attrs.eCurrentText || 'Today');
@@ -33,6 +31,8 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                 inputDatePicker.attr('datepicker-append-to-body', this.attrs.eDatePickerAppendToBody || false);
                 inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
                 inputDatePicker.attr('name', this.attrs.eName);
+                inputDatePicker.attr('on-open-focus', this.attrs.eOnOpenFocus || true);
+                inputDatePicker.attr('ng-readonly', this.attrs.eReadonly || false);
 
                 this.scope.dateOptions = {
                     formatDay:  this.attrs.eFormatDay || 'dd',
@@ -45,8 +45,10 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                     startingDay: this.attrs.eStartingDay || 0,
                     minMode: this.attrs.eMinMode || 'day',
                     maxMode: this.attrs.eMaxMode || 'year',
-                    initDate: this.attrs.eInitDate || new Date(),
-                    datepickerMode: this.attrs.eDatepickerMode || 'day'
+                    initDate: this.scope.$eval(this.attrs.eInitDate) || new Date(),
+                    datepickerMode: this.attrs.eDatepickerMode || 'day',
+                    maxDate: this.scope.$eval(this.attrs.eMaxDate) || null,
+                    minDate: this.scope.$eval(this.attrs.eMinDate) || null
                 };
 
                 inputDatePicker.attr('datepicker-options', "dateOptions");
