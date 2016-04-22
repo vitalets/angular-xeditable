@@ -28,11 +28,11 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         // form controller
         var eFormCtrl;
 
-        // this variable indicates is element is bound to some existing form, 
+        // this variable indicates is element is bound to some existing form,
         // or it's single element who's form will be generated automatically
         // By default consider single element without any linked form.ß
         var hasForm = false;
-     
+
         // element wrapped by form
         if(ctrl[1]) {
           eFormCtrl = ctrl[1];
@@ -42,15 +42,10 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
           if(getter) { // form exists in scope (above), e.g. editable column
             eFormCtrl = getter;
             hasForm = true;
-          } else { // form exists below or not exist at all: check document.forms
-            for(var i=0; i<$document[0].forms.length;i++){
-              if($document[0].forms[i].name === attrs.eForm) {
-                // form is below and not processed yet
-                eFormCtrl = null;
-                hasForm = true;
-                break;
-              }
-            }
+          } else if(elem.parents().last().find('form[name='+attrs.eForm+']').length) { // form exists below or not exist at all: check document.forms
+            // form is below and not processed yet
+            eFormCtrl = null;
+            hasForm = true;
           }
         }
 
@@ -85,7 +80,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         if (disabled) {
           return;
         }
-        
+
         // init editable ctrl
         eCtrl.init(!hasForm);
 
