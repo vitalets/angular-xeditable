@@ -1,5 +1,15 @@
 <div ng-controller="DevSelectCtrl">
-  <a href="#" editable-select="user.status" e-multiple e-ng-options="s.value as s.text for s in statuses">
+  <a href="#" data-editable-select="user.status"
+              data-e-multiple
+              data-e-ng-options="s.value as s.text for s in statuses"
+              id="multiSelect"
+              name="multiSelect">
     {{ showStatus() }}
   </a>
+  &nbsp;
+  <a href="#" data-editable-select="user.status2"
+              data-e-ng-options="s.value as s.text for s in statuses"
+              data-e-placeholder="- Select Status -"
+              id="defaultValue"
+              name="defaultValue">{{showStatus2()}}</a>
 </div>  
