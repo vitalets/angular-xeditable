@@ -14,15 +14,23 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
             return newEl;
         };
 
-        var match = null;
-        var choices = null;
+        var match = [];
+        var choices = [];
+
         var dir = editableDirectiveFactory({
             directiveName: 'editableUiSelect',
             inputTpl: '<ui-select></ui-select>',
             render: function () {
+                var index = -1;
+                for(var i = 0, len = match.length; i < len; i++) {
+                  if (match[i].name === this.name) {
+                      index = i;
+                      break;
+                  }
+              }
                 this.parent.render.call(this);
-                this.inputEl.append(rename('ui-select-match', match));
-                this.inputEl.append(rename('ui-select-choices', choices));
+                this.inputEl.append(rename('ui-select-match', match[index].element));
+                this.inputEl.append(rename('ui-select-choices', choices[index].element));
                 this.inputEl.removeAttr('ng-model');
                 this.inputEl.attr('ng-model', '$parent.$data');
             }
@@ -34,8 +42,8 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
             var matchEl = el.find('editable-ui-select-match');
             var choicesEl = el.find('editable-ui-select-choices');
 
-            match = matchEl.clone();
-            choices = choicesEl.clone();
+            match.push({'name' : attrs.name || attrs.editableUiSelect, 'element' : matchEl.clone()});
+            choices.push({'name' : attrs.name || attrs.editableUiSelect, 'element' : choicesEl.clone()});
 
             matchEl.remove();
             choicesEl.remove();
