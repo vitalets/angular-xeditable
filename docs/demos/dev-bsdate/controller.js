@@ -25,4 +25,9 @@ app.controller('DevBsdateCtrl', function($scope) {
 
 		$scope.opened[elementOpened] = !$scope.opened[elementOpened];
 	};
+	
+	$scope.changed = function() {
+		$scope.user.changed = true;	
+		window.console.log("value changed");
+	};
 });

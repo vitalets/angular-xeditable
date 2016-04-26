@@ -14,7 +14,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                  **/
                 this.parent.render.call(this);
 
-                var inputDatePicker = angular.element('<input type="text" class="form-control" ng-model="$data"/>');
+                var inputDatePicker = angular.element('<input type="text" class="form-control" data-ng-model="$data"/>');
                 var buttonDatePicker = angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
                 var buttonWrapper = angular.element('<span class="input-group-btn"></span>');
 
@@ -33,6 +33,11 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                 inputDatePicker.attr('name', this.attrs.eName);
                 inputDatePicker.attr('on-open-focus', this.attrs.eOnOpenFocus || true);
                 inputDatePicker.attr('ng-readonly', this.attrs.eReadonly || false);
+
+                if (this.attrs.eNgChange) {
+                    inputDatePicker.attr('ng-change', this.attrs.eNgChange);
+                    this.inputEl.removeAttr('ng-change');
+                }
 
                 this.scope.dateOptions = {
                     formatDay:  this.attrs.eFormatDay || 'dd',

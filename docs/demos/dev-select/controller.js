@@ -1,6 +1,7 @@
 app.controller('DevSelectCtrl', function($scope, $filter) {
   $scope.user = {
-    status: [2, 4]
+    status: [2, 4],
+    status2: null
   };
 
   $scope.statuses = [
@@ -18,5 +19,10 @@ app.controller('DevSelectCtrl', function($scope, $filter) {
       }
     });
     return selected.length ? selected.join(', ') : 'Not set';
+  };
+  
+  $scope.showStatus2 = function() {
+    var selected = $filter('filter')($scope.statuses, {value: $scope.user.status2});
+    return ($scope.user.status2 && selected.length) ? selected[0].text : 'Not set';
   };
 });
