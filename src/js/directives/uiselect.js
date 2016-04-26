@@ -17,21 +17,19 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
         var findElement = function(name) {
             for(var i = 0, len = match.length; i < len; i++) {
                   if (match[i].name === name) {
-                      index = i;
-                      break;
+                      return i;
                   }
               }
         };
 
         var match = [];
         var choices = [];
-        var index = -1;
 
         var dir = editableDirectiveFactory({
             directiveName: 'editableUiSelect',
             inputTpl: '<ui-select></ui-select>',
             render: function () {
-                findElement(this.name);
+                var index = findElement(this.name);
                 this.parent.render.call(this);
                 this.inputEl.append(rename('ui-select-match', match[index].element));
                 this.inputEl.append(rename('ui-select-choices', choices[index].element));
