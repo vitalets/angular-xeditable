@@ -1,6 +1,6 @@
 # Angular-xeditable
 
-[![npm](https://img.shields.io/npm/v/angular-xeditable.svg)]() [![Bower](https://img.shields.io/bower/v/angular-xeditable.svg)]()
+[![npm](https://img.shields.io/npm/v/angular-xeditable.svg)](https://www.npmjs.com/package/angular-xeditable) [![Bower](https://img.shields.io/bower/v/angular-xeditable.svg)](http://bower.io/search/?q=angular-xeditable)
 
 Edit in place for AngularJS
 
@@ -40,13 +40,6 @@ To use ui-select you will need to include [angular-ui ui-select](https://github.
 Please use these live templates when creating issues:  
 http://jsfiddle.net/NfPcH/3  
 http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
-
-## Roadmap
-
-* [checklist](https://github.com/vitalets/checklist-model)
-* [combodate](https://github.com/vitalets/combodate)
-* popup mode (waiting https://github.com/angular-ui/bootstrap/pull/1391)
-* internally move to [lazy-model](https://github.com/vitalets/lazy-model)
 
 ## License
 [MIT](LICENSE)
