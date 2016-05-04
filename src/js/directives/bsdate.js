@@ -15,8 +15,6 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                 this.parent.render.call(this);
 
                 var inputDatePicker = angular.element('<input type="text" class="form-control" data-ng-model="$data"/>');
-                var buttonDatePicker = angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
-                var buttonWrapper = angular.element('<span class="input-group-btn"></span>');
 
                 inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy/MM/dd' );
                 inputDatePicker.attr('is-open', this.attrs.eIsOpen);
@@ -56,13 +54,26 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                     minDate: this.scope.$eval(this.attrs.eMinDate) || null
                 };
 
+                var showCalendarButton = angular.isDefined(this.attrs.eShowCalendarButton) ? this.attrs.eShowCalendarButton : "true";
+
+                //See if calendar button should be displayed
+                if (showCalendarButton === "true") {
+                    var buttonDatePicker = angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
+                    var buttonWrapper = angular.element('<span class="input-group-btn"></span>');
+
+                    buttonDatePicker.attr('ng-click', this.attrs.eNgClick);
+
+                    buttonWrapper.append(buttonDatePicker);
+
+                    this.inputEl.append(buttonWrapper);
+                } else {
+                    //If no calendar button, display calendar popup on click of input field
+                    inputDatePicker.attr('ng-click', this.attrs.eNgClick);
+                }
+
                 inputDatePicker.attr('datepicker-options', "dateOptions");
 
-                buttonDatePicker.attr('ng-click',this.attrs.eNgClick);
-
-                buttonWrapper.append(buttonDatePicker);
                 this.inputEl.prepend(inputDatePicker);
-                this.inputEl.append(buttonWrapper);
 
                 this.inputEl.removeAttr('class');
                 this.inputEl.removeAttr('ng-click');

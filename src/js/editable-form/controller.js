@@ -159,7 +159,8 @@ angular.module('xeditable').factory('editableFormController',
     },
 
     /**
-     * Sets focus on form field specified by `name`.
+     * Sets focus on form field specified by `name`.<br/>
+     * When trying to set the focus on a form field of a new row in the editable table, the `$activate` call needs to be wrapped in a `$timeout` call so that the form is rendered before the `$activate` function is called.
      * 
      * @method $activate(name)
      * @param {string} name name of field
