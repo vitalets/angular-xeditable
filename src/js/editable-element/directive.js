@@ -34,18 +34,28 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         var hasForm = false;
 
         // element wrapped by form
-        if(ctrl[1]) {
+        if (ctrl[1]) {
           eFormCtrl = ctrl[1];
           hasForm = attrs.eSingle === undefined;
-        } else if(attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
+        } else if (attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
           var getter = $parse(attrs.eForm)(scope);
-          if(getter) { // form exists in scope (above), e.g. editable column
+          if (getter) { // form exists in scope (above), e.g. editable column
             eFormCtrl = getter;
             hasForm = true;
-          } else if(elem.parents().last().find('form[name='+attrs.eForm+']').length) { // form exists below or not exist at all: check document.forms
+          } else if (elem && typeof elem.parents === "function" && elem.parents().last().find('form[name='+attrs.eForm+']').length) { // form exists below or not exist at all: check document.forms
             // form is below and not processed yet
             eFormCtrl = null;
             hasForm = true;
+          } else {
+            // form exists below or not exist at all: check document.forms
+            for (var i=0; i<$document[0].forms.length;i++) {
+              if ($document[0].forms[i].name === attrs.eForm) {
+                // form is below and not processed yet
+                eFormCtrl = null;
+                hasForm = true;
+                break;
+              }
+            }
           }
         }
 

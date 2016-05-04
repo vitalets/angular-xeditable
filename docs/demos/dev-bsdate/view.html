@@ -42,4 +42,14 @@
               class="onChangeDate">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
+  &nbsp;
+  <a href="#" data-editable-bsdate="user.dob"
+             data-e-is-open="opened.$data"
+             data-e-ng-click="open($event,'$data')"
+             data-e-datepicker-popup="dd-MMMM-yyyy"
+             data-e-show-calendar-button="false"
+             id="hideCalendarButton"
+             class="hideCalendarButton">
+    {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
+  </a>
 </div>
