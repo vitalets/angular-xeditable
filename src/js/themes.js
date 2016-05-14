@@ -15,7 +15,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       noformTpl:    '<span class="editable-wrap"></span>',
       controlsTpl:  '<span class="editable-controls"></span>',
       inputTpl:     '',
-      errorTpl:     '<div class="editable-error" ng-show="$error" ng-bind="$error"></div>',
+      errorTpl:     '<div class="editable-error" data-ng-if="$error" data-ng-bind="$error"></div>',
       buttonsTpl:   '<span class="editable-buttons"></span>',
       submitTpl:    '<button type="submit">save</button>',
       cancelTpl:    '<button type="button" ng-click="$form.$cancel()">cancel</button>'
@@ -27,7 +27,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls controls control-group" ng-class="{\'error\': $error}"></div>',
       inputTpl:    '',
-      errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
+      errorTpl:    '<div class="editable-error help-block" data-ng-if="$error" data-ng-bind="$error"></div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
       cancelTpl:   '<button type="button" class="btn" ng-click="$form.$cancel()">'+
@@ -42,7 +42,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls form-group" ng-class="{\'has-error\': $error}"></div>',
       inputTpl:    '',
-      errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
+      errorTpl:    '<div class="editable-error help-block" data-ng-if="$error" data-ng-bind="$error"></div>',
       buttonsTpl:  '<span class="editable-buttons"></span>',
       submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
       cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
@@ -71,6 +71,7 @@ angular.module('xeditable').factory('editableThemes', function() {
           case 'editableMonth':
           case 'editableWeek':
           case 'editablePassword':
+          case 'editableDatetimeLocal':
             this.inputEl.addClass('form-control');
             if(this.theme.inputClass) {
               // don`t apply `input-sm` and `input-lg` to select multiple
@@ -99,7 +100,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       noformTpl:   '<span class="editable-wrap"></span>',
       controlsTpl: '<div class="editable-controls ui fluid input" ng-class="{\'error\': $error}"></div>',
       inputTpl:    '',
-      errorTpl:    '<div class="editable-error ui error message" ng-show="$error" ng-bind="$error"></div>',
+      errorTpl:    '<div class="editable-error ui error message" data-ng-if="$error" data-ng-bind="$error"></div>',
       buttonsTpl:  '<span class="mini ui buttons"></span>',
       submitTpl:   '<button type="submit" class="ui primary button"><i class="ui check icon"></i></button>',
       cancelTpl:   '<button type="button" class="ui button" ng-click="$form.$cancel()">'+

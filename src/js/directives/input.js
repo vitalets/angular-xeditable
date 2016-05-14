@@ -1,16 +1,22 @@
 /*
-Input types: text|email|tel|number|url|search|color|date|datetime|time|month|week
+Input types: text|password|email|tel|number|url|search|color|date|datetime|datetime-local|time|month|week|file
 */
 
 (function() {
 
-  var types = 'text|password|email|tel|number|url|search|color|date|datetime|time|month|week|file'.split('|');
+  var camelCase = function(dashDelimitedString) {
+    return dashDelimitedString.toLowerCase().replace(/-(.)/g, function(match, word) {
+      return word.toUpperCase();
+    });
+  };
+
+  var types = 'text|password|email|tel|number|url|search|color|date|datetime|datetime-local|time|month|week|file'.split('|');
 
   //todo: datalist
   
   // generate directives
   angular.forEach(types, function(type) {
-    var directiveName = 'editable'+type.charAt(0).toUpperCase() + type.slice(1);
+    var directiveName = camelCase('editable' + '-' + type);
     angular.module('xeditable').directive(directiveName, ['editableDirectiveFactory',
       function(editableDirectiveFactory) {
         return editableDirectiveFactory({

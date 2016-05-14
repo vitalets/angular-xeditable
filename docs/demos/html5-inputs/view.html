@@ -12,4 +12,5 @@
   <div>Month: <a href="#" editable-month="user.month">{{ (user.month | date: "yyyy-MM") || 'empty' }}</a></div>
   <div>Week: <a href="#" editable-week="user.week">{{ (user.week | date: "yyyy-Www") || 'empty'}}</a></div>
   <div>Password: <a href="#" editable-password="user.password">{{ user.password || 'empty' }}</a></div>
+  <div>Datetime-local: <a href="#" editable-datetime-local="user.datetimeLocal">{{ (user.datetimeLocal | date: "yyyy-MM-ddTHH:mm:ss") || 'empty' }}</a></div>
 </div>  
