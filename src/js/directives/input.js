@@ -21,7 +21,13 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
       function(editableDirectiveFactory) {
         return editableDirectiveFactory({
           directiveName: directiveName,
-          inputTpl: '<input type="'+type+'">'
+          inputTpl: '<input type="'+type+'">',
+          render: function() {
+              this.parent.render.call(this);
+              if(this.attrs.eNgChange) {
+                  this.inputEl.attr('ng-change', this.attrs.eNgChange);
+              }
+          }
         });
     }]);
   });
