@@ -17,6 +17,7 @@ describe('dev-text', function() {
     expect(element(s+'form input[type="text"]').attr('placeholder')).toBe("Enter name");
     expect(element(s+'form input[type="text"]').attr('data-var')).toBe("var");
     expect(element(s+'form input[type="text"]').attr('ng-bind')).toBe("test");
+    expect(element(s+'form input[type="text"]').attr('label')).toBe("User Name");
     expect(element(s+'form input[type="text"]').attr('form')).not().toBeDefined();
     expect(element(s+'form input[type="text"]').attr('ng-submit')).not().toBeDefined();
 
@@ -30,6 +31,7 @@ describe('dev-text', function() {
     expect(element(s+'form input[type="text"]').attr('placeholder')).toBe("Enter name");
     expect(element(s+'form input[type="text"]').attr('data-var')).toBe("var");
     expect(element(s+'form input[type="text"]').attr('ng-bind')).toBe("test");
+    expect(element(s+'form input[type="text"]').attr('label')).toBe("User Name");
     expect(element(s+'form input[type="text"]').attr('form')).not().toBeDefined();
     expect(element(s+'form input[type="text"]').attr('ng-submit')).not().toBeDefined();
   });
@@ -109,4 +111,15 @@ describe('dev-text', function() {
     expect(element(s+'form').count()).toBe(2);    
   });
 
+  it('should disable editing of the element', function() {
+    var s = '[ng-controller="DevText"] ';
+    var a = s + 'a#editingEnabled '
+
+    expect(element(a).text()).toMatch('awesome user');
+    element(a).click();
+
+    expect(element(a).css('display')).not().toBe('none');
+    expect(element(a).text()).toMatch('awesome user');
+    expect(element(s+'form').count()).toBe(0);
+  });
 });
