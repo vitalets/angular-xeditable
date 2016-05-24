@@ -1,0 +1,1 @@
+To disable an element from being editable, just add the `edit-disabled="true"` attribute.  Additionally, you can disable all elements at a global level by setting `editableOptions.isDisabled=true`.
