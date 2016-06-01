@@ -25,9 +25,15 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
           render: function() {
             this.parent.render.call(this);
 
+            // Add label to the input
             if (this.attrs.eLabel) {
               var label = angular.element('<label>' + this.attrs.eLabel + '</label>');
               this.inputEl.parent().prepend(label);
+            }
+            
+            // Add classes to the form
+            if (this.attrs.eFormclass) {
+              this.editorEl.addClass(this.attrs.eFormclass);
             }
           }
         });

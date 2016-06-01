@@ -302,10 +302,19 @@ angular.module('xeditable').factory('editableController',
 
     //hide
     self.hide = function() {
-      
+
       self.controlsEl.remove();
       self.editorEl.remove();
       $element.removeClass('editable-hide');
+
+      // Manually remove the watcher on 'has-error' to prevent a memory leak on it.
+      for (var i = 0, len = $scope.$$watchers.length; i < len; i++) {
+        if ($scope.$$watchers[i] !== undefined && $scope.$$watchers[i].last && $scope.$$watchers[i].last !== undefined &&
+            typeof $scope.$$watchers[i].last === 'object' && "has-error" in $scope.$$watchers[i].last) {
+          $scope.$$watchers.splice(i, 1);
+          break;
+        }
+      }
 
       // onhide
       return self.onhide();
