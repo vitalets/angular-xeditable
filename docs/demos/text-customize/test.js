@@ -12,6 +12,7 @@ describe('text-customize', function() {
 
     expect(element(s+'form input[type="text"]').attr('required')).toBe("required");
     expect(element(s+'form input[type="text"]').attr('placeholder')).toBe("Enter name");
+    expect(element(s+'form').attr('class')).toBe("form-inline editable-wrap editable-text class1 class2 ng-pristine ng-valid ng-scope ng-valid-required");
 
     //reopen
     element(s+'form button[type="button"]').click();
