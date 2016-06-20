@@ -17,7 +17,7 @@ describe('checkbox', function() {
     expect(element(s+'form button[type="submit"]:visible').count()).toBe(1);
     expect(element(s+'form button[type="button"]:visible').count()).toBe(1);
 
-    using(s).input('$data').check();
+    using(s).input('$parent.$data').check();
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a:visible').count()).toBe(1);

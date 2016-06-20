@@ -20,7 +20,7 @@ describe('typeahead', function() {
     expect(element(s+'form .editable-buttons button[type="button"]:visible').count()).toBe(1);
 
     //type 'a'
-    using(s).input('$data').enter('a');
+    using(s).input('$parent.$data').enter('a');
     expect(element(s+'form ul.dropdown-menu:visible').count()).toBe(1);
     expect(element(s+'form ul.dropdown-menu > li').count()).toBe(8);
 

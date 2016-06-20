@@ -49,7 +49,7 @@ describe('editable-row', function() {
     checkShown();
 
     //set incorrect values
-    using(s+'td:eq(0)').input('$data').enter('username2');
+    using(s+'td:eq(0)').input('$parent.$data').enter('username2');
     element(s+'td:eq(3) form button[type="submit"]').click();
 
     checkShown();
@@ -59,9 +59,9 @@ describe('editable-row', function() {
     expect(element(s+'td:eq(0) .editable-error').text()).toMatch('Username 2 should be `awesome`');
 
     //set correct values
-    using(s+'td:eq(0)').input('$data').enter('awesome');
-    using(s+'td:eq(1)').select('$data').option('number:3'); //status4
-    using(s+'td:eq(2)').select('$data').option('number:1'); //user
+    using(s+'td:eq(0)').input('$parent.$data').enter('awesome');
+    using(s+'td:eq(1)').select('$parent.$data').option('number:3'); //status4
+    using(s+'td:eq(2)').select('$parent.$data').option('number:1'); //user
     element(s+'td:eq(3) form button[type="submit"]').click();
 
     checkWaiting();

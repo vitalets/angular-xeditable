@@ -14,7 +14,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                  **/
                 this.parent.render.call(this);
 
-                var inputDatePicker = angular.element('<input type="text" class="form-control" data-ng-model="$data"/>');
+                var inputDatePicker = angular.element('<input type="text" class="form-control" data-ng-model="$parent.$data"/>');
 
                 inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy/MM/dd' );
                 inputDatePicker.attr('is-open', this.attrs.eIsOpen);

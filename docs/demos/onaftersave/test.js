@@ -11,7 +11,7 @@ describe('onaftersave', function() {
     element(s+'a').click();
 
     //not valid
-    using(s).input('$data').enter('error');
+    using(s).input('$parent.$data').enter('error');
     element(s+'form button[type="submit"]').click();
 
     //local model changed
@@ -34,7 +34,7 @@ describe('onaftersave', function() {
     expect(element(s+'.editable-error').text()).toMatch('Server-side error');
 
     //valid
-    using(s).input('$data').enter('awesome');
+    using(s).input('$parent.$data').enter('awesome');
     element(s+'form button[type="submit"]').click();
 
     //local model changed

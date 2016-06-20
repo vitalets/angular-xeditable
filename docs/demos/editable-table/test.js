@@ -67,9 +67,9 @@ describe('editable-table', function() {
     expect(element(s+'table tr:eq(2) td:eq(0) .editable-error').text()).toMatch('Username 2 should be `awesome`');
 
     //set correct values
-    using(s+'table tr:eq(2) td:eq(0)').input('$data').enter('awesome'); //user2: name = awesome
-    using(s+'table tr:eq(1) td:eq(1)').select('$data').option('number:3'); //user1: status = status4
-    using(s+'table tr:eq(1) td:eq(2)').select('$data').option('number:1'); //user1: group = user
+    using(s+'table tr:eq(2) td:eq(0)').input('$parent.$data').enter('awesome'); //user2: name = awesome
+    using(s+'table tr:eq(1) td:eq(1)').select('$parent.$data').option('number:3'); //user1: status = status4
+    using(s+'table tr:eq(1) td:eq(2)').select('$parent.$data').option('number:1'); //user1: group = user
 
     //add 2 new rows
     expect(element(s+'table tr').count()).toBe(4);
@@ -112,9 +112,9 @@ describe('editable-table', function() {
     checkShown();
 
     //set correct values
-    using(s+'table tr:eq(2) td:eq(0)').input('$data').enter('awesome'); //user2: name = awesome
-    using(s+'table tr:eq(1) td:eq(1)').select('$data').option('number:3'); //user1: status = status4
-    using(s+'table tr:eq(1) td:eq(2)').select('$data').option('number:1'); //user1: group = user
+    using(s+'table tr:eq(2) td:eq(0)').input('$parent.$data').enter('awesome'); //user2: name = awesome
+    using(s+'table tr:eq(1) td:eq(1)').select('$parent.$data').option('number:3'); //user1: status = status4
+    using(s+'table tr:eq(1) td:eq(2)').select('$parent.$data').option('number:1'); //user1: group = user
 
     //add 2 new rows
     expect(element(s+'table tr').count()).toBe(4);

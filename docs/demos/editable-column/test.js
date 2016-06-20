@@ -65,9 +65,9 @@ describe('editable-column', function() {
     expect(element(s+'tr:eq(3) td:eq(0) .editable-error').text()).toMatch('Username should be `awesome`');
 
     //set correct values
-    using(s+'tr:eq(1) td:eq(0)').input('$data').enter('awesome');
-    using(s+'tr:eq(2) td:eq(0)').input('$data').enter('awesome');
-    using(s+'tr:eq(3) td:eq(0)').input('$data').enter('awesome');
+    using(s+'tr:eq(1) td:eq(0)').input('$parent.$data').enter('awesome');
+    using(s+'tr:eq(2) td:eq(0)').input('$parent.$data').enter('awesome');
+    using(s+'tr:eq(3) td:eq(0)').input('$parent.$data').enter('awesome');
 
     element(s+'tr:eq(0) td:eq(0) form button[type="submit"]').click();
 

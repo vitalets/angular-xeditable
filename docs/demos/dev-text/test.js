@@ -45,7 +45,7 @@ describe('dev-text', function() {
     element(a).click();
     expect(element(a).css('display')).toBe('none');
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
-    using(s).input('$data').enter('username2');
+    using(s).input('$parent.$data').enter('username2');
 
     element('body').click();
     expect(element(a).css('display')).not().toBe('none');
@@ -56,7 +56,7 @@ describe('dev-text', function() {
     element(a).click();
     expect(element(a).css('display')).toBe('none');
     expect(element(s+'form').count()).toBe(1);
-    using(s).input('$data').enter('username3');
+    using(s).input('$parent.$data').enter('username3');
 
     element(s+'a.cancel').click();
     expect(element(a).css('display')).not().toBe('none');
@@ -72,7 +72,7 @@ describe('dev-text', function() {
     element(a).click();
     expect(element(a).css('display')).toBe('none');
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
-    using(s).input('$data').enter('username2');
+    using(s).input('$parent.$data').enter('username2');
 
     element('body').click();
     expect(element(a).css('display')).not().toBe('none');
@@ -83,7 +83,7 @@ describe('dev-text', function() {
     element(a).click();
     expect(element(a).css('display')).toBe('none');
     expect(element(s+'form').count()).toBe(1);
-    using(s).input('$data').enter('username3');
+    using(s).input('$parent.$data').enter('username3');
 
     element(s+'a.ignore').click();
     expect(element(a).css('display')).not().toBe('none');
@@ -99,7 +99,7 @@ describe('dev-text', function() {
     element(a).click();
     expect(element(a).css('display')).toBe('none');
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
-    using(s).input('$data').enter('username2');
+    using(s).input('$parent.$data').enter('username2');
 
     element('body').click();
     expect(element(a).css('display')).toBe('none');

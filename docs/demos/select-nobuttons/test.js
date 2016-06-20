@@ -18,7 +18,7 @@ describe('select-nobuttons', function() {
     expect(element(s+'form select').val()).toBe('number:2');
 
     //set new value
-    using(s).select('$data').option('number:3');
+    using(s).select('$parent.$data').option('number:3');
 
     expect(element(s+'a').css('display')).not().toBe('none');
     expect(element(s+'a').text()).toMatch('status3');

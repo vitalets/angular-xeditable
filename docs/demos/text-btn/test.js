@@ -27,7 +27,7 @@ describe('text-btn', function() {
     expect(element(s+'form').attr('editable-form')).toBeTruthy();
 
     //submit
-    using(s).input('$data').enter('username2');
+    using(s).input('$parent.$data').enter('username2');
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'span:eq(0)').css('display')).not().toBe('none');

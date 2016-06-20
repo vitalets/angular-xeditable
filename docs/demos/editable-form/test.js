@@ -64,7 +64,7 @@ describe('editable-form', function() {
     sleep(delay);
 
     //set incorrect values (field's onbeforesave error)
-    using(s+'form > div:eq(0)').input('$data').enter('username2');
+    using(s+'form > div:eq(0)').input('$parent.$data').enter('username2');
     element(s+'.buttons > span button[type="submit"]').click();
 
     //error shown
@@ -75,7 +75,7 @@ describe('editable-form', function() {
     expect(element(s+'form > div:eq(0) .editable-error').text()).toMatch('Username should be `awesome`');
 
     //set incorrect values (form's onaftersave error)
-    using(s+'form > div:eq(0)').input('$data').enter('error');
+    using(s+'form > div:eq(0)').input('$parent.$data').enter('error');
     element(s+'.buttons > span button[type="submit"]').click();
 
     //saving
@@ -97,9 +97,9 @@ describe('editable-form', function() {
     expect(element(s+'form > div:eq(0) .editable-error').text()).toMatch('Server-side error');
 
     //set correct values
-    using(s+'form > div:eq(0)').input('$data').enter('awesome');
-    using(s+'form > div:eq(1)').select('$data').option('number:3'); //status4
-    using(s+'form > div:eq(2)').select('$data').option('number:1'); //user
+    using(s+'form > div:eq(0)').input('$parent.$data').enter('awesome');
+    using(s+'form > div:eq(1)').select('$parent.$data').option('number:3'); //status4
+    using(s+'form > div:eq(2)').select('$parent.$data').option('number:1'); //user
 
     //click submit
     element(s+'.buttons > span button[type="submit"]').click();
