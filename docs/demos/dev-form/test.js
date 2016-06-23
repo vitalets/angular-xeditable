@@ -58,7 +58,7 @@ describe('dev-form', function() {
     expect(element(s+'input[type="text"]:enabled:visible').count()).toBe(1);
 
     //set some value
-    using(s+'form > div:eq(0)').input('$data').enter('username2');
+    using(s+'form > div:eq(0)').input('$parent.$data').enter('username2');
 
     //click input --> no action, form shown
     element(s+'input[type="text"]').click();
@@ -93,7 +93,7 @@ describe('dev-form', function() {
     expect(element(s+'input[type="text"]:enabled:visible').count()).toBe(1);
 
     //set some value
-    using(s+'form > div:eq(0)').input('$data').enter('username2');
+    using(s+'form > div:eq(0)').input('$parent.$data').enter('username2');
 
     //click input --> no action, form shown
     element(s+'input[type="text"]').click();

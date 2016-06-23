@@ -18,7 +18,7 @@ describe('dev-select-multiple', function() {
     expect(element(s+'form select option:selected').count()).toBe(2);
     expect(element(s+'form select').val()).toMatch('["1","3"]');
 
-    using(s).select('$data').option('status2');
+    using(s).select('$parent.$data').option('status2');
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a#multiSelect').css('display')).not().toBe('none');
@@ -40,7 +40,7 @@ describe('dev-select-multiple', function() {
     expect(element(s+'form select option:selected').count()).toBe(1);
     expect(element(s+'form select').val()).toMatch('');
 
-    using(s).select('$data').option('status2');
+    using(s).select('$parent.$data').option('status2');
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a#defaultValue').css('display')).not().toBe('none');

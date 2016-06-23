@@ -11,7 +11,7 @@ describe('validate-remote', function() {
     element(s+'a').click();
 
     //not valid
-    using(s).input('$data').enter('username');
+    using(s).input('$parent.$data').enter('username');
     element(s+'form button[type="submit"]').click();
 
     //checking
@@ -30,7 +30,7 @@ describe('validate-remote', function() {
     expect(element(s+'.editable-error').text()).toMatch('Username should be `awesome`');
 
     //valid
-    using(s).input('$data').enter('awesome');
+    using(s).input('$parent.$data').enter('awesome');
     element(s+'form button[type="submit"]').click();
 
     //checking

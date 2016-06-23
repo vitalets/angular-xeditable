@@ -34,7 +34,7 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
                 this.inputEl.append(rename('ui-select-match', match[index].element));
                 this.inputEl.append(rename('ui-select-choices', choices[index].element));
                 this.inputEl.removeAttr('ng-model');
-                this.inputEl.attr('ng-model', '$parent.$data');
+                this.inputEl.attr('ng-model', '$parent.$parent.$data');
             }
         });
 

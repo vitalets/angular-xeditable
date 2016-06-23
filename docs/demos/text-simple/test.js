@@ -18,7 +18,7 @@ describe('text-simple', function() {
     expect(element(s+'form button[type="submit"]:visible').count()).toBe(1);
     expect(element(s+'form button[type="button"]:visible').count()).toBe(1);
 
-    using(s).input('$data').enter('username2');
+    using(s).input('$parent.$data').enter('username2');
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');
@@ -30,7 +30,7 @@ describe('text-simple', function() {
     var s = '[ng-controller="TextSimpleCtrl"] ';
     element(s+'a').click();
 
-    using(s).input('$data').enter('username2');
+    using(s).input('$parent.$data').enter('username2');
     element(s+'form button[type="button"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');
@@ -53,7 +53,7 @@ describe('text-simple', function() {
     expect(element(s+'form button[type="submit"]:visible').count()).toBe(1);
     expect(element(s+'form button[type="button"]:visible').count()).toBe(1);
 
-    using(s).input('$data').enter('');
+    using(s).input('$parent.$data').enter('');
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');

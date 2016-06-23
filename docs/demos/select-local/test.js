@@ -17,7 +17,7 @@ describe('select-local', function() {
     //select uses own values in options!!
     expect(element(s+'form select').val()).toBe('number:2');
     
-    using(s).select('$data').option('2');
+    using(s).select('$parent.$data').option('2');
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');

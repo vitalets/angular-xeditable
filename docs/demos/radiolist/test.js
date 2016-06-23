@@ -14,11 +14,11 @@ describe('radiolist', function() {
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
     expect(element(s+'form input[type="radio"]:visible:enabled').count()).toBe(2);
 
-    expect(using(s+'label:eq(0)').input('$parent.$data').val()).toBe('1');
-    expect(using(s+'label:eq(1)').input('$parent.$data').val()).toBe('2');
+    expect(using(s+'label:eq(0)').input('$parent.$parent.$data').val()).toBe('1');
+    expect(using(s+'label:eq(1)').input('$parent.$parent.$data').val()).toBe('2');
 
     // select status1
-    using(s+'label:eq(0)').input('$parent.$data').select('1');
+    using(s+'label:eq(0)').input('$parent.$parent.$data').select('1');
     element(s+'form button[type="submit"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');
