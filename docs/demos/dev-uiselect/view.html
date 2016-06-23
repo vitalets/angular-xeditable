@@ -27,10 +27,39 @@
       <!-- buttons to submit / cancel form -->
       <span ng-show="uiSelectForm.$visible">
         <br/>
-        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
+        <button type="submit" class="btn btn-primary" name="submitState" ng-disabled="uiSelectForm.$waiting">
           Save
         </button>
         <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
+          Cancel
+        </button>
+      </span>
+    </div>
+  </form>
+
+  <form data-editable-form name="uiTagsform">
+    <div editable-ui-select="user.tag" data-e-form="uiTagsform" data-e-name="tag" name="tag" id="tag" theme="bootstrap" data-e-tagging data-e-ng-model="user.tag">
+      {{user.tag}}
+      <editable-ui-select-match placeholder="Tags">
+        {{$select.selected}}
+      </editable-ui-select-match>
+      <editable-ui-select-choices repeat="tag in tags | filter: $select.search track by $index">
+        {{tag}}
+      </editable-ui-select-choices>
+    </div>
+    <br/>
+    <div class="buttons">
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="uiTagsform.$show()" ng-show="!uiTagsform.$visible">
+        Edit
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="uiTagsform.$visible">
+        <br/>
+        <button type="submit" class="btn btn-primary" name="submitTag" ng-disabled="uiTagsform.$waiting">
+          Save
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="uiTagsform.$waiting" ng-click="uiTagsform.$cancel()">
           Cancel
         </button>
       </span>

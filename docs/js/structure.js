@@ -24,7 +24,8 @@ module.exports = [
         {id: 'select-multiple', text: 'Select multiple', fiddle: 'http://jsfiddle.net/NfPcH/30/'},
         {id: 'validate-local', text: 'Validate local', fiddle: 'http://jsfiddle.net/NfPcH/35/'},
         {id: 'validate-remote', text: 'Validate remote', fiddle: 'http://jsfiddle.net/NfPcH/36/'},
-        {id: 'edit-disabled', text: 'Disable editing'}
+        {id: 'edit-disabled', text: 'Disable editing'},
+        {id: 'editable-popover', text: 'Editable Popover'}
     ]},
 
     {id: 'onbeforesave', text: 'Submit', type: 'demos', items: [
