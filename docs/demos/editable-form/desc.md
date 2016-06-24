@@ -49,4 +49,6 @@ The result of form's `onaftersave` is also important for next step:
 
 Commonly you should define `onbeforesave` for child elements to perform validation and `onaftersave` for whole form to send data on server.
 
+Note:  `e-required` will not work since HTML5 validation only works if submitting a form with a submit button and `editable-form` submits via a script.
+
 Please have a look at examples.

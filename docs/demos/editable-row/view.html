@@ -9,7 +9,7 @@
     <tr ng-repeat="user in users">
       <td>
         <!-- editable username (text with validation) -->
-        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, user.id)" e-required>
+        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, user.id)">
           {{ user.name || 'empty' }}
         </span>
       </td>

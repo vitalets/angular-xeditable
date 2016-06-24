@@ -113,4 +113,53 @@ a.editable-empty:focus {
   text-decoration: none;
 }
 
+/* editable popover */
+.popover-wrapper a {
+  /* make the link always show up */
+  display: inline !important;
+}
+
+.popover-wrapper {
+  /* make absolutely positioned children constrained to this box*/
+  display: inline;
+  position: relative;
+}
+
+.popover-wrapper form {
+  position: absolute;
+  top: -53px;
+  background: #FFF;
+  border: 1px solid #AAA;
+  border-radius: 5px;
+  padding: 7px;
+  width: auto;
+  display: inline-block;
+  left: 50%;
+  margin-left: -110px;
+  z-index: 101;
+}
+
+.popover-wrapper form:before {
+  content:"";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #AAA;
+  position:absolute;
+  bottom:-10px;
+  left:100px;
+}
+
+.popover-wrapper form:after {
+  content:"";
+  width:0;
+  height:0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #FFF;
+  position:absolute;
+  bottom:-9px;
+  left:101px;
+}
 
