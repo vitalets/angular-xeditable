@@ -7,7 +7,7 @@
     <!--theme: Bootstrap 3, Bootstrap 2, default-->
     <link href="libs/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet" media="screen">
     <!--ui-select css-->
-    <link href="libs/ui-select/0.16.0/select.css" rel="stylesheet" media="screen">
+    <link href="libs/ui-select/0.16.1/select.css" rel="stylesheet" media="screen">
     <!--xeditable css-->
     <link href="dist/css/xeditable.css" rel="stylesheet" media="screen">
     <!--docs css-->
@@ -20,11 +20,11 @@
     <!--bootstrap-->
     <script src="libs/bootstrap/3.3.6/js/bootstrap.js"></script>
     <!--angular-ui-bootstrap-->
-    <script src="libs/angular-ui/bootstrap/ui-bootstrap-tpls-1.2.4.min.js"></script>
+    <script src="libs/angular-ui/bootstrap/ui-bootstrap-tpls-1.3.1.min.js"></script>
     <!--ui-select-->
-    <script src="libs/ui-select/0.16.0/select.js"></script>
+    <script src="libs/ui-select/0.16.1/select.js"></script>
     <!--moment-->
-    <script src="libs/moment.min.2.5.0.js"></script>
+    <script src="libs/moment.min.2.12.0.js"></script>
     <!--google-code-prettify-->
     <script src="libs/google-code-prettify/run_prettify.js"></script>
     <!--checklist-model-->
@@ -45,7 +45,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.1.12.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.1.12 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.2.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.2.0 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -124,6 +124,8 @@
                   <li><a href="#select-multiple">Select multiple</a></li>
                   <li><a href="#validate-local">Validate local</a></li>
                   <li><a href="#validate-remote">Validate remote</a></li>
+                  <li><a href="#edit-disabled">Disable editing</a></li>
+                  <li><a href="#editable-popover">Editable Popover</a></li>
                 </ul>
               </li>
               <li><a href="#onbeforesave">Submit</a>
@@ -210,7 +212,7 @@ For ui-select you may need to include <a href="https://github.com/angular-ui/ui-
 
               <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.1.12.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.2.0.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -248,7 +250,7 @@ For ui-select you may need to include <a href="https://github.com/angular-ui/ui-
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/25/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextSimpleCtrl">
-  <a href="#" editable-text="user.name">{{ user.name || 'empty' }}</a>
+  <a href="#" editable-text="user.name" e-label="User Name">{{ user.name || 'empty' }}</a>
 </div></div>
                       <pre>{{ debug["text-simple"] | json }}</pre>
                       <p><p>To make element editable via textbox just add <code>editable-text=&quot;model.field&quot;</code> attribute.</p>
@@ -261,7 +263,7 @@ For ui-select you may need to include <a href="https://github.com/angular-ui/ui-
 $scope.$watch("user", function(v) { $scope.$parent.debug["text-simple"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextSimpleCtrl&quot;&gt;
-  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot;&gt;{{ user.name || 'empty' }}&lt;/a&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-label=&quot;User Name&quot;&gt;{{ user.name || 'empty' }}&lt;/a&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('TextSimpleCtrl', function($scope) {
@@ -282,7 +284,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-simple"]=v; }); }
                       <pre>{{ debug["select-local"] | json }}</pre>
                       <p><p>To create editable select (dropdown) just set <code>editable-select</code> attribute pointing to model.
 To pass dropdown options you should define <code>e-ng-options</code> attribute
-that works like normal angular <code>ng-options</code> but is transfered to underlying <code>&lt;select&gt;</code> from original element.</p>
+that works like normal angular <code>ng-options</code> but is transfered to underlying <code>&lt;select&gt;</code> from original element.
+To set a default option in the list add the <code>e-placeholder</code> attribute.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('SelectLocalCtrl', function($scope, $filter) {
@@ -409,6 +412,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
   <div>Month: <a href="#" editable-month="user.month">{{ (user.month | date: "yyyy-MM") || 'empty' }}</a></div>
   <div>Week: <a href="#" editable-week="user.week">{{ (user.week | date: "yyyy-Www") || 'empty'}}</a></div>
   <div>Password: <a href="#" editable-password="user.password">{{ user.password || 'empty' }}</a></div>
+  <div>Datetime-local: <a href="#" editable-datetime-local="user.datetimeLocal">{{ (user.datetimeLocal | date: "yyyy-MM-ddTHH:mm:ss") || 'empty' }}</a></div>
 </div></div>
                       <pre>{{ debug["html5-inputs"] | json }}</pre>
                       <p><p>Following HTML5 types are supported via <code>editable-xxx</code> directive:</p>
@@ -426,6 +430,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
 <li>month</li>
 <li>week</li>
 <li>password</li>
+<li>datetime-local</li>
 </ul>
 <p>Please <a href="http://caniuse.com/">check browser support</a> before using particular type in your project.</p>
 </p>
@@ -444,7 +449,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
     datetime: null,
     month: null,
     week: null,
-    password: 'password'
+    password: 'password',
+    datetimeLocal: null
   };  
 $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); });</script>
                       <h3>html</h3>
@@ -462,6 +468,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
   &lt;div&gt;Month: &lt;a href=&quot;#&quot; editable-month=&quot;user.month&quot;&gt;{{ (user.month | date: &quot;yyyy-MM&quot;) || 'empty' }}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Week: &lt;a href=&quot;#&quot; editable-week=&quot;user.week&quot;&gt;{{ (user.week | date: &quot;yyyy-Www&quot;) || 'empty'}}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Password: &lt;a href=&quot;#&quot; editable-password=&quot;user.password&quot;&gt;{{ user.password || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Datetime-local: &lt;a href=&quot;#&quot; editable-datetime-local=&quot;user.datetimeLocal&quot;&gt;{{ (user.datetimeLocal | date: &quot;yyyy-MM-ddTHH:mm:ss&quot;) || 'empty' }}&lt;/a&gt;&lt;/div&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('Html5InputsCtrl', function($scope) {
@@ -478,7 +485,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
     datetime: null,
     month: null,
     week: null,
-    password: 'password'
+    password: 'password',
+    datetimeLocal: null
   };  
 });</pre>
                     </section>
@@ -623,7 +631,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checklist"]=v; }); });
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="RadiolistCtrl">
-  <a href="#" editable-radiolist="user.status" e-ng-options="s.value as s.text for s in statuses">
+  <a href="#" editable-radiolist="user.status" e-ng-options="s.value as s.text for s in ::statuses track by s.value">
     {{ showStatus() }}
   </a>
 </div></div>
@@ -653,7 +661,7 @@ By default, radioboxes aligned <em>horizontally</em>. To align <em>vertically</e
 $scope.$watch("user", function(v) { $scope.$parent.debug["radiolist"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;RadiolistCtrl&quot;&gt;
-  &lt;a href=&quot;#&quot; editable-radiolist=&quot;user.status&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-radiolist=&quot;user.status&quot; e-ng-options=&quot;s.value as s.text for s in ::statuses track by s.value&quot;&gt;
     {{ showStatus() }}
   &lt;/a&gt;
 &lt;/div&gt;</pre>
@@ -685,11 +693,10 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["radiolist"]=v; }); });
 </div></div>
                       <pre>{{ debug["bsdate"] | json }}</pre>
                       <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
-<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
-<p>And set <code>editable-bsdate</code> attribute in editable element.
-Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;</code>.</p>
+<p>And set <code>editable-bsdate</code> attribute in editable element.<br>To make the input field read-only and force the date to be selected from the popup, add the <code>e-readonly=&quot;true&quot;</code> attribute.<br>Add <code>e-ng-change</code> attribute to call a function when the value of the datepicker is changed.<br>To hide the calendar button and display the calendar popup on click of the input field, set the <code>e-show-calendar-button</code> attribute to false.<br>Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;</code>.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('BsdateCtrl', function($scope) {
@@ -739,7 +746,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</s
 </div></div>
                       <pre>{{ debug["bstime"] | json }}</pre>
                       <p><p>Time control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/timepicker">Angular-ui bootstrap timepicker</a>.<br><strong>Currently it has only Bootstrap 2 version</strong>, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
-<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
 <p>And set <code>editable-bstime</code> attribute in editable element.
@@ -795,7 +802,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bstime"]=v; }); });</s
                       <pre>{{ debug["combodate"] | json }}</pre>
                       <p><p>You should include additional <code>moment.js</code>:</p>
 <p>And set <code>editable-combodate</code> attribute in editable element.
-Custom options supported by <a href="https://vitalets.github.io/combodate/">Combodate</a> can be provided via <code>e-*</code> syntax, e.g. <code>e-min-year=&quot;2015&quot;</code>.</p>
+Custom options supported by <a href="https://vitalets.github.io/combodate/">Combodate</a> can be provided via <code>e-*</code> syntax, e.g. <code>e-min-year=&quot;2015&quot;</code>, <code>e-max-year=&quot;2025&quot;</code>.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('CombodateCtrl', function($scope) {
@@ -827,7 +834,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["combodate"]=v; }); });
 </div></div>
                       <pre>{{ debug["typeahead"] | json }}</pre>
                       <p><p>Typeahead control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/typeahead">Angular-ui bootstrap typeahead</a>.<br>Basically it is normal <code>editable-text</code> control with additional <code>e-typeahead</code> attributes.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
-<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Then add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
 <p>And finally set <code>editable-text</code> attribute pointing to model and <code>e-uib-typeahead</code> attribute pointing to typeahead items.
@@ -953,14 +960,13 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["uiselect"]=v; }); });<
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/26/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextCustomizeCtrl">
-  <a href="#" editable-text="user.name" e-style="color: green" e-required e-placeholder="Enter name">
+  <a href="#" editable-text="user.name" e-style="color: green" e-required e-placeholder="Enter name" e-formclass="class1 class2">
     {{ (user.name || 'empty') | uppercase }}
   </a>
 </div></div>
                       <pre>{{ debug["text-customize"] | json }}</pre>
                       <p><p>To define attributes for input (e.g. <code>style</code> or <code>placeholder</code>) you can define them
-on the original element with <code>e-*</code> prefix (e.g. <code>e-style</code> or <code>e-placeholder</code>). 
-When input will appear these attributes will be transfered to it.</p>
+on the original element with <code>e-*</code> prefix (e.g. <code>e-style</code> or <code>e-placeholder</code>).<br>To customize the classes on the form the input is in, add <code>e-formclass</code> with the classes to be added.<br>When input will appear these attributes will be transferred to it.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('TextCustomizeCtrl', function($scope) {
@@ -970,7 +976,7 @@ When input will appear these attributes will be transfered to it.</p>
 $scope.$watch("user", function(v) { $scope.$parent.debug["text-customize"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextCustomizeCtrl&quot;&gt;
-  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-style=&quot;color: green&quot; e-required e-placeholder=&quot;Enter name&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-style=&quot;color: green&quot; e-required e-placeholder=&quot;Enter name&quot; e-formclass=&quot;class1 class2&quot;&gt;
     {{ (user.name || 'empty') | uppercase }}
   &lt;/a&gt;
 &lt;/div&gt;</pre>
@@ -1248,6 +1254,64 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["validate-remote"]=v; }
   };
 });</pre>
                     </section>
+                    <section id="edit-disabled">
+                      <h1>Disable editing</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="EditDisabledCtrl">
+  <a href="#" editable-text="user.name" edit-disabled="{{user && user.name == 'awesome user'}}">{{user.name || 'empty' }}</a>
+</div></div>
+                      <pre>{{ debug["edit-disabled"] | json }}</pre>
+                      <p><p>To disable an element from being editable, just add the <code>edit-disabled=&quot;true&quot;</code> attribute.  Additionally, you can disable all elements at a global level by setting <code>editableOptions.isDisabled=true</code>.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('EditDisabledCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+$scope.$watch("user", function(v) { $scope.$parent.debug["edit-disabled"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditDisabledCtrl&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; edit-disabled=&quot;{{user &amp;&amp; user.name == 'awesome user'}}&quot;&gt;{{user.name || 'empty' }}&lt;/a&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('EditDisabledCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+});</pre>
+                    </section>
+                    <section id="editable-popover">
+                      <h1>Editable Popover</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="EditPopoverCtrl">
+  <div class="popover-wrapper">
+    <a href="#" editable-text="user.name">{{user.name || 'empty' }}</a>
+  </div>
+</div></div>
+                      <pre>{{ debug["editable-popover"] | json }}</pre>
+                      <p><p>To made an editable field display in a popover, wrap the editable in <code>&lt;div class=&quot;item-wrapper&quot;&gt;</code>.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('EditPopoverCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+$scope.$watch("user", function(v) { $scope.$parent.debug["editable-popover"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditPopoverCtrl&quot;&gt;
+  &lt;div class=&quot;popover-wrapper&quot;&gt;
+    &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot;&gt;{{user.name || 'empty' }}&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('EditPopoverCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+});</pre>
+                    </section>
                     <section id="onbeforesave">
                       <h1>Submit via onbeforesave</h1>
                       <!-- watch change of user to update rootScope for debugging-->
@@ -1437,6 +1501,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
 <li><code>not string</code>: form will be closed</li>
 </ul>
 <p>Commonly you should define <code>onbeforesave</code> for child elements to perform validation and <code>onaftersave</code> for whole form to send data on server.</p>
+<p>Note:  <code>e-required</code> will not work since HTML5 validation only works if submitting a form with a submit button and <code>editable-form</code> submits via a script.</p>
 <p>Please have a look at examples.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
@@ -1601,7 +1666,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     <tr ng-repeat="user in users">
       <td>
         <!-- editable username (text with validation) -->
-        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, user.id)" e-required>
+        <span editable-text="user.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, user.id)">
           {{ user.name || 'empty' }}
         </span>
       </td>
@@ -1720,7 +1785,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
     &lt;tr ng-repeat=&quot;user in users&quot;&gt;
       &lt;td&gt;
         &lt;!-- editable username (text with validation) --&gt;
-        &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-form=&quot;rowform&quot; onbeforesave=&quot;checkName($data, user.id)&quot; e-required&gt;
+        &lt;span editable-text=&quot;user.name&quot; e-name=&quot;name&quot; e-form=&quot;rowform&quot; onbeforesave=&quot;checkName($data, user.id)&quot;&gt;
           {{ user.name || 'empty' }}
         &lt;/span&gt;
       &lt;/td&gt;
@@ -2644,7 +2709,8 @@ to model.<br>If at least one children callback returns <code>non-string</code> -
                           <td><code>$activate(name)</code></td>
                           <td><strong>name</strong><i> (string) </i>name of field<br>
                           </td>
-                          <td><p>Sets focus on form field specified by <code>name</code>.</p>
+                          <td><p>Sets focus on form field specified by <code>name</code>.<br/>
+When trying to set the focus on a form field of a new row in the editable table, the <code>$activate</code> call needs to be wrapped in a <code>$timeout</code> call so that the form is rendered before the <code>$activate</code> function is called.</p>
 </td>
                         </tr>
                         <tr>

@@ -1,6 +1,20 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.2.0 Jun 28, 2016
+
+----------------------------
+[enh #491] Added popover functionality (ckosloski)
+[fix #489] Fix - Memory leak when ending editing by destroying the scope (kenfdev)
+[enh #479] Added ability to add a label to an input (ckosloski)
+[enh #473] Added support for datetime-local input (ckosloski)
+[bug #464] Added ability to add more then one editable-ui-select component on the same page (julia-k)
+[enh #463] Added on-change support for bsdate and placeholder support for editable-select (ckosloski)
+[bug #456] Fixed bsdate warnings with latest ui-bootstrap (ckosloski)
+[bug #454] Fix finding form controller when elements not yet in DOM (bostrom)
+[bug #366] Make 'e-form' publish local $form even if specify object property (hshn)
+
+
 Version 0.1.12 Apr 14, 2016
 ----------------------------
 [enh #448] Add support for ui-select (ckosloski)
