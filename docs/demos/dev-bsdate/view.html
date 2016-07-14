@@ -1,6 +1,6 @@
 <div ng-controller="DevBsdateCtrl">
   <a href="#" data-editable-bsdate="user.dob"
-              data-e-is-open="opened.$data"
+              data-e-is-open="opened.$parent.$data"
               data-e-ng-click="open($event,'$data')"
               data-e-datepicker-popup="dd-MMMM-yyyy"
               data-e-min-date="getMinDate()"
@@ -37,7 +37,7 @@
               data-e-is-open="opened.$data"
               data-e-ng-click="open($event,'$data')"
               data-e-datepicker-popup="dd-MMMM-yyyy"
-              data-e-ng-change="changed()"
+              data-e-ng-change="changed($parent.$data)"
               id="onChangeDate"
               class="onChangeDate">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}

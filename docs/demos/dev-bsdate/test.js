@@ -1,4 +1,4 @@
-describe('bsdate', function() {
+describe('dev-bsdate', function() {
 
   beforeEach(function() {
     browser().navigateTo(mainUrl);
@@ -63,6 +63,9 @@ describe('bsdate', function() {
     expect(element(s+'a#minMax').css('display')).not().toBe('none');
     expect(element(s+'a#minMax').text()).toMatch('');
     expect(element(s+'form').count()).toBe(0);
+
+    //Click on page to close popup to have the isOpened flag properly set for the next text
+    element(s).click();
   });
 
   it('should show editor with selected date set to the current date', function() {

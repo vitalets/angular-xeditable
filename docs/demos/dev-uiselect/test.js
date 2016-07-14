@@ -1,4 +1,4 @@
-describe('uiselect', function() {
+describe('dev-uiselect', function() {
 
   beforeEach(function() {
     browser().navigateTo(mainUrl);
