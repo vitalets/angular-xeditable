@@ -187,7 +187,7 @@ angular.module('xeditable').factory('editableController',
       self.inputEl = angular.element(self.inputTpl);
 
       //build controls
-      self.controlsEl = angular.element(theme.controlsTpl);
+      self.controlsEl = angular.element(self.controlsTpl || theme.controlsTpl);
       self.controlsEl.append(self.inputEl);
 
       //build buttons
