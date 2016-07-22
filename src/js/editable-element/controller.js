@@ -47,7 +47,7 @@ angular.module('xeditable').factory('editableController',
     self.single = null;
 
     /**
-     * Attributes defined with `e-*` prefix automatically transfered from original element to
+     * Attributes defined with `e-*` prefix automatically transferred from original element to
      * control.  
      * For example, if you set `<span editable-text="user.name" e-style="width: 100px"`>
      * then input will appear as `<input style="width: 100px">`.  
@@ -74,7 +74,7 @@ angular.module('xeditable').factory('editableController',
      * @var {string|attribute} blur
      * @memberOf editable-element
      */     
-    // no real `blur` property as it is transfered to editable form
+    // no real `blur` property as it is transferred to editable form
 
     //init
     self.init = function(single) {
