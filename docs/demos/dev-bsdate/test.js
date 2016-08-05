@@ -15,6 +15,7 @@ describe('dev-bsdate', function() {
     expect(element(s+'a#minMax').css('display')).toBe('none');
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
     expect(element(s+'form input[type="text"]:visible').count()).toBe(1);
+    expect(element(s+'form input[type="text"]').css('color')).toBe('rgb(255, 255, 255)');
     expect(element(s+'form input[type="text"]').val()).toBe('15-May-1984');
     expect(element(s+'form .editable-buttons button[type="submit"]:visible').count()).toBe(1);
     expect(element(s+'form .editable-buttons button[type="button"]:visible').count()).toBe(1);

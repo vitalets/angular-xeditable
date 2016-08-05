@@ -37,6 +37,11 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                     this.inputEl.removeAttr('ng-change');
                 }
 
+                if (this.attrs.eStyle) {
+                    inputDatePicker.attr('style', this.attrs.eStyle);
+                    this.inputEl.removeAttr('style');
+                }
+
                 this.scope.dateOptions = {
                     formatDay:  this.attrs.eFormatDay || 'dd',
                     formatMonth: this.attrs.eFormatMonth || 'MMMM',
