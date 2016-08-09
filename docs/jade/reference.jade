@@ -89,3 +89,14 @@ pre.prettyprint
 - items = ns.functions || []  
 +methods(items)
 
+
+h3 Override `controlsTpl` in custom directives
+:markdown
+  You can specify a `controlsTpl` property to override the same property in a defined theme, by adding `controlsTpl` to your custom directive configuration:
+pre.prettyprint
+  = 'ng.module("xeditable").directive( "editableCustomDirective", function( editableDirectiveFactory ) {\n'
+  = '     return editableDirectiveFactory({\n'
+  = '        directiveName: \'editableCustomDirective\',\n'
+  = '        ...\n'
+  = '        controlsTpl: \'<div ng-class="{\\\'md-input-invalid\\\': $error}"></div>\',\n'
+  = '        ...'
