@@ -59,6 +59,7 @@ module.exports = [
         {id: 'dev-form'},
         {id: 'dev-select'},
         {id: 'dev-bsdate'},
-        {id: 'dev-uiselect'}
+        {id: 'dev-uiselect'},
+        {id: 'dev-theme'}
     ]}
 ];
