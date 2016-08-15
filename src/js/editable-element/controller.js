@@ -28,7 +28,7 @@ angular.module('xeditable').factory('editableController',
     self.editorEl = null;
     self.single = true;
     self.error = '';
-    self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
+    self.theme =  editableThemes[$attrs.editableTheme] || editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
 
     //will be undefined if icon_set is default and theme is default
