@@ -8,7 +8,6 @@ Following HTML5 types are supported via `editable-xxx` directive:
 * url
 * color
 * date
-* datetime
 * time
 * month
 * week
