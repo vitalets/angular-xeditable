@@ -9,7 +9,6 @@ app.controller('Html5InputsCtrl', function($scope) {
     color: '#6a4415',
     date: null,
     time: new Date(1970, 0, 1, 12, 30),
-    datetime: null,
     month: null,
     week: null,
     password: 'password',
