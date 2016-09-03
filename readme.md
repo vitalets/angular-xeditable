@@ -35,6 +35,7 @@ Basically it does not depend on any libraries except [AngularJS](http://angularj
 For themes you may need to include [Twitter Bootstrap](http://getbootstrap.com) CSS.  
 For some extra controls (e.g. datepicker) you may need to include [angular-ui bootstrap](http://angular-ui.github.io/bootstrap/).
 To use ui-select you will need to include [angular-ui ui-select](https://github.com/angular-ui/ui-select/).
+To use ngTagsInput you will need to include [mbenford ngTagsInput](https://github.com/mbenford/ngTagsInput).
 
 ## jsFiddle / Plunker
 Please use these live templates when creating issues:  

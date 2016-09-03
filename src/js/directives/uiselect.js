@@ -2,18 +2,8 @@
  AngularJS-native version of Select2 and Selectize
  https://github.com/angular-ui/ui-select
  */
-angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFactory',
-    function(editableDirectiveFactory) {
-        var rename = function (tag, el) {
-            var newEl = angular.element('<' + tag + '/>');
-            newEl.html(el.html());
-            var attrs = el[0].attributes;
-            for (var i = 0; i < attrs.length; ++i) {
-                newEl.attr(attrs.item(i).nodeName, attrs.item(i).value);
-            }
-            return newEl;
-        };
-
+angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFactory', 'editableUtils',
+    function(editableDirectiveFactory, editableUtils) {
         var findElement = function(name) {
             for(var i = 0, len = match.length; i < len; i++) {
                   if (match[i].name === name) {
@@ -31,8 +21,8 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
             render: function () {
                 var index = findElement(this.name);
                 this.parent.render.call(this);
-                this.inputEl.append(rename('ui-select-match', match[index].element));
-                this.inputEl.append(rename('ui-select-choices', choices[index].element));
+                this.inputEl.append(editableUtils.rename('ui-select-match', match[index].element));
+                this.inputEl.append(editableUtils.rename('ui-select-choices', choices[index].element));
                 this.inputEl.removeAttr('ng-model');
                 this.inputEl.attr('ng-model', '$parent.$parent.$data');
             }

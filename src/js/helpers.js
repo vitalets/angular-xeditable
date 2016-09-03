@@ -114,6 +114,16 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
         return offset ? letter.toUpperCase() : letter;
       }).
       replace(MOZ_HACK_REGEXP, 'Moz$1');
+    },
+
+    rename: function (tag, el) {
+      var newEl = angular.element('<' + tag + '/>');
+      newEl.html(el.html());
+      var attrs = el[0].attributes;
+      for (var i = 0; i < attrs.length; ++i) {
+          newEl.attr(attrs.item(i).nodeName, attrs.item(i).value);
+      }
+      return newEl;
     }
   };
 }]);
