@@ -1,0 +1,25 @@
+<div ng-controller="NgTagsCtrl">
+  <form data-editable-form name="ngTagsForm">
+    <div editable-tags-input="user.tags" data-e-form="ngTagsForm" data-e-name="tags" name="tags" data-e-ng-model="user.tags">
+      {{user.tags}}
+        <editable-tags-input-auto-complete source="loadTags($query)"></editable-tags-input-auto-complete>
+    </div>
+    <br/>
+    <div class="buttons">
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="ngTagsForm.$show()" ng-show="!ngTagsForm.$visible">
+        Edit
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="ngTagsForm.$visible">
+        <br/>
+        <button type="submit" class="btn btn-primary" ng-disabled="ngTagsForm.$waiting">
+          Save
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="ngTagsForm.$waiting" ng-click="ngTagsForm.$cancel()">
+          Cancel
+        </button>
+      </span>
+    </div>
+  </form>
+</div>

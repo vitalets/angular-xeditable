@@ -1,4 +1,4 @@
-var app = angular.module("app", ["xeditable", "ngMockE2E", 'ui.bootstrap', 'checklist-model', 'ui.select']);
+var app = angular.module("app", ["xeditable", "ngMockE2E", 'ui.bootstrap', 'checklist-model', 'ui.select', 'ngTagsInput']);
 
 //add delay to $httpBackend
 app.config(function($provide) {
@@ -87,7 +87,21 @@ app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
     {id: 4, text: 'admin'}
   ]);
 
-  //groups err
+  //tags
+  $httpBackend.whenRoute('GET', '/tags').respond([
+    { "text": "Tag1" },
+    { "text": "Tag2" },
+    { "text": "Tag3" },
+    { "text": "Tag4" },
+    { "text": "Tag5" },
+    { "text": "Tag6" },
+    { "text": "Tag7" },
+    { "text": "Tag8" },
+    { "text": "Tag9" },
+    { "text": "Tag10" }
+  ]);
+
+    //groups err
   $httpBackend.whenGET('/groups-err').respond(function(method, url, data) {
     return [500, 'server error', {}];
   });
