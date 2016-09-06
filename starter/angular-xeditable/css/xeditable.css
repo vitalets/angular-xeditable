@@ -4,7 +4,7 @@
 /* class for single editable element */
 .editable-wrap {
   display: inline-block;
-  white-space: nowrap;
+  white-space: pre;
   margin: 0;
 }
 
@@ -114,7 +114,7 @@ a.editable-empty:focus {
 }
 
 /* editable popover */
-.popover-wrapper a {
+.popover-wrapper > a {
   /* make the link always show up */
   display: inline !important;
 }
@@ -135,7 +135,6 @@ a.editable-empty:focus {
   width: auto;
   display: inline-block;
   left: 50%;
-  margin-left: -110px;
   z-index: 101;
 }
 
@@ -148,7 +147,6 @@ a.editable-empty:focus {
   border-top: 10px solid #AAA;
   position:absolute;
   bottom:-10px;
-  left:100px;
 }
 
 .popover-wrapper form:after {
@@ -160,6 +158,34 @@ a.editable-empty:focus {
   border-top: 9px solid #FFF;
   position:absolute;
   bottom:-9px;
-  left:101px;
+}
+
+
+@media screen and (max-width: 750px) {
+    .popover-wrapper form {
+        margin-left: -60px;
+    }
+
+    .popover-wrapper form:before {
+        left:50px;
+    }
+
+    .popover-wrapper form:after {
+        left:51px;
+    }
+}
+
+@media screen and (min-width: 750px) {
+    .popover-wrapper form {
+        margin-left: -110px;
+    }
+
+    .popover-wrapper form:before {
+        left:100px;
+    }
+
+    .popover-wrapper form:after {
+        left:101px;
+    }
 }
 

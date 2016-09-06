@@ -8,6 +8,9 @@
     <link href="libs/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet" media="screen">
     <!--ui-select css-->
     <link href="libs/ui-select/0.16.1/select.css" rel="stylesheet" media="screen">
+    <!--ng-tags css-->
+    <link href="libs/ng-tags/3.1.1/ng-tags-input.min.css" rel="stylesheet" media="screen">
+    <link href="libs/ng-tags/3.1.1/ng-tags-input.bootstrap.min.css" rel="stylesheet" media="screen">
     <!--xeditable css-->
     <link href="dist/css/xeditable.css" rel="stylesheet" media="screen">
     <!--docs css-->
@@ -23,6 +26,8 @@
     <script src="libs/angular-ui/bootstrap/ui-bootstrap-tpls-1.3.1.min.js"></script>
     <!--ui-select-->
     <script src="libs/ui-select/0.16.1/select.js"></script>
+    <!--ng-tags-->
+    <script src="libs/ng-tags/3.1.1/ng-tags-input.min.js"></script>
     <!--moment-->
     <script src="libs/moment.min.2.12.0.js"></script>
     <!--google-code-prettify-->
@@ -45,7 +50,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.2.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.2.0 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.3.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.3.0 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -114,6 +119,7 @@
                   <li><a href="#combodate">DateTime</a></li>
                   <li><a href="#typeahead">Typeahead</a></li>
                   <li><a href="#uiselect">UI-Select</a></li>
+                  <li><a href="#ngtags">ngTagsInput</a></li>
                 </ul>
               </li>
               <li><a href="#text-customize">Techniques</a>
@@ -171,7 +177,8 @@
 to use power of angular and support complex forms / editable grids.</p>
 
           <h4>Dependencies</h4><p>Basically it does not depend on any libraries except <a href="http://angularjs.org">AngularJS</a> itself.<br>For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.<br>For some extra controls (e.g. datepicker) you may need to include <a href="http://angular-ui.github.io/bootstrap/">angular-ui bootstrap</a>.
-For ui-select you may need to include <a href="https://github.com/angular-ui/ui-select/">angular-ui ui-select</a>.</p>
+For ui-select you may need to include <a href="https://github.com/angular-ui/ui-select/">angular-ui ui-select</a>.
+For ngTagsInput you may need to include <a href="https://github.com/mbenford/ngTagsInput">mbenford ngTagsInput</a>.</p>
 
           <h4>Controls & Features</h4>
           <table style="width: 50%; min-width: 200px">
@@ -188,6 +195,7 @@ For ui-select you may need to include <a href="https://github.com/angular-ui/ui-
 <li><a href="#html5-inputs">html5 inputs</a>        </li>
 <li><a href="#typeahead">typeahead</a></li>
 <li><a href="#uiselect">ui-select</a></li>
+<li><a href="#ngTagsInput">ngTagsInput</a></li>
 </ul>
 
               </td>
@@ -212,7 +220,7 @@ For ui-select you may need to include <a href="https://github.com/angular-ui/ui-
 
               <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.2.0.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.3.0.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -404,11 +412,10 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
   <div>Number: <a href="#" editable-number="user.number" e-min="18">{{ user.number || 'empty' }}</a></div>  
   <div>Range: <a href="#" editable-range="user.range" e-step="5">{{ user.range || 'empty' }}</a></div>  
   <div>Url: <a href="#" editable-url="user.url">{{ user.url || 'empty' }}</a></div>  
-  <div>Search: <a href="#" editable-search="user.search">{{ user.search || 'empty' }}</a></div>  
+  <div>Search: <a href="#" editable-search="user.search">{{ user.search || 'empty' }}</a></div>
   <div>Color: <a href="#" editable-color="user.color">{{ user.color || 'empty' }}</a></div>  
   <div>Date: <a href="#" editable-date="user.date">{{ (user.date | date: "yyyy-MM-dd") || 'empty' }}</a></div>
   <div>Time: <a href="#" editable-time="user.time">{{ (user.time | date: "HH:mm") || 'empty' }}</a></div>
-  <div>Datetime: <a href="#" editable-datetime="user.datetime">{{ user.datetime || 'empty' }}</a></div>  
   <div>Month: <a href="#" editable-month="user.month">{{ (user.month | date: "yyyy-MM") || 'empty' }}</a></div>
   <div>Week: <a href="#" editable-week="user.week">{{ (user.week | date: "yyyy-Www") || 'empty'}}</a></div>
   <div>Password: <a href="#" editable-password="user.password">{{ user.password || 'empty' }}</a></div>
@@ -425,7 +432,6 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
 <li>url</li>
 <li>color</li>
 <li>date</li>
-<li>datetime</li>
 <li>time</li>
 <li>month</li>
 <li>week</li>
@@ -446,7 +452,6 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
     color: '#6a4415',
     date: null,
     time: new Date(1970, 0, 1, 12, 30),
-    datetime: null,
     month: null,
     week: null,
     password: 'password',
@@ -460,11 +465,10 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
   &lt;div&gt;Number: &lt;a href=&quot;#&quot; editable-number=&quot;user.number&quot; e-min=&quot;18&quot;&gt;{{ user.number || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
   &lt;div&gt;Range: &lt;a href=&quot;#&quot; editable-range=&quot;user.range&quot; e-step=&quot;5&quot;&gt;{{ user.range || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
   &lt;div&gt;Url: &lt;a href=&quot;#&quot; editable-url=&quot;user.url&quot;&gt;{{ user.url || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
-  &lt;div&gt;Search: &lt;a href=&quot;#&quot; editable-search=&quot;user.search&quot;&gt;{{ user.search || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
+  &lt;div&gt;Search: &lt;a href=&quot;#&quot; editable-search=&quot;user.search&quot;&gt;{{ user.search || 'empty' }}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Color: &lt;a href=&quot;#&quot; editable-color=&quot;user.color&quot;&gt;{{ user.color || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
   &lt;div&gt;Date: &lt;a href=&quot;#&quot; editable-date=&quot;user.date&quot;&gt;{{ (user.date | date: &quot;yyyy-MM-dd&quot;) || 'empty' }}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Time: &lt;a href=&quot;#&quot; editable-time=&quot;user.time&quot;&gt;{{ (user.time | date: &quot;HH:mm&quot;) || 'empty' }}&lt;/a&gt;&lt;/div&gt;
-  &lt;div&gt;Datetime: &lt;a href=&quot;#&quot; editable-datetime=&quot;user.datetime&quot;&gt;{{ user.datetime || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
   &lt;div&gt;Month: &lt;a href=&quot;#&quot; editable-month=&quot;user.month&quot;&gt;{{ (user.month | date: &quot;yyyy-MM&quot;) || 'empty' }}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Week: &lt;a href=&quot;#&quot; editable-week=&quot;user.week&quot;&gt;{{ (user.week | date: &quot;yyyy-Www&quot;) || 'empty'}}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Password: &lt;a href=&quot;#&quot; editable-password=&quot;user.password&quot;&gt;{{ user.password || 'empty' }}&lt;/a&gt;&lt;/div&gt;
@@ -482,7 +486,6 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
     color: '#6a4415',
     date: null,
     time: new Date(1970, 0, 1, 12, 30),
-    datetime: null,
     month: null,
     week: null,
     password: 'password',
@@ -955,6 +958,101 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["uiselect"]=v; }); });<
   $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 });</pre>
                     </section>
+                    <section id="ngtags">
+                      <h1>ngTagsInput</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="NgTagsCtrl">
+  <form data-editable-form name="ngTagsForm">
+    <div editable-tags-input="user.tags" data-e-form="ngTagsForm" data-e-name="tags" name="tags" data-e-ng-model="user.tags">
+      {{user.tags}}
+        <editable-tags-input-auto-complete source="loadTags($query)"></editable-tags-input-auto-complete>
+    </div>
+    <br/>
+    <div class="buttons">
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="ngTagsForm.$show()" ng-show="!ngTagsForm.$visible">
+        Edit
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="ngTagsForm.$visible">
+        <br/>
+        <button type="submit" class="btn btn-primary" ng-disabled="ngTagsForm.$waiting">
+          Save
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="ngTagsForm.$waiting" ng-click="ngTagsForm.$cancel()">
+          Cancel
+        </button>
+      </span>
+    </div>
+  </form>
+</div></div>
+                      <pre>{{ debug["ngtags"] | json }}</pre>
+                      <p><p>ngTagsInput control is implemented via <a href="http://mbenford.github.io/ngTagsInput/">Tags input directive for AngularJS </a>.<br>You should include additional <code>ng-tags-input.min.js</code> and <code>ng-tags-input.min.css</code> and <code>ng-tags-input.bootstrap.min.css</code> (if using bootstrap):</p>
+<pre><code>&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot;&gt;
+
+&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.bootstrap.min.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot;&gt;</code></pre>
+<p>Then add <code>ngTagsInput</code> as module dependency:</p>
+<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ngTagsInput&quot;]);</pre>
+<p>And finally set <code>editable-tags-input</code> attribute pointing to model and add <code>editable-tags-input-auto-complete</code> tag to do the auto complete criteria.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('NgTagsCtrl', function($scope, $http) {
+  $scope.user = {
+    tags: [
+      { text: 'Tag1' },
+      { text: 'Tag2' },
+      { text: 'Tag3' }
+    ],
+  };
+
+  $scope.loadTags = function(query) {
+    return $http.get('/tags?query=' + query);
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["ngtags"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;NgTagsCtrl&quot;&gt;
+  &lt;form data-editable-form name=&quot;ngTagsForm&quot;&gt;
+    &lt;div editable-tags-input=&quot;user.tags&quot; data-e-form=&quot;ngTagsForm&quot; data-e-name=&quot;tags&quot; name=&quot;tags&quot; data-e-ng-model=&quot;user.tags&quot;&gt;
+      {{user.tags}}
+        &lt;editable-tags-input-auto-complete source=&quot;loadTags($query)&quot;&gt;&lt;/editable-tags-input-auto-complete&gt;
+    &lt;/div&gt;
+    &lt;br/&gt;
+    &lt;div class=&quot;buttons&quot;&gt;
+      &lt;!-- button to show form --&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;ngTagsForm.$show()&quot; ng-show=&quot;!ngTagsForm.$visible&quot;&gt;
+        Edit
+      &lt;/button&gt;
+      &lt;!-- buttons to submit / cancel form --&gt;
+      &lt;span ng-show=&quot;ngTagsForm.$visible&quot;&gt;
+        &lt;br/&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot; ng-disabled=&quot;ngTagsForm.$waiting&quot;&gt;
+          Save
+        &lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-disabled=&quot;ngTagsForm.$waiting&quot; ng-click=&quot;ngTagsForm.$cancel()&quot;&gt;
+          Cancel
+        &lt;/button&gt;
+      &lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('NgTagsCtrl', function($scope, $http) {
+  $scope.user = {
+    tags: [
+      { text: 'Tag1' },
+      { text: 'Tag2' },
+      { text: 'Tag3' }
+    ],
+  };
+
+  $scope.loadTags = function(query) {
+    return $http.get('/tags?query=' + query);
+  };
+});</pre>
+                    </section>
                     <section id="text-customize">
                       <h1>Customize input</h1>
                       <!-- watch change of user to update rootScope for debugging-->
@@ -1291,7 +1389,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["edit-disabled"]=v; });
   </div>
 </div></div>
                       <pre>{{ debug["editable-popover"] | json }}</pre>
-                      <p><p>To made an editable field display in a popover, wrap the editable in <code>&lt;div class=&quot;item-wrapper&quot;&gt;</code>.</p>
+                      <p><p>To made an editable field display in a popover, wrap the editable in <code>&lt;div class=&quot;popover-wrapper&quot;&gt;</code>.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('EditPopoverCtrl', function($scope) {
@@ -2478,6 +2576,8 @@ Note that using <code>oncancel</code> hook allows you to revert all changes and 
           <section id="themes"></section>
           <h1>Themes</h1>
           <!-- jade cannot include dynamically--><p>There are several themes that can be used to style editable controls.</p>
+<p>To set the theme for the entire application, set &#39;editableOptions.theme&#39; in <code>app.run</code>.</p>
+<p>To change the theme for a specific control, set the <code>editable-theme</code> attribute.</p>
 
           <section id="bootstrap3"></section>
           <h2>Bootstrap 3</h2><p>Include <a href="http://getbootstrap.com">Bootstrap 3</a> CSS</p>
@@ -2563,7 +2663,7 @@ If set to <code>no</code> control automatically submitted when value changed.<br
                         <tr>
                           <td><code>e-*</code></td>
                           <td>any</td>
-                          <td><p>Attributes defined with <code>e-*</code> prefix automatically transfered from original element to
+                          <td><p>Attributes defined with <code>e-*</code> prefix automatically transferred from original element to
 control.<br>For example, if you set <code>&lt;span editable-text=&quot;user.name&quot; e-style=&quot;width: 100px&quot;</code>&gt;
 then input will appear as <code>&lt;input style=&quot;width: 100px&quot;&gt;</code>.<br>See <a href="#text-customize">demo</a>.</p>
 </td>

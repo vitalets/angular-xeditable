@@ -1,6 +1,18 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.3.0 Sep 06, 2016
+
+----------------------------
+[enh #530] Added support for ngTagsInput (ckosloski)
+[enh #525] Updated css for editable-popup to work better on phones (ckosloski)
+[bug #520] Remove support for html5 datetime object. (ckosloski)
+[enh #515] Add editable-theme attribute to allow overriding of theme per control. (ckosloski)
+[enh #509] Support styling of the bsdate textbox (ckosloski)
+[enh #504] Wrap checkbox text in a span to allow for styling (ckosloski)
+[bug #500] Vertical Scrollbar in Textarea in IE11 fix (ckosloski)
+
+
 Version 0.2.0 Jun 28, 2016
 
 ----------------------------

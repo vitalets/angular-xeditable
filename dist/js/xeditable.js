@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.2.0
+angular-xeditable - 0.3.0
 Edit-in-place for angular.js
-Build date: 2016-06-28 
+Build date: 2016-09-06 
 */
 /**
  * Angular-xeditable module 
@@ -120,6 +120,11 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                     this.inputEl.removeAttr('ng-change');
                 }
 
+                if (this.attrs.eStyle) {
+                    inputDatePicker.attr('style', this.attrs.eStyle);
+                    this.inputEl.removeAttr('style');
+                }
+
                 this.scope.dateOptions = {
                     formatDay:  this.attrs.eFormatDay || 'dd',
                     formatMonth: this.attrs.eFormatMonth || 'MMMM',
@@ -213,7 +218,7 @@ angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFac
         this.parent.render.call(this);
         if(this.attrs.eTitle) {
           this.inputEl.wrap('<label></label>');
-          this.inputEl.parent().append(this.attrs.eTitle);
+          this.inputEl.parent().append('<span>' + this.attrs.eTitle + '</span>');
         }
       },
       autosubmit: function() {
@@ -339,6 +344,48 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
 }());
 
 
+/*
+ Tags input directive for AngularJS
+ https://github.com/mbenford/ngTagsInput
+ */
+angular.module('xeditable').directive('editableTagsInput', ['editableDirectiveFactory', 'editableUtils',
+  function(editableDirectiveFactory, editableUtils) {
+    var findElement = function(name) {
+        for(var i = 0, len = autoComplete.length; i < len; i++) {
+            if (autoComplete[i].name === name) {
+                return i;
+            }
+        }
+    };
+
+    var autoComplete = [];
+
+    var dir = editableDirectiveFactory({
+        directiveName: 'editableTagsInput',
+        inputTpl: '<tags-input></tags-input>',
+        render: function () {
+            var index = findElement(this.name);
+            this.parent.render.call(this);
+            this.inputEl.append(editableUtils.rename('auto-complete', autoComplete[index].element));
+            this.inputEl.removeAttr('ng-model');
+            this.inputEl.attr('ng-model', '$parent.$data');
+        }
+    });
+
+    var linkOrg = dir.link;
+
+    dir.link = function (scope, el, attrs, ctrl) {
+        var autoCompleteEl = el.find('editable-tags-input-auto-complete');
+
+        autoComplete.push({name : attrs.name || attrs.editableTagsInput, element : autoCompleteEl.clone()});
+
+        autoCompleteEl.remove();
+
+        return linkOrg(scope, el, attrs, ctrl);
+    };
+
+    return dir;
+}]);
 // radiolist
 angular.module('xeditable').directive('editableRadiolist', [
   'editableDirectiveFactory',
@@ -427,18 +474,8 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
  AngularJS-native version of Select2 and Selectize
  https://github.com/angular-ui/ui-select
  */
-angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFactory',
-    function(editableDirectiveFactory) {
-        var rename = function (tag, el) {
-            var newEl = angular.element('<' + tag + '/>');
-            newEl.html(el.html());
-            var attrs = el[0].attributes;
-            for (var i = 0; i < attrs.length; ++i) {
-                newEl.attr(attrs.item(i).nodeName, attrs.item(i).value);
-            }
-            return newEl;
-        };
-
+angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFactory', 'editableUtils',
+    function(editableDirectiveFactory, editableUtils) {
         var findElement = function(name) {
             for(var i = 0, len = match.length; i < len; i++) {
                   if (match[i].name === name) {
@@ -456,8 +493,8 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
             render: function () {
                 var index = findElement(this.name);
                 this.parent.render.call(this);
-                this.inputEl.append(rename('ui-select-match', match[index].element));
-                this.inputEl.append(rename('ui-select-choices', choices[index].element));
+                this.inputEl.append(editableUtils.rename('ui-select-match', match[index].element));
+                this.inputEl.append(editableUtils.rename('ui-select-choices', choices[index].element));
                 this.inputEl.removeAttr('ng-model');
                 this.inputEl.attr('ng-model', '$parent.$parent.$data');
             }
@@ -510,7 +547,7 @@ angular.module('xeditable').factory('editableController',
     self.editorEl = null;
     self.single = true;
     self.error = '';
-    self.theme =  editableThemes[editableOptions.theme] || editableThemes['default'];
+    self.theme =  editableThemes[$attrs.editableTheme] || editableThemes[editableOptions.theme] || editableThemes['default'];
     self.parent = {};
 
     //will be undefined if icon_set is default and theme is default
@@ -529,7 +566,7 @@ angular.module('xeditable').factory('editableController',
     self.single = null;
 
     /**
-     * Attributes defined with `e-*` prefix automatically transfered from original element to
+     * Attributes defined with `e-*` prefix automatically transferred from original element to
      * control.  
      * For example, if you set `<span editable-text="user.name" e-style="width: 100px"`>
      * then input will appear as `<input style="width: 100px">`.  
@@ -556,7 +593,7 @@ angular.module('xeditable').factory('editableController',
      * @var {string|attribute} blur
      * @memberOf editable-element
      */     
-    // no real `blur` property as it is transfered to editable form
+    // no real `blur` property as it is transferred to editable form
 
     //init
     self.init = function(single) {
@@ -795,15 +832,6 @@ angular.module('xeditable').factory('editableController',
       self.editorEl.remove();
       $element.removeClass('editable-hide');
 
-      // Manually remove the watcher on 'has-error' to prevent a memory leak on it.
-      for (var i = 0, len = $scope.$$watchers.length; i < len; i++) {
-        if ($scope.$$watchers[i] !== undefined && $scope.$$watchers[i].last && $scope.$$watchers[i].last !== undefined &&
-            typeof $scope.$$watchers[i].last === 'object' && "has-error" in $scope.$$watchers[i].last) {
-          $scope.$$watchers.splice(i, 1);
-          break;
-        }
-      }
-
       // onhide
       return self.onhide();
     };
@@ -1003,7 +1031,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         if (ctrl[1]) {
           eFormCtrl = ctrl[1];
           hasForm = attrs.eSingle === undefined;
-        } else if (attrs.eForm) { // element not wrapped by <form>, but we hane `e-form` attr
+        } else if (attrs.eForm) { // element not wrapped by <form>, but we have `e-form` attr
           var getter = $parse(attrs.eForm)(scope);
           if (getter) { // form exists in scope (above), e.g. editable column
             eFormCtrl = getter;
@@ -1747,6 +1775,16 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
         return offset ? letter.toUpperCase() : letter;
       }).
       replace(MOZ_HACK_REGEXP, 'Moz$1');
+    },
+
+    rename: function (tag, el) {
+      var newEl = angular.element('<' + tag + '/>');
+      newEl.html(el.html());
+      var attrs = el[0].attributes;
+      for (var i = 0; i < attrs.length; ++i) {
+          newEl.attr(attrs.item(i).nodeName, attrs.item(i).value);
+      }
+      return newEl;
     }
   };
 }]);
