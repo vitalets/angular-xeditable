@@ -83,13 +83,11 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
         angular.extend(eCtrl, overwrites);
 
         // x-editable can be disabled using editableOption or edit-disabled attribute
-        var disabled = angular.isDefined(attrs.editDisabled) ?
-          scope.$eval(attrs.editDisabled) :
-          editableOptions.isDisabled;
-
-        if (disabled) {
-          return;
-        }
+        var is_disabled = function() {
+          return angular.isDefined(attrs.editDisabled) ?
+            scope.$eval(attrs.editDisabled) :
+            editableOptions.isDisabled;
+        };
 
         // init editable ctrl
         eCtrl.init(!hasForm);
@@ -133,9 +131,11 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
             elem.bind(editableOptions.activationEvent, function(e) {
               e.preventDefault();
               e.editable = eCtrl;
-              scope.$apply(function(){
-                scope.$form.$show();
-              });
+              if(!is_disabled()) {
+                scope.$apply(function(){
+                  scope.$form.$show();
+                });
+              }
             });
           }
         }
