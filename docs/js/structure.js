@@ -61,6 +61,8 @@ module.exports = [
         {id: 'dev-select'},
         {id: 'dev-bsdate'},
         {id: 'dev-uiselect'},
-        {id: 'dev-theme'}
+        {id: 'dev-theme'},
+        {id: 'dev-ngtags'},
+        {id: 'dev-radiolist'}
     ]}
 ];
