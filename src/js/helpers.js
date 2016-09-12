@@ -117,13 +117,15 @@ angular.module('xeditable').factory('editablePromiseCollection', ['$q', function
     },
 
     rename: function (tag, el) {
-      var newEl = angular.element('<' + tag + '/>');
-      newEl.html(el.html());
-      var attrs = el[0].attributes;
-      for (var i = 0; i < attrs.length; ++i) {
-          newEl.attr(attrs.item(i).nodeName, attrs.item(i).value);
+      if (el[0] && el[0].attributes) {
+        var newEl = angular.element('<' + tag + '/>');
+        newEl.html(el.html());
+        var attrs = el[0].attributes;
+        for (var i = 0; i < attrs.length; ++i) {
+            newEl.attr(attrs.item(i).nodeName, attrs.item(i).value);
+        }
+        return newEl;
       }
-      return newEl;
     }
   };
 }]);

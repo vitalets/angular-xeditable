@@ -47,6 +47,13 @@
   width: 46px;
 }
 
+/* ==== editable-bsdate ==== */
+
+/* fix padding issue on bsdate popup */
+.editable-bsdate {
+    white-space: nowrap;
+}
+
 /* less padding for .well */
 .editable-bstime .well-small {
   margin-bottom: 0;

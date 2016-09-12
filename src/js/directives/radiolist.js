@@ -11,7 +11,7 @@ angular.module('xeditable').directive('editableRadiolist', [
         var parsed = editableNgOptionsParser(this.attrs.eNgOptions);
         
         var html = '<label data-ng-repeat="'+parsed.ngRepeat+'">'+
-          '<input type="radio" data-ng-disabled="::' + this.attrs.eNgDisabled + '" data-ng-model="$parent.$parent.$data" value="{{::'+parsed.locals.valueFn+'}}">'+
+          '<input type="radio" data-ng-disabled="::' + this.attrs.eNgDisabled + '" data-ng-model="$parent.$parent.$data" data-ng-value="{{::'+parsed.locals.valueFn+'}}">'+
           '<span data-ng-bind="::'+parsed.locals.displayFn+'"></span></label>';
 
         this.inputEl.removeAttr('ng-model');
