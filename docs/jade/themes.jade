@@ -4,6 +4,20 @@
   To set the theme for the entire application, set 'editableOptions.theme' in `app.run`.
 :markdown
   To change the theme for a specific control, set the `editable-theme` attribute.
+:markdown
+  To display a clear button, set the `editableOptions.displayClearButton=true` in `app.run`.
+:markdown
+  To change the `title` and `aria-label` values of the submit/cancel/clear buttons, set the `editableOptions` properties:
+
+pre.prettyprint.
+  app.run(function(editableOptions) {
+    editableOptions.submitButtonTitle = 'Submit';
+    editableOptions.submitButtonAriaLabel = 'Submit';
+    editableOptions.cancelButtonTitle = 'Cancel';
+    editableOptions.cancelButtonAriaLabel = 'Cancel';
+    editableOptions.clearButtonTitle = 'Clear';
+    editableOptions.clearButtonAriaLabel = 'Clear';
+  });
 
 section#bootstrap3
 h2 Bootstrap 3
