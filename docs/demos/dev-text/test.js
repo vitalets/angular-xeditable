@@ -35,6 +35,11 @@ describe('dev-text', function() {
     expect(element(s+'form input[type="text"]').attr('form')).not().toBeDefined();
     expect(element(s+'form input[type="text"]').attr('ng-submit')).not().toBeDefined();
     expect(element(s+'form').attr('class')).toBe("form-inline editable-wrap editable-text class1 class2 ng-pristine ng-valid ng-scope ng-valid-required");
+    expect(element(s+'form button[type="button"]').attr('title')).toBe("Cancel");
+    expect(element(s+'form button[type="button"]').attr('aria-label')).toBe("Cancel");
+    expect(element(s+'form button[type="submit"]').attr('title')).toBe("Submit");
+    expect(element(s+'form button[type="submit"]').attr('aria-label')).toBe("Submit");
+    expect(element(s+'form .input-group-addon').count()).toBe(2);
   });
 
   it('blur = `submit`', function() {
@@ -44,6 +49,7 @@ describe('dev-text', function() {
     // click on body
     element(a).click();
     expect(element(a).css('display')).toBe('none');
+    expect(element(s+'form input[type="text"]').attr('label')).toBe("User Name");
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
     using(s).input('$parent.$data').enter('username2');
 

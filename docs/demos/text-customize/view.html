@@ -1,5 +1,11 @@
 <div ng-controller="TextCustomizeCtrl">
-  <a href="#" editable-text="user.name" e-style="color: green" e-required e-placeholder="Enter name" e-formclass="class1 class2">
+  <a href="#" editable-text="user.name"
+              e-style="color: green"
+              e-required
+              e-placeholder="Enter name"
+              e-formclass="class1 class2"
+              e-inputgroupleft="left"
+              e-inputgroupright="right">
     {{ (user.name || 'empty') | uppercase }}
   </a>
 </div>  

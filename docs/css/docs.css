@@ -173,3 +173,8 @@ footer {
   font-weight: normal;
   line-height: 1;
 }
+
+/* editable-bstime doc fixes*/
+.uib-timepicker tr td {
+  height: 34px !important;
+}

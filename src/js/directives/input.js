@@ -25,10 +25,29 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
           render: function() {
             this.parent.render.call(this);
 
+            //Add bootstrap simple input groups
+            if (this.attrs.eInputgroupleft || this.attrs.eInputgroupright) {
+              this.inputEl.wrap('<div class="input-group"></div>');
+
+              if (this.attrs.eInputgroupleft) {
+                var inputGroupLeft = angular.element('<span class="input-group-addon">' + this.attrs.eInputgroupleft + '</span>');
+                this.inputEl.parent().prepend(inputGroupLeft);
+              }
+
+              if (this.attrs.eInputgroupright) {
+                var inputGroupRight = angular.element('<span class="input-group-addon">' + this.attrs.eInputgroupright + '</span>');
+                this.inputEl.parent().append(inputGroupRight);
+              }
+            }
+
             // Add label to the input
             if (this.attrs.eLabel) {
               var label = angular.element('<label>' + this.attrs.eLabel + '</label>');
-              this.inputEl.parent().prepend(label);
+              if (this.attrs.eInputgroupleft || this.attrs.eInputgroupright) {
+                this.inputEl.parent().parent().prepend(label);
+              } else {
+                this.inputEl.parent().prepend(label);
+              }
             }
             
             // Add classes to the form

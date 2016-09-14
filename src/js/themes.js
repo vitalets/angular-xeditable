@@ -1,3 +1,4 @@
+/* jshint -W086 */
 /*
 Editable themes:
 - default
@@ -18,7 +19,8 @@ angular.module('xeditable').factory('editableThemes', function() {
       errorTpl:     '<div class="editable-error" data-ng-if="$error" data-ng-bind="$error"></div>',
       buttonsTpl:   '<span class="editable-buttons"></span>',
       submitTpl:    '<button type="submit">save</button>',
-      cancelTpl:    '<button type="button" ng-click="$form.$cancel()">cancel</button>'
+      cancelTpl:    '<button type="button" ng-click="$form.$cancel()">cancel</button>',
+      resetTpl:    '<button type="reset">clear</button>'
     },
 
     //bs2
@@ -32,7 +34,8 @@ angular.module('xeditable').factory('editableThemes', function() {
       submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
       cancelTpl:   '<button type="button" class="btn" ng-click="$form.$cancel()">'+
                       '<span></span>'+
-                   '</button>'
+                   '</button>',
+      resetTpl:    '<button type="reset" class="btn btn-danger">clear</button>'
 
     },
 
@@ -48,6 +51,7 @@ angular.module('xeditable').factory('editableThemes', function() {
       cancelTpl:   '<button type="button" class="btn btn-default" ng-click="$form.$cancel()">'+
                      '<span></span>'+
                    '</button>',
+      resetTpl:    '<button type="reset" class="btn btn-danger">clear</button>',
 
       //bs3 specific prop to change buttons class: btn-sm, btn-lg
       buttonsClass: '',
@@ -105,7 +109,8 @@ angular.module('xeditable').factory('editableThemes', function() {
       submitTpl:   '<button type="submit" class="ui primary button"><i class="ui check icon"></i></button>',
       cancelTpl:   '<button type="button" class="ui button" ng-click="$form.$cancel()">'+
                       '<i class="ui cancel icon"></i>'+
-                   '</button>'
+                   '</button>',
+      resetTpl:    '<button type="reset" class="ui button">clear</button>'
     }
   };
 

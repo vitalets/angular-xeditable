@@ -194,12 +194,27 @@ angular.module('xeditable').factory('editableController',
       if(self.buttons !== 'no') {
         self.buttonsEl = angular.element(theme.buttonsTpl);
         self.submitEl = angular.element(theme.submitTpl);
+        self.resetEl = angular.element(theme.resetTpl);
         self.cancelEl = angular.element(theme.cancelTpl);
-        if(self.icon_set) {
+        self.submitEl.attr('title', editableOptions.submitButtonTitle);
+        self.submitEl.attr('aria-label', editableOptions.submitButtonAriaLabel);
+        self.cancelEl.attr('title', editableOptions.cancelButtonTitle);
+        self.cancelEl.attr('aria-label', editableOptions.cancelButtonAriaLabel);
+        self.resetEl.attr('title', editableOptions.clearButtonTitle);
+        self.resetEl.attr('aria-label', editableOptions.clearButtonAriaLabel);
+
+        if (self.icon_set) {
           self.submitEl.find('span').addClass(self.icon_set.ok);
           self.cancelEl.find('span').addClass(self.icon_set.cancel);
+          self.resetEl.find('span').addClass(self.icon_set.clear);
         }
+
         self.buttonsEl.append(self.submitEl).append(self.cancelEl);
+
+        if (editableOptions.displayClearButton) {
+          self.buttonsEl.append(self.resetEl);
+        }
+
         self.controlsEl.append(self.buttonsEl);
         
         self.inputEl.addClass('editable-has-buttons');

@@ -72,6 +72,61 @@ angular.module('xeditable', [])
    * @var {string} activationEvent
    * @memberOf editable-options
    */
-  activationEvent: 'click'
+  activationEvent: 'click',
 
+  /**
+   * The default title of the submit button
+   *
+   * @var {string} submitButtonTitle
+   * @memberOf editable-options
+   */
+  submitButtonTitle: 'Submit',
+
+  /**
+   * The default aria label of the submit button
+   *
+   * @var {string} submitButtonAriaLabel
+   * @memberOf editable-options
+   */
+  submitButtonAriaLabel: 'Submit',
+
+  /**
+   * The default title of the cancel button
+   *
+   * @var {string} cancelButtonTitle
+   * @memberOf editable-options
+   */
+  cancelButtonTitle: 'Cancel',
+
+  /**
+   * The default aria label of the cancel button
+   *
+   * @var {string} cancelButtonAriaLabel
+   * @memberOf editable-options
+   */
+  cancelButtonAriaLabel: 'Cancel',
+
+  /**
+   * The default title of the clear button
+   *
+   * @var {string} clearButtonTitle
+   * @memberOf editable-options
+   */
+  clearButtonTitle: 'Clear',
+
+  /**
+   * The default aria label of the clear button
+   *
+   * @var {string} clearButtonAriaLabel
+   * @memberOf editable-options
+   */
+  clearButtonAriaLabel: 'Clear',
+
+  /**
+   * Whether to display the clear button
+   *
+   * @var {boolean} displayClearButton
+   * @memberOf editable-options
+   */
+  displayClearButton: false
 });
