@@ -40,7 +40,20 @@
   width: auto;
 }
 
+
+/* ==== editable-bsdate ==== */
+
+/* fix padding issue on bsdate popup */
+.editable-bsdate {
+    white-space: nowrap;
+}
+
 /* ==== editable-bstime ==== */
+
+/* fix padding issue on bstime */
+.editable-bstime {
+    white-space: nowrap;
+}
 
 /* workaround for bootstrap that sets width: 100% and inputs become too wide */
 .editable-bstime .editable-input input[type="text"] {
