@@ -2866,6 +2866,14 @@ When trying to set the focus on a form field of a new row in the editable table,
                         </tr>
                       </tbody>
                     </table>
+          <h3>Override `controlsTpl` in custom directives</h3><p>You can specify a <code>controlsTpl</code> property to override the same property in a defined theme, by adding <code>controlsTpl</code> to your custom directive configuration:</p>
+
+          <pre class="prettyprint">ng.module(&quot;xeditable&quot;).directive( &quot;editableCustomDirective&quot;, function( editableDirectiveFactory ) {
+     return editableDirectiveFactory({
+        directiveName: 'editableCustomDirective',
+        ...
+        controlsTpl: '&lt;div ng-class=&quot;{\'md-input-invalid\': $error}&quot;&gt;&lt;/div&gt;',
+        ...</pre>
         </div>
       </div>
     </div>
