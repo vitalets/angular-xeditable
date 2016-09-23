@@ -63,6 +63,9 @@ module.exports = [
         {id: 'dev-uiselect'},
         {id: 'dev-theme'},
         {id: 'dev-ngtags'},
-        {id: 'dev-radiolist'}
+        {id: 'dev-radiolist'},
+        {id: 'dev-checklist'},
+        {id: 'dev-editable-row'},
+        {id: 'dev-textarea'}
     ]}
 ];

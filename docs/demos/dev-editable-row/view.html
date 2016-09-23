@@ -1,4 +1,4 @@
-<div ng-controller="EditableRowCtrl">
+<div ng-controller="DevEditableRowCtrl">
   <table class="table table-bordered table-hover table-condensed">
     <tr style="font-weight: bold">
       <td style="width:35%">Name</td>
@@ -14,8 +14,8 @@
         </span>
       </td>
       <td>
-        <!-- editable status (select-local) -->
-        <span editable-select="user.status" e-name="status" e-form="rowform" e-ng-options="s.value as s.text for s in statuses">
+        <!-- editable status (checklist) -->
+        <span editable-checklist="user.status" e-ng-options="s.value as s.text for s in statuses" e-name="status" e-form="rowform">
           {{ showStatus(user) }}
         </span>
       </td>
@@ -36,12 +36,12 @@
           </button>
         </form>
         <div class="buttons" ng-show="!rowform.$visible">
-          <button type="button" class="btn btn-primary" ng-click="rowform.$show()">edit</button>
-          <button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>
+          <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+          <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
         </div>  
       </td>
     </tr>
   </table>
 
-  <button type="button" class="btn btn-default" ng-click="addUser()">Add row</button>
+  <button class="btn btn-default" ng-click="addUser()">Add row</button>
 </div>  

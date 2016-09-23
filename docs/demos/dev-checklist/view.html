@@ -1,0 +1,5 @@
+<div ng-controller="DevChecklistCtrl">
+  <a href="#" editable-checklist="user.devstatus" e-ng-options="s.value as s.text for s in statuses" buttons="no" blur="submit">
+    {{ showStatus() }}
+  </a>
+</div>  
