@@ -229,7 +229,7 @@ angular.module('xeditable').factory('editableController',
       self.editorEl.append(self.controlsEl);
 
       // transfer `e-*|data-e-*|x-e-*` attributes
-      for(var k in $attrs.$attr) {
+      for (var k in $attrs.$attr) {
         if(k.length <= 1) {
           continue;
         }
@@ -237,19 +237,27 @@ angular.module('xeditable').factory('editableController',
         var nextLetter = k.substring(1, 2);
 
         // if starts with `e` + uppercase letter
-        if(k.substring(0, 1) === 'e' && nextLetter === nextLetter.toUpperCase()) {
+        if (k.substring(0, 1) === 'e' && nextLetter === nextLetter.toUpperCase()) {
           transferAttr = k.substring(1); // cut `e`
         } else {
           continue;
         }
         
         // exclude `form` and `ng-submit`, 
-        if(transferAttr === 'Form' || transferAttr === 'NgSubmit') {
+        if (transferAttr === 'Form' || transferAttr === 'NgSubmit') {
           continue;
         }
 
+        var firstLetter = transferAttr.substring(0, 1);
+        var secondLetter = transferAttr.substring(1, 2);
+
         // convert back to lowercase style
-        transferAttr = transferAttr.substring(0, 1).toLowerCase() + editableUtils.camelToDash(transferAttr.substring(1));  
+        if (secondLetter === secondLetter.toUpperCase() &&
+            firstLetter === firstLetter.toUpperCase()) {
+          transferAttr = firstLetter.toLowerCase() + '-' + editableUtils.camelToDash(transferAttr.substring(1));
+        } else {
+          transferAttr = firstLetter.toLowerCase() + editableUtils.camelToDash(transferAttr.substring(1));
+        }
 
         // workaround for attributes without value (e.g. `multiple = "multiple"`)
         // except for 'e-value'
@@ -265,14 +273,14 @@ angular.module('xeditable').factory('editableController',
       // add directiveName class to editor, e.g. `editable-text`
       self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
 
-      if(self.single) {
+      if (self.single) {
         self.editorEl.attr('editable-form', '$form');
         // transfer `blur` to form
         self.editorEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
       }
 
       //apply `postrender` method of theme
-      if(angular.isFunction(theme.postrender)) {
+      if (angular.isFunction(theme.postrender)) {
         theme.postrender.call(self);
       }
 
