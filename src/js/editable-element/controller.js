@@ -423,9 +423,12 @@ angular.module('xeditable').factory('editableController',
             };
           }
           el.focus();
-        }
-        if (editableOptions.activate === 'select' && el.select) {
-          el.select();
+        } else if (editableOptions.activate === 'select') {
+          if (el.select){
+            el.select();
+          } else if (el.focus) {
+            el.focus();
+          }
         }
       }, 0);
     };
