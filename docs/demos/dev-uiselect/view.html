@@ -1,4 +1,15 @@
 <div ng-controller="DevUiSelectCtrl">
+  <form data-editable-form name="priorSelectForm">
+    <div editable-ui-select="user.mentalState" data-e-form="priorSelectForm" data-e-name="state2" name="state2" id="mentalState" theme="bootstrap" data-e-ng-model="user.mentalState" data-e-style="min-width:300px;">
+      {{user.state}}
+      <editable-ui-select-match placeholder="State">
+        {{$select.selected}}
+      </editable-ui-select-match>
+      <editable-ui-select-choices repeat="state in ['Sane','Insane'] | filter: $select.search track by $index">
+        {{state}}
+      </editable-ui-select-choices>
+    </div>
+  </form>
   <form data-editable-form name="uiSelectForm">
     <div editable-ui-select="user.state" data-e-form="uiSelectForm" data-e-name="state" name="state" id="state" theme="bootstrap" data-e-ng-model="user.state" data-e-style="min-width:300px;">
       {{user.state}}
@@ -36,7 +47,29 @@
       </span>
     </div>
   </form>
+  <form data-editable-form name="subsequentSelectForm">
+    <div editable-ui-select="user.powerState" data-e-form="subsequentSelectForm" data-e-name="state2" name="state2" id="powerState" theme="bootstrap" data-e-ng-model="user.powerState" data-e-style="min-width:300px;">
+      {{user.state}}
+      <editable-ui-select-match placeholder="State">
+        {{$select.selected}}
+      </editable-ui-select-match>
+      <editable-ui-select-choices repeat="state in ['ON','OFF'] | filter: $select.search track by $index">
+        {{state}}
+      </editable-ui-select-choices>
+    </div>
+  </form>
 
+  <form data-editable-form name="priorTagsForm">
+    <div editable-ui-select="user.priorTag" data-e-form="priorTagsForm" data-e-name="tag" name="tag" id="priorTag" theme="bootstrap" data-e-tagging data-e-ng-model="user.priorTag">
+      {{user.tag}}
+      <editable-ui-select-match placeholder="Tags">
+        {{$select.selected}}
+      </editable-ui-select-match>
+      <editable-ui-select-choices repeat="tag in ['A','B'] | filter: $select.search track by $index">
+        {{tag}}
+      </editable-ui-select-choices>
+    </div>
+  </form>
   <form data-editable-form name="uiTagsform">
     <div editable-ui-select="user.tag" data-e-form="uiTagsform" data-e-name="tag" name="tag" id="tag" theme="bootstrap" data-e-tagging data-e-ng-model="user.tag">
       {{user.tag}}
@@ -63,6 +96,17 @@
           Cancel
         </button>
       </span>
+    </div>
+  </form>
+  <form data-editable-form name="subsequentTagsForm">
+    <div editable-ui-select="user.subsequentTag" data-e-form="subsequentTagsForm" data-e-name="tag" name="tag" id="subsequentTag" theme="bootstrap" data-e-tagging data-e-ng-model="user.subsequentTag">
+      {{user.tag}}
+      <editable-ui-select-match placeholder="Tags">
+        {{$select.selected}}
+      </editable-ui-select-match>
+      <editable-ui-select-choices repeat="tag in ['1','2'] | filter: $select.search track by $index">
+        {{tag}}
+      </editable-ui-select-choices>
     </div>
   </form>
 </div>
