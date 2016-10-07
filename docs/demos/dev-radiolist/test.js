@@ -26,7 +26,7 @@ describe('dev-radiolist', function() {
     expect(element(s+'form').count()).toBe(0);
   });
 
-  it('should show radio options and submit new value on change', function() {
+  it('should show radio options and call on-change event', function() {
     var s = '[ng-controller="DevRadiolistCtrl"] ';
 
     expect(element(s+'a.nobuttons ').text()).toMatch('status1');
@@ -35,6 +35,7 @@ describe('dev-radiolist', function() {
     expect(element(s+'a.nobuttons ').css('display')).toBe('none');
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
     expect(element(s+'form input[type="radio"]:visible:enabled').count()).toBe(2);
+    expect(element(s+'form input[type="radio"]').attr('ng-change')).toBeDefined();
 
     expect(using(s+'label:eq(0)').input('$parent.$parent.$data').val()).toBe('true');
     expect(using(s+'label:eq(1)').input('$parent.$parent.$data').val()).toBe('false');

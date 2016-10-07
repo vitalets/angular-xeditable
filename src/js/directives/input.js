@@ -60,14 +60,14 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
   });
 
   //`range` is bit specific
-  angular.module('xeditable').directive('editableRange', ['editableDirectiveFactory',
-    function(editableDirectiveFactory) {
+  angular.module('xeditable').directive('editableRange', ['editableDirectiveFactory', '$interpolate',
+    function(editableDirectiveFactory, $interpolate) {
       return editableDirectiveFactory({
         directiveName: 'editableRange',
         inputTpl: '<input type="range" id="range" name="range">',
         render: function() {
           this.parent.render.call(this);
-          this.inputEl.after('<output>{{$data}}</output>');
+          this.inputEl.after('<output>' + $interpolate.startSymbol() + '$data' + $interpolate.endSymbol()  + '</output>');
         }        
       });
   }]);

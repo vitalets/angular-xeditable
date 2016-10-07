@@ -3,7 +3,8 @@
     {{ showBooleanStatus() }}
   </a>&nbsp;&nbsp;
 
-  <a href="#" class="nobuttons" editable-radiolist="user.booleanstatus" e-ng-options="s.value as s.text for s in ::bolleanstatuses track by s.value" buttons="no">
+  <a href="#" class="nobuttons" editable-radiolist="user.booleanstatus" e-ng-options="s.value as s.text for s in ::bolleanstatuses track by s.value" buttons="no"
+     e-ng-change="doSomething($data)">
     {{ showBooleanStatus() }}
   </a>
 </div>  
