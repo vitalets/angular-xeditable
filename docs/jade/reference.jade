@@ -89,3 +89,21 @@ pre.prettyprint
 - items = ns.functions || []  
 +methods(items)
 
+
+
+
+section#ref-options
+h2 Reference: editable options
+- var ns = jsdoc.namespaces && jsdoc.namespaces.length ? jsdoc.namespaces.filter(function(v){return v.name === 'editable-options'})[0] : []
+
+h3 Options
+:markdown
+  Options are set in app.run
+pre.prettyprint
+  = 'app.run(function(editableOptions) {\n'
+  = 'editableOptions.theme = \'bs3\';\n'
+  = '...\n'
+  = '});\n'
+- var items = ns.properties ? ns.properties.filter(function(v){return !~v.type.names.indexOf('attribute')}) : []
++props(items)
+

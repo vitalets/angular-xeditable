@@ -1,5 +1,9 @@
 <div ng-controller="DevChecklistCtrl">
-  <a href="#" editable-checklist="user.devstatus" e-ng-options="s.value as s.text for s in statuses" buttons="no" blur="submit">
+  <a href="#" class="nobuttons" editable-checklist="user.devstatus" e-ng-options="s.value as s.text for s in statuses" buttons="no" blur="submit">
+    {{ showStatus() }}
+  </a>&nbsp;&nbsp;
+  
+  <a href="#" class="onchange" editable-checklist="user.devstatus" e-ng-options="s.value as s.text for s in statuses" buttons="no" blur="submit" e-ng-change="doSomething($data)">
     {{ showStatus() }}
   </a>
 </div>  

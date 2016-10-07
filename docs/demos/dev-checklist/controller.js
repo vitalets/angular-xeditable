@@ -19,4 +19,7 @@ app.controller('DevChecklistCtrl', function($scope, $filter) {
     return selected.length ? selected.join(', ') : 'Not set';
   };
 
+  $scope.doSomething = function($data) {
+    window.console.log($data);
+  };
 });

@@ -53,6 +53,7 @@ module.exports = [
     {id: 'reference', anchor: 'ref-element', text: 'Reference', items: [
         {id: 'ref-element', text: '', menutext: 'Editable element'},
         {id: 'ref-form', text: '', menutext: 'Editable form'},
+        {id: 'ref-options', text: '', menutext: 'Editable options'},
     ]},
 
     {id: 'dev-text', text: 'Dev Tests', type: 'demos', env: 'dev', items: [
