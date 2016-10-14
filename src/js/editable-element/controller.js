@@ -412,6 +412,7 @@ angular.module('xeditable').factory('editableController',
     self.activate = function(start, end) {
       setTimeout(function() {
         var el = self.inputEl[0];
+
         if (editableOptions.activate === 'focus' && el.focus) {
           if(start){
             end = end || start;
@@ -422,7 +423,14 @@ angular.module('xeditable').factory('editableController',
               });
             };
           }
-          el.focus();
+          
+          if (self.directiveName == 'editableRadiolist' || self.directiveName == 'editableChecklist' ||
+              self.directiveName == 'editableBsdate' || self.directiveName == 'editableTagsInput') {
+            //Set focus to first pristine element in the list
+            el.querySelector('.ng-pristine').focus();
+          } else {
+            el.focus();
+          }
         } else if (editableOptions.activate === 'select') {
           if (el.select){
             el.select();
