@@ -745,7 +745,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</s
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/34/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 2 jsFiddle</a>
                       <div class="well line-example"><div ng-controller="BstimeCtrl">
-  <a href="#" editable-bstime="user.time" e-show-meridian="false" e-minute-step="10">
+  <a href="#" editable-bstime="user.time" e-show-meridian="true" e-minute-step="10">
     {{ (user.time | date:"HH:mm") || 'empty' }}
   </a>
 </div></div>
@@ -784,7 +784,7 @@ Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-minute
 $scope.$watch("user", function(v) { $scope.$parent.debug["bstime"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;BstimeCtrl&quot;&gt;
-  &lt;a href=&quot;#&quot; editable-bstime=&quot;user.time&quot; e-show-meridian=&quot;false&quot; e-minute-step=&quot;10&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-bstime=&quot;user.time&quot; e-show-meridian=&quot;true&quot; e-minute-step=&quot;10&quot;&gt;
     {{ (user.time | date:&quot;HH:mm&quot;) || 'empty' }}
   &lt;/a&gt;
 &lt;/div&gt;</pre>
