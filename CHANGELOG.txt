@@ -6,6 +6,7 @@ Version 0.4.0 Sep 21, 2016
 ----------------------------
 [enh #537] Added title and aria-label to form buttons (ckosloski)
 [enh #532] Change radiolist to use ng-value instead of value (ckosloski)
+[bug #282] Fixed text-disable so it watches the actual value of the edit-disabled attribute (jivasquez)
 
 
 Version 0.3.0 Sep 06, 2016
