@@ -116,7 +116,7 @@ form[name="editableForm"] .editable {
 }
 
 form[name="editableForm"] select {
-  width: 120px;
+  width: 118px;
 }
 
 div[ng-controller] table tr td {
@@ -177,4 +177,75 @@ footer {
 /* editable-bstime doc fixes*/
 .uib-timepicker tr td {
   height: 34px !important;
+}
+
+@media screen and (max-width: 414px) {
+  div#TextSimpleCtrl input {
+    width: 105px;
+  }
+
+  div#Html5InputsCtrl input[type=email], div#Html5InputsCtrl input[type=tel] {
+    width: 137px;
+  }
+  
+  div#TextareaCtrl textarea {
+    width: 179px;
+  }
+
+  div#TextCustomizeCtrl input {
+    width: 207px;
+  }
+
+  div#ValidateLocalCtrl input, div#ValidateRemoteCtrl input, div#OnbeforesaveCtrl input, div#OnaftersaveCtrl input {
+    width: 122px;
+  }
+
+  div#EditableFormCtrl input {
+    width: 118px;
+  }
+    
+  section#text-simple .fiddle, section#html5-inputs .fiddle, section#textarea .fiddle,
+  section#text-btn .fiddle {
+    margin: 19px 0 19px 0;
+  }
+
+  section#text-simple .well, section#html5-inputs .well, section#textarea .well,
+  section#text-btn .well {
+    padding: 19px 0 19px 0;
+  }
+}
+
+
+@media screen and (max-width: 360px) {
+  div#TextSimpleCtrl input {
+    width: 50px;
+  }
+  
+  div#Html5InputsCtrl input[type=email], div#Html5InputsCtrl input[type=tel] {
+    width: 82px;
+  }
+
+  div#TextareaCtrl textarea {
+    width: 124px;
+  }
+
+  div#TextCustomizeCtrl input {
+    width: 150px;
+  }
+
+  div#TextBtnCtrl input {
+    width: 124px;
+  }
+
+  div#ValidateLocalCtrl input, div#ValidateRemoteCtrl input, div#OnbeforesaveCtrl input, div#OnaftersaveCtrl input {
+    width: 67px;
+  }
+
+  div#EditableFormCtrl input {
+    width: 63px;
+  }
+  
+  form[name="editableForm"] select {
+    width: 63px;
+  }
 }

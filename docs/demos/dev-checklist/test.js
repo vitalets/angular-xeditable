@@ -37,6 +37,7 @@ describe('dev-checklist', function() {
     expect(element(s+'form input[type="checkbox"]:visible:enabled').count()).toBe(3);
     expect(element(s+'form input[type="checkbox"]:checked').count()).toBe(2);
     expect(element(s+'form input[type="checkbox"]').attr('ng-change')).toBeDefined();
+    expect(element(s+'form input[type="checkbox"]').attr('checklist-comparator')).toBeDefined();
 
     // check status1
     using(s+'label:eq(0)').input('checked').check();
@@ -45,7 +46,7 @@ describe('dev-checklist', function() {
     element(s).click();
 
     expect(element(s+'a.onchange ').css('display')).not().toBe('none');
-    expect(element(s+'a.onchange ').text()).toMatch('status1, status2');
+    expect(element(s+'a.onchange ').text()).toMatch('status2, status1');
     expect(element(s+'form').count()).toBe(0);
   });
   
