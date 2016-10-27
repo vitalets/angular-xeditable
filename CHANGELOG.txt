@@ -1,6 +1,16 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.5.0 Oct 27, 2016
+
+----------------------------
+[enh #561] Add support for checklist-comparator to editable-checklist (ckosloski)
+[enh #553] Use interpolate begin/end symbol in editableRange and editableRadioList (ckosloski)
+[bug #552] Editable-ui-select names must be unique across the application (roblperry)
+[bug #549] Added fallback to focus on activate (Carnid)
+[enh #544] Added support for Kendo UI attributes (ckosloski)
+
+
 Version 0.4.0 Sep 21, 2016
 
 ----------------------------

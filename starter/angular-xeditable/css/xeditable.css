@@ -40,6 +40,12 @@
   width: auto;
 }
 
+/* ==== editable-text ==== */
+
+/* fix padding issue on typeahead */
+.editable-text {
+    white-space: nowrap;
+}
 
 /* ==== editable-bsdate ==== */
 
