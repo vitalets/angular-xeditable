@@ -32,7 +32,11 @@ angular.module('xeditable').factory('editableController',
     self.parent = {};
 
     //will be undefined if icon_set is default and theme is default
-    self.icon_set = editableOptions.icon_set === 'default' ? editableIcons.default[editableOptions.theme] : editableIcons.external[editableOptions.icon_set];
+    var theme_name = $attrs.editableTheme || editableOptions.theme || 'default';
+    // The theme_name will not be correct if the theme set in options is unavailable
+    // However, in that case an undefined icon_set is not that bad...
+    var icon_set_option = $attrs.editableIconSet || editableOptions.icon_set;
+    self.icon_set = icon_set_option === 'default' ? editableIcons.default[theme_name] : editableIcons.external[icon_set_option];
 
     //to be overwritten by directive
     self.inputTpl = '';
