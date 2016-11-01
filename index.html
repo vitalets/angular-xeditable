@@ -50,7 +50,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.4.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.4.0 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.5.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.5.0 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -163,6 +163,7 @@
                 <ul class="nav">
                   <li><a href="#ref-element">Editable element</a></li>
                   <li><a href="#ref-form">Editable form</a></li>
+                  <li><a href="#ref-options">Editable options</a></li>
                 </ul>
               </li>
             </ul>
@@ -220,7 +221,7 @@ For ngTagsInput you may need to include <a href="https://github.com/mbenford/ngT
 
               <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.4.0.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.5.0.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -257,7 +258,7 @@ For ngTagsInput you may need to include <a href="https://github.com/mbenford/ngT
                       <h1>Text</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/25/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="TextSimpleCtrl">
+                      <div class="well line-example"><div ng-controller="TextSimpleCtrl" id="TextSimpleCtrl">
   <a href="#" editable-text="user.name" e-label="User Name">{{ user.name || 'empty' }}</a>
 </div></div>
                       <pre>{{ debug["text-simple"] | json }}</pre>
@@ -270,7 +271,7 @@ For ngTagsInput you may need to include <a href="https://github.com/mbenford/ngT
   };  
 $scope.$watch("user", function(v) { $scope.$parent.debug["text-simple"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextSimpleCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextSimpleCtrl&quot; id=&quot;TextSimpleCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-label=&quot;User Name&quot;&gt;{{ user.name || 'empty' }}&lt;/a&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
@@ -406,7 +407,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
                       <h1>HTML5 inputs</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/82/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="Html5InputsCtrl">
+                      <div class="well line-example"><div ng-controller="Html5InputsCtrl" id="Html5InputsCtrl">
   <div>Email: <a href="#" editable-email="user.email">{{ user.email || 'empty' }}</a></div>
   <div>Tel: <a href="#" editable-tel="user.tel" e-pattern="\d{3}\-\d{2}\-\d{2}" e-title="xxx-xx-xx">{{ user.tel || 'empty' }}</a></div>
   <div>Number: <a href="#" editable-number="user.number" e-min="18">{{ user.number || 'empty' }}</a></div>  
@@ -459,7 +460,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
   };  
 $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;Html5InputsCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;Html5InputsCtrl&quot; id=&quot;Html5InputsCtrl&quot;&gt;
   &lt;div&gt;Email: &lt;a href=&quot;#&quot; editable-email=&quot;user.email&quot;&gt;{{ user.email || 'empty' }}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Tel: &lt;a href=&quot;#&quot; editable-tel=&quot;user.tel&quot; e-pattern=&quot;\d{3}\-\d{2}\-\d{2}&quot; e-title=&quot;xxx-xx-xx&quot;&gt;{{ user.tel || 'empty' }}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Number: &lt;a href=&quot;#&quot; editable-number=&quot;user.number&quot; e-min=&quot;18&quot;&gt;{{ user.number || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
@@ -497,7 +498,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
                       <h1>Textarea</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/32/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="TextareaCtrl">
+                      <div class="well line-example"><div ng-controller="TextareaCtrl" id="TextareaCtrl">
   <a href="#" editable-textarea="user.desc" e-rows="7" e-cols="40">
     <pre>{{ user.desc || 'no description' }}</pre>
   </a>
@@ -514,7 +515,7 @@ Data can be submitted by <em>Ctrl + Enter</em>.</p>
   };
 $scope.$watch("user", function(v) { $scope.$parent.debug["textarea"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextareaCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextareaCtrl&quot; id=&quot;TextareaCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-textarea=&quot;user.desc&quot; e-rows=&quot;7&quot; e-cols=&quot;40&quot;&gt;
     &lt;pre&gt;{{ user.desc || 'no description' }}&lt;/pre&gt;
   &lt;/a&gt;
@@ -569,7 +570,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checkbox"]=v; }); });<
 </div></div>
                       <pre>{{ debug["checklist"] | json }}</pre>
                       <p><p>To create list of checkboxes use <code>editable-checklist</code> attribute pointing to model.
-Also you should define <code>e-ng-options</code> attribute to set value and display items.  </p>
+Also you should define <code>e-ng-options</code> attribute to set value and display items.
+Optionally define <code>e-checklist-comparator</code> to use a function to determine which checkboxes are actually checked.  </p>
 <p><strong>Please note</strong>, you should include <a href="http://vitalets.github.io/checklist-model">checklist-model directive</a> into your app: <code>var app = angular.module(&quot;app&quot;, [..., &quot;checklist-model&quot;]);</code>.    </p>
 <p>By default, checkboxes aligned <em>horizontally</em>. To align <em>vertically</em> just add following <strong>CSS</strong>:</p>
 <pre><code>.editable-checklist label {
@@ -830,7 +832,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["combodate"]=v; }); });
                       <h1>Typeahead</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/46/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 2 jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="TypeaheadCtrl">
+                      <div class="well line-example"><div ng-controller="TypeaheadCtrl" id="TypeaheadCtrl">
   <a href="#" editable-text="user.state" e-uib-typeahead="state for state in states | filter:$viewValue | limitTo:8">
     {{ user.state || 'empty' }}
   </a>
@@ -852,7 +854,7 @@ Other parameters can be defined via <code>e-typeahead-*</code> syntax, e.g. <cod
   $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 $scope.$watch("user", function(v) { $scope.$parent.debug["typeahead"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TypeaheadCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TypeaheadCtrl&quot; id=&quot;TypeaheadCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.state&quot; e-uib-typeahead=&quot;state for state in states | filter:$viewValue | limitTo:8&quot;&gt;
     {{ user.state || 'empty' }}
   &lt;/a&gt;
@@ -1057,7 +1059,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["ngtags"]=v; }); });</s
                       <h1>Customize input</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/26/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="TextCustomizeCtrl">
+                      <div class="well line-example"><div ng-controller="TextCustomizeCtrl" id="TextCustomizeCtrl">
   <a href="#" editable-text="user.name"
               e-style="color: green"
               e-required
@@ -1079,7 +1081,7 @@ on the original element with <code>e-*</code> prefix (e.g. <code>e-style</code> 
   };  
 $scope.$watch("user", function(v) { $scope.$parent.debug["text-customize"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextCustomizeCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextCustomizeCtrl&quot; id=&quot;TextCustomizeCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot;
               e-style=&quot;color: green&quot;
               e-required
@@ -1101,7 +1103,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-customize"]=v; })
                       <h1>Trigger manually</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/27/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="TextBtnCtrl">
+                      <div class="well line-example"><div ng-controller="TextBtnCtrl" id="TextBtnCtrl">
   <span editable-text="user.name" e-form="textBtnForm">
     {{ user.name || 'empty' }}
   </span>
@@ -1120,7 +1122,7 @@ Value of it is the name of variable to be created in scope that allows you to sh
   };  
 $scope.$watch("user", function(v) { $scope.$parent.debug["text-btn"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextBtnCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;TextBtnCtrl&quot; id=&quot;TextBtnCtrl&quot;&gt;
   &lt;span editable-text=&quot;user.name&quot; e-form=&quot;textBtnForm&quot;&gt;
     {{ user.name || 'empty' }}
   &lt;/span&gt;
@@ -1260,7 +1262,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-multiple"]=v; }
                       <h1>Validate local</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/35/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="ValidateLocalCtrl">
+                      <div class="well line-example"><div ng-controller="ValidateLocalCtrl" id="ValidateLocalCtrl">
   <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
     {{ user.name || 'empty' }}
   </a>
@@ -1283,7 +1285,7 @@ and string shown as error message.</p>
   };
 $scope.$watch("user", function(v) { $scope.$parent.debug["validate-local"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ValidateLocalCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ValidateLocalCtrl&quot; id=&quot;ValidateLocalCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
     {{ user.name || 'empty' }}
   &lt;/a&gt;
@@ -1305,7 +1307,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["validate-local"]=v; })
                       <h1>Validate remote</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/36/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="ValidateRemoteCtrl">
+                      <div class="well line-example"><div ng-controller="ValidateRemoteCtrl" id="ValidateRemoteCtrl">
   <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
     {{ user.name || 'empty' }}
   </a>
@@ -1337,7 +1339,7 @@ If promise resolves to <strong>string</strong> validation failed.</p>
   };
 $scope.$watch("user", function(v) { $scope.$parent.debug["validate-remote"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ValidateRemoteCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ValidateRemoteCtrl&quot; id=&quot;ValidateRemoteCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;checkName($data)&quot;&gt;
     {{ user.name || 'empty' }}
   &lt;/a&gt;
@@ -1426,7 +1428,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["editable-popover"]=v; 
                       <h1>Submit via onbeforesave</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/37/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="OnbeforesaveCtrl">
+                      <div class="well line-example"><div ng-controller="OnbeforesaveCtrl" id="OnbeforesaveCtrl">
   <a href="#" editable-text="user.name" onbeforesave="updateUser($data)">
     {{ user.name || 'empty' }}
   </a>
@@ -1458,7 +1460,7 @@ Useful for validation and processing errors.</li>
   };
 $scope.$watch("user", function(v) { $scope.$parent.debug["onbeforesave"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;OnbeforesaveCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;OnbeforesaveCtrl&quot; id=&quot;OnbeforesaveCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onbeforesave=&quot;updateUser($data)&quot;&gt;
     {{ user.name || 'empty' }}
   &lt;/a&gt;
@@ -1479,7 +1481,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onbeforesave"]=v; }); 
                       <h1>Submit via onaftersave</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/38/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="OnaftersaveCtrl">
+                      <div class="well line-example"><div ng-controller="OnaftersaveCtrl" id="OnaftersaveCtrl">
   <a href="#" editable-text="user.name" onaftersave="updateUser()">
     {{ user.name || 'empty' }}
   </a>
@@ -1507,7 +1509,7 @@ There are no input parameters as data already in local model.</p>
   };
 $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;OnaftersaveCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;OnaftersaveCtrl&quot; id=&quot;OnaftersaveCtrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; onaftersave=&quot;updateUser()&quot;&gt;
     {{ user.name || 'empty' }}
   &lt;/a&gt;
@@ -1528,7 +1530,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                       <h1>Editable form</h1>
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/81/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
-                      <div class="well line-example"><div ng-controller="EditableFormCtrl">
+                      <div class="well line-example"><div ng-controller="EditableFormCtrl" id="EditableFormCtrl">
   <form editable-form name="editableForm" onaftersave="saveUser()">
     <div>
       <!-- editable username (text with validation) -->
@@ -1667,7 +1669,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
   };
 });</script>
                       <h3>html</h3>
-                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableFormCtrl&quot;&gt;
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;EditableFormCtrl&quot; id=&quot;EditableFormCtrl&quot;&gt;
   &lt;form editable-form name=&quot;editableForm&quot; onaftersave=&quot;saveUser()&quot;&gt;
     &lt;div&gt;
       &lt;!-- editable username (text with validation) --&gt;
@@ -1803,14 +1805,14 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
           </button>
         </form>
         <div class="buttons" ng-show="!rowform.$visible">
-          <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
-          <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
+          <button type="button" class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+          <button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>
         </div>  
       </td>
     </tr>
   </table>
 
-  <button class="btn btn-default" ng-click="addUser()">Add row</button>
+  <button type="button" class="btn btn-default" ng-click="addUser()">Add row</button>
 </div></div>
                       <p><p>To create editable row in table you should place editable elements in cells with <code>e-form</code> attribute pointing to form&#39;s name. The form itself can appear later (e.g. in last column) but it will work. Don&#39;t forget to add 
 <code>editable-form</code> attribute to the form. The form behavior is absolutely the same as described in
@@ -1922,14 +1924,14 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
           &lt;/button&gt;
         &lt;/form&gt;
         &lt;div class=&quot;buttons&quot; ng-show=&quot;!rowform.$visible&quot;&gt;
-          &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;rowform.$show()&quot;&gt;edit&lt;/button&gt;
-          &lt;button class=&quot;btn btn-danger&quot; ng-click=&quot;removeUser($index)&quot;&gt;del&lt;/button&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; ng-click=&quot;rowform.$show()&quot;&gt;edit&lt;/button&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-danger&quot; ng-click=&quot;removeUser($index)&quot;&gt;del&lt;/button&gt;
         &lt;/div&gt;  
       &lt;/td&gt;
     &lt;/tr&gt;
   &lt;/table&gt;
 
-  &lt;button class=&quot;btn btn-default&quot; ng-click=&quot;addUser()&quot;&gt;Add row&lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;addUser()&quot;&gt;Add row&lt;/button&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('EditableRowCtrl', function($scope, $filter, $http) {
@@ -2588,7 +2590,7 @@ Note that using <code>oncancel</code> hook allows you to revert all changes and 
           <section id="themes"></section>
           <h1>Themes</h1>
           <!-- jade cannot include dynamically--><p>There are several themes that can be used to style editable controls.</p>
-<p>To set the theme for the entire application, set &#39;editableOptions.theme&#39; in <code>app.run</code>.</p>
+<p>To set the theme for the entire application, set <code>editableOptions.theme</code> in <code>app.run</code>.</p>
 <p>To change the theme for a specific control, set the <code>editable-theme</code> attribute.</p>
 <p>To display a clear button, set the <code>editableOptions.displayClearButton=true</code> in <code>app.run</code>.</p>
 <p>To change the <code>title</code> and <code>aria-label</code> values of the submit/cancel/clear buttons, set the <code>editableOptions</code> properties:</p>
@@ -2862,6 +2864,117 @@ When trying to set the focus on a form field of a new row in the editable table,
                           <td><i>none    </i>
                           </td>
                           <td><p>Shows form with editable controls.</p>
+</td>
+                        </tr>
+                      </tbody>
+                    </table>
+          <section id="ref-options"></section>
+          <h2>Reference: editable options</h2>
+          <h3>Options</h3><p>Options are set in app.run</p>
+
+          <pre class="prettyprint">app.run(function(editableOptions) {
+editableOptions.theme = 'bs3';
+...
+});
+</pre>
+                    <table width="100%" class="table-bordered table-condensed">
+                      <thead>
+                        <tr>
+                          <th width="15%">Name</th>
+                          <th width="15%">Type</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><code>activate</code></td>
+                          <td>string</td>
+                          <td><p>How input elements get activated. Possible values: <code>focus|select|none</code>.<br>Default is <code>focus</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>activationEvent</code></td>
+                          <td>string</td>
+                          <td><p>Event, on which the edit mode gets activated. 
+Can be any event.<br>Default is <code>click</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>blurElem</code></td>
+                          <td>string</td>
+                          <td><p>Default value for <code>blur</code> attribute of single editable element.<br>Can be <code>cancel|submit|ignore</code>.<br>Default is <code>cancel</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>blurForm</code></td>
+                          <td>string</td>
+                          <td><p>Default value for <code>blur</code> attribute of editable form.<br>Can be <code>cancel|submit|ignore</code>.<br>Default is <code>ignore</code>.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>buttons</code></td>
+                          <td>string</td>
+                          <td><p>Whether to show buttons for single editable element.<br>Possible values <code>right</code>, <code>no</code>.<br>Default is <code>right</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>cancelButtonAriaLabel</code></td>
+                          <td>string</td>
+                          <td><p>The default aria label of the cancel button.<br>Default is <code>Cancel</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>cancelButtonTitle</code></td>
+                          <td>string</td>
+                          <td><p>The default title of the cancel button.<br>Default is <code>Cancel</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>clearButtonAriaLabel</code></td>
+                          <td>string</td>
+                          <td><p>The default aria label of the clear button.<br>Default is <code>Clear</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>clearButtonTitle</code></td>
+                          <td>string</td>
+                          <td><p>The default title of the clear button.<br>Default is <code>Clear</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>displayClearButton</code></td>
+                          <td>boolean</td>
+                          <td><p>Whether to display the clear button.<br>Default is <code>false</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>icon set</code></td>
+                          <td>string</td>
+                          <td><p>Icon Set. Possible values <code>font-awesome</code>, <code>default</code>.<br>Default is <code>default</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>isDisabled</code></td>
+                          <td>boolean</td>
+                          <td><p>Whether to disable x-editable. Can be overloaded on each element.<br>Default is <code>false</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>submitButtonAriaLabel</code></td>
+                          <td>string</td>
+                          <td><p>The default aria label of the submit button.<br>Default is <code>Submit</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>submitButtonTitle</code></td>
+                          <td>string</td>
+                          <td><p>The default title of the submit button.<br>Default is <code>Submit</code></p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>theme</code></td>
+                          <td>string</td>
+                          <td><p>Theme. Possible values <code>bs3</code>, <code>bs2</code>, <code>default</code>.<br>Default is <code>default</code></p>
 </td>
                         </tr>
                       </tbody>
