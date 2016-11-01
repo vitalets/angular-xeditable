@@ -15,7 +15,13 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
       autosubmit: function() {
         var self = this;
         self.inputEl.bind('keydown', function(e) {
-          if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
+          if (self.attrs.submitOnEnter) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+              self.scope.$apply(function() {
+                self.scope.$form.$submit();
+              });
+            }
+          } else if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
             self.scope.$apply(function() {
               self.scope.$form.$submit();
             });
