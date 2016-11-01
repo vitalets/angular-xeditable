@@ -1,5 +1,8 @@
 <div ng-controller="DevTextareaCtrl">
-  <a href="#" editable-textarea="user.html" ng-bind-html="user.html" e-rows="7" e-cols="40">
+  <a href="#" id="displayHtml" editable-textarea="user.html" ng-bind-html="user.html" e-rows="7" e-cols="40">
+    <pre>{{ user.html || 'no description' }}</pre>
+  </a>&nbsp;&nbsp;
+  <a href="#" id="submitOnEnter" editable-textarea="user.html" submit-on-enter="true" ng-bind-html="user.html" e-rows="7" e-cols="40" buttons="no">
     <pre>{{ user.html || 'no description' }}</pre>
   </a>
 </div>  
