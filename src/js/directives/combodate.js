@@ -14,8 +14,13 @@ angular.module('xeditable').directive('editableCombodate', ['editableDirectiveFa
         angular.forEach(["format", "template", "minYear", "maxYear", "yearDescending", "minuteStep", "secondStep", "firstItem", "errorClass", "customClass", "roundTime", "smartDays"], function(name) {
 
           var attrName = "e" + name.charAt(0).toUpperCase() + name.slice(1);
+
           if (attrName in self.attrs) {
-            options[name] = self.attrs[attrName];
+            if (name == "minYear" || name == "maxYear" || name == "minuteStep" || name == "secondStep") {
+              options[name] = parseInt(self.attrs[attrName], 10);
+            } else {
+              options[name] = self.attrs[attrName];
+            }
           }
         });
 
