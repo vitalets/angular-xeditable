@@ -67,6 +67,7 @@ module.exports = [
         {id: 'dev-radiolist'},
         {id: 'dev-checklist'},
         {id: 'dev-editable-row'},
-        {id: 'dev-textarea'}
+        {id: 'dev-textarea'},
+        {id: 'dev-combodate'}
     ]}
 ];

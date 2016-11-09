@@ -1,0 +1,5 @@
+<div ng-controller="DevCombodateCtrl">
+  <a href="#" editable-combodate="user.dob" e-format="MM-DD-YYYY HH:mm:ss" e-template="MM-DD-YYYY HH:mm:ss" e-minute-step="1" e-second-step="1">
+    {{ (user.dob | date:"medium") || 'empty' }}
+  </a>
+</div>
