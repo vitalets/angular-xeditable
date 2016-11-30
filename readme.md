@@ -16,6 +16,16 @@ to use power of angular and support complex forms / editable grids.
 ````
 bower install angular-xeditable
 ````
+#### NuGet
+Manage the NuGet Packages for your project and install Angular.Xeditable.
+Alternatively, at the Package Manager Console type:
+````
+Install-Package Angular.Xeditable
+````
+Or, in a command line (with nuget.exe in your path):
+````
+nuget.exe install Angular.Xeditable
+````
 #### Manual
 Download latest version from [project homepage](http://vitalets.github.io/angular-xeditable).
 

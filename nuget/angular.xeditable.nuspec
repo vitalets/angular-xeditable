@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Angular.Xeditable</id>
+        <version>0.1.8</version>
+        <title>Angular xeditable</title>
+        <authors>vitalets,ADAPTByDesign</authors>
+        <projectUrl>http://vitalets.github.io/angular-xeditable</projectUrl>
+        <iconUrl>http://vitalets.github.io/angular-xeditable/docs/img/angular32.jpeg</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Angular-xeditable is a bundle of AngularJS directives that allows you to create editable elements.
+
+This technique is also known as click-to-edit or edit-in-place.
+
+It is based on the ideas from x-editable but was written from scratch to use power of angular and support complex forms / editable grids.
+
+[NuGet packaging by ADAPTByDesign]
+</description>
+        <summary>Editable elements for AngularJS</summary>
+        <releaseNotes />
+        <copyright />
+        <tags>angularjs xeditable click-to-edit edit-in-place</tags>
+        <dependencies>
+            <dependency id="AngularJS.Core" version="1.0.7" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\dist\js\xeditable.min.js" target="content\Scripts\xeditable.min.js" />
+        <file src="..\dist\js\xeditable.js" target="content\Scripts\xeditable.js" />
+        <file src="..\dist\css\xeditable.css" target="content\Content\xeditable.css" />
+    </files>
+</package>
