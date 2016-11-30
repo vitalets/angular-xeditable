@@ -1,0 +1,9 @@
+<div ng-controller="DevEformCtrl">
+  <ul>
+    <li ng-repeat="user in users">
+        <a editable-text="user.name" e-form="rowform{{$index}}" e-clickable="true" onbeforesave="checkName($data, user.id)">
+          {{ user.name || 'empty' }}
+        </a>
+    </li>
+  </ul>
+</div>  
