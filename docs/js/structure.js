@@ -10,7 +10,7 @@ module.exports = [
         {id: 'checkbox', text: 'Checkbox', fiddle: 'http://jsfiddle.net/NfPcH/33/'},
         {id: 'checklist', text: 'Checklist', fiddle: ''},
         {id: 'radiolist', text: 'Radiolist', fiddle: ''},
-        {id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/NfPcH/23/', fiddleText: 'View Bootstrap 2 jsFiddle'},
+        {id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/ckosloski/NfPcH/17531/', fiddleText: 'View Bootstrap 3 jsFiddle'},
         {id: 'bstime', text: 'Time', fiddle: 'http://jsfiddle.net/NfPcH/34/', fiddleText: 'View Bootstrap 2 jsFiddle'},
         {id: 'combodate', text: 'DateTime', fiddle: '', fiddleText: 'No jsFiddle'},
         {id: 'typeahead', text: 'Typeahead', fiddle: 'http://jsfiddle.net/NfPcH/46/', fiddleText: 'View Bootstrap 2 jsFiddle'},
@@ -68,6 +68,7 @@ module.exports = [
         {id: 'dev-checklist'},
         {id: 'dev-editable-row'},
         {id: 'dev-textarea'},
-        {id: 'dev-combodate'}
+        {id: 'dev-combodate'},
+        {id: 'dev-eform'}
     ]}
 ];
