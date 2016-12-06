@@ -418,13 +418,16 @@ angular.module('xeditable').factory('editableController',
         var el = self.inputEl[0];
 
         if (editableOptions.activate === 'focus' && el.focus) {
-          if(start){
+          if (start !== undefined && start !== "" && el.setSelectionRange) {
             end = end || start;
-            el.onfocus = function(){
-              var that = this;
-              setTimeout(function(){
-                that.setSelectionRange(start,end);
-              });
+            el.onfocus = function() {
+              setTimeout(function() {
+                try {
+                  this.setSelectionRange(start,end);
+                } catch(e) {
+                  //do nothing, this input doesn't support setSelectionRange
+                }
+              }.bind(this));
             };
           }
           

@@ -167,7 +167,9 @@ angular.module('xeditable').factory('editableFormController',
      * @memberOf editable-form
      */
     $activate: function(name) {
-      var i;
+      var i,
+          selectionStart,
+          selectionEnd;
       if (this.$editables.length) {
         //activate by name
         if (angular.isString(name)) {
@@ -188,7 +190,13 @@ angular.module('xeditable').factory('editableFormController',
         }
 
         //by default activate first field
-        this.$editables[0].activate(this.$editables[0].elem[0].selectionStart, this.$editables[0].elem[0].selectionEnd);
+        selectionStart = this.$editables[0].elem[0].selectionStart ? 
+            this.$editables[0].elem[0].selectionStart : 
+              this.$editables[0].elem[0].text ? this.$editables[0].elem[0].text.length : 0;
+        selectionEnd = this.$editables[0].elem[0].selectionEnd ? 
+            this.$editables[0].elem[0].selectionEnd : 
+              this.$editables[0].elem[0].text ? this.$editables[0].elem[0].text.length : 0;
+        this.$editables[0].activate(selectionStart, selectionEnd);
       }
     },
 

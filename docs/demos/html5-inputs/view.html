@@ -1,6 +1,6 @@
 <div ng-controller="Html5InputsCtrl" id="Html5InputsCtrl">
   <div>Email: <a href="#" editable-email="user.email">{{ user.email || 'empty' }}</a></div>
-  <div>Tel: <a href="#" editable-tel="user.tel" e-pattern="\d{3}\-\d{2}\-\d{2}" e-title="xxx-xx-xx">{{ user.tel || 'empty' }}</a></div>
+  <div>Tel: <a href="#" editable-tel="user.tel" e-pattern="\d{3}-\d{2}-\d{2}" e-title="xxx-xx-xx">{{ user.tel || 'empty' }}</a></div>
   <div>Number: <a href="#" editable-number="user.number" e-min="18">{{ user.number || 'empty' }}</a></div>  
   <div>Range: <a href="#" editable-range="user.range" e-step="5">{{ user.range || 'empty' }}</a></div>  
   <div>Url: <a href="#" editable-url="user.url">{{ user.url || 'empty' }}</a></div>  

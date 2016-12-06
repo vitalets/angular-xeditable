@@ -21,7 +21,7 @@ angular.module('xeditable', [])
    */  
   theme: 'default',
   /**
-   * Icon Set. Possible values `font-awesome`, `default`.  
+   * icon_set. Possible values `font-awesome`, `default`.  
    * Default is `default`
    * 
    * @var {string} icon set
