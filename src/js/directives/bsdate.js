@@ -26,7 +26,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                 inputDatePicker.attr('clear-text', this.attrs.eClearText || 'Clear');
                 inputDatePicker.attr('close-text', this.attrs.eCloseText || 'Done');
                 inputDatePicker.attr('close-on-date-selection', this.attrs.eCloseOnDateSelection || true);
-                inputDatePicker.attr('datepicker-append-to-body', this.attrs.eDatePickerAppendToBody || false);
+                inputDatePicker.attr('datepicker-append-to-body', this.attrs.eDatepickerAppendToBody || this.attrs.eDatePickerAppendToBody || false);
                 inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
                 inputDatePicker.attr('name', this.attrs.eName);
                 inputDatePicker.attr('on-open-focus', this.attrs.eOnOpenFocus || true);
