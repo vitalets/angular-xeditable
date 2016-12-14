@@ -1,54 +1,54 @@
 <div ng-controller="DevBsdateCtrl">
-  <a href="#" data-editable-bsdate="user.dob"
-              data-e-is-open="opened.$data"
-              data-e-ng-click="open($event,'$data')"
-              data-e-datepicker-popup="dd-MMMM-yyyy"
-              data-e-min-date="getMinDate()"
-              data-e-max-date="getMaxDate()"
-              data-e-on-open-focus="true"
-              data-e-style="color: white; background-color: green"
+  <a href="#" editable-bsdate="user.dob"
+              e-is-open="opened.$data"
+              e-ng-click="open($event,'$data')"
+              e-datepicker-popup="dd-MMMM-yyyy"
+              e-min-date="getMinDate()"
+              e-max-date="getMaxDate()"
+              e-on-open-focus="true"
+              e-style="color: white; background-color: green"
               id="minMax"
               class="minMax">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
   &nbsp;
-  <a href="#" data-editable-bsdate="user.startDate"
-              data-e-is-open="opened.$data"
-              data-e-ng-click="open($event,'$data')"
-              data-e-datepicker-popup="dd-MMMM-yyyy"
-              data-e-init-date="getInitDate()"
+  <a href="#" editable-bsdate="user.startDate"
+              e-is-open="opened.$data"
+              e-ng-click="open($event,'$data')"
+              e-datepicker-popup="dd-MMMM-yyyy"
+              e-init-date="getInitDate()"
               id="initDate"
               class="initDate">
     {{ (user.startDate | date:"dd/MM/yyyy") || 'empty' }}
   </a>
   &nbsp;
-  <a href="#" data-editable-bsdate="user.hireDate"
-              data-e-is-open="opened.$data"
-              data-e-ng-click="open($event,'$data')"
-              data-e-datepicker-popup="dd-MMMM-yyyy"
-              data-e-init-date="getInitDate()"
-              data-e-on-open-focus="true"
-              data-e-readonly="true"
+  <a href="#" editable-bsdate="user.hireDate"
+              e-is-open="opened.$data"
+              e-ng-click="open($event,'$data')"
+              e-datepicker-popup="dd-MMMM-yyyy"
+              e-init-date="getInitDate()"
+              e-on-open-focus="true"
+              e-readonly="true"
               id="readOnly"
               class="readOnly">
     {{ (user.hireDate | date:"dd/MM/yyyy") || 'empty' }}
   </a>
   &nbsp;
-  <a href="#" data-editable-bsdate="user.dob"
-              data-e-is-open="opened.$data"
-              data-e-ng-click="open($event,'$data')"
-              data-e-datepicker-popup="dd-MMMM-yyyy"
-              data-e-ng-change="changed($parent.$data)"
+  <a href="#" editable-bsdate="user.dob"
+              e-is-open="opened.$data"
+              e-ng-click="open($event,'$data')"
+              e-datepicker-popup="dd-MMMM-yyyy"
+              e-ng-change="changed($parent.$data)"
               id="onChangeDate"
               class="onChangeDate">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
   &nbsp;
-  <a href="#" data-editable-bsdate="user.dob"
-             data-e-is-open="opened.$data"
-             data-e-ng-click="open($event,'$data')"
-             data-e-datepicker-popup="dd-MMMM-yyyy"
-             data-e-show-calendar-button="false"
+  <a href="#" editable-bsdate="user.dob"
+             e-is-open="opened.$data"
+             e-ng-click="open($event,'$data')"
+             e-datepicker-popup="dd-MMMM-yyyy"
+             e-show-calendar-button="false"
              id="hideCalendarButton"
              class="hideCalendarButton">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
