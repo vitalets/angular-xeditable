@@ -23,7 +23,7 @@
     <!--bootstrap-->
     <script src="libs/bootstrap/3.3.6/js/bootstrap.js"></script>
     <!--angular-ui-bootstrap-->
-    <script src="libs/angular-ui/bootstrap/ui-bootstrap-tpls-1.3.1.min.js"></script>
+    <script src="libs/angular-ui/bootstrap/ui-bootstrap-tpls-2.2.0.min.js"></script>
     <!--ui-select-->
     <script src="libs/ui-select/0.16.1/select.js"></script>
     <!--ng-tags-->
@@ -504,9 +504,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
   </a>
 </div></div>
                       <pre>{{ debug["textarea"] | json }}</pre>
-                      <p><p>To make element editable via textarea just add <code>editable-textarea</code> attribute 
-pointing to model in scope. You can also wrap content into <code>&lt;pre&gt;</code> tags to keep linebreaks.
-Data can be submitted by <em>Ctrl + Enter</em>.</p>
+                      <p><p>To make element editable via textarea just add <code>editable-textarea</code> attribute
+pointing to model in scope. You can also wrap content into <code>&lt;pre&gt;</code> tags to keep linebreaks.<br>Data can be submitted by <em>Ctrl + Enter</em>.<br>Data can be submitted by <em>Enter</em> if the attribute <code>submit-on-enter=&quot;true&quot;</code> is used.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('TextareaCtrl', function($scope) {

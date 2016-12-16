@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.5.0
 Edit-in-place for angular.js
-Build date: 2016-10-27 
+Build date: 2016-11-01 
 */
 /**
  * Angular-xeditable module 
@@ -254,7 +254,7 @@ angular.module('xeditable').directive('editableBstime', ['editableDirectiveFacto
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableBstime',
-      inputTpl: '<uib-timepicker></uib-timepicker>',
+      inputTpl: '<div uib-timepicker></div uib-timepicker>',
       render: function() {
         this.parent.render.call(this);
 
@@ -563,7 +563,13 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
       autosubmit: function() {
         var self = this;
         self.inputEl.bind('keydown', function(e) {
-          if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
+          if (self.attrs.submitOnEnter) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+              self.scope.$apply(function() {
+                self.scope.$form.$submit();
+              });
+            }
+          } else if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
             self.scope.$apply(function() {
               self.scope.$form.$submit();
             });

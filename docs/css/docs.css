@@ -156,7 +156,7 @@ footer {
 }
 
 /* temporary workaround for display editable-bstime in bs3 - up/down symbols not shown */
-.editable-bstime .editable-input i.icon-chevron-up:before {
+/*.editable-bstime .editable-input i.icon-chevron-up:before {
   content: '\e113';
 }
 .editable-bstime .editable-input i.icon-chevron-down:before {
@@ -172,7 +172,7 @@ footer {
   font-style: normal;
   font-weight: normal;
   line-height: 1;
-}
+}*/
 
 /* editable-bstime doc fixes*/
 .uib-timepicker tr td {
