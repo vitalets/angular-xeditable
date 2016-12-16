@@ -54,6 +54,17 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
             if (this.attrs.eFormclass) {
               this.editorEl.addClass(this.attrs.eFormclass);
             }
+          },
+          autosubmit: function() {
+            var self = this;
+            self.inputEl.bind('keydown', function(e) {
+                //submit on tab
+                if (e.keyCode === 9) {
+                    self.scope.$apply(function() {
+                        self.scope.$form.$submit();
+                    });
+                }
+            });
           }
         });
     }]);
