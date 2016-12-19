@@ -11,6 +11,7 @@ module.exports = [
         {id: 'checklist', text: 'Checklist', fiddle: ''},
         {id: 'radiolist', text: 'Radiolist', fiddle: ''},
         {id: 'bsdate', text: 'Date', fiddle: 'http://jsfiddle.net/ckosloski/NfPcH/17531/', fiddleText: 'View Bootstrap 3 jsFiddle'},
+        {id: 'uidate', text: 'UI Date', fiddle: ''},
         {id: 'bstime', text: 'Time', fiddle: 'http://jsfiddle.net/NfPcH/34/', fiddleText: 'View Bootstrap 2 jsFiddle'},
         {id: 'combodate', text: 'DateTime', fiddle: '', fiddleText: 'No jsFiddle'},
         {id: 'typeahead', text: 'Typeahead', fiddle: 'http://jsfiddle.net/NfPcH/46/', fiddleText: 'View Bootstrap 2 jsFiddle'},

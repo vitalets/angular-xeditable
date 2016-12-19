@@ -1,0 +1,6 @@
+<div ng-controller="UidateCtrl">
+    <span editable-uidate="user.dob"
+        e-ui-date="datePickerConfig">
+        {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
+    </span>
+</div>
