@@ -1,7 +1,11 @@
 /*!
 angular-xeditable - 0.5.0
 Edit-in-place for angular.js
+<<<<<<< bebcf16b2343301b498a233b28497b7ee76efb92
 Build date: 2016-10-27 
+=======
+Build date: 2016-10-22 
+>>>>>>> Fixed time directive but need to work on the documentation and tests
 */
 /**
  * Angular-xeditable module 
@@ -254,27 +258,27 @@ angular.module('xeditable').directive('editableBstime', ['editableDirectiveFacto
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableBstime',
-      inputTpl: '<uib-timepicker></uib-timepicker>',
+      inputTpl: '<div uib-timepicker></div uib-timepicker>',
       render: function() {
         this.parent.render.call(this);
 
-        // timepicker can't update model when ng-model set directly to it
-        // see: https://github.com/angular-ui/bootstrap/issues/1141
-        // so we wrap it into DIV
-        var div = angular.element('<div class="well well-small" style="display:inline-block;"></div>');
+        // // timepicker can't update model when ng-model set directly to it
+        // // see: https://github.com/angular-ui/bootstrap/issues/1141
+        // // so we wrap it into DIV
+        // var div = angular.element('<div class="well well-small" style="display:inline-block;"></div>');
 
-        // move ng-model to wrapping div
-        div.attr('ng-model', this.inputEl.attr('ng-model'));
-        this.inputEl.removeAttr('ng-model');
+        // // move ng-model to wrapping div
+        // div.attr('ng-model', this.inputEl.attr('ng-model'));
+        // this.inputEl.removeAttr('ng-model');
 
-        // move ng-change to wrapping div
-        if(this.attrs.eNgChange) {
-          div.attr('ng-change', this.inputEl.attr('ng-change'));
-          this.inputEl.removeAttr('ng-change');
-        }
+        // // move ng-change to wrapping div
+        // if(this.attrs.eNgChange) {
+          // div.attr('ng-change', this.inputEl.attr('ng-change'));
+          // this.inputEl.removeAttr('ng-change');
+        // }
 
-        // wrap
-        this.inputEl.wrap(div);
+        // // wrap
+        // this.inputEl.wrap(div);
       }
     });
 }]);
@@ -317,6 +321,7 @@ angular.module('xeditable').directive('editableChecklist', [
         this.parent.render.call(this);
         var parsed = editableNgOptionsParser(this.attrs.eNgOptions);
         var ngChangeHtml = '';
+<<<<<<< bebcf16b2343301b498a233b28497b7ee76efb92
         var ngChecklistComparatorHtml = '';
 
         if (this.attrs.eNgChange) {
@@ -330,12 +335,25 @@ angular.module('xeditable').directive('editableChecklist', [
         var html = '<label ng-repeat="'+parsed.ngRepeat+'">'+
           '<input type="checkbox" checklist-model="$parent.$parent.$data" checklist-value="'+parsed.locals.valueFn+'"' +
             ngChangeHtml + ngChecklistComparatorHtml + '>'+
+=======
+
+        if (this.attrs.eNgChange) {
+          ngChangeHtml = 'ng-change="' +  this.attrs.eNgChange + '"';
+        }
+
+        var html = '<label ng-repeat="'+parsed.ngRepeat+'">'+
+          '<input type="checkbox" checklist-model="$parent.$parent.$data" checklist-value="'+parsed.locals.valueFn+'"' +
+            ngChangeHtml + '>'+
+>>>>>>> Fixed time directive but need to work on the documentation and tests
           '<span ng-bind="'+parsed.locals.displayFn+'"></span></label>';
 
         this.inputEl.removeAttr('ng-model');
         this.inputEl.removeAttr('ng-options');
         this.inputEl.removeAttr('ng-change');
+<<<<<<< bebcf16b2343301b498a233b28497b7ee76efb92
         this.inputEl.removeAttr('checklist-comparator');
+=======
+>>>>>>> Fixed time directive but need to work on the documentation and tests
         this.inputEl.html(html);
       }
     });
