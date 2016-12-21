@@ -14,7 +14,7 @@ http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 * `npm install` in the project
 * `grunt build` - to build the project files
 * `grunt server` - to start the server
-* Run the "doc" tests http://localhost:8000/test/e2e/docs-test.html
-* Run the "dev" tests http://localhost:8000/test/e2e/dev-test.html
-* Verify the documentation still works correctly by navigating to http://localhost:8000
-* To view the "dev" documentation, navigate to http://localhost:8000/dev.html
+* Run the "doc" tests `http://localhost:8000/test/e2e/docs-test.html`
+* Run the "dev" tests `http://localhost:8000/test/e2e/dev-test.html`
+* Verify the documentation still works correctly by navigating to `http://localhost:8000`
+* To view the "dev" documentation, navigate to `http://localhost:8000/dev.html`
