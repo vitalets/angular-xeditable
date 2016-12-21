@@ -34,50 +34,13 @@ app.config(function($locationProvider) {
 
 app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
   $rootScope.debug = {};
-  //detecting query params. Angular $location.search() works in html5mode only!
-  /*
-  var l = $window.location.href;
-  var theme;
-  if(/theme=default/.test(l)) {
-    theme = 'default';
-  } else if(/theme=bs2/.test(l)) {
-    theme = 'bs2';
-  } else {
-    theme = 'bs3';
-    editableThemes.bs3.inputClass = 'input-sm';
-    editableThemes.bs3.buttonsClass = 'btn-sm';
-  }
-
-  editableOptions.theme = theme;
-  $rootScope.theme = theme;
-
-  if(theme === 'bs3' || theme === 'bs3sm') {
-    $rootScope.css = ['bootstrap300/css/bootstrap.css'];  
-  } else if(theme === 'bs2') {
-    $rootScope.css = ['bootstrap232/css/bootstrap.css', 'bootstrap232/css/bootstrap-responsive.css'];  
-  } else {
-    $rootScope.css = [];
-  }
-*/
-  
-  /*
-  editableOptions.theme = 'default';
-  $rootScope.css = [];
-  */
 
   editableOptions.theme = 'bs3';
   editableOptions.activate = 'focus';
 
+  $rootScope.css = ['bower_components/bootstrap/dist/css/bootstrap.css'];
 
-  $rootScope.css = ['libs/bootstrap/3.3.6/css/bootstrap.css'];
-
- 
-  /*
-  editableOptions.theme = 'bs2';
-  $rootScope.css = ['libs/bootstrap/2.3.2/css/bootstrap.css', 'libs/bootstrap/2.3.2/css/bootstrap-responsive.css']; 
-  */
-
-  // -- mocks --
+   // -- mocks --
 
   //groups
   $httpBackend.whenGET('/groups').respond([
