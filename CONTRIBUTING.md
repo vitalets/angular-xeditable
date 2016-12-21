@@ -13,10 +13,9 @@ http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 * Install grunt globally, if you haven't already: `npm install -g grunt-cli`
 * Install a server - `npm i http-server -g`
 * `npm install` in the project
-* `grunt jade` - to create the documentation files
 * `grunt build` - to build the project files
-* `http-server` - to start the server
-* Run the "doc" tests [http://127.0.0.1:8080/test/e2e/docs-test.html](http://127.0.0.1:8080/test/e2e/docs-test.html)
-* Run the "dev" tests [http://localhost:8080/test/e2e/dev-test.html](http://localhost:8080/test/e2e/dev-test.html)
-* Verify the documentation still works correctly by navigating to [http://127.0.0.1:8080](http://127.0.0.1:8080)
-* To view the "dev" documentation, navigate to [http://127.0.0.1:8080/dev.html](http://127.0.0.1:8080/dev.html)
+* `grunt server` - to start the server
+* Run the "doc" tests http://localhost:8000/test/e2e/docs-test.html
+* Run the "dev" tests http://localhost:8000/test/e2e/dev-test.html
+* Verify the documentation still works correctly by navigating to http://localhost:8000
+* To view the "dev" documentation, navigate to http://localhost:8000/dev.html
