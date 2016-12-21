@@ -26,25 +26,29 @@
     "moment": "^2.5.0"
   },
   "devDependencies": {
+    "bower": "^1.8.0",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.9",
     "grunt-contrib-clean": "~0.4.1",
-    "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-compress": "~0.5.0",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-jshint": "~0.5.3",
-    "grunt-contrib-watch": "~0.4.3",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-replace": "~0.4.4",
+    "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-connect": "~0.4.0",
-    "grunt-contrib-jade": "~0.8.0",
+    "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-cssmin": "~0.6.1",
-    "marked": "~0.2.9",
+    "grunt-contrib-jade": "~0.8.0",
+    "grunt-contrib-jshint": "~0.5.3",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.3",
     "grunt-jsdoc": "~0.4.1",
-    "grunt-shell": "~0.5.0"
+    "grunt-replace": "~0.4.4",
+    "grunt-shell": "~0.5.0",
+    "marked": "~0.2.9"
   },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/vitalets/angular-xeditable/issues"
+  },
+  "scripts": {
+    "prepublish": "bower update"
   }
 }
