@@ -34,6 +34,7 @@
     "angular-scenario": "~1.5.0",
     "jquery": "^2.2.4",
     "bootstrap": "^3.3.7",
-    "moment": "^2.17.1"
+    "moment": "^2.17.1",
+    "checklist-model": "^0.10.0"
   }
 }
