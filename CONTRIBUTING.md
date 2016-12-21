@@ -11,7 +11,6 @@ http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 
 ## How to run the tests
 * Install grunt globally, if you haven't already: `npm install -g grunt-cli`
-* Install a server - `npm i http-server -g`
 * `npm install` in the project
 * `grunt build` - to build the project files
 * `grunt server` - to start the server
