@@ -1,12 +1,12 @@
 describe('html5-inputs', function() {
 
-  var $filter;
+  // var $filter;
 
   beforeEach(function() {
     browser().navigateTo(mainUrl);
   });
 
-  it('should show editor and submit new value', inject(function($filter) {
+  it('should show editor and submit new value', function($filter) {
     var s = '[ng-controller="Html5InputsCtrl"] ';
     var data0 = {
       email: 'email@example.com',
@@ -17,11 +17,11 @@ describe('html5-inputs', function() {
       search: 'blabla',
       color: '#6a4415',
       date: null,
-      time: new Date(1970, 0, 1, 12, 30),
+      time: '12:30',
       month: null,
       week: null,
       password: 'password',
-      datetimeLocal: null
+      'datetime-local': null
     };
 
     var data1 = {
@@ -33,11 +33,11 @@ describe('html5-inputs', function() {
       search: 'blabla1',
       color: '#000000',
       date: null,
-      time: new Date(1970, 0, 1, 12, 40),
+      time: '12:40',
       month: null,
       week: null,
       password: 'password1',
-      dateTimeLocal: null
+      'datetime-local': null
     };
 
     function checkValues(data) {
@@ -46,7 +46,7 @@ describe('html5-inputs', function() {
         expect(element(e).css('display')).not().toBe('none');
 
         if (k === "time") {
-          expect(element(e).text()).toMatch(($filter('date')(v, 'HH:mm')) || 'empty');
+          expect(element(e).text()).toMatch(v || 'empty');
         } else {
           expect(element(e).text()).toMatch(v || 'empty');
         }
@@ -62,13 +62,13 @@ describe('html5-inputs', function() {
       element(e).click();
       expect(element(e).css('display')).toBe('none');
       expect(element(s+'form input[type="'+k+'"]:visible').count()).toBe(1);
-      using(s).input('$data').enter(v);
+      using(s).input('$parent.$data').enter(v);
       element(s+'form button[type="submit"]').click();
       expect(element(s+'form input[type="'+k+'"]:visible').count()).toBe(0);
     });
 
     // check final state
     checkValues(data1);
-  }));
+  });
 
 });
