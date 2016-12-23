@@ -10,10 +10,9 @@ http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 * Squash your commits before creating the pull request.
 
 ## How to run the tests
-* Install grunt globally, if you haven't already: `npm install -g grunt-cli`
 * `npm install` in the project
-* `grunt build` - to build the project files
-* `grunt server` - to start the server
+* `npm run build` - to build the project files
+* `npm start` - to start the server
 * Run the "doc" tests `http://localhost:8000/test/e2e/docs-test.html`
 * Run the "dev" tests `http://localhost:8000/test/e2e/dev-test.html`
 * Verify the documentation still works correctly by navigating to `http://localhost:8000`

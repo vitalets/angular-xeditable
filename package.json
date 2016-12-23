@@ -49,6 +49,8 @@
     "url": "https://github.com/vitalets/angular-xeditable/issues"
   },
   "scripts": {
+    "build": "grunt build",
+    "start": "grunt server",
     "prepublish": "bower update"
   }
 }
