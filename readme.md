@@ -36,6 +36,7 @@ For themes you may need to include [Twitter Bootstrap](http://getbootstrap.com) 
 For some extra controls (e.g. datepicker) you may need to include [angular-ui bootstrap](http://angular-ui.github.io/bootstrap/).
 To use ui-select you will need to include [angular-ui ui-select](https://github.com/angular-ui/ui-select/).
 To use ngTagsInput you will need to include [mbenford ngTagsInput](https://github.com/mbenford/ngTagsInput).
+To use ui-date you will need to include [angular-ui ui-date](https://github.com/angular-ui/ui-date).
 
 ## Reporting issues and Contributing
 Please read our [Contributor guidelines](CONTRIBUTING.md) before reporting an issue or creating a pull request.
