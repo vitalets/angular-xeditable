@@ -4,7 +4,11 @@
  */
 angular.module('xeditable', [])
 
-
+.constant('editableConfig', {
+	editableTagsInput: {
+		inputTpl: '<tags-input></tags-input>'
+	}
+})
 /**
  * Default options. 
  *

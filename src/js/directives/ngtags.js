@@ -29,3 +29,21 @@ angular.module('xeditable').directive('editableTagsInput', ['editableDirectiveFa
 
     return dir;
 }]);
+
+/*
+ Generic tags directive. set 'editableConfig.editableTagsInput.inputTpl' and use as you would
+ */
+angular.module('xeditable').directive('editableGenericTagsInput', ['editableDirectiveFactory', 'editableUtils', 'editableConfig',
+  function(editableDirectiveFactory, editableUtils, editableConfig) {
+    var dir = editableDirectiveFactory({
+        directiveName: 'editableGenericTagsInput',
+        inputTpl: editableConfig.editableTagsInput.inputTpl,
+        render: function () {
+            this.parent.render.call(this);
+            this.inputEl.removeAttr('ng-model');
+            this.inputEl.attr('ng-model', '$parent.$data');
+        }
+    });
+
+    return dir;
+}]);

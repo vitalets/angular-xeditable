@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.5.0
 Edit-in-place for angular.js
-Build date: 2016-10-27 
+Build date: 2016-12-13 
 */
 /**
  * Angular-xeditable module 
@@ -9,7 +9,11 @@ Build date: 2016-10-27
  */
 angular.module('xeditable', [])
 
-
+.constant('editableConfig', {
+	editableTagsInput: {
+		inputTpl: '<tags-input></tags-input>'
+	}
+})
 /**
  * Default options. 
  *
@@ -356,8 +360,13 @@ angular.module('xeditable').directive('editableCombodate', ['editableDirectiveFa
         angular.forEach(["format", "template", "minYear", "maxYear", "yearDescending", "minuteStep", "secondStep", "firstItem", "errorClass", "customClass", "roundTime", "smartDays"], function(name) {
 
           var attrName = "e" + name.charAt(0).toUpperCase() + name.slice(1);
+
           if (attrName in self.attrs) {
-            options[name] = self.attrs[attrName];
+            if (name == "minYear" || name == "maxYear" || name == "minuteStep" || name == "secondStep") {
+              options[name] = parseInt(self.attrs[attrName], 10);
+            } else {
+              options[name] = self.attrs[attrName];
+            }
           }
         });
 
@@ -478,6 +487,25 @@ angular.module('xeditable').directive('editableTagsInput', ['editableDirectiveFa
 
     return dir;
 }]);
+
+/*
+ Generic tags directive. set 'editableConfig.editableTagsInput.inputTpl' and use as you would
+ */
+angular.module('xeditable').directive('editableGenericTagsInput', ['editableDirectiveFactory', 'editableUtils', 'editableConfig',
+  function(editableDirectiveFactory, editableUtils, editableConfig) {
+    var dir = editableDirectiveFactory({
+        directiveName: 'editableGenericTagsInput',
+        inputTpl: editableConfig.editableTagsInput.inputTpl,
+        render: function () {
+            this.parent.render.call(this);
+            this.inputEl.removeAttr('ng-model');
+            this.inputEl.attr('ng-model', '$parent.$data');
+        }
+    });
+
+    return dir;
+}]);
+
 // radiolist
 angular.module('xeditable').directive('editableRadiolist', [
   'editableDirectiveFactory',
@@ -563,7 +591,13 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
       autosubmit: function() {
         var self = this;
         self.inputEl.bind('keydown', function(e) {
-          if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
+          if (self.attrs.submitOnEnter) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+              self.scope.$apply(function() {
+                self.scope.$form.$submit();
+              });
+            }
+          } else if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
             self.scope.$apply(function() {
               self.scope.$form.$submit();
             });
@@ -642,7 +676,11 @@ angular.module('xeditable').factory('editableController',
     self.parent = {};
 
     //will be undefined if icon_set is default and theme is default
-    self.icon_set = editableOptions.icon_set === 'default' ? editableIcons.default[editableOptions.theme] : editableIcons.external[editableOptions.icon_set];
+    var theme_name = $attrs.editableTheme || editableOptions.theme || 'default';
+    // The theme_name will not be correct if the theme set in options is unavailable
+    // However, in that case an undefined icon_set is not that bad...
+    var icon_set_option = $attrs.editableIconSet || editableOptions.icon_set;
+    self.icon_set = icon_set_option === 'default' ? editableIcons.default[theme_name] : editableIcons.external[icon_set_option];
 
     //to be overwritten by directive
     self.inputTpl = '';
