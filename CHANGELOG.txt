@@ -1,6 +1,19 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.6.0 Dec 27, 2016
+
+----------------------------
+[enh #592] Added support to jQuery UI Datepicker for AngularJS (arielcr)
+[enh #590] Support tab for submit=blur (ckosloski)
+[enh #589] Use datepicker's default settings (valexiev)
+[enh #586] Correctly set caret position to end of input (ckosloski)
+[enh #583] Added tests for e-form (ckosloski)
+[bug #573] Fix parsing of combodate options (ckosloski)
+[enh #569] Add option to submit editable textarea on enter (ckosloski)
+[enh #564] Added possibility to set icon_set via attribute (fredrikw)
+[bug #524] Remove optional dependencies from package.json (ckosloski, eugef)
+
 Version 0.5.0 Oct 27, 2016
 
 ----------------------------

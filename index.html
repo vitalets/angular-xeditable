@@ -4,36 +4,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angular-xeditable :: Edit in place for AngularJS</title>
-    <!--theme: Bootstrap 3, Bootstrap 2, default-->
-    <link href="libs/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet" media="screen">
+    <!--theme: Bootstrap 3-->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
     <!--ui-select css-->
-    <link href="libs/ui-select/0.16.1/select.css" rel="stylesheet" media="screen">
+    <link href="bower_components/angular-ui-select/dist/select.css" rel="stylesheet" media="screen">
     <!--ng-tags css-->
-    <link href="libs/ng-tags/3.1.1/ng-tags-input.min.css" rel="stylesheet" media="screen">
-    <link href="libs/ng-tags/3.1.1/ng-tags-input.bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="bower_components/ng-tags-input/ng-tags-input.css" rel="stylesheet" media="screen">
+    <link href="bower_components/ng-tags-input/ng-tags-input.bootstrap.css" rel="stylesheet" media="screen">
     <!--xeditable css-->
     <link href="dist/css/xeditable.css" rel="stylesheet" media="screen">
     <!--docs css-->
     <link href="docs/css/docs.css" rel="stylesheet" media="screen">
     <!--angular-->
-    <script src="libs/angular/1.5.0/angular.js"></script>
-    <script src="libs/angular/1.5.0/angular-mocks.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
     <!--jquery (needed for bootstrap)-->
-    <script src="libs/jquery/jquery-1.10.2.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <!--bootstrap-->
-    <script src="libs/bootstrap/3.3.6/js/bootstrap.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <!--angular-ui-bootstrap-->
-    <script src="libs/angular-ui/bootstrap/ui-bootstrap-tpls-1.3.1.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!--ui-select-->
-    <script src="libs/ui-select/0.16.1/select.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
     <!--ng-tags-->
-    <script src="libs/ng-tags/3.1.1/ng-tags-input.min.js"></script>
+    <script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
     <!--moment-->
-    <script src="libs/moment.min.2.12.0.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
     <!--google-code-prettify-->
-    <script src="libs/google-code-prettify/run_prettify.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     <!--checklist-model-->
-    <script src="libs/checklist-model.js"></script>
+    <script src="bower_components/checklist-model/checklist-model.js"></script>
     <!--app-->
     <script src="docs/js/app.js"></script>
     <!--xeditable-->
@@ -50,7 +50,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.5.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.5.0 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.6.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.6.0 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -115,6 +115,7 @@
                   <li><a href="#checklist">Checklist</a></li>
                   <li><a href="#radiolist">Radiolist</a></li>
                   <li><a href="#bsdate">Date</a></li>
+                  <li><a href="#uidate">UI Date</a></li>
                   <li><a href="#bstime">Time</a></li>
                   <li><a href="#combodate">DateTime</a></li>
                   <li><a href="#typeahead">Typeahead</a></li>
@@ -177,9 +178,7 @@
 <em>editable elements</em>.<br>Such technique is also known as <em>click-to-edit</em> or <em>edit-in-place</em>.<br>It is based on ideas of <a href="http://vitalets.github.io/x-editable">x-editable</a> but was written from scratch
 to use power of angular and support complex forms / editable grids.</p>
 
-          <h4>Dependencies</h4><p>Basically it does not depend on any libraries except <a href="http://angularjs.org">AngularJS</a> itself.<br>For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.<br>For some extra controls (e.g. datepicker) you may need to include <a href="http://angular-ui.github.io/bootstrap/">angular-ui bootstrap</a>.
-For ui-select you may need to include <a href="https://github.com/angular-ui/ui-select/">angular-ui ui-select</a>.
-For ngTagsInput you may need to include <a href="https://github.com/mbenford/ngTagsInput">mbenford ngTagsInput</a>.</p>
+          <h4>Dependencies</h4><p>Basically it does not depend on any libraries except <a href="http://angularjs.org">AngularJS</a> itself.<br>For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.<br>For some extra controls (e.g. datepicker) you may need to include <a href="http://angular-ui.github.io/bootstrap/">angular-ui bootstrap</a>.<br>For ui-select you may need to include <a href="https://github.com/angular-ui/ui-select/">angular-ui ui-select</a>.<br>For ngTagsInput you may need to include <a href="https://github.com/mbenford/ngTagsInput">mbenford ngTagsInput</a>.<br>If installing via NPM, jQuery and moment js will also be installed.</p>
 
           <h4>Controls & Features</h4>
           <table style="width: 50%; min-width: 200px">
@@ -221,7 +220,7 @@ For ngTagsInput you may need to include <a href="https://github.com/mbenford/ngT
 
               <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.5.0.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.6.0.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -409,7 +408,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
                       <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/82/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="Html5InputsCtrl" id="Html5InputsCtrl">
   <div>Email: <a href="#" editable-email="user.email">{{ user.email || 'empty' }}</a></div>
-  <div>Tel: <a href="#" editable-tel="user.tel" e-pattern="\d{3}\-\d{2}\-\d{2}" e-title="xxx-xx-xx">{{ user.tel || 'empty' }}</a></div>
+  <div>Tel: <a href="#" editable-tel="user.tel" e-pattern="\d{3}-\d{2}-\d{2}" e-title="xxx-xx-xx">{{ user.tel || 'empty' }}</a></div>
   <div>Number: <a href="#" editable-number="user.number" e-min="18">{{ user.number || 'empty' }}</a></div>  
   <div>Range: <a href="#" editable-range="user.range" e-step="5">{{ user.range || 'empty' }}</a></div>  
   <div>Url: <a href="#" editable-url="user.url">{{ user.url || 'empty' }}</a></div>  
@@ -462,7 +461,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;Html5InputsCtrl&quot; id=&quot;Html5InputsCtrl&quot;&gt;
   &lt;div&gt;Email: &lt;a href=&quot;#&quot; editable-email=&quot;user.email&quot;&gt;{{ user.email || 'empty' }}&lt;/a&gt;&lt;/div&gt;
-  &lt;div&gt;Tel: &lt;a href=&quot;#&quot; editable-tel=&quot;user.tel&quot; e-pattern=&quot;\d{3}\-\d{2}\-\d{2}&quot; e-title=&quot;xxx-xx-xx&quot;&gt;{{ user.tel || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;Tel: &lt;a href=&quot;#&quot; editable-tel=&quot;user.tel&quot; e-pattern=&quot;\d{3}-\d{2}-\d{2}&quot; e-title=&quot;xxx-xx-xx&quot;&gt;{{ user.tel || 'empty' }}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Number: &lt;a href=&quot;#&quot; editable-number=&quot;user.number&quot; e-min=&quot;18&quot;&gt;{{ user.number || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
   &lt;div&gt;Range: &lt;a href=&quot;#&quot; editable-range=&quot;user.range&quot; e-step=&quot;5&quot;&gt;{{ user.range || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
   &lt;div&gt;Url: &lt;a href=&quot;#&quot; editable-url=&quot;user.url&quot;&gt;{{ user.url || 'empty' }}&lt;/a&gt;&lt;/div&gt;  
@@ -504,9 +503,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
   </a>
 </div></div>
                       <pre>{{ debug["textarea"] | json }}</pre>
-                      <p><p>To make element editable via textarea just add <code>editable-textarea</code> attribute 
-pointing to model in scope. You can also wrap content into <code>&lt;pre&gt;</code> tags to keep linebreaks.
-Data can be submitted by <em>Ctrl + Enter</em>.</p>
+                      <p><p>To make element editable via textarea just add <code>editable-textarea</code> attribute
+pointing to model in scope. You can also wrap content into <code>&lt;pre&gt;</code> tags to keep linebreaks.<br>Data can be submitted by <em>Ctrl + Enter</em>.<br>Data can be submitted by <em>Enter</em> if the attribute <code>submit-on-enter=&quot;true&quot;</code> is used.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('TextareaCtrl', function($scope) {
@@ -690,9 +688,12 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["radiolist"]=v; }); });
                     <section id="bsdate">
                       <h1>Date</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/23/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 2 jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/17531/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 3 jsFiddle</a>
                       <div class="well line-example"><div ng-controller="BsdateCtrl">
-  <a href="#" editable-bsdate="user.dob" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datepicker-popup="dd-MMMM-yyyy">
+  <a href="#" editable-bsdate="user.dob"
+              e-is-open="opened.$data"
+              e-ng-click="open($event,'$data')"
+              e-datepicker-popup="dd-MMMM-yyyy">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
 </div></div>
@@ -720,7 +721,10 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["radiolist"]=v; }); });
 $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;BsdateCtrl&quot;&gt;
-  &lt;a href=&quot;#&quot; editable-bsdate=&quot;user.dob&quot; e-is-open=&quot;opened.$data&quot; e-ng-click=&quot;open($event,'$data')&quot; e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-bsdate=&quot;user.dob&quot;
+              e-is-open=&quot;opened.$data&quot;
+              e-ng-click=&quot;open($event,'$data')&quot;
+              e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;&gt;
     {{ (user.dob | date:&quot;dd/MM/yyyy&quot;) || 'empty' }}
   &lt;/a&gt;
 &lt;/div&gt;</pre>
@@ -738,6 +742,73 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</s
 
 		$scope.opened[elementOpened] = !$scope.opened[elementOpened];
 	};
+});</pre>
+                    </section>
+                    <section id="uidate">
+                      <h1>UI Date</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="UidateCtrl">
+    <span editable-uidate="user.dob"
+        e-ui-date="datePickerConfig">
+        {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
+    </span>
+</div></div>
+                      <pre>{{ debug["uidate"] | json }}</pre>
+                      <p><p>Date control is implemented via <a href="https://github.com/angular-ui/ui-date">jQuery UI Datepicker for AngularJS</a>.  </p>
+<p>You should install ui-date with bower:</p>
+<pre class="prettyprint">    bower install angular-ui-date --save    </pre>
+<p>Add the CSS:</p>
+<pre><code class="lang-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/jquery-ui/themes/smoothness/jquery-ui.css&quot;/&gt;</code></pre>
+<p>Load the script files (minimun jQuery version is v2.2.0):</p>
+<pre><code class="lang-html">&lt;script type=&quot;text/javascript&quot; src=&quot;bower_components/jquery/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;bower_components/jquery-ui/jquery-ui.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;bower_components/angular/angular.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;bower_components/angular-ui-date/dist/date.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p>Add the date module as a dependency to your application module:</p>
+<pre><code class="lang-js">angular.module(&#39;MyApp&#39;, [&#39;ui.date&#39;])</code></pre>
+<p>And set <code>editable-uidate</code> attribute in editable element.  </p>
+<p>You can pass an <code>e-ui-date</code> attribute pointing to an object with a picker configuration that you may want.</p>
+<pre><code class="lang-js">var datePickerOptions = {
+    changeYear: true,
+    changeMonth: true,
+    showOn: &quot;button&quot;,
+    buttonImage: &quot;build/assets/img/calendar.png&quot;,
+    buttonImageOnly: true
+};</code></pre>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('UidateCtrl', function($scope) {
+
+    $scope.datePickerConfig = {
+        changeYear: true,
+        changeMonth: true
+    };
+
+    $scope.user = {
+        dob: new Date(1985, 3, 11)
+    };
+
+$scope.$watch("user", function(v) { $scope.$parent.debug["uidate"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;UidateCtrl&quot;&gt;
+    &lt;span editable-uidate=&quot;user.dob&quot;
+        e-ui-date=&quot;datePickerConfig&quot;&gt;
+        {{ (user.dob | date:&quot;dd/MM/yyyy&quot;) || 'empty' }}
+    &lt;/span&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('UidateCtrl', function($scope) {
+
+    $scope.datePickerConfig = {
+        changeYear: true,
+        changeMonth: true
+    };
+
+    $scope.user = {
+        dob: new Date(1985, 3, 11)
+    };
+
 });</pre>
                     </section>
                     <section id="bstime">
@@ -1112,8 +1183,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-customize"]=v; })
   </button>
 </div></div>
                       <pre>{{ debug["text-btn"] | json }}</pre>
-                      <p><p>To trigger edit-in-place by external button you should define <code>e-form</code> attribute.
-Value of it is the name of variable to be created in scope that allows you to show / hide editor manually.</p>
+                      <p><p>To trigger edit-in-place by external button you should define <code>e-form</code> attribute.<br>Value of it is the name of variable to be created in scope that allows you to show / hide editor manually.<br>To trigger edit-in-place with <code>e-form</code> and no button for a single element, add <code>e-clickable=&quot;true&quot;</code>.<br>This will allow you to have custom form names in an ng-repeat for single elements.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('TextBtnCtrl', function($scope) {
@@ -2591,7 +2661,7 @@ Note that using <code>oncancel</code> hook allows you to revert all changes and 
           <h1>Themes</h1>
           <!-- jade cannot include dynamically--><p>There are several themes that can be used to style editable controls.</p>
 <p>To set the theme for the entire application, set <code>editableOptions.theme</code> in <code>app.run</code>.</p>
-<p>To change the theme for a specific control, set the <code>editable-theme</code> attribute.</p>
+<p>To change the theme for a specific control, set the <code>editable-theme</code> attribute. To change the icon_set for a specific control, the <code>editable-icon-set</code> attribute could be set similarly.</p>
 <p>To display a clear button, set the <code>editableOptions.displayClearButton=true</code> in <code>app.run</code>.</p>
 <p>To change the <code>title</code> and <code>aria-label</code> values of the submit/cancel/clear buttons, set the <code>editableOptions</code> properties:</p>
 
@@ -2950,7 +3020,7 @@ Can be any event.<br>Default is <code>click</code></p>
                         <tr>
                           <td><code>icon set</code></td>
                           <td>string</td>
-                          <td><p>Icon Set. Possible values <code>font-awesome</code>, <code>default</code>.<br>Default is <code>default</code></p>
+                          <td><p>icon_set. Possible values <code>font-awesome</code>, <code>default</code>.<br>Default is <code>default</code></p>
 </td>
                         </tr>
                         <tr>
