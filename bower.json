@@ -32,6 +32,7 @@
     "angular": "~1.5.0",
     "angular-mocks": "~1.5.0",
     "angular-scenario": "~1.5.0",
+    "angular-sanitize": "~1.5.0",
     "jquery": "^2.2.4",
     "bootstrap": "^3.3.7",
     "moment": "^2.17.1",
