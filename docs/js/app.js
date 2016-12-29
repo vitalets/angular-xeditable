@@ -1,4 +1,4 @@
-var app = angular.module("app", ["xeditable", "ngMockE2E", 'ui.bootstrap', 'checklist-model', 'ui.select', 'ngTagsInput']);
+var app = angular.module("app", ["xeditable", "ngMockE2E", 'ui.bootstrap', 'checklist-model', 'ui.select', 'ngTagsInput', 'ngSanitize']);
 
 //add delay to $httpBackend
 app.config(function($provide) {

@@ -9,7 +9,7 @@ describe('dev-textarea', function() {
     var a = s + 'a#displayHtml ';
     
     expect(element(a).css('display')).not().toBe('none');
-    expect(element(a).text()).toMatch('<strong>Title</strong><p>my text...');
+    expect(element(a).text()).toMatch('Titlemy text...');
     element(a).click();
 
     expect(element(a).css('display')).toBe('none');
@@ -32,7 +32,7 @@ describe('dev-textarea', function() {
     var a = s + 'a#submitOnEnter ';
     
     expect(element(a).css('display')).not().toBe('none');
-    expect(element(a).text()).toMatch('<strong>Title</strong><p>my text...');
+    expect(element(a).text()).toMatch('Titlemy text...');
     element(a).click();
 
     expect(element(a).css('display')).toBe('none');
@@ -48,7 +48,7 @@ describe('dev-textarea', function() {
     element('body').click();
 
     expect(element(a).css('display')).not().toBe('none');
-    expect(element(a).text()).toMatch('<strong>Title</strong><p>my text...');
+    expect(element(a).text()).toMatch('Titlemy text...');
     expect(element(s+'form').count()).toBe(0);
   });
 });

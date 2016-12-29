@@ -5,7 +5,7 @@ http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
 
 ## Contribute
 * Don't include the dist files in your pull request.
-* Add new tests if possible.
+* Add new tests in docs/demos if possible.
 * Make sure all existing tests run.
 * Squash your commits before creating the pull request.
 
