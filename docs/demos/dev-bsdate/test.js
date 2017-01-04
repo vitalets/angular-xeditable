@@ -178,4 +178,22 @@ describe('dev-bsdate', function() {
     expect(element(s+'a#hideCalendarButton').text()).toMatch('29/04/1984');
     expect(element(s+'form').count()).toBe(0);
   });
+
+
+  it('should allow alternate input formats for date', function() {
+    var s = '[ng-controller="DevBsdateCtrl"] ';
+
+    expect(element(s+'a#altInputFormats').css('display')).not().toBe('none');
+    expect(element(s+'a#altInputFormats').text()).toMatch('15/05/1984');
+
+    element(s+'a#altInputFormats').click();
+
+    // enter alternate input date format and submit
+    input('$parent.$data').enter('3/1/17');
+    element(s+'form button[type="submit"]').click();
+
+    expect(element(s+'a#altInputFormats').css('display')).not().toBe('none');
+    expect(element(s+'a#altInputFormats').text()).toMatch('03/01/2017');
+    expect(element(s+'form').count()).toBe(0);
+  });
 });
