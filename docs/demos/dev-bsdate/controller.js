@@ -16,7 +16,9 @@ app.controller('DevBsdateCtrl', function($scope) {
 	$scope.getInitDate = function($event, elementOpened) {
 		return new Date();
 	};
-	
+
+	$scope.altInputFormats = ['d/M/yy'];
+
 	$scope.opened = {};
 
 	$scope.open = function($event, elementOpened) {

@@ -21,7 +21,8 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
             ['eDatePickerAppendToBody', 'datepicker-append-to-body'],
             ['eOnOpenFocus', 'on-open-focus'],
             ['eName', 'name'],
-            ['eDateDisabled', 'date-disabled']
+            ['eDateDisabled', 'date-disabled'],
+            ['eAltInputFormats', 'alt-input-formats']
         ];
 
         var dateOptionsNames = [
