@@ -40,7 +40,7 @@ app.controller('DevEditableRowCtrl', function($scope, $filter, $http) {
 
   $scope.checkName = function(data, id) {
     if (id === 2 && data !== 'awesome') {
-      return "Username 2 should be `awesome`";
+      return "Username 2 should be <b>awesome</b>";
     }
   };
 

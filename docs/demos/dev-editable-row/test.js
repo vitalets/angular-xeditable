@@ -56,7 +56,7 @@ describe('dev-editable-row', function() {
 
     //error shown
     expect(element(s+'td:eq(0) .editable-error:visible').count()).toBe(1);
-    expect(element(s+'td:eq(0) .editable-error').text()).toMatch('Username 2 should be `awesome`');
+    expect(element(s+'td:eq(0) .editable-error').text()).toMatch('Username 2 should be awesome');
 
     //set correct values
     using(s+'td:eq(0)').input('$parent.$data').enter('awesome');

@@ -12,8 +12,8 @@ angular.module('xeditable').factory('editableController',
   function($q, editableUtils) {
 
   //EditableController function
-  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q'];
-  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q) {
+  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q', '$sce'];
+  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q, $sce) {
     var valueGetter;
 
     //if control is disabled - it does not participate in waiting process
@@ -450,7 +450,7 @@ angular.module('xeditable').factory('editableController',
 
     self.setError = function(msg) {
       if(!angular.isObject(msg)) {
-        $scope.$error = msg;
+        $scope.$error = $sce.trustAsHtml(msg);
         self.error = msg;
       }
     };
