@@ -70,6 +70,7 @@ module.exports = [
         {id: 'dev-editable-row'},
         {id: 'dev-textarea'},
         {id: 'dev-combodate'},
-        {id: 'dev-eform'}
+        {id: 'dev-eform'},
+        {id: 'dev-select-multiple'}
     ]}
 ];
