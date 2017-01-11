@@ -1,0 +1,9 @@
+<div ng-controller="DevSelectMultipleCtrl">
+  <a href="#" editable-select="user.status" 
+              e-multiple 
+              e-ng-options="s.value as s.text for s in statuses"
+              buttons="no"
+              blur="submit">
+    {{ showStatus() }}
+  </a>
+</div>  
