@@ -21,7 +21,8 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
                 self.scope.$form.$submit();
               });
             }
-          } else if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13)) {
+          } else if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13) || 
+                (e.keyCode === 9 && self.editorEl.attr('blur') === 'submit')) {
             self.scope.$apply(function() {
               self.scope.$form.$submit();
             });

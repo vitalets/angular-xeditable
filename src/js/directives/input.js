@@ -59,7 +59,7 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
             var self = this;
             self.inputEl.bind('keydown', function(e) {
                 //submit on tab
-                if (e.keyCode === 9) {
+                if (e.keyCode === 9 && self.editorEl.attr('blur') === 'submit') {
                     self.scope.$apply(function() {
                         self.scope.$form.$submit();
                     });
