@@ -17,7 +17,7 @@
     {{ (user.name || 'empty') | uppercase }}
   </a>
   &nbsp;
-  <a href="#" class="submit" editable-text="user.name" data-e-label="User Name" blur="submit">
+  <a href="#" class="submit" editable-text="user.name" data-e-label="User Name" blur="submit" buttons="no">
     {{ user.name }}
   </a>
   &nbsp;
@@ -30,6 +30,10 @@
   </a>
   &nbsp;
   <a href="#" id="editingEnabled" editable-text="user.name" edit-disabled="{{user && user.name == 'awesome user'}}">
+    {{ user.name }}
+  </a>
+  &nbsp;
+  <a href="#" class="nobuttons" editable-text="user.name" data-e-label="User Name" buttons="no">
     {{ user.name }}
   </a>
 </div>  
