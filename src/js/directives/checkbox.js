@@ -6,10 +6,11 @@ angular.module('xeditable').directive('editableCheckbox', ['editableDirectiveFac
       inputTpl: '<input type="checkbox">',
       render: function() {
         this.parent.render.call(this);
-        if(this.attrs.eTitle) {
-          this.inputEl.wrap('<label></label>');
+        this.inputEl.wrap('<label></label>');
+        
+        if (this.attrs.eTitle) {
           this.inputEl.parent().append('<span>' + this.attrs.eTitle + '</span>');
-        }
+       }
       },
       autosubmit: function() {
         var self = this;

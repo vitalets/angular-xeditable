@@ -71,6 +71,7 @@ module.exports = [
         {id: 'dev-textarea'},
         {id: 'dev-combodate'},
         {id: 'dev-eform'},
-        {id: 'dev-select-multiple'}
+        {id: 'dev-select-multiple'},
+        {id: 'dev-checkbox'}
     ]}
 ];
