@@ -9,19 +9,24 @@ angular.module('xeditable').directive('editableRadiolist', [
       inputTpl: '<span></span>',
       render: function() {
         this.parent.render.call(this);
-        var parsed = editableNgOptionsParser(this.attrs.eNgOptions);
-        var ngChangeHtml = '';
+        var parsed = editableNgOptionsParser(this.attrs.eNgOptions),
+            ngChangeHtml = '',
+            ngNameHtml = '';
 
         if (this.attrs.eNgChange) {
-          ngChangeHtml = 'ng-change="' +  this.attrs.eNgChange + '"';
+          ngChangeHtml = ' ng-change="' +  this.attrs.eNgChange + '"';
         }
-
+        
+        if (this.attrs.eName) {
+            ngNameHtml = ' name="' +  this.attrs.eName + '"';
+        }
+          
         var html = '<label data-ng-repeat="'+parsed.ngRepeat+'">'+
           '<input type="radio" data-ng-disabled="::' +
             this.attrs.eNgDisabled +
             '" data-ng-model="$parent.$parent.$data" data-ng-value="' + $interpolate.startSymbol() +
             '::' + parsed.locals.valueFn + $interpolate.endSymbol() +'"' +
-            ngChangeHtml + '>'+
+            ngChangeHtml + ngNameHtml + '>'+
           '<span data-ng-bind="::'+parsed.locals.displayFn+'"></span></label>';
 
         this.inputEl.removeAttr('ng-model');
