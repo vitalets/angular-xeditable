@@ -1,6 +1,6 @@
 <div ng-controller="NgTagsCtrl">
   <form data-editable-form name="ngTagsForm">
-    <div editable-tags-input="user.tags" data-e-form="ngTagsForm" data-e-name="tags" name="tags" data-e-ng-model="user.tags">
+    <div editable-tags-input="user.tags" data-e-form="ngTagsForm" data-e-name="tags" name="tags" id="tags" data-e-ng-model="user.tags">
       {{user.tags}}
         <editable-tags-input-auto-complete source="loadTags($query)"></editable-tags-input-auto-complete>
     </div>

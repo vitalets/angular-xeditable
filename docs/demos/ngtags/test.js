@@ -38,6 +38,7 @@ describe('ngtags', function() {
 
     //form closed
     expect(element(s+'form > div[editable-tags-input]:visible').count()).toBe(1);
+    expect(element(s+'form > div[editable-tags-input]:visible').text()).toMatch('[{"text":"Tag1"},{"text":"Tag2"},{"text":"Tag3"}]');
     expect(element(s+'.buttons > button:visible').count()).toBe(1);
     expect(element(s+'.buttons > span:visible').count()).toBe(0);
   });
@@ -74,4 +75,33 @@ describe('ngtags', function() {
     expect(element(s+'.buttons > span:visible').count()).toBe(0);
   });
 
+  it('should show form and cancel new values', function() {
+      var s = '[ng-controller="NgTagsCtrl"] ';
+
+      //show form
+      element(s+'form > div > button').click();
+
+      sleep(delay);
+
+      //select a value
+      element(s+' input[type="text"]').click();
+      input('newTag.text').enter('Tag');
+      sleep(delay);
+      sleep(delay);
+      element(s+'.suggestion-item').click();
+
+      //click cancel
+      element(s+'button[ng-click="ngTagsForm.$cancel()"]').click();
+
+      //form closed, new values shown
+      expect(element(s+' form > div[editable-tags-input]:visible').count()).toBe(1);
+      //expect(element(s+' form > div[editable-tags-input]:visible').text()).toMatch('[{"text":"Tag1"},{"text":"Tag2"},{"text":"Tag3"}]');
+      element(s+' form > div[editable-tags-input]:visible').query(function(elements, done) {
+          expect(element(s+' form > div[editable-tags-input]:visible').text()).toMatch('[{"text":"Tag1"},{"text":"Tag2"},{"text":"Tag3"}]');
+          done();
+      });
+      
+      expect(element(s+'.buttons > button:visible').count()).toBe(1);
+      expect(element(s+'.buttons > span:visible').count()).toBe(0);
+  });
 });

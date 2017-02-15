@@ -7,6 +7,7 @@ angular.module('xeditable').directive('editableTagsInput', ['editableDirectiveFa
     var dir = editableDirectiveFactory({
         directiveName: 'editableTagsInput',
         inputTpl: '<tags-input></tags-input>',
+        useCopy: true,
         render: function () {
             this.parent.render.call(this);
             this.inputEl.append(editableUtils.rename('auto-complete', this.attrs.$autoCompleteElement));
