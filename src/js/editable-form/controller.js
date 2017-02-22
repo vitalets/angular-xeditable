@@ -192,10 +192,12 @@ angular.module('xeditable').factory('editableFormController',
         //by default activate first field
         selectionStart = this.$editables[0].elem[0].selectionStart ? 
             this.$editables[0].elem[0].selectionStart : 
-              this.$editables[0].elem[0].text ? this.$editables[0].elem[0].text.length : 0;
+              this.$editables[0].elem[0].text ? this.$editables[0].elem[0].text.length :
+                  this.$editables[0].elem[0].innerHTML ? this.$editables[0].elem[0].innerHTML.length : 0;
         selectionEnd = this.$editables[0].elem[0].selectionEnd ? 
             this.$editables[0].elem[0].selectionEnd : 
-              this.$editables[0].elem[0].text ? this.$editables[0].elem[0].text.length : 0;
+              this.$editables[0].elem[0].text ? this.$editables[0].elem[0].text.length :
+                  this.$editables[0].elem[0].innerHTML ? this.$editables[0].elem[0].innerHTML.length : 0;
         this.$editables[0].activate(selectionStart, selectionEnd);
       }
     },

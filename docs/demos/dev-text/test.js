@@ -6,7 +6,7 @@ describe('dev-text', function() {
 
   it('should transfer `e-|data-e-|x-e-` attributes (except e-form and e-ng-submit)', function() {
     var s = '[ng-controller="DevText"] ';
-    var a = s + 'a#e-attrs '
+    var a = s + 'a#e-attrs ';
 
     expect(element(a).text()).toMatch('AWESOME USER');
     element(a).click();
@@ -46,7 +46,7 @@ describe('dev-text', function() {
 
   it('blur = `submit`', function() {
     var s = '[ng-controller="DevText"] ';
-    var a = s + 'a.submit '
+    var a = s + 'a.submit ';
 
     // click on body
     element(a).click();
@@ -74,7 +74,7 @@ describe('dev-text', function() {
 
   it('blur = `cancel`', function() {
     var s = '[ng-controller="DevText"] ';
-    var a = s + 'a.cancel '
+    var a = s + 'a.cancel ';
 
     // click on body 
     element(a).click();
@@ -101,7 +101,7 @@ describe('dev-text', function() {
 
   it('blur = `ignore`', function() {
     var s = '[ng-controller="DevText"] ';
-    var a = s + 'a.ignore '
+    var a = s + 'a.ignore ';
 
     // click on body 
     element(a).click();
@@ -122,7 +122,7 @@ describe('dev-text', function() {
 
   it('should disable editing of the element', function() {
     var s = '[ng-controller="DevText"] ';
-    var a = s + 'a#editingEnabled '
+    var a = s + 'a#editingEnabled ';
 
     expect(element(a).text()).toMatch('awesome user');
     element(a).click();
@@ -130,5 +130,29 @@ describe('dev-text', function() {
     expect(element(a).css('display')).not().toBe('none');
     expect(element(a).text()).toMatch('awesome user');
     expect(element(s+'form').count()).toBe(0);
+  });
+  
+  it('should show editor and submit new value when container is a div', function() {
+      var s = '[ng-controller="DevText"] ';
+      var a = s + 'div#divContainer ';
+      
+      expect(element(a).css('display')).not().toBe('none');
+      expect(element(a).text()).toMatch('awesome user');
+      
+      element(a).click();
+
+      expect(element(a).css('display')).toBe('none');
+      expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
+      expect(element(s+'form input[type="text"]:visible').count()).toBe(1);
+      expect(element(s+'form input[type="text"]').val()).toBe('awesome user');
+      expect(element(s+'form button[type="submit"]:visible').count()).toBe(1);
+      expect(element(s+'form button[type="button"]:visible').count()).toBe(1);
+
+      using(s).input('$parent.$data').enter('username2');
+      element(s+'form button[type="submit"]').click();
+
+      expect(element(a).css('display')).not().toBe('none');
+      expect(element(a).text()).toMatch('username2');
+      expect(element(s+'form').count()).toBe(0);
   });
 });
