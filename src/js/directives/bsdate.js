@@ -18,7 +18,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
             ['eClearText', 'clear-text'],
             ['eCloseText', 'close-text'],
             ['eCloseOnDateSelection', 'close-on-date-selection'],
-            ['eDatePickerAppendToBody', 'datepicker-append-to-body'],
+            ['eDatepickerAppendToBody', 'datepicker-append-to-body'],
             ['eOnOpenFocus', 'on-open-focus'],
             ['eName', 'name'],
             ['eDateDisabled', 'date-disabled'],
