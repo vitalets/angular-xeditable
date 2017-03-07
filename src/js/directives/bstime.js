@@ -6,7 +6,7 @@ angular.module('xeditable').directive('editableBstime', ['editableDirectiveFacto
   function(editableDirectiveFactory) {
     return editableDirectiveFactory({
       directiveName: 'editableBstime',
-      inputTpl: '<uib-timepicker></uib-timepicker>',
+      inputTpl: '<div uib-timepicker></div>',
       render: function() {
         this.parent.render.call(this);
 
