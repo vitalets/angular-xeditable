@@ -1,7 +1,7 @@
 describe('text-simple', function () {
 	var cssForOuterDiv = '[ng-controller="TextSimpleCtrl"] ';
 	beforeEach(function () {
-		browser.get('http://127.0.0.1:8000/docs/demos/text-simple/test-page.html');
+		browser.get(browser.baseUrl +'/docs/demos/text-simple/test-page.html');
 	});
 
 	it('should be clickable', function () {
