@@ -26,7 +26,7 @@ describe('text-simple', function () {
 	it('should contain the "awesome user" as initial text in input control', function () {
 		element(by.binding('user.name')).click();
 
-		var text = element(by.css(cssForOuterDiv + 'form input[type="text"]')).getText();
+		var text = element(by.css(cssForOuterDiv + 'form input[type="text"]')).getAttribute('value');
 
 		expect(text).toBe("awesome user");
 	});
