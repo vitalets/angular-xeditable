@@ -48,6 +48,7 @@
   "scripts": {
     "build": "grunt build",
     "start": "grunt server",
-    "prepublish": "bower update"
+    "prepublish": "bower update",
+    "test": "grunt travis"
   }
 }
