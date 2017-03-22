@@ -2,10 +2,10 @@ language: node_js
 node_js:
  - "iojs"
  
- env:
-  global:
-    - SAUCE_USERNAME=B3nCr
-    - SAUCE_ACCESS_KEY=5826ebd7-beb4-452b-bb10-7feb97c89e4e
+env:
+ global:
+  - SAUCE_USERNAME=B3nCr
+  - SAUCE_ACCESS_KEY=5826ebd7-beb4-452b-bb10-7feb97c89e4e
  
 before_script:
  - npm install -g grunt
