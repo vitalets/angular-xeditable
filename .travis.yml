@@ -2,17 +2,10 @@ language: node_js
 node_js:
  - "iojs"
 before_script:
- - npm install - g grunt
-script: grunt build
-
-beforescript:
-
- - "export DISPLAY=:99.0"
-
- - sh - e / etc / init.d / xvfb start
- - nohup bash - c "./nodemodules/protractor/bin/webdriver-manager start 2>&1 &"
- - sleep 5
-
-script:
-
-- grunt travis - protractor
+ - npm install -g grunt
+ - npm build
+script: npm test
+addons:
+  sauce_connect:
+    username: "B3nCr"
+    access_key: "5826ebd7-beb4-452b-bb10-7feb97c89e4e"

@@ -219,7 +219,12 @@ module.exports = function(grunt) {
     'uglify',
     'copy',
     'compress',
-    'docs'
+    //'docs'
+  ]);
+
+
+  grunt.registerTask('test', [
+      'build'
   ]);
 
   grunt.registerTask('docs', [
