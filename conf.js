@@ -8,8 +8,11 @@ if (process.env.TRAVIS) {
 }
 
 exports.config = {
-	baseUrl: url,
-	seleniumAddress: 'http://localhost:4444/wd/hub',
-    capabilities: capabilities,
-	specs: ['docs/demos/text-simple/test-spec.js']
+    baseUrl: url,
+    //seleniumAddress: 'http://localhost:4444/wd/hub',
+    capabilities: {
+        "browserName": "firefox",
+        "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER
+    },
+    specs: ['docs/demos/text-simple/test-spec.js']
 };
