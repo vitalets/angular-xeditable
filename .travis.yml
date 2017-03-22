@@ -3,6 +3,7 @@ node_js:
  - "iojs"
 before_script:
  - npm install -g grunt
+ - npm install -g protractor
  - npm build
 script: npm test
 addons:
