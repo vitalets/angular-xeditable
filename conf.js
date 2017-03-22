@@ -9,7 +9,7 @@ if (process.env.TRAVIS) {
 
 exports.config = {
     baseUrl: url,
-    //seleniumAddress: 'http://localhost:4444/wd/hub',
+    seleniumAddress:   (process.env.SELENIUM_URL || 'http://localhost:4444/wd/hub'),
     capabilities: {
         "browserName": "firefox",
         "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER
