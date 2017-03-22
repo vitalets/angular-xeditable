@@ -1,12 +1,16 @@
 language: node_js
 node_js:
  - "iojs"
+ 
+ env:
+  global:
+    - SAUCE_USERNAME=B3nCr
+    - SAUCE_ACCESS_KEY=5826ebd7-beb4-452b-bb10-7feb97c89e4e
+ 
 before_script:
  - npm install -g grunt
  - npm install -g protractor
  - npm build
 script: npm test
 addons:
-  sauce_connect:
-    username: "B3nCr"
-    access_key: "5826ebd7-beb4-452b-bb10-7feb97c89e4e"
+  sauce_connect: true
