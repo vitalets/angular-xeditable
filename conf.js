@@ -7,7 +7,7 @@ var capabilities = {
 };
 if (process.env.TRAVIS) {
     url = 'https://b3ncr.github.io/angular-xeditable/'; // Change to your dev server
-    capabilities.["tunnel-identifier"] = process.env.TRAVIS_JOB_NUMBER; // this is required by saucelabs
+    capabilities["tunnel-identifier"] = process.env.TRAVIS_JOB_NUMBER; // this is required by saucelabs
 }
 
 exports.config = {
