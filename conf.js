@@ -11,8 +11,10 @@ if (process.env.TRAVIS) {
 }
 
 exports.config = {
+  sauceUser: process.env.SAUCE_USERNAME,
+  sauceKey: process.env.SAUCE_ACCESS_KEY,
     baseUrl: url,
-    seleniumAddress:   (process.env.SELENIUM_URL || 'http://localhost:4444/wd/hub'),
+    //seleniumAddress:   (process.env.SELENIUM_URL || 'http://localhost:4444/wd/hub'),
     capabilities: {
         "browserName": "firefox",
         "tunnel-identifier": process.env.TRAVIS_JOB_NUMBER
