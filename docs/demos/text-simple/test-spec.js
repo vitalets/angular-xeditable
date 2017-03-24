@@ -1,5 +1,6 @@
 
 var EditTextPage = require('./textsimple.pageObject');
+var hasClass = require('./hasClass');
 
 describe('text-simple', function () {
 	var cssForOuterDiv = '[ng-controller="TextSimpleCtrl"] ';
@@ -62,5 +63,15 @@ describe('text-simple', function () {
         editTextPage.cancelButton.click();
 
         expect(editTextPage.label.getText()).toBe("awesome user");
+    });
+
+    it('Should add "editable-empty" class to label when model is cleared', function () {
+        editTextPage.beginEdit();
+
+        editTextPage.input.clear().then(function () {
+            editTextPage.submitButton.click();
+
+            expect(hasClass(editTextPage.label, 'editable-empty')).toBe(true);
+        });
     });
 });
