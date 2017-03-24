@@ -1,17 +1,15 @@
 
-var EditTextPage = require('./textsimple.pageObject');
-var hasClass = require('./hasClass');
+var EditTextPage = require('./text-simple-page');
+var hasClass = require('../hasClass');
 
 describe('text-simple', function () {
-	var cssForOuterDiv = '[ng-controller="TextSimpleCtrl"] ';
-    var editTextPage;
+    var editTextPage= new EditTextPage();
     
 	beforeEach(function () {
-        // create page object for each test
-        editTextPage = new EditTextPage();
         
+                
         // load the simple-text test view
-		browser.get(browser.baseUrl +'/docs/demos/text-simple/test-page.html');
+		browser.get(browser.baseUrl +'/test/e2e/text-simple/text-simple.html');
 	});
 
 	it('should be clickable', function () {

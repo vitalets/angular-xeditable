@@ -2,7 +2,7 @@ exports.config = {
 	capabilities: {
 		"browserName": "chrome",
 	},
-	specs: ['docs/demos/text-simple/test-spec.js']
+    specs: ['test/e2e/text-simple/text-simple-spec.js']
 };
 
 if (process.env.TRAVIS) {
