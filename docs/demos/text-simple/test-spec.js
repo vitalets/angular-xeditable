@@ -48,11 +48,19 @@ describe('text-simple', function () {
         expect(editTextPage.label.isDisplayed()).toBe(true);
 	});
     
-    it('Should update model on button click', function(){
+    it('Should update model on submit', function(){
         editTextPage.setText("Mary");
         
         editTextPage.submitButton.click();
 
         expect(editTextPage.label.getText()).toBe("Mary");
+    });
+
+    it('Should not update model on cancel', function () {
+        editTextPage.setText("Mary");
+
+        editTextPage.cancelButton.click();
+
+        expect(editTextPage.label.getText()).toBe("awesome user");
     });
 });

@@ -3,6 +3,7 @@ var page = function () {
     this.label = element(by.binding('user.name'));
     this.input = element(by.model('$parent.$data'));
     this.submitButton = element(by.css('button[type=submit]'));
+    this.cancelButton = element(by.css('[ng-click="$form.$cancel()"]'));
 
     this.beginEdit = function () {
         this.label.click();
