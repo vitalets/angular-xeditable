@@ -74,4 +74,12 @@ describe('text-simple', function () {
             expect(hasClass(editTextPage.label, 'editable-empty')).toBe(true);
         });
     });
+
+    it('Should not update the model when clicking on the body', function () {
+        editTextPage.setText("Mary");
+
+        editTextPage.body.click();
+
+        expect(editTextPage.label.getText()).toBe("awesome user");
+    });
 });
