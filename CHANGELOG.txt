@@ -1,6 +1,22 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.7.0 Mar 24, 2017
+
+----------------------------
+[enh #638] Handle empty date values in combodate (ckosloski)
+[enh #630] Use new angular-bootstrap attribute directive (B3nCr)
+[bug #624] Fix caret positioning when using div as the editable tag (ckosloski)
+[bug #623] Correction of the reading of the datepicker-append-to-body attribute (Fredz66)
+[bug #622] Fix cancel not cancelling for ngTagsInput (ckosloski)
+[enh #619] Added support for name on radiolist (ckosloski)
+[bug #613] Fix checkbox alignment issue when no title is used (ckosloski)
+[enh #611] Add support for submit on tab for textarea (ckosloski)
+[bug #601] Fix issue with multiselect and submit on blur (ckosloski)
+[enh #600] Add support for HTML error messages (ckosloski)
+[enh #598] Add support for alt-input-formats to bsdate (kglee79)
+[bug #596] Fix $sce error in console when running dev tests (ckosloski)
+
 Version 0.6.0 Dec 27, 2016
 
 ----------------------------
