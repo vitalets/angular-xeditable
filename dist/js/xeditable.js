@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.2.0
 Edit-in-place for angular.js
-Build date: 2016-06-28 
+Build date: 2017-04-05 
 */
 /**
  * Angular-xeditable module 
@@ -669,7 +669,7 @@ angular.module('xeditable').factory('editableController',
       self.inputEl = angular.element(self.inputTpl);
 
       //build controls
-      self.controlsEl = angular.element(theme.controlsTpl);
+      self.controlsEl = angular.element(self.controlsTpl || theme.controlsTpl);
       self.controlsEl.append(self.inputEl);
 
       //build buttons
