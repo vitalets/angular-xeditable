@@ -179,6 +179,12 @@ footer {
   height: 34px !important;
 }
 
+/* Input file */
+.editable-wrap .editable-controls > input[type="file"] {
+  height: 28px;
+  line-height: 15px;
+}
+
 @media screen and (max-width: 414px) {
   div#TextSimpleCtrl input {
     width: 105px;

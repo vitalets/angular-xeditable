@@ -12,6 +12,7 @@ app.controller('Html5InputsCtrl', function($scope) {
     month: null,
     week: null,
     password: 'password',
-    datetimeLocal: null
+    datetimeLocal: null,
+    file: null
   };  
 });
