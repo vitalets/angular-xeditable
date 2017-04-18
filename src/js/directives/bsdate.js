@@ -126,6 +126,25 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                 this.inputEl.removeAttr('date-picker-append-to-body');
                 this.inputEl.removeAttr('name');
                 this.inputEl.attr('class','input-group');
+            },
+            autosubmit: function() {
+                var self = this;
+                self.inputEl.bind('change', function() {
+                    setTimeout(function() {
+                        self.scope.$apply(function() {
+                            self.scope.$form.$submit();
+                        });
+                    }, 500);
+                });
+                
+                self.inputEl.bind('keydown', function(e) {
+                    //submit on tab
+                    if (e.keyCode === 9 && self.editorEl.attr('blur') === 'submit') {
+                        self.scope.$apply(function() {
+                            self.scope.$form.$submit();
+                        });
+                    }
+                });
             }
     });
 }]);
