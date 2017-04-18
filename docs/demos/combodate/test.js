@@ -53,7 +53,7 @@ describe('combodate', function() {
       expect(element(s+'form .editable-buttons button[type="button"]:visible').count()).toBe(1);
 
       //set 29 april
-      element(s+'form select.day option[value=]').click();
+      element(s+'form select.day option[value=""]').click();
 
       //submit
       element(s+'form button[type="submit"]').click();

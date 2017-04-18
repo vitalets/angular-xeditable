@@ -53,7 +53,7 @@
              class="hideCalendarButton">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
-
+  &nbsp;
   <a href="#" editable-bsdate="user.dob"
      e-is-open="opened.$data"
      e-ng-click="open($event,'$data')"
@@ -62,6 +62,17 @@
      e-alt-input-formats="altInputFormats"
      id="altInputFormats"
      class="altInputFormats">
+    {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
+  </a>
+  &nbsp;
+  <a href="#" editable-bsdate="user.dob"
+     e-is-open="opened.$data"
+     e-ng-click="open($event,'$data')"
+     e-datepicker-popup="dd-MMMM-yyyy"
+     buttons="no" 
+     blur="submit"
+     id="noButtonsBlurSubmit"
+     class="noButtonsBlurSubmit">
     {{ (user.dob | date:"dd/MM/yyyy") || 'empty' }}
   </a>
 </div>
