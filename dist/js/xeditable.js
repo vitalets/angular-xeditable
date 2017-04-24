@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.7.0
+angular-xeditable - 0.7.1
 Edit-in-place for angular.js
-Build date: 2017-03-24 
+Build date: 2017-04-24 
 */
 /**
  * Angular-xeditable module 
@@ -279,6 +279,25 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                 this.inputEl.removeAttr('date-picker-append-to-body');
                 this.inputEl.removeAttr('name');
                 this.inputEl.attr('class','input-group');
+            },
+            autosubmit: function() {
+                var self = this;
+                self.inputEl.bind('change', function() {
+                    setTimeout(function() {
+                        self.scope.$apply(function() {
+                            self.scope.$form.$submit();
+                        });
+                    }, 500);
+                });
+                
+                self.inputEl.bind('keydown', function(e) {
+                    //submit on tab
+                    if (e.keyCode === 9 && self.editorEl.attr('blur') === 'submit') {
+                        self.scope.$apply(function() {
+                            self.scope.$form.$submit();
+                        });
+                    }
+                });
             }
     });
 }]);
@@ -979,7 +998,7 @@ angular.module('xeditable').factory('editableController',
       if (self.single) {
         self.editorEl.attr('editable-form', '$form');
         // transfer `blur` to form
-        self.editorEl.attr('blur', self.attrs.blur || (self.buttons === 'no' ? 'cancel' : editableOptions.blurElem));
+        self.editorEl.attr('blur', self.attrs.blur || editableOptions.blurElem);
       }
 
       //apply `postrender` method of theme
