@@ -51,7 +51,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.7.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.7.0 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.7.1.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.7.1 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -221,7 +221,7 @@ to use power of angular and support complex forms / editable grids.</p>
 
               <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.7.0.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.7.1.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -257,7 +257,7 @@ to use power of angular and support complex forms / editable grids.</p>
                     <section id="text-simple">
                       <h1>Text</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/25/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19035/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextSimpleCtrl" id="TextSimpleCtrl">
   <a href="#" editable-text="user.name" e-label="User Name">{{ user.name || 'empty' }}</a>
 </div></div>
@@ -284,7 +284,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-simple"]=v; }); }
                     <section id="select-local">
                       <h1>Select local</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/28/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19036/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="SelectLocalCtrl">
   <a href="#" editable-select="user.status" e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
@@ -342,7 +342,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-local"]=v; }); 
                     <section id="select-remote">
                       <h1>Select remote</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/29/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19039/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="SelectRemoteCtrl">
   <a href="#" editable-select="user.group" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
     {{ user.groupName || 'not set' }}
@@ -406,7 +406,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
                     <section id="html5-inputs">
                       <h1>HTML5 inputs</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/82/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19040/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="Html5InputsCtrl" id="Html5InputsCtrl">
   <div>Email: <a href="#" editable-email="user.email">{{ user.email || 'empty' }}</a></div>
   <div>Tel: <a href="#" editable-tel="user.tel" e-pattern="\d{3}-\d{2}-\d{2}" e-title="xxx-xx-xx">{{ user.tel || 'empty' }}</a></div>
@@ -421,6 +421,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
   <div>Week: <a href="#" editable-week="user.week">{{ (user.week | date: "yyyy-Www") || 'empty'}}</a></div>
   <div>Password: <a href="#" editable-password="user.password">{{ user.password || 'empty' }}</a></div>
   <div>Datetime-local: <a href="#" editable-datetime-local="user.datetimeLocal">{{ (user.datetimeLocal | date: "yyyy-MM-ddTHH:mm:ss") || 'empty' }}</a></div>
+  <div>File: <a href="#" editable-file="user.file">{{ user.file || 'empty' }}</a></div>
 </div></div>
                       <pre>{{ debug["html5-inputs"] | json }}</pre>
                       <p><p>Following HTML5 types are supported via <code>editable-xxx</code> directive:</p>
@@ -456,7 +457,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-remote"]=v; });
     month: null,
     week: null,
     password: 'password',
-    datetimeLocal: null
+    datetimeLocal: null,
+    file: null
   };  
 $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); });</script>
                       <h3>html</h3>
@@ -474,6 +476,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
   &lt;div&gt;Week: &lt;a href=&quot;#&quot; editable-week=&quot;user.week&quot;&gt;{{ (user.week | date: &quot;yyyy-Www&quot;) || 'empty'}}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Password: &lt;a href=&quot;#&quot; editable-password=&quot;user.password&quot;&gt;{{ user.password || 'empty' }}&lt;/a&gt;&lt;/div&gt;
   &lt;div&gt;Datetime-local: &lt;a href=&quot;#&quot; editable-datetime-local=&quot;user.datetimeLocal&quot;&gt;{{ (user.datetimeLocal | date: &quot;yyyy-MM-ddTHH:mm:ss&quot;) || 'empty' }}&lt;/a&gt;&lt;/div&gt;
+  &lt;div&gt;File: &lt;a href=&quot;#&quot; editable-file=&quot;user.file&quot;&gt;{{ user.file || 'empty' }}&lt;/a&gt;&lt;/div&gt;
 &lt;/div&gt;</pre>
                       <h3>controller.js</h3>
                       <pre class="prettyprint">app.controller('Html5InputsCtrl', function($scope) {
@@ -490,14 +493,15 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
     month: null,
     week: null,
     password: 'password',
-    datetimeLocal: null
+    datetimeLocal: null,
+    file: null
   };  
 });</pre>
                     </section>
                     <section id="textarea">
                       <h1>Textarea</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/32/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19041/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextareaCtrl" id="TextareaCtrl">
   <a href="#" editable-textarea="user.desc" e-rows="7" e-cols="40">
     <pre>{{ user.desc || 'no description' }}</pre>
@@ -529,7 +533,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["textarea"]=v; }); });<
                     <section id="checkbox">
                       <h1>Checkbox</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/33/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19042/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="CheckboxCtrl">
   <a href="#" editable-checkbox="user.remember" e-title="Remember?">
     {{ user.remember && "Remember me!" || "Don't remember" }}
@@ -689,7 +693,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["radiolist"]=v; }); });
                     <section id="bsdate">
                       <h1>Date</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/17531/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 3 jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19043/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="BsdateCtrl">
   <a href="#" editable-bsdate="user.dob"
               e-is-open="opened.$data"
@@ -815,7 +819,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["uidate"]=v; }); });</s
                     <section id="bstime">
                       <h1>Time</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/34/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 2 jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19046/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="BstimeCtrl">
   <a href="#" editable-bstime="user.time" e-show-meridian="false" e-minute-step="10">
     {{ (user.time | date:"HH:mm") || 'empty' }}
@@ -903,7 +907,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["combodate"]=v; }); });
                     <section id="typeahead">
                       <h1>Typeahead</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/46/" target="_blank" class="btn btn-info fiddle pull-right">View Bootstrap 2 jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19049/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TypeaheadCtrl" id="TypeaheadCtrl">
   <a href="#" editable-text="user.state" e-uib-typeahead="state for state in states | filter:$viewValue | limitTo:8">
     {{ user.state || 'empty' }}
@@ -1130,7 +1134,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["ngtags"]=v; }); });</s
                     <section id="text-customize">
                       <h1>Customize input</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/26/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19050/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextCustomizeCtrl" id="TextCustomizeCtrl">
   <a href="#" editable-text="user.name"
               e-style="color: green"
@@ -1174,7 +1178,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-customize"]=v; })
                     <section id="text-btn">
                       <h1>Trigger manually</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/27/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19051/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="TextBtnCtrl" id="TextBtnCtrl">
   <span editable-text="user.name" e-form="textBtnForm">
     {{ user.name || 'empty' }}
@@ -1211,7 +1215,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-btn"]=v; }); });<
                     <section id="select-nobuttons">
                       <h1>Hide buttons</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/31/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19052/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="SelectNobuttonsCtrl">
   <a href="#" editable-select="user.status" buttons="no" e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
@@ -1267,7 +1271,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-nobuttons"]=v; 
                     <section id="select-multiple">
                       <h1>Select multiple</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/30/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19053/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="SelectMultipleCtrl">
   <a href="#" editable-select="user.status" e-multiple e-ng-options="s.value as s.text for s in statuses">
     {{ showStatus() }}
@@ -1332,7 +1336,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["select-multiple"]=v; }
                     <section id="validate-local">
                       <h1>Validate local</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/35/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19054/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="ValidateLocalCtrl" id="ValidateLocalCtrl">
   <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
     {{ user.name || 'empty' }}
@@ -1377,7 +1381,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["validate-local"]=v; })
                     <section id="validate-remote">
                       <h1>Validate remote</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/36/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19055/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="ValidateRemoteCtrl" id="ValidateRemoteCtrl">
   <a href="#" editable-text="user.name" onbeforesave="checkName($data)">
     {{ user.name || 'empty' }}
@@ -1498,7 +1502,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["editable-popover"]=v; 
                     <section id="onbeforesave">
                       <h1>Submit via onbeforesave</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/37/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19056/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="OnbeforesaveCtrl" id="OnbeforesaveCtrl">
   <a href="#" editable-text="user.name" onbeforesave="updateUser($data)">
     {{ user.name || 'empty' }}
@@ -1551,7 +1555,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onbeforesave"]=v; }); 
                     <section id="onaftersave">
                       <h1>Submit via onaftersave</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/38/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19057/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="OnaftersaveCtrl" id="OnaftersaveCtrl">
   <a href="#" editable-text="user.name" onaftersave="updateUser()">
     {{ user.name || 'empty' }}
@@ -1600,7 +1604,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-form">
                       <h1>Editable form</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/81/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19058/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableFormCtrl" id="EditableFormCtrl">
   <form editable-form name="editableForm" onaftersave="saveUser()">
     <div>
@@ -1837,7 +1841,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-row">
                       <h1>Editable row</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/93/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19059/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableRowCtrl">
   <table class="table table-bordered table-hover table-condensed">
     <tr style="font-weight: bold">
@@ -2075,7 +2079,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-column">
                       <h1>Editable column</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/80/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19060/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableColumnCtrl">
   <table class="table table-bordered table-hover table-condensed">
     <tr style="font-weight: bold; white-space: nowrap">
@@ -2346,7 +2350,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
                     <section id="editable-table">
                       <h1>Editable table</h1>
                       <!-- watch change of user to update rootScope for debugging-->
-                      <h3>demo</h3><a href="http://jsfiddle.net/NfPcH/78/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
+                      <h3>demo</h3><a href="http://jsfiddle.net/ckosloski/NfPcH/19061/" target="_blank" class="btn btn-info fiddle pull-right">jsFiddle</a>
                       <div class="well line-example"><div ng-controller="EditableTableCtrl">
   <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
 

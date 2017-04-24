@@ -1,6 +1,11 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.7.1 Apr 24, 2017
+
+----------------------------
+[bug #649] Update bsdate to work with no buttons and submit on blur (ckosloski)
+
 Version 0.7.0 Mar 24, 2017
 
 ----------------------------
