@@ -21,7 +21,8 @@ describe('html5-inputs', function() {
       month: null,
       week: null,
       password: 'password',
-      'datetime-local': null
+      'datetime-local': null,
+      file: null
     };
 
     var data1 = {
@@ -37,7 +38,8 @@ describe('html5-inputs', function() {
       month: null,
       week: null,
       password: 'password1',
-      'datetime-local': null
+      'datetime-local': null,
+      file: null
     };
 
     function checkValues(data) {

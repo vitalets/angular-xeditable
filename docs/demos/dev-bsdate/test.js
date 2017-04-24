@@ -178,8 +178,7 @@ describe('dev-bsdate', function() {
     expect(element(s+'a#hideCalendarButton').text()).toMatch('29/04/1984');
     expect(element(s+'form').count()).toBe(0);
   });
-
-
+    
   it('should allow alternate input formats for date', function() {
     var s = '[ng-controller="DevBsdateCtrl"] ';
 
@@ -195,5 +194,23 @@ describe('dev-bsdate', function() {
     expect(element(s+'a#altInputFormats').css('display')).not().toBe('none');
     expect(element(s+'a#altInputFormats').text()).toMatch('03/01/2017');
     expect(element(s+'form').count()).toBe(0);
+  });
+  
+  it('should submit on blur', function() {
+      var s = '[ng-controller="DevBsdateCtrl"] ';
+
+      expect(element(s+'a#noButtonsBlurSubmit').css('display')).not().toBe('none');
+      expect(element(s+'a#noButtonsBlurSubmit').text()).toMatch('15/05/1984');
+
+      element(s+'a#noButtonsBlurSubmit').click();
+      element(s+'form .input-group-btn button[type="button"]').click();
+      
+      //set 29 april
+      element(s+'form table > tbody > tr:eq(0) > td:eq(1) > button').click();
+      element('body').click();
+
+      expect(element(s+'a#noButtonsBlurSubmit').css('display')).not().toBe('none');
+      expect(element(s+'a#noButtonsBlurSubmit').text()).toMatch('29/04/1984');
+      expect(element(s+'form').count()).toBe(0);
   });
 });
