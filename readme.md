@@ -8,11 +8,11 @@ Edit in place for AngularJS
 **Angular-xeditable** is a bundle of [AngularJS](http://angularjs.org) directives that allows you to create
 *editable* elements in your projects.  
 Such technique is also known as *click-to-edit* or *edit-in-place*.  
-It is based on ideas of [x-editable](http://vitalets.github.io/x-editable) but was written from scratch
+It is based on ideas of [x-editable](https://vitalets.github.io/x-editable) but was written from scratch
 to use power of angular and support complex forms / editable grids.
 
 ## Demo and docs
-**http://vitalets.github.io/angular-xeditable**
+**https://vitalets.github.io/angular-xeditable**
 
 ## Installation
 #### Bower
@@ -24,7 +24,7 @@ bower install angular-xeditable
 npm install angular-xeditable
 ````
 #### Manual
-Download latest version from [project homepage](http://vitalets.github.io/angular-xeditable).
+Download latest version from [project homepage](https://vitalets.github.io/angular-xeditable).
 #### Insert dependency 
 ````
 var app = angular.module("app", ["xeditable"]);
