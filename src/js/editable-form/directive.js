@@ -94,6 +94,17 @@ angular.module('xeditable').directive('editableForm',
             }
 
             /**
+             * Whether form always rendered in shown state.
+             *
+             * @var {bool|attribute} alwaysshown
+             * @memberOf editable-form
+             */
+            if (attrs.alwaysshown && $parse(attrs.alwaysshown)(scope)) {
+              eForm.$show();
+              eForm.$alwaysShown = true;
+            }
+
+            /**
              * Action when form losses focus. Values: `cancel|submit|ignore`.
              * Default is `ignore`.
              * 

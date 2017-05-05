@@ -209,7 +209,7 @@ angular.module('xeditable').factory('editableFormController',
      * @memberOf editable-form
      */
     $hide: function() {
-      if (!this.$visible) {
+      if (!this.$visible || this.$alwaysShown) {
         return;
       }      
       this.$visible = false;
