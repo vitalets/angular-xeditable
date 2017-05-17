@@ -1,1 +1,1 @@
-To made an editable field display in a popover, wrap the editable in `<div class="popover-wrapper">`.
+To make a single editable field display in a pure css popover, wrap the editable in `<div class="popover-wrapper">`.
