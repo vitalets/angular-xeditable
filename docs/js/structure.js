@@ -27,7 +27,8 @@ module.exports = [
         {id: 'validate-local', text: 'Validate local', fiddle: 'http://jsfiddle.net/ckosloski/NfPcH/19054/'},
         {id: 'validate-remote', text: 'Validate remote', fiddle: 'http://jsfiddle.net/ckosloski/NfPcH/19055/'},
         {id: 'edit-disabled', text: 'Disable editing'},
-        {id: 'editable-popover', text: 'Editable Popover'}
+        {id: 'editable-popover', text: 'Editable Popover'},
+        {id: 'uipopover', text: 'Editable ui-bootstrap Popover'}
     ]},
 
     {id: 'onbeforesave', text: 'Submit', type: 'demos', items: [

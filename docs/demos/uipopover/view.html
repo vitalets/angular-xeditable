@@ -1,0 +1,14 @@
+<div ng-controller="UiPopoverCtrl" id="UiPopoverCtrl">
+  <div class="ui-popover-wrapper">
+    <a href="#" 
+       id="simpleText"
+       editable-text="user.name" 
+       e-label="User Name"
+       uib-popover-template="'popover.html'"
+       popover-is-open="popoverIsOpen"
+       popover-append-to-body="true"
+       onshow="popoverIsOpen = !popoverIsOpen" 
+       onhide="popoverIsOpen = !popoverIsOpen"
+       popover="true">{{ user.name || 'empty' }}</a>
+  </div>
+</div>
