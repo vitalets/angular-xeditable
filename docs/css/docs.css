@@ -185,6 +185,10 @@ footer {
   line-height: 15px;
 }
 
+.increase-popover-width {
+  max-width: 400px;
+}
+
 @media screen and (max-width: 414px) {
   div#TextSimpleCtrl input {
     width: 105px;

@@ -12,8 +12,8 @@ angular.module('xeditable').factory('editableController',
   function($q, editableUtils) {
 
   //EditableController function
-  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q', '$sce'];
-  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q, $sce) {
+  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q', '$sce', '$templateCache'];
+  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q, $sce, $templateCache) {
     var valueGetter;
 
     //if control is disabled - it does not participate in waiting process
@@ -69,7 +69,16 @@ angular.module('xeditable').factory('editableController',
      * @var {string|attribute} buttons
      * @memberOf editable-element
      */    
-    self.buttons = 'right'; 
+    self.buttons = 'right';
+    
+    /**
+     * Whether to show the editable element in a ui-bootstrap popover. Values: `true|false`.
+     *
+     * @var {boolean|attribute} popover
+     * @memberOf editable-element
+     */
+    self.popover = false;
+      
     /**
      * Action when control losses focus. Values: `cancel|submit|ignore`.
      * Has sense only for single editable element.
@@ -130,7 +139,7 @@ angular.module('xeditable').factory('editableController',
        * @var {method|attribute} onhide
        * @memberOf editable-element
        */
-      if($attrs.onhide) {
+      if ($attrs.onhide) {
         self.onhide = function() {
           return $parse($attrs.onhide)($scope);
         };
@@ -142,7 +151,7 @@ angular.module('xeditable').factory('editableController',
        * @var {method|attribute} oncancel
        * @memberOf editable-element
        */
-      if($attrs.oncancel) {
+      if ($attrs.oncancel) {
         self.oncancel = function() {
           return $parse($attrs.oncancel)($scope);
         };
@@ -174,6 +183,10 @@ angular.module('xeditable').factory('editableController',
         };
       }
 
+      if ($attrs.popover) {
+        self.popover = self.attrs.popover;
+      }
+        
       // watch change of model to update editable element
       // now only add/remove `editable-empty` class.
       // Initially this method called with newVal = undefined, oldVal = undefined
@@ -283,6 +296,13 @@ angular.module('xeditable').factory('editableController',
         self.editorEl.attr('blur', self.attrs.blur || editableOptions.blurElem);
       }
 
+      if (self.popover) {
+        var wrapper = angular.element('<div></div>');
+        wrapper.append(self.editorEl);
+        self.editorEl = wrapper;
+        $templateCache.put('popover.html', self.editorEl[0].outerHTML);
+      }
+        
       //apply `postrender` method of theme
       if (angular.isFunction(theme.postrender)) {
         theme.postrender.call(self);
@@ -308,7 +328,7 @@ angular.module('xeditable').factory('editableController',
 
       /*
       Originally render() was inside init() method, but some directives polluting editorEl,
-      so it is broken on second openning.
+      so it is broken on second opening.
       Cloning is not a solution as jqLite can not clone with event handler's.
       */
       self.render();
@@ -340,6 +360,10 @@ angular.module('xeditable').factory('editableController',
       self.editorEl.remove();
       $element.removeClass('editable-hide');
 
+      if (self.popover) {
+        $templateCache.remove('popover.html');
+      }
+      
       // onhide
       return self.onhide();
     };
