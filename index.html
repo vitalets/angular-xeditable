@@ -11,18 +11,24 @@
     <!--ng-tags css-->
     <link href="bower_components/ng-tags-input/ng-tags-input.css" rel="stylesheet" media="screen">
     <link href="bower_components/ng-tags-input/ng-tags-input.bootstrap.css" rel="stylesheet" media="screen">
+    <!--jquery-ui css-->
+    <link href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet" media="screen">
     <!--xeditable css-->
     <link href="dist/css/xeditable.css" rel="stylesheet" media="screen">
     <!--docs css-->
     <link href="docs/css/docs.css" rel="stylesheet" media="screen">
+    <!--jquery (needed for bootstrap)-->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <!--jquery ui-->
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
     <!--angular-->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-mocks/angular-mocks.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <!--jquery (needed for bootstrap)-->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
     <!--bootstrap-->
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!--angular-ui-date-->
+    <script src="bower_components/angular-ui-date/dist/date.js"></script>
     <!--angular-ui-bootstrap-->
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!--ui-select-->
@@ -51,7 +57,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.7.1.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.7.1 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.8.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.8.0 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -134,6 +140,7 @@
                   <li><a href="#validate-remote">Validate remote</a></li>
                   <li><a href="#edit-disabled">Disable editing</a></li>
                   <li><a href="#editable-popover">Editable Popover</a></li>
+                  <li><a href="#uipopover">Editable ui-bootstrap Popover</a></li>
                 </ul>
               </li>
               <li><a href="#onbeforesave">Submit</a>
@@ -221,7 +228,7 @@ to use power of angular and support complex forms / editable grids.</p>
 
               <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.7.1.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.8.0.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -1478,7 +1485,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["edit-disabled"]=v; });
   </div>
 </div></div>
                       <pre>{{ debug["editable-popover"] | json }}</pre>
-                      <p><p>To made an editable field display in a popover, wrap the editable in <code>&lt;div class=&quot;popover-wrapper&quot;&gt;</code>.</p>
+                      <p><p>To make a single editable field display in a pure css popover, wrap the editable in <code>&lt;div class=&quot;popover-wrapper&quot;&gt;</code>.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('EditPopoverCtrl', function($scope) {
@@ -1497,6 +1504,68 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["editable-popover"]=v; 
   $scope.user = {
     name: 'awesome user'
   };  
+});</pre>
+                    </section>
+                    <section id="uipopover">
+                      <h1>Editable ui-bootstrap Popover</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="UiPopoverCtrl" id="UiPopoverCtrl">
+  <div class="ui-popover-wrapper">
+    <a href="#" 
+       id="simpleText"
+       editable-text="user.name" 
+       e-label="User Name"
+       uib-popover-template="'popover.html'"
+       popover-is-open="popoverIsOpen"
+       popover-append-to-body="true"
+       onshow="popoverIsOpen = !popoverIsOpen" 
+       onhide="popoverIsOpen = !popoverIsOpen"
+       popover="true">{{ user.name || 'empty' }}</a>
+  </div>
+</div></div>
+                      <pre>{{ debug["uipopover"] | json }}</pre>
+                      <p><p>To make a single element editable via <code>ui-boostrap popover</code> do the following:</p>
+<ul>
+<li>Wrap the editable in <code>&lt;div class=&quot;ui-popover-wrapper&quot;&gt;</code>.</li>
+<li>Put the following attributes on the editable element:<ul>
+<li><code>uib-popover-template=&quot;&#39;popover.html&#39;&quot;</code> - The template is generated when the <code>popover</code> attribute is set to `true&#39;</li>
+<li><code>popover-is-open=&quot;popoverIsOpen&quot;</code> - Controls when the popover is opened</li>
+<li><code>onshow=&quot;popoverIsOpen = !popoverIsOpen&quot;</code> - Opens the popover when the editable form is shown</li>
+<li><code>onhide=&quot;popoverIsOpen = !popoverIsOpen&quot;</code> - Closes the popover when the editable form is closed</li>
+<li><code>popover=&quot;true&quot;</code> - Tells the editable directive that this element is to be displayed in the ui-bootstrap popover</li>
+</ul>
+</li>
+</ul>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('UiPopoverCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user',
+      location: 'location 1'
+  };
+$scope.$watch("user", function(v) { $scope.$parent.debug["uipopover"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;UiPopoverCtrl&quot; id=&quot;UiPopoverCtrl&quot;&gt;
+  &lt;div class=&quot;ui-popover-wrapper&quot;&gt;
+    &lt;a href=&quot;#&quot; 
+       id=&quot;simpleText&quot;
+       editable-text=&quot;user.name&quot; 
+       e-label=&quot;User Name&quot;
+       uib-popover-template=&quot;'popover.html'&quot;
+       popover-is-open=&quot;popoverIsOpen&quot;
+       popover-append-to-body=&quot;true&quot;
+       onshow=&quot;popoverIsOpen = !popoverIsOpen&quot; 
+       onhide=&quot;popoverIsOpen = !popoverIsOpen&quot;
+       popover=&quot;true&quot;&gt;{{ user.name || 'empty' }}&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('UiPopoverCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user',
+      location: 'location 1'
+  };
 });</pre>
                     </section>
                     <section id="onbeforesave">
@@ -2796,6 +2865,12 @@ then input will appear as <code>&lt;input style=&quot;width: 100px&quot;&gt;</co
                           <td><code>onshow</code></td>
                           <td>method</td>
                           <td><p>Called when control is shown.<br>See <a href="#select-remote">demo</a>.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>popover</code></td>
+                          <td>boolean</td>
+                          <td><p>Whether to show the editable element in a ui-bootstrap popover. Values: <code>true|false</code>.</p>
 </td>
                         </tr>
                       </tbody>

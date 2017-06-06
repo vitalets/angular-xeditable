@@ -1,6 +1,12 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.8.0 Jun 6, 2017
+
+----------------------------
+[enh #659] Add no buttons support for ui-select (ckosloski)
+[enh #657] Add support for ui-boostrap popover (ckosloski)
+
 Version 0.7.1 Apr 24, 2017
 
 ----------------------------
