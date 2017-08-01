@@ -22,7 +22,7 @@ angular.module('xeditable').directive('editableRadiolist', [
         }
           
         var html = '<label data-ng-repeat="'+parsed.ngRepeat+'">'+
-          '<input type="radio" data-ng-disabled="::' +
+          '<input type="radio" data-ng-disabled="' +
             this.attrs.eNgDisabled +
             '" data-ng-model="$parent.$parent.$data" data-ng-value="' + $interpolate.startSymbol() +
             '::' + parsed.locals.valueFn + $interpolate.endSymbol() +'"' +
