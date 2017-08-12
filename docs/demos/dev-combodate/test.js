@@ -7,11 +7,11 @@ describe('dev-combodate', function() {
   it('should show editor including seconds and submit new value', function() {
     var s = '[ng-controller="DevCombodateCtrl"] ';
 
-    expect(element(s+'a[editable-combodate]').css('display')).not().toBe('none');
-    expect(element(s+'a[editable-combodate]').text()).toMatch('May 15, 1984 12:00:00 AM');
-    element(s+'a[editable-combodate]').click();
+    expect(element(s+'a#seconds').css('display')).not().toBe('none');
+    expect(element(s+'a#seconds').text()).toMatch('May 15, 1984 12:00:00 AM');
+    element(s+'a#seconds').click();
 
-    expect(element(s+'a[editable-combodate]').css('display')).toBe('none');
+    expect(element(s+'a#seconds').css('display')).toBe('none');
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
     expect(element(s+'form select:visible').count()).toBe(6);
     expect(element(s+'form select.day').val()).toBe('15');
@@ -32,11 +32,12 @@ describe('dev-combodate', function() {
     //submit
     element(s+'form button[type="submit"]').click();
 
-    expect(element(s+'a[editable-combodate]').css('display')).not().toBe('none');
-    expect(element(s+'a[editable-combodate]').text()).toMatch('Apr 29, 1984 12:04:05 AM');
+    expect(element(s+'a#seconds').css('display')).not().toBe('none');
+    expect(element(s+'a#seconds').text()).toMatch('Apr 29, 1984 12:04:05 AM');
     expect(element(s+'form').count()).toBe(0);
-    
-    it('should show editor and submit new value when initial date does not match avaiable values in drop downs', function() {
+  });
+
+  it('should show editor and submit new value when initial date does not match avaiable values in drop downs', function() {
     var s = '[ng-controller="DevCombodateCtrl"] ';
 
     expect(element(s+'a#minuteStep').css('display')).not().toBe('none');
