@@ -169,4 +169,27 @@ describe('dev-uiselect', function() {
     expect(element(s+'.buttons > button:visible').count()).toBe(2);
     expect(element(s+'.buttons > span:visible').count()).toBe(0);
   });
+  
+  it('should show form without buttons and submit automatically', function() {
+      var s = '[ng-controller="DevUiSelectCtrl"] ';
+      
+      element(s+'div[name=state3]').click();
+      
+      expect(element(s+'div[name=state3]').css('display')).toBe('none');
+      expect(element(s+'form[editable-form="$form"] button:visible').count()).toBe(0);
+
+      sleep(delay);
+
+      //select a value for the first dropdown
+      element(s+'div[name=state3] > div > span').click();
+      input('$select.search').enter('Wisconsin');
+      element(s+'#ui-select-choices-row-0-').click();
+
+      //click body --> submit
+      element('body').click();
+
+      expect(element(s+'div#state3:visible').count()).toBe(1);
+      expect(element(s+'div#state3:visible').text()).toMatch('Wisconsin');
+      expect(element(s+'form[editable-form="$form"]').count()).toBe(0);
+  });
 });

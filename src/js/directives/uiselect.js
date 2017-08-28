@@ -13,6 +13,25 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
                 this.inputEl.append(editableUtils.rename('ui-select-choices', this.attrs.$choicesElement));
                 this.inputEl.removeAttr('ng-model');
                 this.inputEl.attr('ng-model', '$parent.$parent.$data');
+            },
+            autosubmit: function() {
+                var self = this;
+                self.inputEl.bind('change', function() {
+                    setTimeout(function() {
+                        self.scope.$apply(function() {
+                            self.scope.$form.$submit();
+                        });
+                    }, 500);
+                });
+
+                self.inputEl.bind('keydown', function(e) {
+                    //submit on tab
+                    if (e.keyCode === 9 && self.editorEl.attr('blur') === 'submit') {
+                        self.scope.$apply(function() {
+                            self.scope.$form.$submit();
+                        });
+                    }
+                });
             }
         });
 

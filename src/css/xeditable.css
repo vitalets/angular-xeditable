@@ -132,6 +132,16 @@ a.editable-empty:focus {
   text-decoration: none;
 }
 
+/* ui-bootstrap editable popover */
+.ui-popover-wrapper a {
+    /* make the link always show up */  
+    display: inline !important;
+}
+
+.ui-popover-wrapper form {
+    display: none !important;
+}
+
 /* editable popover */
 .popover-wrapper > a {
   /* make the link always show up */

@@ -1,4 +1,4 @@
-var app = angular.module("app", ["xeditable", "ngMockE2E", 'ui.bootstrap', 'checklist-model', 'ui.select', 'ngTagsInput', 'ngSanitize']);
+var app = angular.module("app", ["xeditable", "ngMockE2E", 'ui.bootstrap', 'checklist-model', 'ui.select', 'ngTagsInput', 'ngSanitize', 'ui.date']);
 
 //add delay to $httpBackend
 app.config(function($provide) {
@@ -115,5 +115,5 @@ app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
 
 function isProd() {
   //return true;
-  return window.location.href.indexOf('http://vitalets.github.io/angular-xeditable') >= 0;
+  return window.location.href.indexOf('https://vitalets.github.io/angular-xeditable') >= 0;
 }
