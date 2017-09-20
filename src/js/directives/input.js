@@ -53,6 +53,7 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
             // Add classes to the form
             if (this.attrs.eFormclass) {
               this.editorEl.addClass(this.attrs.eFormclass);
+              this.inputEl.removeAttr('formclass');
             }
           },
           autosubmit: function() {

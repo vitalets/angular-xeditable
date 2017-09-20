@@ -36,6 +36,7 @@ describe('dev-text', function() {
     expect(element(s+'form input[type="text"]').attr('form')).not().toBeDefined();
     expect(element(s+'form input[type="text"]').attr('ng-submit')).not().toBeDefined();
     expect(element(s+'form input[type="text"]').attr('k-data-text-field')).toBeDefined();
+    expect(element(s+'form input[type="text"]').attr('formclass')).not().toBeDefined();
     expect(element(s+'form').attr('class')).toBe("form-inline editable-wrap editable-text class1 class2 ng-pristine ng-valid ng-scope ng-valid-required");
     expect(element(s+'form button[type="button"]').attr('title')).toBe("Cancel");
     expect(element(s+'form button[type="button"]').attr('aria-label')).toBe("Cancel");

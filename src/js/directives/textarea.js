@@ -4,6 +4,15 @@ angular.module('xeditable').directive('editableTextarea', ['editableDirectiveFac
     return editableDirectiveFactory({
       directiveName: 'editableTextarea',
       inputTpl: '<textarea></textarea>',
+      render: function() {
+          this.parent.render.call(this);
+
+          // Add classes to the form
+          if (this.attrs.eFormclass) {
+              this.editorEl.addClass(this.attrs.eFormclass);
+              this.inputEl.removeAttr('formclass');
+          }
+      },
       addListeners: function() {
         var self = this;
         self.parent.addListeners.call(self);

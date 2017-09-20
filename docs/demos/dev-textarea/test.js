@@ -51,4 +51,29 @@ describe('dev-textarea', function() {
     expect(element(a).text()).toMatch('Titlemy text...');
     expect(element(s+'form').count()).toBe(0);
   });
+
+  it('should show textarea with formclasses set', function() {
+    var s = '[ng-controller="DevTextareaCtrl"] ';
+    var a = s + 'a#formclass ';
+
+    expect(element(a).css('display')).not().toBe('none');
+    expect(element(a).text()).toMatch('<strong>Title</strong><p>my text...');
+    element(a).click();
+
+    expect(element(a).css('display')).toBe('none');
+    expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
+    expect(element(s+'form textarea:visible').count()).toBe(1);
+    expect(element(s+'form textarea').val()).toMatch('<strong>Title</strong><p>my text...');
+    expect(element(s+'form button[type="submit"]:visible').count()).toBe(1);
+    expect(element(s+'form button[type="button"]:visible').count()).toBe(1);
+    expect(element(s+'form textarea').attr('formclass')).not().toBeDefined();
+    expect(element(s+'form').attr('class')).toBe("form-inline editable-wrap editable-textarea testclass ng-pristine ng-valid ng-scope");
+      
+    using(s).input('$parent.$data').enter('username2');
+    element(s+'form button[type="submit"]').click();
+
+    expect(element(a).css('display')).not().toBe('none');
+    expect(element(a).text()).toMatch('username2');
+    expect(element(s+'form').count()).toBe(0);
+  });
 });
