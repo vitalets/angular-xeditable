@@ -1,7 +1,7 @@
 ## jsFiddle / Plunker
 Please use these live templates when creating issues:  
-http://jsfiddle.net/NfPcH/3  
-http://plnkr.co/edit/BjWwXIlYyyLvRnVwO8m8?p=preview
+http://jsfiddle.net/ckosloski/NfPcH/20243/  
+http://plnkr.co/edit/OqOveMtnSs1G68SC36wt?p=preview
 
 ## Contribute
 * Don't include files from the `dist`, `starter` and `zip` folders in your pull request.
