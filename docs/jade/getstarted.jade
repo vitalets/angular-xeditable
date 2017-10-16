@@ -32,9 +32,9 @@ ol
 
   li Set theme in app.run:
     pre.prettyprint.
-      app.run(function(editableOptions) {
+      app.run(['editableOptions', function(editableOptions) {
         editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-      });
+      }]);
 
   li Markup element that should be editable 
     pre.prettyprint(ng-non-bindable)

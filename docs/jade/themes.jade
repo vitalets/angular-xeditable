@@ -10,14 +10,14 @@
   To change the `title` and `aria-label` values of the submit/cancel/clear buttons, set the `editableOptions` properties:
 
 pre.prettyprint.
-  app.run(function(editableOptions) {
+  app.run(['editableOptions', function(editableOptions) {
     editableOptions.submitButtonTitle = 'Submit';
     editableOptions.submitButtonAriaLabel = 'Submit';
     editableOptions.cancelButtonTitle = 'Cancel';
     editableOptions.cancelButtonAriaLabel = 'Cancel';
     editableOptions.clearButtonTitle = 'Clear';
     editableOptions.clearButtonAriaLabel = 'Clear';
-  });
+  }]);
 
 section#bootstrap3
 h2 Bootstrap 3
@@ -31,15 +31,15 @@ pre.prettyprint
   Set theme in `app.run`:
 
 pre.prettyprint.
-  app.run(function(editableOptions) {
+  app.run(['editableOptions', function(editableOptions) {
     editableOptions.theme = 'bs3';
-  });
+  }]);
 
 :markdown
   To have smaller or bigger controls modify `inputClass` and `buttonsClass` properties of theme:
 
 pre.prettyprint.
-  app.run(function(editableOptions, editableThemes) {
+  app.run(['editableOptions', 'editableThemes', function(editableOptions, editableThemes) {
     editableThemes.bs3.inputClass = 'input-sm';
     editableThemes.bs3.buttonsClass = 'btn-sm';
     editableOptions.theme = 'bs3';
@@ -57,9 +57,9 @@ pre.prettyprint
   Set theme in `app.run`:
 
 pre.prettyprint.
-  app.run(function(editableOptions) {
+  app.run(['editableOptions', function(editableOptions) {
     editableOptions.theme = 'bs2';
-  });
+  }]);
 
 section#default
 h2 Default
@@ -68,13 +68,13 @@ h2 Default
   You can customize theme in `app.run` by overwriting properties:
 
 pre.prettyprint.
-  app.run(function(editableOptions, editableThemes) {
+  app.run(['editableOptions', 'editableThemes', function(editableOptions, editableThemes)
     // set `default` theme
     editableOptions.theme = 'default';
 
     // overwrite submit button template
     editableThemes['default'].submitTpl = '&lt;button type="submit"&gt;ok&lt;/button&gt;';
-  });
+  }]);
 
 :markdown
   Available properties of each theme you can see in source

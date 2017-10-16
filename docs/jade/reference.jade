@@ -100,10 +100,10 @@ h3 Options
 :markdown
   Options are set in app.run
 pre.prettyprint
-  = 'app.run(function(editableOptions) {\n'
+  = 'app.run([\'editableOptions\', function(editableOptions) {\n'
   = 'editableOptions.theme = \'bs3\';\n'
   = '...\n'
-  = '});\n'
+  = '}]);\n'
 - var items = ns.properties ? ns.properties.filter(function(v){return !~v.type.names.indexOf('attribute')}) : []
 +props(items)
 

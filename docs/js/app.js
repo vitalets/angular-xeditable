@@ -32,7 +32,7 @@ app.config(function($locationProvider) {
 });
 */
 
-app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
+app.run(['editableOptions', '$httpBackend', 'editableOptions', 'editableThemes', function($rootScope, $httpBackend, editableOptions, editableThemes) {
   $rootScope.debug = {};
 
   editableOptions.theme = 'bs3';
@@ -111,7 +111,7 @@ app.run(function($rootScope, $httpBackend, editableOptions, editableThemes) {
 
   $httpBackend.whenGET(/\.(html|css|js)$/).passThrough();
 
-});
+}]);
 
 function isProd() {
   //return true;
