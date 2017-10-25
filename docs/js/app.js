@@ -32,7 +32,7 @@ app.config(function($locationProvider) {
 });
 */
 
-app.run(['editableOptions', '$httpBackend', 'editableOptions', 'editableThemes', function($rootScope, $httpBackend, editableOptions, editableThemes) {
+app.run(['$rootScope', '$httpBackend', 'editableOptions', 'editableThemes', function($rootScope, $httpBackend, editableOptions, editableThemes) {
   $rootScope.debug = {};
 
   editableOptions.theme = 'bs3';

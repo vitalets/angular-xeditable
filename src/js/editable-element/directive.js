@@ -42,7 +42,7 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
           if (getter) { // form exists in scope (above), e.g. editable column
             eFormCtrl = getter;
             hasForm = true;
-          } else if (elem && typeof elem.parents === "function" && elem.parents().last().find('form[name='+attrs.eForm+']').length) { // form exists below or not exist at all: check document.forms
+          } else if (elem && typeof elem.parents === "function" && elem.parents().last().find('form[name="'+attrs.eForm+'"]').length) { // form exists below or not exist at all: check document.forms
             // form is below and not processed yet
             eFormCtrl = null;
             hasForm = true;
