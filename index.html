@@ -57,7 +57,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.8.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.8.0 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.8.1.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.8.1 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -141,6 +141,7 @@
                   <li><a href="#edit-disabled">Disable editing</a></li>
                   <li><a href="#editable-popover">Editable Popover</a></li>
                   <li><a href="#uipopover">Editable ui-bootstrap Popover</a></li>
+                  <li><a href="#e-single">Single editable in a form</a></li>
                 </ul>
               </li>
               <li><a href="#onbeforesave">Submit</a>
@@ -228,7 +229,7 @@ to use power of angular and support complex forms / editable grids.</p>
 
               <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.8.0.zip">download latest zip    </a>
+            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.8.1.zip">download latest zip    </a>
               <pre class="prettyprint">bower install angular-xeditable </pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -240,9 +241,9 @@ to use power of angular and support complex forms / editable grids.</p>
               <pre class="prettyprint">var app = angular.module("app", ["xeditable"]);</pre>
             </li>
             <li>Set theme in app.run:
-              <pre class="prettyprint">app.run(function(editableOptions) {
+              <pre class="prettyprint">app.run(['editableOptions', function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-});
+}]);
 </pre>
             </li>
             <li>Markup element that should be editable 
@@ -1568,6 +1569,37 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["uipopover"]=v; }); });
   };
 });</pre>
                     </section>
+                    <section id="e-single">
+                      <h1>Single editable in a form</h1>
+                      <!-- watch change of user to update rootScope for debugging-->
+                      <h3>demo</h3>
+                      <div class="well line-example"><div ng-controller="ESingleCtrl" id="ESingleCtrl">
+  <form>
+    <a href="#" editable-text="user.name" e-single>{{ user.name || 'empty' }}</a>
+  </form>
+</div></div>
+                      <pre>{{ debug["e-single"] | json }}</pre>
+                      <p><p>Add <code>e-single</code> attribute when you want a single item to be clickable inside of a form.<br>It ignores the outer form.</p>
+</p>
+                      <!--script(src=dir+'/controller.js')-->
+                      <script>app.controller('ESingleCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+$scope.$watch("user", function(v) { $scope.$parent.debug["e-single"]=v; }); });</script>
+                      <h3>html</h3>
+                      <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ESingleCtrl&quot; id=&quot;ESingleCtrl&quot;&gt;
+  &lt;form&gt;
+    &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot; e-single&gt;{{ user.name || 'empty' }}&lt;/a&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</pre>
+                      <h3>controller.js</h3>
+                      <pre class="prettyprint">app.controller('ESingleCtrl', function($scope) {
+  $scope.user = {
+    name: 'awesome user'
+  };  
+});</pre>
+                    </section>
                     <section id="onbeforesave">
                       <h1>Submit via onbeforesave</h1>
                       <!-- watch change of user to update rootScope for debugging-->
@@ -2739,26 +2771,26 @@ Note that using <code>oncancel</code> hook allows you to revert all changes and 
 <p>To display a clear button, set the <code>editableOptions.displayClearButton=true</code> in <code>app.run</code>.</p>
 <p>To change the <code>title</code> and <code>aria-label</code> values of the submit/cancel/clear buttons, set the <code>editableOptions</code> properties:</p>
 
-          <pre class="prettyprint">app.run(function(editableOptions) {
+          <pre class="prettyprint">app.run(['editableOptions', function(editableOptions) {
   editableOptions.submitButtonTitle = 'Submit';
   editableOptions.submitButtonAriaLabel = 'Submit';
   editableOptions.cancelButtonTitle = 'Cancel';
   editableOptions.cancelButtonAriaLabel = 'Cancel';
   editableOptions.clearButtonTitle = 'Clear';
   editableOptions.clearButtonAriaLabel = 'Clear';
-});
+}]);
 </pre>
           <section id="bootstrap3"></section>
           <h2>Bootstrap 3</h2><p>Include <a href="http://getbootstrap.com">Bootstrap 3</a> CSS</p>
 
           <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre><p>Set theme in <code>app.run</code>:</p>
 
-          <pre class="prettyprint">app.run(function(editableOptions) {
+          <pre class="prettyprint">app.run(['editableOptions', function(editableOptions) {
   editableOptions.theme = 'bs3';
-});
+}]);
 </pre><p>To have smaller or bigger controls modify <code>inputClass</code> and <code>buttonsClass</code> properties of theme:</p>
 
-          <pre class="prettyprint">app.run(function(editableOptions, editableThemes) {
+          <pre class="prettyprint">app.run(['editableOptions', 'editableThemes', function(editableOptions, editableThemes) {
   editableThemes.bs3.inputClass = 'input-sm';
   editableThemes.bs3.buttonsClass = 'btn-sm';
   editableOptions.theme = 'bs3';
@@ -2769,20 +2801,20 @@ Note that using <code>oncancel</code> hook allows you to revert all changes and 
 
           <pre class="prettyprint">&lt;link href=&quot;//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre><p>Set theme in <code>app.run</code>:</p>
 
-          <pre class="prettyprint">app.run(function(editableOptions) {
+          <pre class="prettyprint">app.run(['editableOptions', function(editableOptions) {
   editableOptions.theme = 'bs2';
-});
+}]);
 </pre>
           <section id="default"></section>
           <h2>Default</h2><p>No additional CSS required.<br>You can customize theme in <code>app.run</code> by overwriting properties:</p>
 
-          <pre class="prettyprint">app.run(function(editableOptions, editableThemes) {
+          <pre class="prettyprint">app.run(['editableOptions', 'editableThemes', function(editableOptions, editableThemes)
   // set `default` theme
   editableOptions.theme = 'default';
   
   // overwrite submit button template
   editableThemes['default'].submitTpl = '&lt;button type="submit"&gt;ok&lt;/button&gt;';
-});
+}]);
 </pre><p>Available properties of each theme you can see in source
 <a href="https://github.com/vitalets/angular-xeditable/tree/master/src/js/themes.js">themes.js</a></p>
 <p>To change appearance of editable links you should overwrite CSS:</p>
@@ -3022,10 +3054,10 @@ When trying to set the focus on a form field of a new row in the editable table,
           <h2>Reference: editable options</h2>
           <h3>Options</h3><p>Options are set in app.run</p>
 
-          <pre class="prettyprint">app.run(function(editableOptions) {
+          <pre class="prettyprint">app.run(['editableOptions', function(editableOptions) {
 editableOptions.theme = 'bs3';
 ...
-});
+}]);
 </pre>
                     <table width="100%" class="table-bordered table-condensed">
                       <thead>

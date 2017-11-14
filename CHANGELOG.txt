@@ -1,6 +1,13 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.8.1 Nov 14, 2017
+
+----------------------------
+[bug #702] Fix Node/Phantomjs/Karma syntax error (ckosloski)
+[bug #690] Fix e-formclass for textarea (ckosloski)
+[bug #679] Fix combodate not updating value if the combobox is not changed (chiu0602)
+
 Version 0.8.0 Jun 6, 2017
 
 ----------------------------
