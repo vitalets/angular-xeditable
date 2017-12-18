@@ -5,4 +5,23 @@
   <a href="#" id="minuteStep" editable-combodate="user.dob2">
     {{ (user.dob2 | date:"medium") || 'empty' }}
   </a>
+  <br/>
+  <span href="#" id="yearOnly" editable-combodate='myDate.date' e-format='{{myDate.template}}' e-template='{{myDate.template}}'>{{myDate.date | date: myDate.format}}</span>
+  <br/>
+  <span>{{myDate.date}}</span>
+  <br/>
+  <br/>
+  <span href="#" id="yearMonthOnly" editable-combodate='myDate2.date' e-format='{{myDate2.template}}' e-template='{{myDate2.template}}'>{{myDate2.date | date: myDate2.format}}</span>
+  <br/>
+  <span>{{myDate2.date}}</span>
+  <br/>
+  <br/>
+  <span href="#" id="monthOnly" editable-combodate='myDate3.date' e-format='{{myDate3.template}}' e-template='{{myDate3.template}}'>{{myDate3.date | date: myDate3.format}}</span>
+  <br/>
+  <span>{{myDate3.date}}</span>
+  <br/>
+  <br/>
+  <span href="#" id="dayMonthYear" editable-combodate='myDate4.date' e-format='{{myDate4.template}}' e-template='{{myDate4.template}}'>{{myDate4.date | date: myDate4.format}}</span>
+  <br/>
+  <span>{{myDate4.date}}</span>
 </div>
