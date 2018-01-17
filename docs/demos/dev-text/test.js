@@ -59,7 +59,7 @@ describe('dev-text', function() {
     element('body').click();
     expect(element(a).css('display')).not().toBe('none');
     expect(element(a).text()).toMatch('username2');
-    expect(element(s+'form').count()).toBe(0);  
+    expect(element(s+'form').count()).toBe(0);
 
     // click on another editable
     element(a).click();
@@ -70,14 +70,14 @@ describe('dev-text', function() {
     element(s+'a.cancel').click();
     expect(element(a).css('display')).not().toBe('none');
     expect(element(a).text()).toMatch('username3');
-    expect(element(s+'form').count()).toBe(1);    
+    expect(element(s+'form').count()).toBe(1);
   });
 
   it('blur = `cancel`', function() {
     var s = '[ng-controller="DevText"] ';
     var a = s + 'a.cancel ';
 
-    // click on body 
+    // click on body
     element(a).click();
     expect(element(a).css('display')).toBe('none');
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
@@ -86,9 +86,9 @@ describe('dev-text', function() {
     element('body').click();
     expect(element(a).css('display')).not().toBe('none');
     expect(element(a).text()).toMatch('awesome user');
-    expect(element(s+'form').count()).toBe(0);  
+    expect(element(s+'form').count()).toBe(0);
 
-    // click on another editable 
+    // click on another editable
     element(a).click();
     expect(element(a).css('display')).toBe('none');
     expect(element(s+'form').count()).toBe(1);
@@ -97,14 +97,14 @@ describe('dev-text', function() {
     element(s+'a.ignore').click();
     expect(element(a).css('display')).not().toBe('none');
     expect(element(a).text()).toMatch('awesome user');
-    expect(element(s+'form').count()).toBe(1);    
+    expect(element(s+'form').count()).toBe(1);
   });
 
   it('blur = `ignore`', function() {
     var s = '[ng-controller="DevText"] ';
     var a = s + 'a.ignore ';
 
-    // click on body 
+    // click on body
     element(a).click();
     expect(element(a).css('display')).toBe('none');
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
@@ -113,12 +113,12 @@ describe('dev-text', function() {
     element('body').click();
     expect(element(a).css('display')).toBe('none');
     expect(element(a).text()).toMatch('awesome user');
-    expect(element(s+'form').count()).toBe(1);  
+    expect(element(s+'form').count()).toBe(1);
 
-    // click on another editable 
+    // click on another editable
     element(s+'a.submit').click();
     expect(element(a).css('display')).toBe('none');
-    expect(element(s+'form').count()).toBe(2);    
+    expect(element(s+'form').count()).toBe(2);
   });
 
   it('should disable editing of the element', function() {
@@ -132,14 +132,14 @@ describe('dev-text', function() {
     expect(element(a).text()).toMatch('awesome user');
     expect(element(s+'form').count()).toBe(0);
   });
-  
+
   it('should show editor and submit new value when container is a div', function() {
       var s = '[ng-controller="DevText"] ';
       var a = s + 'div#divContainer ';
-      
+
       expect(element(a).css('display')).not().toBe('none');
       expect(element(a).text()).toMatch('awesome user');
-      
+
       element(a).click();
 
       expect(element(a).css('display')).toBe('none');
@@ -154,6 +154,31 @@ describe('dev-text', function() {
 
       expect(element(a).css('display')).not().toBe('none');
       expect(element(a).text()).toMatch('username2');
+      expect(element(s+'form').count()).toBe(0);
+  });
+
+  it('should show editor with input group and have the input group value change dynamically', function() {
+      var s = '[ng-controller="DevText"] ';
+      var a = s + 'a.inputgroup ';
+
+      expect(element(a).css('display')).not().toBe('none');
+      expect(element(a).text()).toMatch('10');
+
+      element(a).click();
+
+      expect(element(a).css('display')).toBe('none');
+      expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
+      expect(element(s+'form input[type="number"]:visible').count()).toBe(1);
+      expect(element(s+'form input[type="number"]').val()).toBe("10");
+      expect(element(s+'form button[type="submit"]:visible').count()).toBe(1);
+      expect(element(s+'form button[type="button"]:visible').count()).toBe(1);
+
+      using(s).input('$parent.$data').enter("12");
+      expect(element(s+'span.input-group-addon').text()).toMatch("12");
+      element(s+'form button[type="submit"]').click();
+
+      expect(element(a).css('display')).not().toBe('none');
+      expect(element(a).text()).toMatch("12");
       expect(element(s+'form').count()).toBe(0);
   });
 });

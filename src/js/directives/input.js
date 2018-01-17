@@ -13,7 +13,7 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
   var types = 'text|password|email|tel|number|url|search|color|date|datetime|datetime-local|time|month|week|file'.split('|');
 
   //todo: datalist
-  
+
   // generate directives
   angular.forEach(types, function(type) {
     var directiveName = camelCase('editable' + '-' + type);
@@ -25,34 +25,37 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
           render: function() {
             this.parent.render.call(this);
 
+            var attrs = this.attrs;
+            var scope = this.scope;
+
             //Add bootstrap simple input groups
-            if (this.attrs.eInputgroupleft || this.attrs.eInputgroupright) {
+            if (attrs.eInputgroupleft || attrs.eInputgroupright) {
               this.inputEl.wrap('<div class="input-group"></div>');
 
-              if (this.attrs.eInputgroupleft) {
-                var inputGroupLeft = angular.element('<span class="input-group-addon">' + this.attrs.eInputgroupleft + '</span>');
+              if (attrs.eInputgroupleft) {
+                var inputGroupLeft = angular.element('<span class="input-group-addon" data-ng-bind="' + attrs.eInputgroupleft + '"></span>');
                 this.inputEl.parent().prepend(inputGroupLeft);
               }
 
-              if (this.attrs.eInputgroupright) {
-                var inputGroupRight = angular.element('<span class="input-group-addon">' + this.attrs.eInputgroupright + '</span>');
+              if (attrs.eInputgroupright) {
+                var inputGroupRight = angular.element('<span class="input-group-addon" data-ng-bind="' + attrs.eInputgroupright + '"></span>');
                 this.inputEl.parent().append(inputGroupRight);
               }
             }
 
             // Add label to the input
-            if (this.attrs.eLabel) {
-              var label = angular.element('<label>' + this.attrs.eLabel + '</label>');
-              if (this.attrs.eInputgroupleft || this.attrs.eInputgroupright) {
+            if (attrs.eLabel) {
+              var label = angular.element('<label>' + attrs.eLabel + '</label>');
+              if (attrs.eInputgroupleft || attrs.eInputgroupright) {
                 this.inputEl.parent().parent().prepend(label);
               } else {
                 this.inputEl.parent().prepend(label);
               }
             }
-            
+
             // Add classes to the form
-            if (this.attrs.eFormclass) {
-              this.editorEl.addClass(this.attrs.eFormclass);
+            if (attrs.eFormclass) {
+              this.editorEl.addClass(attrs.eFormclass);
               this.inputEl.removeAttr('formclass');
             }
           },
@@ -80,7 +83,7 @@ Input types: text|password|email|tel|number|url|search|color|date|datetime|datet
         render: function() {
           this.parent.render.call(this);
           this.inputEl.after('<output>' + $interpolate.startSymbol() + '$data' + $interpolate.endSymbol()  + '</output>');
-        }        
+        }
       });
   }]);
 
