@@ -6,8 +6,8 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
     function(editableDirectiveFactory, $injector, $parse) {
 
         // Constants from Angular-ui bootstrap datepicker
-        uibDatepickerConfig = $injector.get('uibDatepickerConfig');
-        uibDatepickerPopupConfig = $injector.get('uibDatepickerPopupConfig');
+        var uibDatepickerConfig = $injector.get('uibDatepickerConfig');
+        var uibDatepickerPopupConfig = $injector.get('uibDatepickerPopupConfig');
 
         var popupAttrNames = [
             ['eIsOpen', 'is-open'],
