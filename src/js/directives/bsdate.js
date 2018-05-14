@@ -22,7 +22,8 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
             ['eOnOpenFocus', 'on-open-focus'],
             ['eName', 'name'],
             ['eDateDisabled', 'date-disabled'],
-            ['eAltInputFormats', 'alt-input-formats']
+            ['eAltInputFormats', 'alt-input-formats'],
+            ['eDatepickerTemplateUrl', 'datepicker-template-url']
         ];
 
         var dateOptionsNames = [
@@ -136,7 +137,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
                         });
                     }, 500);
                 });
-                
+
                 self.inputEl.bind('keydown', function(e) {
                     //submit on tab
                     if (e.keyCode === 9 && self.editorEl.attr('blur') === 'submit') {
