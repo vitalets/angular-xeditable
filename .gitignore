@@ -6,5 +6,4 @@ jsdoc.json
 node_modules
 .tmp
 .sass-cache
-bower_components
 npm-debug.log
