@@ -1,6 +1,6 @@
 {
     "opts": {
-        "template": "node_modules/grunt-jsdoc/node_modules/jsdoc/templates/haruki",
+        "template": "node_modules/jsdoc/templates/haruki",
         "destination": "console",
         "recurse": true
     },
