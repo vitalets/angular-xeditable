@@ -12,6 +12,7 @@ angular.module('xeditable').directive('editableChecklist', [
         var parsed = editableNgOptionsParser(this.attrs.eNgOptions);
         var ngChangeHtml = '';
         var ngChecklistComparatorHtml = '';
+        var ngDisabled = '';
 
         if (this.attrs.eNgChange) {
           ngChangeHtml = ' ng-change="' +  this.attrs.eNgChange + '"';
@@ -20,10 +21,14 @@ angular.module('xeditable').directive('editableChecklist', [
         if (this.attrs.eChecklistComparator) {
           ngChecklistComparatorHtml = ' checklist-comparator="' +  this.attrs.eChecklistComparator + '"';
         }
+
+        if(this.attrs.eNgDisabled){
+          ngDisabled = ' ng-disabled="' + this.attrs.eNgDisabled+'"';
+        }
         
         var html = '<label ng-repeat="'+parsed.ngRepeat+'">'+
           '<input type="checkbox" checklist-model="$parent.$parent.$data" checklist-value="'+parsed.locals.valueFn+'"' +
-            ngChangeHtml + ngChecklistComparatorHtml + '>'+
+            ngChangeHtml + ngChecklistComparatorHtml + ngDisabled+'>'+
           '<span ng-bind="'+parsed.locals.displayFn+'"></span></label>';
 
         this.inputEl.removeAttr('ng-model');

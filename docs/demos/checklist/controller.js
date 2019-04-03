@@ -18,5 +18,12 @@ app.controller('ChecklistCtrl', function($scope, $filter) {
     });
     return selected.length ? selected.join(', ') : 'Not set';
   };
+  
+  $scope.disableCheckbox = function (v) {
+    if ($scope.user.status.indexOf(v) == -1) {
+      return true
+    }
+    return false;
+  }
 
 });
