@@ -19,6 +19,38 @@ pre.prettyprint.
     editableOptions.clearButtonAriaLabel = 'Clear';
   }]);
 
+section#bootstrap4
+h2 Bootstrap 4
+:markdown
+  Include [Bootstrap 4](http://getbootstrap.com) CSS
+
+pre.prettyprint
+  = '<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">'
+
+:markdown
+  Set theme in `app.run`:
+
+pre.prettyprint.
+  app.run(['editableOptions', function(editableOptions) {
+    editableOptions.theme = 'bs4';
+  }]);
+
+:markdown
+  To have smaller or bigger controls modify `inputClass` and `buttonsClass` properties of theme:
+
+pre.prettyprint.
+  app.run(['editableOptions', 'editableThemes', function(editableOptions, editableThemes) {
+    editableThemes.bs4.inputClass = 'form-control-sm';
+    editableThemes.bs4.buttonsClass = 'btn-sm';
+    editableOptions.theme = 'bs4';
+  });
+
+:markdown
+    Include [font-awesome](https://fontawesome.com) CSS.  This is required for the button icons.
+
+pre.prettyprint
+    = '<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">'
+
 section#bootstrap3
 h2 Bootstrap 3
 :markdown
@@ -64,7 +96,7 @@ pre.prettyprint.
 section#default
 h2 Default
 :markdown
-  No additional CSS required.  
+  No additional CSS required.
   You can customize theme in `app.run` by overwriting properties:
 
 pre.prettyprint.
@@ -83,11 +115,11 @@ pre.prettyprint.
   To change appearance of editable links you should overwrite CSS:
 
 pre.prettyprint.
-  a.editable-click { 
+  a.editable-click {
       color: green;
       border-bottom: dotted 2px green;
   }
-  a.editable-click:hover { 
+  a.editable-click:hover {
       color: #47a447;
       border-bottom-color: #47a447;
   }

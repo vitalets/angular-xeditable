@@ -6,7 +6,7 @@ describe('dev-theme', function() {
 
   it('should have bs3 theme classes', function() {
     var s = '[ng-controller="DevTheme"] ';
-    var a = s + 'a#e-attrs '
+    var a = s + 'a#e-attrs ';
 
     // click on body
     element(a).click();
@@ -24,7 +24,7 @@ describe('dev-theme', function() {
 
   it('should have default theme classes', function() {
     var s = '[ng-controller="DevTheme"] ';
-    var a = s + 'a.cancel '
+    var a = s + 'a.cancel ';
 
     expect(element(a).text()).toMatch('awesome user');
     element(a).click();
@@ -34,7 +34,7 @@ describe('dev-theme', function() {
 
   it('should have bs2 icons', function() {
     var s = '[ng-controller="DevTheme"] ';
-    var a = s + 'a.bs2-test '
+    var a = s + 'a.bs2-test ';
 
     expect(element(a).text()).toMatch('awesome user');
     element(a).click();
@@ -44,7 +44,7 @@ describe('dev-theme', function() {
 
   it('should have font-awesome icons', function() {
     var s = '[ng-controller="DevTheme"] ';
-    var a = s + 'a.fa-test '
+    var a = s + 'a.fa-test ';
 
     expect(element(a).text()).toMatch('awesome user');
     element(a).click();
@@ -52,5 +52,14 @@ describe('dev-theme', function() {
     expect(element(s+'form .editable-buttons button[type="submit"] span').attr('class')).toBe('fa fa-check')
   });
 
+  it('should have bs4 icons', function() {
+    var s = '[ng-controller="DevTheme"] ';
+    var a = s + 'a.bs4-test ';
+
+    expect(element(a).text()).toMatch('awesome user');
+    element(a).click();
+
+    expect(element(s+'form .editable-buttons button[type="submit"] span').attr('class')).toBe('fa fa-check')
+  });
 
 });

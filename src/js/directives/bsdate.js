@@ -100,8 +100,10 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 
                 //See if calendar button should be displayed
                 if (showCalendarButton === "true") {
-                    var buttonDatePicker = angular.element('<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
-                    var buttonWrapper = angular.element('<span class="input-group-btn"></span>');
+                    var buttonDatePicker = angular.element('<button type="button" class="' +
+                                            this.theme.calendarButtonClass + '"><i class="' +
+                                            this.icon_set.calendar + '"></i></button>');
+                    var buttonWrapper = angular.element('<span class="' + this.theme.buttonGroupAppendClass+ '"></span>');
 
                     buttonDatePicker.attr('ng-click', attrs.eNgClick);
 

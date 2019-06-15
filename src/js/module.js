@@ -1,62 +1,62 @@
 /**
- * Angular-xeditable module 
+ * Angular-xeditable module
  *
  */
 angular.module('xeditable', [])
 
 
 /**
- * Default options. 
+ * Default options.
  *
  * @namespace editable-options
  */
 //todo: maybe better have editableDefaults, not options...
 .value('editableOptions', {
   /**
-   * Theme. Possible values `bs3`, `bs2`, `default`.  
+   * Theme. Possible values `bs4`, `bs3`, `bs2`, `default`.
    * Default is `default`
-   * 
+   *
    * @var {string} theme
    * @memberOf editable-options
-   */  
+   */
   theme: 'default',
   /**
-   * icon_set. Possible values `font-awesome`, `default`.  
+   * icon_set. Possible values `font-awesome`, `default`.
    * Default is `default`
-   * 
+   *
    * @var {string} icon set
    * @memberOf editable-options
-   */  
+   */
   icon_set: 'default',
   /**
-   * Whether to show buttons for single editable element.  
-   * Possible values `right`, `no`.  
+   * Whether to show buttons for single editable element.
+   * Possible values `right`, `no`.
    * Default is `right`
-   * 
+   *
    * @var {string} buttons
    * @memberOf editable-options
-   */    
+   */
   buttons: 'right',
   /**
-   * Default value for `blur` attribute of single editable element.  
-   * Can be `cancel|submit|ignore`.  
+   * Default value for `blur` attribute of single editable element.
+   * Can be `cancel|submit|ignore`.
    * Default is `cancel`
-   * 
+   *
    * @var {string} blurElem
    * @memberOf editable-options
    */
   blurElem: 'cancel',
   /**
-   * Default value for `blur` attribute of editable form.  
-   * Can be `cancel|submit|ignore`.  
+   * Default value for `blur` attribute of editable form.
+   * Can be `cancel|submit|ignore`.
    * Default is `ignore`.
-   * 
+   *
    * @var {string} blurForm
    * @memberOf editable-options
    */
   blurForm: 'ignore',
   /**
-   * How input elements get activated. Possible values: `focus|select|none`.  
+   * How input elements get activated. Possible values: `focus|select|none`.
    * Default is `focus`
    *
    * @var {string} activate
@@ -64,17 +64,17 @@ angular.module('xeditable', [])
    */
   activate: 'focus',
   /**
-   * Whether to disable x-editable. Can be overloaded on each element.  
+   * Whether to disable x-editable. Can be overloaded on each element.
    * Default is `false`
    *
    * @var {boolean} isDisabled
    * @memberOf editable-options
    */
    isDisabled: false,
-  
+
   /**
-   * Event, on which the edit mode gets activated. 
-   * Can be any event.  
+   * Event, on which the edit mode gets activated.
+   * Can be any event.
    * Default is `click`
    *
    * @var {string} activationEvent
@@ -83,7 +83,7 @@ angular.module('xeditable', [])
   activationEvent: 'click',
 
   /**
-   * The default title of the submit button.  
+   * The default title of the submit button.
    * Default is `Submit`
    *
    * @var {string} submitButtonTitle
@@ -92,7 +92,7 @@ angular.module('xeditable', [])
   submitButtonTitle: 'Submit',
 
   /**
-   * The default aria label of the submit button.  
+   * The default aria label of the submit button.
    * Default is `Submit`
    *
    * @var {string} submitButtonAriaLabel
@@ -101,7 +101,7 @@ angular.module('xeditable', [])
   submitButtonAriaLabel: 'Submit',
 
   /**
-   * The default title of the cancel button.  
+   * The default title of the cancel button.
    * Default is `Cancel`
    *
    * @var {string} cancelButtonTitle
@@ -110,7 +110,7 @@ angular.module('xeditable', [])
   cancelButtonTitle: 'Cancel',
 
   /**
-   * The default aria label of the cancel button.  
+   * The default aria label of the cancel button.
    * Default is `Cancel`
    *
    * @var {string} cancelButtonAriaLabel
@@ -119,7 +119,7 @@ angular.module('xeditable', [])
   cancelButtonAriaLabel: 'Cancel',
 
   /**
-   * The default title of the clear button.  
+   * The default title of the clear button.
    * Default is `Clear`
    *
    * @var {string} clearButtonTitle
@@ -128,7 +128,7 @@ angular.module('xeditable', [])
   clearButtonTitle: 'Clear',
 
   /**
-   * The default aria label of the clear button.  
+   * The default aria label of the clear button.
    * Default is `Clear`
    *
    * @var {string} clearButtonAriaLabel
@@ -137,7 +137,7 @@ angular.module('xeditable', [])
   clearButtonAriaLabel: 'Clear',
 
   /**
-   * Whether to display the clear button.  
+   * Whether to display the clear button.
    * Default is `false`
    *
    * @var {boolean} displayClearButton

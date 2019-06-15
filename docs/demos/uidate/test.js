@@ -17,6 +17,8 @@ describe('uidate', function() {
     expect(element(s+'form input').val()).toBe('04/11/1985');
     expect(element(s+'form .editable-buttons button[type="submit"]:visible').count()).toBe(1);
     expect(element(s+'form .editable-buttons button[type="button"]:visible').count()).toBe(1);
+    sleep(delay);
+    sleep(delay);
     expect(element('div#ui-datepicker-div:visible').count()).toBe(1);
     expect(element('a.ui-state-active').text()).toMatch('11');
 
