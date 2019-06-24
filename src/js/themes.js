@@ -35,8 +35,9 @@ angular.module('xeditable').factory('editableThemes', function() {
       cancelTpl:   '<button type="button" class="btn" ng-click="$form.$cancel()">'+
                       '<span></span>'+
                    '</button>',
-      resetTpl:    '<button type="reset" class="btn btn-danger">clear</button>'
-
+      resetTpl:    '<button type="reset" class="btn btn-danger">clear</button>',
+      calendarButtonClass: 'btn',
+      buttonGroupAppendClass: 'input-append'
     },
 
     //bs3
@@ -57,6 +58,8 @@ angular.module('xeditable').factory('editableThemes', function() {
       buttonsClass: '',
       //bs3 specific prop to change standard inputs class: input-sm, input-lg
       inputClass: '',
+      calendarButtonClass: 'btn btn-default',
+      buttonGroupAppendClass: 'input-group-btn',
       postrender: function() {
         //apply `form-control` class to std inputs
         switch(this.directiveName) {
@@ -97,7 +100,69 @@ angular.module('xeditable').factory('editableThemes', function() {
         }
       }
     },
-    
+
+    //bs4
+    'bs4': {
+      formTpl:     '<form class="form-inline editable-wrap" role="form"></form>',
+      noformTpl:   '<span class="editable-wrap"></span>',
+      controlsTpl: '<div class="editable-controls form-group"></div>',
+      inputTpl:    '',
+      errorTpl:    '<div class="editable-error form-text invalid-feedback" data-ng-if="$error" data-ng-bind-html="$error"></div>',
+      buttonsTpl:  '<span class="editable-buttons"></span>',
+      submitTpl:   '<button type="submit" class="btn btn-primary"><span></span></button>',
+      cancelTpl:   '<button type="button" class="btn btn-secondary" ng-click="$form.$cancel()">'+
+                     '<span></span>'+
+                   '</button>',
+      resetTpl:    '<button type="reset" class="btn btn-danger">clear</button>',
+
+      //bs4 specific prop to change buttons class: btn-sm, btn-lg
+      buttonsClass: '',
+      //bs4 specific prop to change standard inputs class: form-control-sm, form-control-lg
+      inputClass: '',
+      calendarButtonClass: 'btn btn-secondary',
+      buttonGroupAppendClass: 'input-group-append',
+      postrender: function() {
+          //apply `form-control` class to std inputs
+          switch(this.directiveName) {
+              case 'editableText':
+              case 'editableSelect':
+              case 'editableTextarea':
+              case 'editableEmail':
+              case 'editableTel':
+              case 'editableNumber':
+              case 'editableUrl':
+              case 'editableSearch':
+              case 'editableDate':
+              case 'editableDatetime':
+              case 'editableBsdate':
+              case 'editableTime':
+              case 'editableMonth':
+              case 'editableWeek':
+              case 'editablePassword':
+              case 'editableDatetimeLocal':
+                  this.inputEl.addClass('form-control');
+                  this.inputEl.attr('ng-class', "{'is-invalid': $error}");
+                  if (this.theme.inputClass) {
+                      // don`t apply `form-control-sm` and `form-control-lg` to select multiple
+                      // should be fixed in bs itself!
+                      if(this.inputEl.attr('multiple') &&
+                          (this.theme.inputClass === 'form-control-sm' || this.theme.inputClass === 'form-control-lg')) {
+                          break;
+                      }
+                      this.inputEl.addClass(this.theme.inputClass);
+                  }
+                  break;
+              case 'editableCheckbox':
+                  this.editorEl.addClass('form-check');
+          }
+
+          //apply buttonsClass (bs4 specific!)
+          if(this.buttonsEl && this.theme.buttonsClass) {
+              this.buttonsEl.find('button').addClass(this.theme.buttonsClass);
+          }
+        }
+    },
+
     //semantic-ui
     'semantic': {
       formTpl:     '<form class="editable-wrap ui form" ng-class="{\'error\': $error}" role="form"></form>',

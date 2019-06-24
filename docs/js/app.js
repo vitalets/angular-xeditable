@@ -73,9 +73,9 @@ app.run(['$rootScope', '$httpBackend', 'editableOptions', 'editableThemes', func
   $httpBackend.whenPOST(/\/checkName/).respond(function(method, url, data) {
     data = angular.fromJson(data);
     if(data.value !== 'awesome') {
-      return [200, {status: 'error', msg: 'Username should be `awesome`'}]; 
+      return [200, {status: 'error', msg: 'Username should be `awesome`'}];
     } else {
-      return [200, {status: 'ok'}]; 
+      return [200, {status: 'ok'}];
     }
   });
 
@@ -83,9 +83,9 @@ app.run(['$rootScope', '$httpBackend', 'editableOptions', 'editableThemes', func
   $httpBackend.whenPOST(/\/updateUser/).respond(function(method, url, data) {
     data = angular.fromJson(data);
     if(data.name !== 'awesome') {
-      return [500, 'Server-side error: username should be `awesome`!']; 
+      return [500, 'Server-side error: username should be `awesome`!'];
     } else {
-      return [200, 'ok']; 
+      return [200, 'ok'];
     }
   });
 
@@ -93,9 +93,9 @@ app.run(['$rootScope', '$httpBackend', 'editableOptions', 'editableThemes', func
   $httpBackend.whenPOST(/\/saveUser/).respond(function(method, url, data) {
     data = angular.fromJson(data);
     if(data.name === 'error') {
-      return [500, {field: 'name', msg: 'Server-side error for this username!'}]; 
+      return [500, {field: 'name', msg: 'Server-side error for this username!'}];
     } else {
-      return [200, {status: 'ok'}]; 
+      return [200, {status: 'ok'}];
     }
   });
 
@@ -103,9 +103,9 @@ app.run(['$rootScope', '$httpBackend', 'editableOptions', 'editableThemes', func
   $httpBackend.whenPOST(/\/saveColumn/).respond(function(method, url, data) {
     data = angular.fromJson(data);
     if(data.column === 'name' && data.value !== 'awesome') {
-      return [500, 'Username should be `awesome`']; 
+      return [500, 'Username should be `awesome`'];
     } else {
-      return [200, {status: 'ok'}]; 
+      return [200, {status: 'ok'}];
     }
   });
 

@@ -1,5 +1,5 @@
 ol
-  li 
+  li
     :markdown
       Include [Angular.js](http://angularjs.org) in your project
 
@@ -9,15 +9,23 @@ ol
     :markdown
       Optionally include [Bootstrap](http://getbootstrap.com) CSS for theming
 
+    :markdown
+      Bootstrap 3
+
     pre.prettyprint
       = '<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">'
 
-  li 
-    span Install angular-xeditable via 
+    :markdown
+      Boostrap 4
+
+    pre.prettyprint
+      = '<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">'
+  li
+    span Install angular-xeditable via
     a(href="http://bower.io", target="_blank") bower
-    span  or  
-    a(href="zip/angular-xeditable-"+version+".zip") download latest zip    
-    pre.prettyprint bower install angular-xeditable 
+    span  or
+    a(href="zip/angular-xeditable-"+version+".zip") download latest zip
+    pre.prettyprint bower install angular-xeditable
 
 
   li Include angular-xeditable into your project
@@ -33,10 +41,10 @@ ol
   li Set theme in app.run:
     pre.prettyprint.
       app.run(['editableOptions', function(editableOptions) {
-        editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+        editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs4', 'bs2', 'default'
       }]);
 
-  li Markup element that should be editable 
+  li Markup element that should be editable
     pre.prettyprint(ng-non-bindable)
       = '<div ng-controller="Ctrl">\n'
       = '  <a href="#" editable-text="user.name">{{ user.name || "empty" }}</a>\n'
@@ -47,9 +55,9 @@ ol
       app.controller('Ctrl', function($scope) {
         $scope.user = {
           name: 'awesome user'
-        };  
+        };
       });
   li Enjoy!
-    div(style="padding-top: 5px")    
+    div(style="padding-top: 5px")
       a.btn.btn-success(href="starter", target="_blank") View starter template
       a.btn.btn-primary(href="zip/angular-xeditable-starter.zip", style="margin-left: 10px") Download starter zip

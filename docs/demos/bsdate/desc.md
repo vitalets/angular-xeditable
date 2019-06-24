@@ -1,8 +1,12 @@
 Date control is implemented via [Angular-ui bootstrap datepicker](http://angular-ui.github.io/bootstrap/#/datepicker).  
-You should include additional `ui-bootstrap-tpls.min.js`:
+You should include additional `ui-bootstrap-tpls.min.js` for Bootstrap 3:
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js"></script>
 
+For Bootstrap 4, include:
+
+	<script src="https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js"></script>
+	
 Add `ui.bootstrap` as module dependency:
 
 	var app = angular.module("app", ["xeditable", "ui.bootstrap"]);
