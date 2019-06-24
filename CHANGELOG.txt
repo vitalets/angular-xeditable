@@ -1,6 +1,12 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.10.0 Jun 24, 2019
+
+----------------------------
+[enh #747] Add Bootstrap 4 template (ckosloski)
+[enh #745] Allow users to disable checkboxes based on a condition (lohxx)
+
 Version 0.9.0 Jul 20, 2018
 
 ----------------------------

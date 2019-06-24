@@ -57,7 +57,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.9.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.9.0 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.10.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.10.0 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -184,16 +184,24 @@
           <section id="overview"></section>
           <h1>Overview</h1>
           <!-- jade cannot include dynamically--><p><strong>Angular-xeditable</strong> is a bundle of <a href="http://angularjs.org">AngularJS</a> directives that allows you to create
-<em>editable elements</em>.<br>Such technique is also known as <em>click-to-edit</em> or <em>edit-in-place</em>.<br>It is based on ideas of <a href="http://vitalets.github.io/x-editable">x-editable</a> but was written from scratch
+<em>editable elements</em>.
+Such technique is also known as <em>click-to-edit</em> or <em>edit-in-place</em>.
+It is based on ideas of <a href="http://vitalets.github.io/x-editable">x-editable</a> but was written from scratch
 to use power of angular and support complex forms / editable grids.</p>
 
-          <h4>Dependencies</h4><p>Basically it does not depend on any libraries except <a href="http://angularjs.org">AngularJS</a> itself.<br>For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.<br>For some extra controls (e.g. datepicker) you may need to include <a href="http://angular-ui.github.io/bootstrap/">angular-ui bootstrap</a>.<br>For ui-select you may need to include <a href="https://github.com/angular-ui/ui-select/">angular-ui ui-select</a>.<br>For ngTagsInput you may need to include <a href="https://github.com/mbenford/ngTagsInput">mbenford ngTagsInput</a>.<br>If installing via NPM, jQuery and moment js will also be installed.</p>
+          <h4>Dependencies</h4><p>Basically it does not depend on any libraries except <a href="http://angularjs.org">AngularJS</a> itself.
+For themes you may need to include <a href="http://getbootstrap.com">Twitter Bootstrap</a> CSS.
+For some extra controls (e.g. datepicker) you may need to include <a href="http://angular-ui.github.io/bootstrap/">angular-ui bootstrap</a> for Bootstrap 2/3.
+Include <a href="https://morgul.github.io/ui-bootstrap4/">ui-bootstrap4</a> for Bootstrap 4.
+For ui-select you may need to include <a href="https://github.com/angular-ui/ui-select/">angular-ui ui-select</a>.
+For ngTagsInput you may need to include <a href="https://github.com/mbenford/ngTagsInput">mbenford ngTagsInput</a>.
+If installing via NPM, jQuery and moment js will also be installed.</p>
 
           <h4>Controls & Features</h4>
           <table style="width: 50%; min-width: 200px">
             <tr>
               <td style="width: 50%; vertical-align: top"><ul>
-<li><a href="#text-simple">text</a>        </li>
+<li><a href="#text-simple">text</a></li>
 <li><a href="#textarea">textarea</a></li>
 <li><a href="#select-local">select</a></li>
 <li><a href="#checklist">checkbox</a></li>
@@ -201,7 +209,7 @@ to use power of angular and support complex forms / editable grids.</p>
 <li><a href="#bsdate">date</a></li>
 <li><a href="#bstime">time</a></li>
 <li><a href="#combodate">datetime</a></li>
-<li><a href="#html5-inputs">html5 inputs</a>        </li>
+<li><a href="#html5-inputs">html5 inputs</a></li>
 <li><a href="#typeahead">typeahead</a></li>
 <li><a href="#uiselect">ui-select</a></li>
 <li><a href="#ngtags">ngTagsInput</a></li>
@@ -223,14 +231,17 @@ to use power of angular and support complex forms / editable grids.</p>
           <h1>Get started</h1>
           <!-- jade cannot include dynamically-->
           <ol>
-            <li> <p>Include <a href="http://angularjs.org">Angular.js</a> in your project</p>
+            <li><p>Include <a href="http://angularjs.org">Angular.js</a> in your project</p>
 
               <pre class="prettyprint">&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js&quot;&gt;&lt;/script&gt;</pre><p>Optionally include <a href="http://getbootstrap.com">Bootstrap</a> CSS for theming</p>
+<p>Bootstrap 3</p>
 
-              <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
+              <pre class="prettyprint">&lt;link href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre><p>Boostrap 4</p>
+
+              <pre class="prettyprint">&lt;link href=&quot;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li> <span>Install angular-xeditable via </span><a href="http://bower.io" target="_blank">bower</a><span> or  </span><a href="zip/angular-xeditable-0.9.0.zip">download latest zip    </a>
-              <pre class="prettyprint">bower install angular-xeditable </pre>
+            <li><span>Install angular-xeditable via</span><a href="http://bower.io" target="_blank">bower</a><span> or</span><a href="zip/angular-xeditable-0.10.0.zip">download latest zip</a>
+              <pre class="prettyprint">bower install angular-xeditable</pre>
             </li>
             <li>Include angular-xeditable into your project
               <pre class="prettyprint">&lt;link href=&quot;bower_components/angular-xeditable/dist/css/xeditable.css&quot; rel=&quot;stylesheet&quot;&gt;
@@ -242,11 +253,11 @@ to use power of angular and support complex forms / editable grids.</p>
             </li>
             <li>Set theme in app.run:
               <pre class="prettyprint">app.run(['editableOptions', function(editableOptions) {
-  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs4', 'bs2', 'default'
 }]);
 </pre>
             </li>
-            <li>Markup element that should be editable 
+            <li>Markup element that should be editable
               <pre ng-non-bindable class="prettyprint">&lt;div ng-controller=&quot;Ctrl&quot;&gt;
   &lt;a href=&quot;#&quot; editable-text=&quot;user.name&quot;&gt;{{ user.name || &quot;empty&quot; }}&lt;/a&gt;
 &lt;/div&gt;</pre>
@@ -255,11 +266,11 @@ to use power of angular and support complex forms / editable grids.</p>
               <pre class="prettyprint">app.controller('Ctrl', function($scope) {
   $scope.user = {
     name: 'awesome user'
-  };  
+  };
 });</pre>
             </li>
             <li>Enjoy!
-              <div style="padding-top: 5px">   <a href="starter" target="_blank" class="btn btn-success">View starter template</a><a href="zip/angular-xeditable-starter.zip" style="margin-left: 10px" class="btn btn-primary">Download starter zip</a></div>
+              <div style="padding-top: 5px"><a href="starter" target="_blank" class="btn btn-success">View starter template</a><a href="zip/angular-xeditable-starter.zip" style="margin-left: 10px" class="btn btn-primary">Download starter zip</a></div>
             </li>
           </ol>
                     <section id="text-simple">
@@ -575,7 +586,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checkbox"]=v; }); });<
                       <!-- watch change of user to update rootScope for debugging-->
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="ChecklistCtrl">
-  <a href="#" editable-checklist="user.status" e-ng-options="s.value as s.text for s in statuses">
+  <a href="#" editable-checklist="user.status" e-ng-options="s.value as s.text for s in statuses" e-ng-disabled="disableCheckbox(s.value)">
     {{ showStatus() }}
   </a>
 </div></div>
@@ -584,6 +595,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checkbox"]=v; }); });<
 Also you should define <code>e-ng-options</code> attribute to set value and display items.
 Optionally define <code>e-checklist-comparator</code> to use a function to determine which checkboxes are actually checked.  </p>
 <p><strong>Please note</strong>, you should include <a href="http://vitalets.github.io/checklist-model">checklist-model directive</a> into your app: <code>var app = angular.module(&quot;app&quot;, [..., &quot;checklist-model&quot;]);</code>.    </p>
+<p>To disable a checkbox include the attribute <code>e-ng-disabled</code> and pass a condition.</p>
 <p>By default, checkboxes aligned <em>horizontally</em>. To align <em>vertically</em> just add following <strong>CSS</strong>:</p>
 <pre><code>.editable-checklist label {
   display: block;
@@ -593,17 +605,17 @@ Optionally define <code>e-checklist-comparator</code> to use a function to deter
                       <script>app.controller('ChecklistCtrl', function($scope, $filter) {
   $scope.user = {
     status: [2, 3]
-  }; 
+  };
 
   $scope.statuses = [
     {value: 1, text: 'status1'},
     {value: 2, text: 'status2'},
     {value: 3, text: 'status3'}
-  ]; 
+  ];
 
   $scope.showStatus = function() {
     var selected = [];
-    angular.forEach($scope.statuses, function(s) { 
+    angular.forEach($scope.statuses, function(s) {
       if ($scope.user.status.indexOf(s.value) >= 0) {
         selected.push(s.text);
       }
@@ -611,10 +623,17 @@ Optionally define <code>e-checklist-comparator</code> to use a function to deter
     return selected.length ? selected.join(', ') : 'Not set';
   };
 
+  $scope.disableCheckbox = function (v) {
+    if ($scope.user.status.indexOf(v) === -1) {
+      return true
+    }
+    return false;
+  }
+
 $scope.$watch("user", function(v) { $scope.$parent.debug["checklist"]=v; }); });</script>
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;ChecklistCtrl&quot;&gt;
-  &lt;a href=&quot;#&quot; editable-checklist=&quot;user.status&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot;&gt;
+  &lt;a href=&quot;#&quot; editable-checklist=&quot;user.status&quot; e-ng-options=&quot;s.value as s.text for s in statuses&quot; e-ng-disabled=&quot;disableCheckbox(s.value)&quot;&gt;
     {{ showStatus() }}
   &lt;/a&gt;
 &lt;/div&gt;</pre>
@@ -622,23 +641,30 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["checklist"]=v; }); });
                       <pre class="prettyprint">app.controller('ChecklistCtrl', function($scope, $filter) {
   $scope.user = {
     status: [2, 3]
-  }; 
+  };
 
   $scope.statuses = [
     {value: 1, text: 'status1'},
     {value: 2, text: 'status2'},
     {value: 3, text: 'status3'}
-  ]; 
+  ];
 
   $scope.showStatus = function() {
     var selected = [];
-    angular.forEach($scope.statuses, function(s) { 
+    angular.forEach($scope.statuses, function(s) {
       if ($scope.user.status.indexOf(s.value) &gt;= 0) {
         selected.push(s.text);
       }
     });
     return selected.length ? selected.join(', ') : 'Not set';
   };
+
+  $scope.disableCheckbox = function (v) {
+    if ($scope.user.status.indexOf(v) === -1) {
+      return true
+    }
+    return false;
+  }
 
 });</pre>
                     </section>
@@ -711,8 +737,10 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["radiolist"]=v; }); });
   </a>
 </div></div>
                       <pre>{{ debug["bsdate"] | json }}</pre>
-                      <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
+                      <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code> for Bootstrap 3:</p>
 <pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<p>For Bootstrap 4, include:</p>
+<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
 <p>And set <code>editable-bsdate</code> attribute in editable element.<br>To make the input field read-only and force the date to be selected from the popup, add the <code>e-readonly=&quot;true&quot;</code> attribute.<br>Add <code>e-ng-change</code> attribute to call a function when the value of the datepicker is changed.<br>To hide the calendar button and display the calendar popup on click of the input field, set the <code>e-show-calendar-button</code> attribute to false.<br>Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;</code>.</p>
@@ -834,31 +862,14 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["uidate"]=v; }); });</s
   </a>
 </div></div>
                       <pre>{{ debug["bstime"] | json }}</pre>
-                      <p><p>Time control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/timepicker">Angular-ui bootstrap timepicker</a>.<br><strong>Currently it has only Bootstrap 2 version</strong>, Bootstrap 3 version is <a href="https://github.com/angular-ui/bootstrap/issues?milestone=6">in progress</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
+                      <p><p>Time control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/timepicker">Angular-ui bootstrap timepicker</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>for Bootstrap 3:</p>
 <pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<p>For Bootstrap 4, include:</p>
+<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
 <p>And set <code>editable-bstime</code> attribute in editable element.
 Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-minute-step=&quot;10&quot;</code>.</p>
-<p>To get it working with <strong>Bootstrap 3</strong> you should add following css:</p>
-<pre><code>/* temporary workaround for display editable-bstime in bs3 - up/down symbols not shown */
-.editable-bstime .editable-input i.icon-chevron-up:before {
-  content: &#39;\e113&#39;;
-}
-.editable-bstime .editable-input i.icon-chevron-down:before {
-  content: &#39;\e114&#39;;
-}
-.editable-bstime .editable-input i.icon-chevron-up,
-.editable-bstime .editable-input i.icon-chevron-down {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: &#39;Glyphicons Halflings&#39;;
-  -webkit-font-smoothing: antialiased;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-}</code></pre>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('BstimeCtrl', function($scope) {
@@ -922,8 +933,10 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["combodate"]=v; }); });
   </a>
 </div></div>
                       <pre>{{ debug["typeahead"] | json }}</pre>
-                      <p><p>Typeahead control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/typeahead">Angular-ui bootstrap typeahead</a>.<br>Basically it is normal <code>editable-text</code> control with additional <code>e-typeahead</code> attributes.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>:</p>
+                      <p><p>Typeahead control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/typeahead">Angular-ui bootstrap typeahead</a>.<br>Basically it is normal <code>editable-text</code> control with additional <code>e-typeahead</code> attributes.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>for Bootstrap 3:</p>
 <pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
+<p>For Bootstrap 4, include:</p>
+<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js&quot;&gt;&lt;/script&gt;</pre>
 <p>Then add <code>ui.bootstrap</code> as module dependency:</p>
 <pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
 <p>And finally set <code>editable-text</code> attribute pointing to model and <code>e-uib-typeahead</code> attribute pointing to typeahead items.
@@ -2780,6 +2793,24 @@ Note that using <code>oncancel</code> hook allows you to revert all changes and 
   editableOptions.clearButtonAriaLabel = 'Clear';
 }]);
 </pre>
+          <section id="bootstrap4"></section>
+          <h2>Bootstrap 4</h2><p>Include <a href="http://getbootstrap.com">Bootstrap 4</a> CSS</p>
+
+          <pre class="prettyprint">&lt;link href=&quot;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre><p>Set theme in <code>app.run</code>:</p>
+
+          <pre class="prettyprint">app.run(['editableOptions', function(editableOptions) {
+  editableOptions.theme = 'bs4';
+}]);
+</pre><p>To have smaller or bigger controls modify <code>inputClass</code> and <code>buttonsClass</code> properties of theme:</p>
+
+          <pre class="prettyprint">app.run(['editableOptions', 'editableThemes', function(editableOptions, editableThemes) {
+  editableThemes.bs4.inputClass = 'form-control-sm';
+  editableThemes.bs4.buttonsClass = 'btn-sm';
+  editableOptions.theme = 'bs4';
+});
+</pre><p>Include <a href="https://fontawesome.com">font-awesome</a> CSS.  This is required for the button icons.</p>
+
+          <pre class="prettyprint">&lt;link href=&quot;https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
           <section id="bootstrap3"></section>
           <h2>Bootstrap 3</h2><p>Include <a href="http://getbootstrap.com">Bootstrap 3</a> CSS</p>
 
@@ -2806,7 +2837,8 @@ Note that using <code>oncancel</code> hook allows you to revert all changes and 
 }]);
 </pre>
           <section id="default"></section>
-          <h2>Default</h2><p>No additional CSS required.<br>You can customize theme in <code>app.run</code> by overwriting properties:</p>
+          <h2>Default</h2><p>No additional CSS required.
+You can customize theme in <code>app.run</code> by overwriting properties:</p>
 
           <pre class="prettyprint">app.run(['editableOptions', 'editableThemes', function(editableOptions, editableThemes)
   // set `default` theme
@@ -2819,11 +2851,11 @@ Note that using <code>oncancel</code> hook allows you to revert all changes and 
 <a href="https://github.com/vitalets/angular-xeditable/tree/master/src/js/themes.js">themes.js</a></p>
 <p>To change appearance of editable links you should overwrite CSS:</p>
 
-          <pre class="prettyprint">a.editable-click { 
+          <pre class="prettyprint">a.editable-click {
     color: green;
     border-bottom: dotted 2px green;
 }
-a.editable-click:hover { 
+a.editable-click:hover {
     color: #47a447;
     border-bottom-color: #47a447;
 }
@@ -3071,92 +3103,110 @@ editableOptions.theme = 'bs3';
                         <tr>
                           <td><code>activate</code></td>
                           <td>string</td>
-                          <td><p>How input elements get activated. Possible values: <code>focus|select|none</code>.<br>Default is <code>focus</code></p>
+                          <td><p>How input elements get activated. Possible values: <code>focus|select|none</code>.
+Default is <code>focus</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>activationEvent</code></td>
                           <td>string</td>
-                          <td><p>Event, on which the edit mode gets activated. 
-Can be any event.<br>Default is <code>click</code></p>
+                          <td><p>Event, on which the edit mode gets activated.
+Can be any event.
+Default is <code>click</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>blurElem</code></td>
                           <td>string</td>
-                          <td><p>Default value for <code>blur</code> attribute of single editable element.<br>Can be <code>cancel|submit|ignore</code>.<br>Default is <code>cancel</code></p>
+                          <td><p>Default value for <code>blur</code> attribute of single editable element.
+Can be <code>cancel|submit|ignore</code>.
+Default is <code>cancel</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>blurForm</code></td>
                           <td>string</td>
-                          <td><p>Default value for <code>blur</code> attribute of editable form.<br>Can be <code>cancel|submit|ignore</code>.<br>Default is <code>ignore</code>.</p>
+                          <td><p>Default value for <code>blur</code> attribute of editable form.
+Can be <code>cancel|submit|ignore</code>.
+Default is <code>ignore</code>.</p>
 </td>
                         </tr>
                         <tr>
                           <td><code>buttons</code></td>
                           <td>string</td>
-                          <td><p>Whether to show buttons for single editable element.<br>Possible values <code>right</code>, <code>no</code>.<br>Default is <code>right</code></p>
+                          <td><p>Whether to show buttons for single editable element.
+Possible values <code>right</code>, <code>no</code>.
+Default is <code>right</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>cancelButtonAriaLabel</code></td>
                           <td>string</td>
-                          <td><p>The default aria label of the cancel button.<br>Default is <code>Cancel</code></p>
+                          <td><p>The default aria label of the cancel button.
+Default is <code>Cancel</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>cancelButtonTitle</code></td>
                           <td>string</td>
-                          <td><p>The default title of the cancel button.<br>Default is <code>Cancel</code></p>
+                          <td><p>The default title of the cancel button.
+Default is <code>Cancel</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>clearButtonAriaLabel</code></td>
                           <td>string</td>
-                          <td><p>The default aria label of the clear button.<br>Default is <code>Clear</code></p>
+                          <td><p>The default aria label of the clear button.
+Default is <code>Clear</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>clearButtonTitle</code></td>
                           <td>string</td>
-                          <td><p>The default title of the clear button.<br>Default is <code>Clear</code></p>
+                          <td><p>The default title of the clear button.
+Default is <code>Clear</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>displayClearButton</code></td>
                           <td>boolean</td>
-                          <td><p>Whether to display the clear button.<br>Default is <code>false</code></p>
+                          <td><p>Whether to display the clear button.
+Default is <code>false</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>icon set</code></td>
                           <td>string</td>
-                          <td><p>icon_set. Possible values <code>font-awesome</code>, <code>default</code>.<br>Default is <code>default</code></p>
+                          <td><p>icon_set. Possible values <code>font-awesome</code>, <code>default</code>.
+Default is <code>default</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>isDisabled</code></td>
                           <td>boolean</td>
-                          <td><p>Whether to disable x-editable. Can be overloaded on each element.<br>Default is <code>false</code></p>
+                          <td><p>Whether to disable x-editable. Can be overloaded on each element.
+Default is <code>false</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>submitButtonAriaLabel</code></td>
                           <td>string</td>
-                          <td><p>The default aria label of the submit button.<br>Default is <code>Submit</code></p>
+                          <td><p>The default aria label of the submit button.
+Default is <code>Submit</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>submitButtonTitle</code></td>
                           <td>string</td>
-                          <td><p>The default title of the submit button.<br>Default is <code>Submit</code></p>
+                          <td><p>The default title of the submit button.
+Default is <code>Submit</code></p>
 </td>
                         </tr>
                         <tr>
                           <td><code>theme</code></td>
                           <td>string</td>
-                          <td><p>Theme. Possible values <code>bs3</code>, <code>bs2</code>, <code>default</code>.<br>Default is <code>default</code></p>
+                          <td><p>Theme. Possible values <code>bs4</code>, <code>bs3</code>, <code>bs2</code>, <code>default</code>.
+Default is <code>default</code></p>
 </td>
                         </tr>
                       </tbody>
