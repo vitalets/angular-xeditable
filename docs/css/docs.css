@@ -185,8 +185,16 @@ footer {
   line-height: 15px;
 }
 
+/* ui-bootstrap editable popover */
 .increase-popover-width {
   max-width: 400px;
+}
+
+/* ==== editable-text ==== */
+
+/* Add margin to right of label */
+.editable-text label {
+  margin-right: 5px;
 }
 
 @media screen and (max-width: 414px) {
@@ -197,7 +205,7 @@ footer {
   div#Html5InputsCtrl input[type=email], div#Html5InputsCtrl input[type=tel] {
     width: 137px;
   }
-  
+
   div#TextareaCtrl textarea {
     width: 179px;
   }
@@ -213,7 +221,7 @@ footer {
   div#EditableFormCtrl input {
     width: 118px;
   }
-    
+
   section#text-simple .fiddle, section#html5-inputs .fiddle, section#textarea .fiddle,
   section#text-btn .fiddle {
     margin: 19px 0 19px 0;
@@ -230,7 +238,7 @@ footer {
   div#TextSimpleCtrl input {
     width: 50px;
   }
-  
+
   div#Html5InputsCtrl input[type=email], div#Html5InputsCtrl input[type=tel] {
     width: 82px;
   }
@@ -254,7 +262,7 @@ footer {
   div#EditableFormCtrl input {
     width: 63px;
   }
-  
+
   form[name="editableForm"] select {
     width: 63px;
   }
