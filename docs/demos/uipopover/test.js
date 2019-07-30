@@ -29,11 +29,12 @@ it('should show editor and submit new value', function() {
   });
 
   it('should not save by cancel button', function() {
-    var s = '[ng-controller="UiPopoverCtrl"] ';
+    var s = '[ng-controller="UiPopoverCtrl"] ',
+        p = 'div.popover-content ';
     element(s+'a').click();
 
-    using(s).input('$parent.$data').enter('username2');
-    element(s+'form button[type="button"]').click();
+    using(p).input('$parent.$data').enter('username2');
+    element(p+'form button[type="button"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');
     expect(element(s+'a').text()).toMatch('awesome user');
@@ -56,8 +57,8 @@ it('should show editor and submit new value', function() {
     expect(element(p+'form button[type="submit"]:visible').count()).toBe(1);
     expect(element(p+'form button[type="button"]:visible').count()).toBe(1);
 
-    using(s).input('$parent.$data').enter('');
-    element(s+'form button[type="submit"]').click();
+    using(p).input('$parent.$data').enter('');
+    element(p+'form button[type="submit"]').click();
 
     expect(element(s+'a').css('display')).not().toBe('none');
     expect(element(s+'a').text()).toBe('empty');
@@ -68,7 +69,7 @@ it('should show editor and submit new value', function() {
   it('should cancel by click on body', function() {
     var s = '[ng-controller="UiPopoverCtrl"] ',
         p = 'div.popover-content ';
-    
+
     element(s+'a').click();
 
     expect(element(s+'a').css('display')).toBe('inline');
