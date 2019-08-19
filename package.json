@@ -7,7 +7,7 @@
     "name": "Vitaliy Potapov",
     "email": "noginsk@rambler.ru"
   },
-  "main": "dist/js/xeditable.js",
+  "main": "index.js",
   "style": "dist/css/xeditable.css",
   "repository": {
     "type": "git",
