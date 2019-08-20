@@ -1,13 +1,23 @@
 <div ng-controller="DevRadiolistCtrl">
-  <a href="#" class="normal" 
-              editable-radiolist="user.booleanstatus" 
+  <a href="#" class="normal"
+              editable-radiolist="user.booleanstatus"
               data-e-name="status"
               e-ng-options="s.value as s.text for s in ::bolleanstatuses track by s.value">
     {{ showBooleanStatus() }}
   </a>&nbsp;&nbsp;
 
-  <a href="#" class="nobuttons" editable-radiolist="user.booleanstatus" e-ng-options="s.value as s.text for s in ::bolleanstatuses track by s.value" buttons="no"
-     e-ng-change="doSomething($data)">
+  <a href="#" class="nobuttons"
+              editable-radiolist="user.booleanstatus"
+              e-ng-options="s.value as s.text for s in ::bolleanstatuses track by s.value"
+              buttons="no"
+              e-ng-change="doSomething($data)">
     {{ showBooleanStatus() }}
+  </a>&nbsp;&nbsp;
+
+  <a href="#" class="string"
+                  editable-radiolist="user.stringStatus"
+                  data-e-name="status3"
+                  e-ng-options="s.value as s.text for s in ::stringStatuses track by s.value">
+    {{ showStringStatus() }}
   </a>
-</div>  
+</div>

@@ -14,7 +14,7 @@ describe('dev-radiolist', function() {
     expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
     expect(element(s+'form input[type="radio"]:visible:enabled').count()).toBe(2);
     expect(element(s+'form input[type="radio"]').attr('name')).toBeDefined();
-      
+
     expect(using(s+'label:eq(0)').input('$parent.$parent.$data').val()).toBe('true');
     expect(using(s+'label:eq(1)').input('$parent.$parent.$data').val()).toBe('false');
 
@@ -50,4 +50,26 @@ describe('dev-radiolist', function() {
     expect(element(s+'form').count()).toBe(0);
   });
 
+  it('should show radio options with string values and submit new value', function() {
+    var s = '[ng-controller="DevRadiolistCtrl"] ';
+
+    expect(element(s+'a.string ').text()).toMatch('status1');
+    element(s+'a.string ').click();
+
+    expect(element(s+'a.string ').css('display')).toBe('none');
+    expect(element(s+'form[editable-form="$form"]').count()).toBe(1);
+    expect(element(s+'form input[type="radio"]:visible:enabled').count()).toBe(2);
+    expect(element(s+'form input[type="radio"]').attr('name')).toBeDefined();
+
+    expect(using(s+'label:eq(0)').input('$parent.$parent.$data').val()).toBe('s1');
+    expect(using(s+'label:eq(1)').input('$parent.$parent.$data').val()).toBe('s2');
+
+    // select status2
+    using(s+'label:eq(1)').input('$parent.$parent.$data').select('s2');
+    element(s+'form button[type="submit"]').click();
+
+    expect(element(s+'a.string ').css('display')).not().toBe('none');
+    expect(element(s+'a.string ').text()).toMatch('status2');
+    expect(element(s+'form').count()).toBe(0);
+  });
 });
