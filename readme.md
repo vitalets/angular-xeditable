@@ -25,10 +25,17 @@ npm install angular-xeditable
 ````
 #### Manual
 Download latest version from [project homepage](https://vitalets.github.io/angular-xeditable).
+
 #### Insert dependency 
 ````
 var app = angular.module("app", ["xeditable"]);
 ````
+#### Usage with a Asset/Module Bundler
+```js
+import angularXeditable from 'angular-xeditable';
+
+angular.module('app', [angularXeditable]);
+```
 
 ## Dependencies
 Basically it does not depend on any libraries except [AngularJS](http://angularjs.org) itself.    
