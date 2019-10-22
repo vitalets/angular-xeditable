@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.10.0
+angular-xeditable - 0.10.1
 Edit-in-place for angular.js
-Build date: 2019-06-24 
+Build date: 2019-10-22 
 */
 /**
  * Angular-xeditable module
@@ -577,21 +577,23 @@ angular.module('xeditable').directive('editableRadiolist', [
         this.parent.render.call(this);
         var parsed = editableNgOptionsParser(this.attrs.eNgOptions),
             ngChangeHtml = '',
-            ngNameHtml = '';
+            ngNameHtml = '',
+            ngValueFn = isNaN(parsed.locals.valueFn) ? "'" + parsed.locals.valueFn + "'" : parsed.locals.valueFn,
+            ngDisabled = this.attrs.eNgDisabled ? this.attrs.eNgDisabled : false;
 
         if (this.attrs.eNgChange) {
           ngChangeHtml = ' ng-change="' +  this.attrs.eNgChange + '"';
         }
-        
+
         if (this.attrs.eName) {
             ngNameHtml = ' name="' +  this.attrs.eName + '"';
         }
-          
+
         var html = '<label data-ng-repeat="'+parsed.ngRepeat+'">'+
           '<input type="radio" data-ng-disabled="::' +
-            this.attrs.eNgDisabled +
+            ngDisabled +
             '" data-ng-model="$parent.$parent.$data" data-ng-value="' + $interpolate.startSymbol() +
-            '::' + parsed.locals.valueFn + $interpolate.endSymbol() +'"' +
+            '::' + ngValueFn + $interpolate.endSymbol() +'"' +
             ngChangeHtml + ngNameHtml + '>'+
           '<span data-ng-bind="::'+parsed.locals.displayFn+'"></span></label>';
 
@@ -755,7 +757,7 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
         return dir;
     }]);
 /**
- * EditableController class. 
+ * EditableController class.
  * Attached to element with `editable-xxx` directive.
  *
  * @namespace editable-element
@@ -763,536 +765,545 @@ angular.module('xeditable').directive('editableUiSelect',['editableDirectiveFact
 /*
 TODO: this file should be refactored to work more clear without closures!
 */
-angular.module('xeditable').factory('editableController', 
+angular.module('xeditable').factory('editableController',
   ['$q', 'editableUtils',
-  function($q, editableUtils) {
+    function ($q, editableUtils) {
 
-  //EditableController function
-  EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q', '$sce', '$templateCache'];
-  function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q, $sce, $templateCache) {
-    var valueGetter;
+      //EditableController function
+      EditableController.$inject = ['$scope', '$attrs', '$element', '$parse', 'editableThemes', 'editableIcons', 'editableOptions', '$rootScope', '$compile', '$q', '$sce', '$templateCache'];
+      function EditableController($scope, $attrs, $element, $parse, editableThemes, editableIcons, editableOptions, $rootScope, $compile, $q, $sce, $templateCache) {
+        var valueGetter;
 
-    //if control is disabled - it does not participate in waiting process
-    var inWaiting;
+        //if control is disabled - it does not participate in waiting process
+        var inWaiting;
 
-    var self = this;
+        var self = this;
 
-    self.scope = $scope;
-    self.elem = $element;
-    self.attrs = $attrs;
-    self.inputEl = null;
-    self.editorEl = null;
-    self.single = true;
-    self.error = '';
-    self.theme =  editableThemes[$attrs.editableTheme] || editableThemes[editableOptions.theme] || editableThemes['default'];
-    self.parent = {};
+        self.scope = $scope;
+        self.elem = $element;
+        self.attrs = $attrs;
+        self.inputEl = null;
+        self.editorEl = null;
+        self.single = true;
+        self.error = '';
+        self.theme = editableThemes[$attrs.editableTheme] || editableThemes[editableOptions.theme] || editableThemes['default'];
+        self.parent = {};
 
-    //will be undefined if icon_set is default and theme is default
-    var theme_name = $attrs.editableTheme || editableOptions.theme || 'default';
-    // The theme_name will not be correct if the theme set in options is unavailable
-    // However, in that case an undefined icon_set is not that bad...
-    var icon_set_option = $attrs.editableIconSet || editableOptions.icon_set;
-    self.icon_set = icon_set_option === 'default' ? editableIcons.default[theme_name] : editableIcons.external[icon_set_option];
+        //will be undefined if icon_set is default and theme is default
+        var theme_name = $attrs.editableTheme || editableOptions.theme || 'default';
+        // The theme_name will not be correct if the theme set in options is unavailable
+        // However, in that case an undefined icon_set is not that bad...
+        var icon_set_option = $attrs.editableIconSet || editableOptions.icon_set;
+        self.icon_set = icon_set_option === 'default' ? editableIcons.default[theme_name] : editableIcons.external[icon_set_option];
 
-    //to be overwritten by directive
-    self.inputTpl = '';
-    self.directiveName = '';
+        //to be overwritten by directive
+        self.inputTpl = '';
+        self.directiveName = '';
 
-    // with majority of controls copy is not needed, but..
-    // copy MUST NOT be used for `select-multiple` with objects as items
-    // copy MUST be used for `checklist`
-    self.useCopy = false;
+        // with majority of controls copy is not needed, but..
+        // copy MUST NOT be used for `select-multiple` with objects as items
+        // copy MUST be used for `checklist`
+        self.useCopy = false;
 
-    //runtime (defaults)
-    self.single = null;
+        //runtime (defaults)
+        self.single = null;
 
-    /**
-     * Attributes defined with `e-*` prefix automatically transferred from original element to
-     * control.  
-     * For example, if you set `<span editable-text="user.name" e-style="width: 100px"`>
-     * then input will appear as `<input style="width: 100px">`.  
-     * See [demo](#text-customize).
-     * 
-     * @var {any|attribute} e-*
-     * @memberOf editable-element
-     */ 
+        /**
+         * Attributes defined with `e-*` prefix automatically transferred from original element to
+         * control.
+         * For example, if you set `<span editable-text="user.name" e-style="width: 100px"`>
+         * then input will appear as `<input style="width: 100px">`.
+         * See [demo](#text-customize).
+         *
+         * @var {any|attribute} e-*
+         * @memberOf editable-element
+         */
 
-    /**
-     * Whether to show ok/cancel buttons. Values: `right|no`.
-     * If set to `no` control automatically submitted when value changed.  
-     * If control is part of form buttons will never be shown. 
-     * 
-     * @var {string|attribute} buttons
-     * @memberOf editable-element
-     */    
-    self.buttons = 'right';
-    
-    /**
-     * Whether to show the editable element in a ui-bootstrap popover. Values: `true|false`.
-     *
-     * @var {boolean|attribute} popover
-     * @memberOf editable-element
-     */
-    self.popover = false;
-      
-    /**
-     * Action when control losses focus. Values: `cancel|submit|ignore`.
-     * Has sense only for single editable element.
-     * Otherwise, if control is part of form - you should set `blur` of form, not of individual element.
-     * 
-     * @var {string|attribute} blur
-     * @memberOf editable-element
-     */     
-    // no real `blur` property as it is transferred to editable form
+        /**
+         * Whether to show ok/cancel buttons. Values: `right|no`.
+         * If set to `no` control automatically submitted when value changed.
+         * If control is part of form buttons will never be shown.
+         *
+         * @var {string|attribute} buttons
+         * @memberOf editable-element
+         */
+        self.buttons = 'right';
 
-    //init
-    self.init = function(single) {
-      self.single = single;
+        /**
+         * Whether to show the editable element in a ui-bootstrap popover. Values: `true|false`.
+         *
+         * @var {boolean|attribute} popover
+         * @memberOf editable-element
+         */
+        self.popover = false;
 
-      self.name = $attrs.eName || $attrs[self.directiveName];
-      /*
-      if(!$attrs[directiveName] && !$attrs.eNgModel && ($attrs.eValue === undefined)) {
-        throw 'You should provide value for `'+directiveName+'` or `e-value` in editable element!';
-      }
-      */
-      if($attrs[self.directiveName]) {
-        valueGetter = $parse($attrs[self.directiveName]);
-      } else {
-        throw 'You should provide value for `'+self.directiveName+'` in editable element!';
-      }
+        /**
+         * Action when control losses focus. Values: `cancel|submit|ignore`.
+         * Has sense only for single editable element.
+         * Otherwise, if control is part of form - you should set `blur` of form, not of individual element.
+         *
+         * @var {string|attribute} blur
+         * @memberOf editable-element
+         */
+        // no real `blur` property as it is transferred to editable form
 
-      // settings for single and non-single
-      if (!self.single) {
-        // hide buttons for non-single
-        self.buttons = 'no';
-      } else {
-        self.buttons = self.attrs.buttons || editableOptions.buttons;
-      }
 
-      //if name defined --> watch changes and update $data in form
-      if($attrs.eName) {
-        self.scope.$watch('$data', function(newVal){
-          self.scope.$form.$data[$attrs.eName] = newVal;
-        });
-      }
+        /**
+         * Listen to Mouse Down event instead of click: `true|false`.
+         * Has sense only for single editable element.
+         *
+         * @var {string|attribute} usemousedown
+         * @memberOf editable-element
+         */
 
-      /**
-       * Called when control is shown.  
-       * See [demo](#select-remote).
-       * 
-       * @var {method|attribute} onshow
-       * @memberOf editable-element
-       */
-      if($attrs.onshow) {
-        self.onshow = function() {
-          return self.catchError($parse($attrs.onshow)($scope));
-        };
-      }
+        //init
+        self.init = function (single) {
+          self.single = single;
 
-      /**
-       * Called when control is hidden after both save or cancel.  
-       * 
-       * @var {method|attribute} onhide
-       * @memberOf editable-element
-       */
-      if ($attrs.onhide) {
-        self.onhide = function() {
-          return $parse($attrs.onhide)($scope);
-        };
-      }
-
-      /**
-       * Called when control is cancelled.  
-       * 
-       * @var {method|attribute} oncancel
-       * @memberOf editable-element
-       */
-      if ($attrs.oncancel) {
-        self.oncancel = function() {
-          return $parse($attrs.oncancel)($scope);
-        };
-      }          
-
-      /**
-       * Called during submit before value is saved to model.  
-       * See [demo](#onbeforesave).
-       * 
-       * @var {method|attribute} onbeforesave
-       * @memberOf editable-element
-       */
-      if ($attrs.onbeforesave) {
-        self.onbeforesave = function() {
-          return self.catchError($parse($attrs.onbeforesave)($scope));
-        };
-      }
-
-      /**
-       * Called during submit after value is saved to model.  
-       * See [demo](#onaftersave).
-       * 
-       * @var {method|attribute} onaftersave
-       * @memberOf editable-element
-       */
-      if ($attrs.onaftersave) {
-        self.onaftersave = function() {
-          return self.catchError($parse($attrs.onaftersave)($scope));
-        };
-      }
-
-      if ($attrs.popover) {
-        self.popover = self.attrs.popover;
-      }
-        
-      // watch change of model to update editable element
-      // now only add/remove `editable-empty` class.
-      // Initially this method called with newVal = undefined, oldVal = undefined
-      // so no need initially call handleEmpty() explicitly
-      $scope.$parent.$watch($attrs[self.directiveName], function(newVal, oldVal) {
-        self.setLocalValue();
-        self.handleEmpty();
-      });
-    };
-
-    self.render = function() {
-      var theme = self.theme;
-
-      //build input
-      self.inputEl = angular.element(self.inputTpl);
-
-      //build controls
-      self.controlsEl = angular.element(theme.controlsTpl);
-      self.controlsEl.append(self.inputEl);
-
-      //build buttons
-      if(self.buttons !== 'no') {
-        self.buttonsEl = angular.element(theme.buttonsTpl);
-        self.submitEl = angular.element(theme.submitTpl);
-        self.resetEl = angular.element(theme.resetTpl);
-        self.cancelEl = angular.element(theme.cancelTpl);
-        self.submitEl.attr('title', editableOptions.submitButtonTitle);
-        self.submitEl.attr('aria-label', editableOptions.submitButtonAriaLabel);
-        self.cancelEl.attr('title', editableOptions.cancelButtonTitle);
-        self.cancelEl.attr('aria-label', editableOptions.cancelButtonAriaLabel);
-        self.resetEl.attr('title', editableOptions.clearButtonTitle);
-        self.resetEl.attr('aria-label', editableOptions.clearButtonAriaLabel);
-
-        if (self.icon_set) {
-          self.submitEl.find('span').addClass(self.icon_set.ok);
-          self.cancelEl.find('span').addClass(self.icon_set.cancel);
-          self.resetEl.find('span').addClass(self.icon_set.clear);
-        }
-
-        self.buttonsEl.append(self.submitEl).append(self.cancelEl);
-
-        if (editableOptions.displayClearButton) {
-          self.buttonsEl.append(self.resetEl);
-        }
-
-        self.controlsEl.append(self.buttonsEl);
-        
-        self.inputEl.addClass('editable-has-buttons');
-      }
-
-      //build error
-      self.errorEl = angular.element(theme.errorTpl);
-      self.controlsEl.append(self.errorEl);
-
-      //build editor
-      self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
-      self.editorEl.append(self.controlsEl);
-
-      // transfer `e-*|data-e-*|x-e-*` attributes
-      for (var k in $attrs.$attr) {
-        if(k.length <= 1) {
-          continue;
-        }
-        var transferAttr = false;
-        var nextLetter = k.substring(1, 2);
-
-        // if starts with `e` + uppercase letter
-        if (k.substring(0, 1) === 'e' && nextLetter === nextLetter.toUpperCase()) {
-          transferAttr = k.substring(1); // cut `e`
-        } else {
-          continue;
-        }
-        
-        // exclude `form` and `ng-submit`, 
-        if (transferAttr === 'Form' || transferAttr === 'NgSubmit') {
-          continue;
-        }
-
-        var firstLetter = transferAttr.substring(0, 1);
-        var secondLetter = transferAttr.substring(1, 2);
-
-        // convert back to lowercase style
-        if (secondLetter === secondLetter.toUpperCase() &&
-            firstLetter === firstLetter.toUpperCase()) {
-          transferAttr = firstLetter.toLowerCase() + '-' + editableUtils.camelToDash(transferAttr.substring(1));
-        } else {
-          transferAttr = firstLetter.toLowerCase() + editableUtils.camelToDash(transferAttr.substring(1));
-        }
-
-        // workaround for attributes without value (e.g. `multiple = "multiple"`)
-        // except for 'e-value'
-        var attrValue = (transferAttr !== 'value' && $attrs[k] === '') ? transferAttr : $attrs[k];
-
-        // set attributes to input
-        self.inputEl.attr(transferAttr, attrValue);
-      }
-
-      self.inputEl.addClass('editable-input');
-      self.inputEl.attr('ng-model', '$parent.$data');
-
-      // add directiveName class to editor, e.g. `editable-text`
-      self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
-
-      if (self.single) {
-        self.editorEl.attr('editable-form', '$form');
-        // transfer `blur` to form
-        self.editorEl.attr('blur', self.attrs.blur || editableOptions.blurElem);
-      }
-
-      if (self.popover) {
-        var wrapper = angular.element('<div></div>');
-        wrapper.append(self.editorEl);
-        self.editorEl = wrapper;
-        $templateCache.put('popover.html', self.editorEl[0].outerHTML);
-      }
-        
-      //apply `postrender` method of theme
-      if (angular.isFunction(theme.postrender)) {
-        theme.postrender.call(self);
-      }
-
-    };
-
-    // with majority of controls copy is not needed, but..
-    // copy MUST NOT be used for `select-multiple` with objects as items
-    // copy MUST be used for `checklist`
-    self.setLocalValue = function() {
-      self.scope.$data = self.useCopy ? 
-        angular.copy(valueGetter($scope.$parent)) : 
-        valueGetter($scope.$parent);
-    };
-
-    // reference of the scope to use for $compile
-    var newScope = null;
-    //show
-    self.show = function() {
-      // set value of scope.$data
-      self.setLocalValue();
-
-      /*
-      Originally render() was inside init() method, but some directives polluting editorEl,
-      so it is broken on second opening.
-      Cloning is not a solution as jqLite can not clone with event handler's.
-      */
-      self.render();
-
-      // insert into DOM
-      $element.after(self.editorEl);
-
-      // compile (needed to attach ng-* events from markup)
-      newScope = $scope.$new();
-      $compile(self.editorEl)(newScope);
-
-      // attach listeners (`escape`, autosubmit, etc)
-      self.addListeners();
-
-      // hide element
-      $element.addClass('editable-hide');
-
-      // onshow
-      return self.onshow();
-    };
-
-    //hide
-    self.hide = function() {
-
-      // destroy the scope to prevent memory leak
-      newScope.$destroy();
-
-      self.controlsEl.remove();
-      self.editorEl.remove();
-      $element.removeClass('editable-hide');
-
-      if (self.popover) {
-        $templateCache.remove('popover.html');
-      }
-      
-      // onhide
-      return self.onhide();
-    };
-
-    // cancel
-    self.cancel = function() {
-      // oncancel
-      self.oncancel();
-      // don't call hide() here as it called in form's code
-    };
-
-    /*
-    Called after show to attach listeners
-    */
-    self.addListeners = function() {
-      // bind keyup for `escape`
-      self.inputEl.bind('keyup', function(e) {
-          if(!self.single) {
-            return;
+          self.name = $attrs.eName || $attrs[self.directiveName];
+          /*
+          if(!$attrs[directiveName] && !$attrs.eNgModel && ($attrs.eValue === undefined)) {
+            throw 'You should provide value for `'+directiveName+'` or `e-value` in editable element!';
+          }
+          */
+          if ($attrs[self.directiveName]) {
+            valueGetter = $parse($attrs[self.directiveName]);
+          } else {
+            throw 'You should provide value for `' + self.directiveName + '` in editable element!';
           }
 
-          // todo: move this to editable-form!
-          switch(e.keyCode) {
-            // hide on `escape` press
-            case 27:
-              self.scope.$apply(function() {
-                self.scope.$form.$cancel();
-              });
-            break;
+          // settings for single and non-single
+          if (!self.single) {
+            // hide buttons for non-single
+            self.buttons = 'no';
+          } else {
+            self.buttons = self.attrs.buttons || editableOptions.buttons;
           }
-      });
 
-      // autosubmit when `no buttons`
-      if (self.single && self.buttons === 'no') {
-        self.autosubmit();
-      }
-
-      // click - mark element as clicked to exclude in document click handler
-      self.editorEl.bind('click', function(e) {
-        // ignore right/middle button click
-        if (e.which && e.which !== 1) {
-          return;
-        }
-
-        if (self.scope.$form.$visible) {
-          self.scope.$form._clicked = true;
-        }
-      });
-    };
-
-    // setWaiting
-    self.setWaiting = function(value) {
-      if (value) {
-        // participate in waiting only if not disabled
-        inWaiting = !self.inputEl.attr('disabled') &&
-                    !self.inputEl.attr('ng-disabled') &&
-                    !self.inputEl.attr('ng-enabled');
-        if (inWaiting) {
-          self.inputEl.attr('disabled', 'disabled');
-          if(self.buttonsEl) {
-            self.buttonsEl.find('button').attr('disabled', 'disabled');
+          //if name defined --> watch changes and update $data in form
+          if ($attrs.eName) {
+            self.scope.$watch('$data', function (newVal) {
+              self.scope.$form.$data[$attrs.eName] = newVal;
+            });
           }
-        }
-      } else {
-        if (inWaiting) {
-          self.inputEl.removeAttr('disabled');
-          if (self.buttonsEl) {
-            self.buttonsEl.find('button').removeAttr('disabled');
-          }
-        }
-      }
-    };
 
-    self.activate = function(start, end) {
-      setTimeout(function() {
-        var el = self.inputEl[0];
-
-        if (editableOptions.activate === 'focus' && el.focus) {
-          if (start !== undefined && start !== "" && el.setSelectionRange) {
-            end = end || start;
-            el.onfocus = function() {
-              setTimeout(function() {
-                try {
-                  this.setSelectionRange(start,end);
-                } catch(e) {
-                  //do nothing, this input doesn't support setSelectionRange
-                }
-              }.bind(this));
+          /**
+           * Called when control is shown.
+           * See [demo](#select-remote).
+           *
+           * @var {method|attribute} onshow
+           * @memberOf editable-element
+           */
+          if ($attrs.onshow) {
+            self.onshow = function () {
+              return self.catchError($parse($attrs.onshow)($scope));
             };
           }
-          
-          if (self.directiveName == 'editableRadiolist' || self.directiveName == 'editableChecklist' ||
-              self.directiveName == 'editableBsdate' || self.directiveName == 'editableTagsInput') {
-            //Set focus to first pristine element in the list
-            el.querySelector('.ng-pristine').focus();
+
+          /**
+           * Called when control is hidden after both save or cancel.
+           *
+           * @var {method|attribute} onhide
+           * @memberOf editable-element
+           */
+          if ($attrs.onhide) {
+            self.onhide = function () {
+              return $parse($attrs.onhide)($scope);
+            };
+          }
+
+          /**
+           * Called when control is cancelled.
+           *
+           * @var {method|attribute} oncancel
+           * @memberOf editable-element
+           */
+          if ($attrs.oncancel) {
+            self.oncancel = function () {
+              return $parse($attrs.oncancel)($scope);
+            };
+          }
+
+          /**
+           * Called during submit before value is saved to model.
+           * See [demo](#onbeforesave).
+           *
+           * @var {method|attribute} onbeforesave
+           * @memberOf editable-element
+           */
+          if ($attrs.onbeforesave) {
+            self.onbeforesave = function () {
+              return self.catchError($parse($attrs.onbeforesave)($scope));
+            };
+          }
+
+          /**
+           * Called during submit after value is saved to model.
+           * See [demo](#onaftersave).
+           *
+           * @var {method|attribute} onaftersave
+           * @memberOf editable-element
+           */
+          if ($attrs.onaftersave) {
+            self.onaftersave = function () {
+              return self.catchError($parse($attrs.onaftersave)($scope));
+            };
+          }
+
+          if ($attrs.popover) {
+            self.popover = self.attrs.popover;
+          }
+
+          // watch change of model to update editable element
+          // now only add/remove `editable-empty` class.
+          // Initially this method called with newVal = undefined, oldVal = undefined
+          // so no need initially call handleEmpty() explicitly
+          $scope.$parent.$watch($attrs[self.directiveName], function (newVal, oldVal) {
+            self.setLocalValue();
+            self.handleEmpty();
+          });
+        };
+
+        self.render = function () {
+          var theme = self.theme;
+
+          //build input
+          self.inputEl = angular.element(self.inputTpl);
+
+          //build controls
+          self.controlsEl = angular.element(theme.controlsTpl);
+          self.controlsEl.append(self.inputEl);
+
+          //build buttons
+          if (self.buttons !== 'no') {
+            self.buttonsEl = angular.element(theme.buttonsTpl);
+            self.submitEl = angular.element(theme.submitTpl);
+            self.resetEl = angular.element(theme.resetTpl);
+            self.cancelEl = angular.element(theme.cancelTpl);
+            self.submitEl.attr('title', editableOptions.submitButtonTitle);
+            self.submitEl.attr('aria-label', editableOptions.submitButtonAriaLabel);
+            self.cancelEl.attr('title', editableOptions.cancelButtonTitle);
+            self.cancelEl.attr('aria-label', editableOptions.cancelButtonAriaLabel);
+            self.resetEl.attr('title', editableOptions.clearButtonTitle);
+            self.resetEl.attr('aria-label', editableOptions.clearButtonAriaLabel);
+
+            if (self.icon_set) {
+              self.submitEl.find('span').addClass(self.icon_set.ok);
+              self.cancelEl.find('span').addClass(self.icon_set.cancel);
+              self.resetEl.find('span').addClass(self.icon_set.clear);
+            }
+
+            self.buttonsEl.append(self.submitEl).append(self.cancelEl);
+
+            if (editableOptions.displayClearButton) {
+              self.buttonsEl.append(self.resetEl);
+            }
+
+            self.controlsEl.append(self.buttonsEl);
+
+            self.inputEl.addClass('editable-has-buttons');
+          }
+
+          //build error
+          self.errorEl = angular.element(theme.errorTpl);
+          self.controlsEl.append(self.errorEl);
+
+          //build editor
+          self.editorEl = angular.element(self.single ? theme.formTpl : theme.noformTpl);
+          self.editorEl.append(self.controlsEl);
+
+          // transfer `e-*|data-e-*|x-e-*` attributes
+          for (var k in $attrs.$attr) {
+            if (k.length <= 1) {
+              continue;
+            }
+            var transferAttr = false;
+            var nextLetter = k.substring(1, 2);
+
+            // if starts with `e` + uppercase letter
+            if (k.substring(0, 1) === 'e' && nextLetter === nextLetter.toUpperCase()) {
+              transferAttr = k.substring(1); // cut `e`
+            } else {
+              continue;
+            }
+
+            // exclude `form` and `ng-submit`,
+            if (transferAttr === 'Form' || transferAttr === 'NgSubmit') {
+              continue;
+            }
+
+            var firstLetter = transferAttr.substring(0, 1);
+            var secondLetter = transferAttr.substring(1, 2);
+
+            // convert back to lowercase style
+            if (secondLetter === secondLetter.toUpperCase() &&
+              firstLetter === firstLetter.toUpperCase()) {
+              transferAttr = firstLetter.toLowerCase() + '-' + editableUtils.camelToDash(transferAttr.substring(1));
+            } else {
+              transferAttr = firstLetter.toLowerCase() + editableUtils.camelToDash(transferAttr.substring(1));
+            }
+
+            // workaround for attributes without value (e.g. `multiple = "multiple"`)
+            // except for 'e-value'
+            var attrValue = (transferAttr !== 'value' && $attrs[k] === '') ? transferAttr : $attrs[k];
+
+            // set attributes to input
+            self.inputEl.attr(transferAttr, attrValue);
+          }
+
+          self.inputEl.addClass('editable-input');
+          self.inputEl.attr('ng-model', '$parent.$data');
+
+          // add directiveName class to editor, e.g. `editable-text`
+          self.editorEl.addClass(editableUtils.camelToDash(self.directiveName));
+
+          if (self.single) {
+            self.editorEl.attr('editable-form', '$form');
+            // transfer `blur` to form
+            self.editorEl.attr('blur', self.attrs.blur || editableOptions.blurElem);
+          }
+
+          //apply `postrender` method of theme
+          if (angular.isFunction(theme.postrender)) {
+            theme.postrender.call(self);
+          }
+
+        };
+
+        // with majority of controls copy is not needed, but..
+        // copy MUST NOT be used for `select-multiple` with objects as items
+        // copy MUST be used for `checklist`
+        self.setLocalValue = function () {
+          self.scope.$data = self.useCopy ?
+            angular.copy(valueGetter($scope.$parent)) :
+            valueGetter($scope.$parent);
+        };
+
+        // reference of the scope to use for $compile
+        var newScope = null;
+        //show
+        self.show = function () {
+          // set value of scope.$data
+          self.setLocalValue();
+
+          /*
+          Originally render() was inside init() method, but some directives polluting editorEl,
+          so it is broken on second opening.
+          Cloning is not a solution as jqLite can not clone with event handler's.
+          */
+          self.render();
+
+          // insert into DOM
+          $element.after(self.editorEl);
+
+          // compile (needed to attach ng-* events from markup)
+          newScope = $scope.$new();
+          $compile(self.editorEl)(newScope);
+
+          // attach listeners (`escape`, autosubmit, etc)
+          self.addListeners();
+
+          // hide element
+          $element.addClass('editable-hide');
+
+          if (self.popover) {
+            var wrapper = angular.element('<div></div>');
+            wrapper.append(self.editorEl);
+            self.editorEl = wrapper;
+            $templateCache.put('popover.html', self.editorEl[0].outerHTML);
+          }
+
+          // onshow
+          return self.onshow();
+        };
+
+        //hide
+        self.hide = function () {
+
+          // destroy the scope to prevent memory leak
+          newScope.$destroy();
+
+          self.controlsEl.remove();
+          self.editorEl.remove();
+          $element.removeClass('editable-hide');
+
+          if (self.popover) {
+            $templateCache.remove('popover.html');
+          }
+
+          // onhide
+          return self.onhide();
+        };
+
+        // cancel
+        self.cancel = function () {
+          // oncancel
+          self.oncancel();
+          // don't call hide() here as it called in form's code
+        };
+
+        /*
+        Called after show to attach listeners
+        */
+        self.addListeners = function () {
+          // bind keyup for `escape`
+          self.inputEl.bind('keyup', function (e) {
+            if (!self.single) {
+              return;
+            }
+
+            // todo: move this to editable-form!
+            switch (e.keyCode) {
+              // hide on `escape` press
+              case 27:
+                self.scope.$apply(function () {
+                  self.scope.$form.$cancel();
+                });
+                break;
+            }
+          });
+
+          // autosubmit when `no buttons`
+          if (self.single && self.buttons === 'no') {
+            self.autosubmit();
+          }
+
+          // click - mark element as clicked to exclude in document click handler
+          self.editorEl.bind('click', function (e) {
+            // ignore right/middle button click
+            if (e.which && e.which !== 1) {
+              return;
+            }
+
+            if (self.scope.$form.$visible) {
+              self.scope.$form._clicked = true;
+            }
+          });
+        };
+
+        // setWaiting
+        self.setWaiting = function (value) {
+          if (value) {
+            // participate in waiting only if not disabled
+            inWaiting = !self.inputEl.attr('disabled') &&
+              !self.inputEl.attr('ng-disabled') &&
+              !self.inputEl.attr('ng-enabled');
+            if (inWaiting) {
+              self.inputEl.attr('disabled', 'disabled');
+              if (self.buttonsEl) {
+                self.buttonsEl.find('button').attr('disabled', 'disabled');
+              }
+            }
           } else {
-            el.focus();
+            if (inWaiting) {
+              self.inputEl.removeAttr('disabled');
+              if (self.buttonsEl) {
+                self.buttonsEl.find('button').removeAttr('disabled');
+              }
+            }
           }
-        } else if (editableOptions.activate === 'select') {
-          if (el.select){
-            el.select();
-          } else if (el.focus) {
-            el.focus();
+        };
+
+        self.activate = function (start, end) {
+          setTimeout(function () {
+            var el = self.inputEl[0];
+
+            if (editableOptions.activate === 'focus' && el.focus) {
+              if (start !== undefined && start !== "" && el.setSelectionRange) {
+                end = end || start;
+                el.onfocus = function () {
+                  setTimeout(function () {
+                    try {
+                      this.setSelectionRange(start, end);
+                    } catch (e) {
+                      //do nothing, this input doesn't support setSelectionRange
+                    }
+                  }.bind(this));
+                };
+              }
+
+              if (self.directiveName == 'editableRadiolist' || self.directiveName == 'editableChecklist' ||
+                self.directiveName == 'editableBsdate' || self.directiveName == 'editableTagsInput') {
+                //Set focus to first pristine element in the list
+                el.querySelector('.ng-pristine').focus();
+              } else {
+                el.focus();
+              }
+            } else if (editableOptions.activate === 'select') {
+              if (el.select) {
+                el.select();
+              } else if (el.focus) {
+                el.focus();
+              }
+            }
+          }, 0);
+        };
+
+        self.setError = function (msg) {
+          if (!angular.isObject(msg)) {
+            $scope.$error = $sce.trustAsHtml(msg);
+            self.error = msg;
           }
-        }
-      }, 0);
-    };
+        };
 
-    self.setError = function(msg) {
-      if(!angular.isObject(msg)) {
-        $scope.$error = $sce.trustAsHtml(msg);
-        self.error = msg;
+        /*
+        Checks that result is string or promise returned string and shows it as error message
+        Applied to onshow, onbeforesave, onaftersave
+        */
+        self.catchError = function (result, noPromise) {
+          if (angular.isObject(result) && noPromise !== true) {
+            $q.when(result).then(
+              //success and fail handlers are equal
+              angular.bind(this, function (r) {
+                this.catchError(r, true);
+              }),
+              angular.bind(this, function (r) {
+                this.catchError(r, true);
+              })
+            );
+            //check $http error
+          } else if (noPromise && angular.isObject(result) && result.status &&
+            (result.status !== 200) && result.data && angular.isString(result.data)) {
+            this.setError(result.data);
+            //set result to string: to let form know that there was error
+            result = result.data;
+          } else if (angular.isString(result)) {
+            this.setError(result);
+          }
+          return result;
+        };
+
+        self.save = function () {
+          valueGetter.assign($scope.$parent,
+            self.useCopy ? angular.copy(self.scope.$data) : self.scope.$data);
+
+          // no need to call handleEmpty here as we are watching change of model value
+          // self.handleEmpty();
+        };
+
+        /*
+        attach/detach `editable-empty` class to element
+        */
+        self.handleEmpty = function () {
+          var val = valueGetter($scope.$parent);
+          var isEmpty = val === null || val === undefined || val === "" || (angular.isArray(val) && val.length === 0);
+          $element.toggleClass('editable-empty', isEmpty);
+        };
+
+        /*
+        Called when `buttons = "no"` to submit automatically
+        */
+        self.autosubmit = angular.noop;
+
+        self.onshow = angular.noop;
+        self.onhide = angular.noop;
+        self.oncancel = angular.noop;
+        self.onbeforesave = angular.noop;
+        self.onaftersave = angular.noop;
       }
-    };
 
-    /*
-    Checks that result is string or promise returned string and shows it as error message
-    Applied to onshow, onbeforesave, onaftersave
-    */
-    self.catchError = function(result, noPromise) {
-      if (angular.isObject(result) && noPromise !== true) {
-        $q.when(result).then(
-          //success and fail handlers are equal
-          angular.bind(this, function(r) {
-            this.catchError(r, true);
-          }),
-          angular.bind(this, function(r) {
-            this.catchError(r, true);
-          })
-        );
-      //check $http error
-      } else if (noPromise && angular.isObject(result) && result.status &&
-        (result.status !== 200) && result.data && angular.isString(result.data)) {
-        this.setError(result.data);
-        //set result to string: to let form know that there was error
-        result = result.data;
-      } else if (angular.isString(result)) {
-        this.setError(result);
-      }
-      return result;
-    };
-
-    self.save = function() {
-      valueGetter.assign($scope.$parent,
-          self.useCopy ? angular.copy(self.scope.$data) : self.scope.$data);
-
-      // no need to call handleEmpty here as we are watching change of model value
-      // self.handleEmpty();
-    };
-
-    /*
-    attach/detach `editable-empty` class to element
-    */
-    self.handleEmpty = function() {
-      var val = valueGetter($scope.$parent);
-      var isEmpty = val === null || val === undefined || val === "" || (angular.isArray(val) && val.length === 0); 
-      $element.toggleClass('editable-empty', isEmpty);
-    };
-
-    /*
-    Called when `buttons = "no"` to submit automatically
-    */
-    self.autosubmit = angular.noop;
-
-    self.onshow = angular.noop;
-    self.onhide = angular.noop;
-    self.oncancel = angular.noop;
-    self.onbeforesave = angular.noop;
-    self.onaftersave = angular.noop;
-  }
-
-  return EditableController;
-}]);
+      return EditableController;
+    }]);
 
 /*
 editableFactory is used to generate editable directives (see `/directives` folder)
@@ -1444,370 +1455,380 @@ function($parse, $compile, editableThemes, $rootScope, $document, editableContro
 /*
 Returns editableForm controller
 */
-angular.module('xeditable').factory('editableFormController', 
-  ['$parse', '$document', '$rootScope', 'editablePromiseCollection', 'editableUtils',
-  function($parse, $document, $rootScope, editablePromiseCollection, editableUtils) {
+angular.module('xeditable').factory('editableFormController',
+  ['$parse', '$document', '$rootScope', 'editablePromiseCollection', 'editableUtils', 'editableOptions',
+    function ($parse, $document, $rootScope, editablePromiseCollection, editableUtils, editableOptions) {
 
-  // array of opened editable forms
-  var shown = [];
+      // array of opened editable forms
+      var shown = [];
 
-  //Check if the child element correspond or is a descendant of the parent element
-  var isSelfOrDescendant = function (parent, child) {
-    if (child == parent) {
-      return true;
-    }
+      //Check if the child element correspond or is a descendant of the parent element
+      var isSelfOrDescendant = function (parent, child) {
+        if (child === parent || (editableOptions.activationEvent === "focus" && child === parent.parentNode)) {
+          return true;
+        }
 
-    var node = child.parentNode;
-    while (node !== null) {
-      if (node == parent) {
-        return true;
-      }
-      node = node.parentNode;
-    }
-    return false;
-  };
-  
-  //Check if it is a real blur : if the click event appear on a shown editable elem, this is not a blur.
-  var isBlur = function(shown, event) {
-    var isBlur = true;
+        var node = child.parentNode;
 
-    var editables = shown.$editables;
-    angular.forEach(editables, function(v){
-      var element = v.editorEl[0];
-      if (isSelfOrDescendant(element, event.target))
-        isBlur = false;
-      
-    });
-    return isBlur;
-  };
-  
-  // bind click to body: cancel|submit|ignore forms
-  $document.bind('click', function(e) {
-    // ignore right/middle button click
-    if (e.which && e.which !== 1) {
-      return;
-    }
+        while (node !== null) {
+          if (node === parent) {
+            return true;
+          }
+          node = node.parentNode;
+        }
+        return false;
+      };
 
-    var toCancel = [];
-    var toSubmit = [];
-    for (var i=0; i<shown.length; i++) {
+      //Check if it is a real blur : if the click event appear on a shown editable elem, this is not a blur.
+      var isBlur = function (shown, event) {
+        var isBlur = true;
 
-      // exclude clicked
-      if (shown[i]._clicked) {
-        shown[i]._clicked = false;
-        continue;
-      }
+        var editables = shown.$editables;
+        angular.forEach(editables, function (v) {
+          var element = v.editorEl[0];
+          if (isSelfOrDescendant(element, event.target))
+            isBlur = false;
 
-      // exclude waiting
-      if (shown[i].$waiting) {
-        continue;
-      }
+        });
+        return isBlur;
+      };
 
-      if (shown[i]._blur === 'cancel' && isBlur(shown[i], e)) {
-        toCancel.push(shown[i]);
-      }
-
-      if (shown[i]._blur === 'submit' && isBlur(shown[i], e)) {
-        toSubmit.push(shown[i]);
-      }
-    }
-
-    if (toCancel.length || toSubmit.length) {
-      $rootScope.$apply(function() {
-        angular.forEach(toCancel, function(v){ v.$cancel(); });
-        angular.forEach(toSubmit, function(v){ v.$submit(); });
-      });
-    }
-  });
- 
-  $rootScope.$on('closeEdit', function() {
-    for(var i=0; i < shown.length; i++) {
-      shown[i].$hide();
-    }
-  }); 
-
-  var base = {
-    $addEditable: function(editable) {
-      //console.log('add editable', editable.elem, editable.elem.bind);
-      this.$editables.push(editable);
-
-      //'on' is not supported in angular 1.0.8
-      editable.elem.bind('$destroy', angular.bind(this, this.$removeEditable, editable));
-
-      //bind editable's local $form to self (if not bound yet, below form) 
-      if (!editable.scope.$form) {
-        editable.scope.$form = this;
-      }
-
-      //if form already shown - call show() of new editable
-      if (this.$visible) {
-        editable.catchError(editable.show());
-      }
-      editable.catchError(editable.setWaiting(this.$waiting));
-    },
-
-    $removeEditable: function(editable) {
-      //arrayRemove
-      for(var i=0; i < this.$editables.length; i++) {
-        if(this.$editables[i] === editable) {
-          this.$editables.splice(i, 1);
+      var clickHandler = function (e) {
+        // ignore right/middle button click
+        if (e.which && e.which !== 1) {
           return;
         }
-      }
-    },
 
-    /**
-     * Shows form with editable controls.
-     * 
-     * @method $show()
-     * @memberOf editable-form
-     */
-    $show: function() {
-      if (this.$visible) {
-        return;
-      }
+        var toCancel = [];
+        var toSubmit = [];
+        for (var i = 0; i < shown.length; i++) {
+          console.log("in for", shown[i]);
+          // exclude clicked
+          if (shown[i]._clicked) {
+            shown[i]._clicked = false;
+            continue;
+          }
 
-      this.$visible = true;
+          // exclude waiting
+          if (shown[i].$waiting) {
+            continue;
+          }
 
-      var pc = editablePromiseCollection();
+          if (shown[i]._blur === 'cancel' && isBlur(shown[i], e)) {
+            toCancel.push(shown[i]);
+          }
 
-      //own show
-      pc.when(this.$onshow());
-
-      //clear errors
-      this.$setError(null, '');
-
-      //children show
-      angular.forEach(this.$editables, function(editable) {
-        pc.when(editable.show());
-      });
-
-      //wait promises and activate
-      pc.then({
-        onWait: angular.bind(this, this.$setWaiting), 
-        onTrue: angular.bind(this, this.$activate), 
-        onFalse: angular.bind(this, this.$activate), 
-        onString: angular.bind(this, this.$activate)
-      });
-
-      // add to internal list of shown forms
-      // setTimeout needed to prevent closing right after opening (e.g. when trigger by button)
-      setTimeout(angular.bind(this, function() {
-        // clear `clicked` to get ready for clicks on visible form
-        this._clicked = false;
-        if(editableUtils.indexOf(shown, this) === -1) {
-          shown.push(this);
+          if (shown[i]._blur === 'submit' && isBlur(shown[i], e)) {
+            toSubmit.push(shown[i]);
+          }
         }
-      }), 0);      
-    },
 
-    /**
-     * Sets focus on form field specified by `name`.<br/>
-     * When trying to set the focus on a form field of a new row in the editable table, the `$activate` call needs to be wrapped in a `$timeout` call so that the form is rendered before the `$activate` function is called.
-     * 
-     * @method $activate(name)
-     * @param {string} name name of field
-     * @memberOf editable-form
-     */
-    $activate: function(name) {
-      var i,
-          selectionStart,
-          selectionEnd;
-      if (this.$editables.length) {
-        //activate by name
-        if (angular.isString(name)) {
-          for(i=0; i<this.$editables.length; i++) {
-            if (this.$editables[i].name === name) {
-              this.$editables[i].activate();
+        if (toCancel.length || toSubmit.length) {
+          $rootScope.$apply(function () {
+            angular.forEach(toCancel, function (v) { v.$cancel(); });
+            angular.forEach(toSubmit, function (v) { v.$submit(); });
+          });
+        }
+      };
+
+
+
+      $rootScope.$on('closeEdit', function () {
+        for (var i = 0; i < shown.length; i++) {
+          shown[i].$hide();
+        }
+      });
+
+      var base = {
+        $addEditable: function (editable) {
+          //console.log('add editable', editable.elem, editable.elem.bind);
+          this.$editables.push(editable);
+
+          //'on' is not supported in angular 1.0.8
+          editable.elem.bind('$destroy', angular.bind(this, this.$removeEditable, editable));
+
+          //bind editable's local $form to self (if not bound yet, below form)
+          if (!editable.scope.$form) {
+            editable.scope.$form = this;
+          }
+
+          //if form already shown - call show() of new editable
+          if (this.$visible) {
+            editable.catchError(editable.show());
+          }
+          editable.catchError(editable.setWaiting(this.$waiting));
+        },
+
+        $removeEditable: function (editable) {
+          //arrayRemove
+          for (var i = 0; i < this.$editables.length; i++) {
+            if (this.$editables[i] === editable) {
+              this.$editables.splice(i, 1);
               return;
             }
           }
-        }
+        },
 
-        //try activate error field
-        for(i=0; i<this.$editables.length; i++) {
-          if (this.$editables[i].error) {
-            this.$editables[i].activate();
+        /**
+         * Shows form with editable controls.
+         *
+         * @method $show()
+         * @memberOf editable-form
+         */
+        $show: function () {
+          if (this.$visible) {
             return;
           }
-        }
 
-        //by default activate first field
-        selectionStart = this.$editables[0].elem[0].selectionStart ? 
-            this.$editables[0].elem[0].selectionStart : 
+          this.$visible = true;
+
+          var pc = editablePromiseCollection();
+
+          //own show
+          pc.when(this.$onshow());
+
+          //clear errors
+          this.$setError(null, '');
+
+          //children show
+          angular.forEach(this.$editables, function (editable) {
+            pc.when(editable.show());
+          });
+
+          //wait promises and activate
+          pc.then({
+            onWait: angular.bind(this, this.$setWaiting),
+            onTrue: angular.bind(this, this.$activate),
+            onFalse: angular.bind(this, this.$activate),
+            onString: angular.bind(this, this.$activate)
+          });
+
+          // add to internal list of shown forms
+          // setTimeout needed to prevent closing right after opening (e.g. when trigger by button)
+          setTimeout(angular.bind(this, function () {
+            // clear `clicked` to get ready for clicks on visible form
+            this._clicked = false;
+            if (editableUtils.indexOf(shown, this) === -1) {
+              shown.push(this);
+            }
+          }), 0);
+        },
+
+        /**
+         * Sets focus on form field specified by `name`.<br/>
+         * When trying to set the focus on a form field of a new row in the editable table, the `$activate` call needs to be wrapped in a `$timeout` call so that the form is rendered before the `$activate` function is called.
+         *
+         * @method $activate(name)
+         * @param {string} name name of field
+         * @memberOf editable-form
+         */
+        $activate: function (name) {
+          var i,
+            selectionStart,
+            selectionEnd;
+          if (this.$editables.length) {
+            //activate by name
+            if (angular.isString(name)) {
+              for (i = 0; i < this.$editables.length; i++) {
+                if (this.$editables[i].name === name) {
+                  this.$editables[i].activate();
+                  return;
+                }
+              }
+            }
+
+            //try activate error field
+            for (i = 0; i < this.$editables.length; i++) {
+              if (this.$editables[i].error) {
+                this.$editables[i].activate();
+                return;
+              }
+            }
+
+
+            // bind click to body: cancel|submit|ignore forms
+            if (this.$editables[0].attrs.usemousedown === "true") {
+              $document.bind('mousedown', clickHandler);
+            } else {
+              $document.bind('click', clickHandler);
+            }
+
+            //by default activate first field
+            selectionStart = this.$editables[0].elem[0].selectionStart ?
+              this.$editables[0].elem[0].selectionStart :
               this.$editables[0].elem[0].text ? this.$editables[0].elem[0].text.length :
-                  this.$editables[0].elem[0].innerHTML ? this.$editables[0].elem[0].innerHTML.length : 0;
-        selectionEnd = this.$editables[0].elem[0].selectionEnd ? 
-            this.$editables[0].elem[0].selectionEnd : 
+                this.$editables[0].elem[0].innerHTML ? this.$editables[0].elem[0].innerHTML.length : 0;
+            selectionEnd = this.$editables[0].elem[0].selectionEnd ?
+              this.$editables[0].elem[0].selectionEnd :
               this.$editables[0].elem[0].text ? this.$editables[0].elem[0].text.length :
-                  this.$editables[0].elem[0].innerHTML ? this.$editables[0].elem[0].innerHTML.length : 0;
-        this.$editables[0].activate(selectionStart, selectionEnd);
-      }
-    },
+                this.$editables[0].elem[0].innerHTML ? this.$editables[0].elem[0].innerHTML.length : 0;
+            this.$editables[0].activate(selectionStart, selectionEnd);
+          }
+        },
 
-    /**
-     * Hides form with editable controls without saving.
-     * 
-     * @method $hide()
-     * @memberOf editable-form
-     */
-    $hide: function() {
-      if (!this.$visible) {
-        return;
-      }      
-      this.$visible = false;
-      // self hide
-      this.$onhide();
-      // children's hide
-      angular.forEach(this.$editables, function(editable) {
-        editable.hide();
-      });
+        /**
+         * Hides form with editable controls without saving.
+         *
+         * @method $hide()
+         * @memberOf editable-form
+         */
+        $hide: function () {
+          if (!this.$visible) {
+            return;
+          }
+          this.$visible = false;
+          // self hide
+          this.$onhide();
+          // children's hide
+          angular.forEach(this.$editables, function (editable) {
+            editable.hide();
+          });
 
-      // remove from internal list of shown forms
-      editableUtils.arrayRemove(shown, this);
-    },
+          // remove from internal list of shown forms
+          editableUtils.arrayRemove(shown, this);
+        },
 
-    /**
-     * Triggers `oncancel` event and calls `$hide()`.
-     * 
-     * @method $cancel()
-     * @memberOf editable-form
-     */
-    $cancel: function() {
-      if (!this.$visible) {
-        return;
-      }      
-      // self cancel
-      this.$oncancel();
-      // children's cancel      
-      angular.forEach(this.$editables, function(editable) {
-        editable.cancel();
-      });
-      // self hide
-      this.$hide();
-    },    
+        /**
+         * Triggers `oncancel` event and calls `$hide()`.
+         *
+         * @method $cancel()
+         * @memberOf editable-form
+         */
+        $cancel: function () {
+          if (!this.$visible) {
+            return;
+          }
+          // self cancel
+          this.$oncancel();
+          // children's cancel
+          angular.forEach(this.$editables, function (editable) {
+            editable.cancel();
+          });
+          // self hide
+          this.$hide();
+        },
 
-    $setWaiting: function(value) {
-      this.$waiting = !!value;
-      // we can't just set $waiting variable and use it via ng-disabled in children
-      // because in editable-row form is not accessible
-      angular.forEach(this.$editables, function(editable) {
-        editable.setWaiting(!!value);
-      });
-    },
+        $setWaiting: function (value) {
+          this.$waiting = !!value;
+          // we can't just set $waiting variable and use it via ng-disabled in children
+          // because in editable-row form is not accessible
+          angular.forEach(this.$editables, function (editable) {
+            editable.setWaiting(!!value);
+          });
+        },
 
-    /**
-     * Shows error message for particular field.
-     * 
-     * @method $setError(name, msg)
-     * @param {string} name name of field
-     * @param {string} msg error message
-     * @memberOf editable-form
-     */
-    $setError: function(name, msg) {
-      angular.forEach(this.$editables, function(editable) {
-        if(!name || editable.name === name) {
-          editable.setError(msg);
-        }
-      });
-    },
+        /**
+         * Shows error message for particular field.
+         *
+         * @method $setError(name, msg)
+         * @param {string} name name of field
+         * @param {string} msg error message
+         * @memberOf editable-form
+         */
+        $setError: function (name, msg) {
+          angular.forEach(this.$editables, function (editable) {
+            if (!name || editable.name === name) {
+              editable.setError(msg);
+            }
+          });
+        },
 
-    $submit: function() {
-      if (this.$waiting) {
-        return;
-      } 
+        $submit: function () {
+          if (this.$waiting) {
+            return;
+          }
 
-      //clear errors
-      this.$setError(null, '');
+          //clear errors
+          this.$setError(null, '');
 
-      //children onbeforesave
-      var pc = editablePromiseCollection();
-      angular.forEach(this.$editables, function(editable) {
-        pc.when(editable.onbeforesave());
-      });
+          //children onbeforesave
+          var pc = editablePromiseCollection();
+          angular.forEach(this.$editables, function (editable) {
+            pc.when(editable.onbeforesave());
+          });
 
-      /*
-      onbeforesave result:
-      - true/undefined: save data and close form
-      - false: close form without saving
-      - string: keep form open and show error
-      */
-      pc.then({
-        onWait: angular.bind(this, this.$setWaiting), 
-        onTrue: angular.bind(this, checkSelf, true), 
-        onFalse: angular.bind(this, checkSelf, false), 
-        onString: angular.bind(this, this.$activate)
-      });
+          /*
+          onbeforesave result:
+          - true/undefined: save data and close form
+          - false: close form without saving
+          - string: keep form open and show error
+          */
+          pc.then({
+            onWait: angular.bind(this, this.$setWaiting),
+            onTrue: angular.bind(this, checkSelf, true),
+            onFalse: angular.bind(this, checkSelf, false),
+            onString: angular.bind(this, this.$activate)
+          });
 
-      //save
-      function checkSelf(childrenTrue){
-        var pc = editablePromiseCollection();
-        pc.when(this.$onbeforesave());
-        pc.then({
-          onWait: angular.bind(this, this.$setWaiting), 
-          onTrue: childrenTrue ? angular.bind(this, this.$save) : angular.bind(this, this.$hide), 
-          onFalse: angular.bind(this, this.$hide), 
-          onString: angular.bind(this, this.$activate)
-        });
-      }
-    },
+          //save
+          function checkSelf(childrenTrue) {
+            var pc = editablePromiseCollection();
+            pc.when(this.$onbeforesave());
+            pc.then({
+              onWait: angular.bind(this, this.$setWaiting),
+              onTrue: childrenTrue ? angular.bind(this, this.$save) : angular.bind(this, this.$hide),
+              onFalse: angular.bind(this, this.$hide),
+              onString: angular.bind(this, this.$activate)
+            });
+          }
+        },
 
-    $save: function() {
-      // write model for each editable
-      angular.forEach(this.$editables, function(editable) {
-        editable.save();
-      });
+        $save: function () {
+          // write model for each editable
+          angular.forEach(this.$editables, function (editable) {
+            editable.save();
+          });
 
-      //call onaftersave of self and children
-      var pc = editablePromiseCollection();
-      pc.when(this.$onaftersave());
-      angular.forEach(this.$editables, function(editable) {
-        pc.when(editable.onaftersave());
-      });
+          //call onaftersave of self and children
+          var pc = editablePromiseCollection();
+          pc.when(this.$onaftersave());
+          angular.forEach(this.$editables, function (editable) {
+            pc.when(editable.onaftersave());
+          });
 
-      /*
-      onaftersave result:
-      - true/undefined/false: just close form
-      - string: keep form open and show error
-      */
-      pc.then({
-        onWait: angular.bind(this, this.$setWaiting), 
-        onTrue: angular.bind(this, this.$hide), 
-        onFalse: angular.bind(this, this.$hide), 
-        onString: angular.bind(this, this.$activate)
-      });
-    },
+          /*
+          onaftersave result:
+          - true/undefined/false: just close form
+          - string: keep form open and show error
+          */
+          pc.then({
+            onWait: angular.bind(this, this.$setWaiting),
+            onTrue: angular.bind(this, this.$hide),
+            onFalse: angular.bind(this, this.$hide),
+            onString: angular.bind(this, this.$activate)
+          });
+        },
 
-    $onshow: angular.noop,
-    $oncancel: angular.noop,
-    $onhide: angular.noop,
-    $onbeforesave: angular.noop,
-    $onaftersave: angular.noop
-  };
+        $onshow: angular.noop,
+        $oncancel: angular.noop,
+        $onhide: angular.noop,
+        $onbeforesave: angular.noop,
+        $onaftersave: angular.noop
+      };
 
-  return function() {
-    return angular.extend({
-      $editables: [],
-      /**
-       * Form visibility flag.
-       * 
-       * @var {bool} $visible
-       * @memberOf editable-form
-       */
-      $visible: false,
-      /**
-       * Form waiting flag. It becomes `true` when form is loading or saving data.
-       * 
-       * @var {bool} $waiting
-       * @memberOf editable-form
-       */
-      $waiting: false,
-      $data: {},
-      _clicked: false,
-      _blur: null
-    }, base);
-  };
-}]);
+      return function () {
+        return angular.extend({
+          $editables: [],
+          /**
+           * Form visibility flag.
+           *
+           * @var {bool} $visible
+           * @memberOf editable-form
+           */
+          $visible: false,
+          /**
+           * Form waiting flag. It becomes `true` when form is loading or saving data.
+           *
+           * @var {bool} $waiting
+           * @memberOf editable-form
+           */
+          $waiting: false,
+          $data: {},
+          _clicked: false,
+          _blur: null
+        }, base);
+      };
+    }]);
 
 /**
  * EditableForm directive. Should be defined in <form> containing editable controls.  

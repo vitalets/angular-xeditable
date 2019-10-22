@@ -1,6 +1,15 @@
 Angular-xeditable changelog
 =============================
 
+Version 0.10.1 Oct 22, 2019
+
+----------------------------
+[bug #750] Fix rendering of editable ui-bootstrap popover (ckosloski)
+[bug #754] Fix radiolist issue with string values (ckosloski)
+[bug #753] Change main entry to index.js and export module name (madflow)
+[bug #755] Fix activationEvent of focus doesn't allow editing (ckosloski)
+[bug #758] Control deselects when navigating outside the area - mouseup on outside (drsmog)
+
 Version 0.10.0 Jun 24, 2019
 
 ----------------------------

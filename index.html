@@ -57,7 +57,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.10.0.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.10.0 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.10.1.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.10.1 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -240,7 +240,7 @@ If installing via NPM, jQuery and moment js will also be installed.</p>
 
               <pre class="prettyprint">&lt;link href=&quot;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li><span>Install angular-xeditable via</span><a href="http://bower.io" target="_blank">bower</a><span> or</span><a href="zip/angular-xeditable-0.10.0.zip">download latest zip</a>
+            <li><span>Install angular-xeditable via</span><a href="http://bower.io" target="_blank">bower</a><span> or</span><a href="zip/angular-xeditable-0.10.1.zip">download latest zip</a>
               <pre class="prettyprint">bower install angular-xeditable</pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -1526,15 +1526,16 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["editable-popover"]=v; 
                       <h3>demo</h3>
                       <div class="well line-example"><div ng-controller="UiPopoverCtrl" id="UiPopoverCtrl">
   <div class="ui-popover-wrapper">
-    <a href="#" 
+    <a href="#"
        id="simpleText"
-       editable-text="user.name" 
+       editable-text="user.name"
        e-label="User Name"
        uib-popover-template="'popover.html'"
        popover-is-open="popoverIsOpen"
        popover-append-to-body="true"
-       onshow="popoverIsOpen = !popoverIsOpen" 
+       onshow="popoverIsOpen = !popoverIsOpen"
        onhide="popoverIsOpen = !popoverIsOpen"
+       popover-class="increase-popover-width"
        popover="true">{{ user.name || 'empty' }}</a>
   </div>
 </div></div>
@@ -1548,6 +1549,7 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["editable-popover"]=v; 
 <li><code>onshow=&quot;popoverIsOpen = !popoverIsOpen&quot;</code> - Opens the popover when the editable form is shown</li>
 <li><code>onhide=&quot;popoverIsOpen = !popoverIsOpen&quot;</code> - Closes the popover when the editable form is closed</li>
 <li><code>popover=&quot;true&quot;</code> - Tells the editable directive that this element is to be displayed in the ui-bootstrap popover</li>
+<li><code>popover-class=&quot;increase-popover-width&quot;</code> - Add this attribute to change the width of the popover</li>
 </ul>
 </li>
 </ul>
@@ -1562,15 +1564,16 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["uipopover"]=v; }); });
                       <h3>html</h3>
                       <pre class="prettyprint ng-non-bindable">&lt;div ng-controller=&quot;UiPopoverCtrl&quot; id=&quot;UiPopoverCtrl&quot;&gt;
   &lt;div class=&quot;ui-popover-wrapper&quot;&gt;
-    &lt;a href=&quot;#&quot; 
+    &lt;a href=&quot;#&quot;
        id=&quot;simpleText&quot;
-       editable-text=&quot;user.name&quot; 
+       editable-text=&quot;user.name&quot;
        e-label=&quot;User Name&quot;
        uib-popover-template=&quot;'popover.html'&quot;
        popover-is-open=&quot;popoverIsOpen&quot;
        popover-append-to-body=&quot;true&quot;
-       onshow=&quot;popoverIsOpen = !popoverIsOpen&quot; 
+       onshow=&quot;popoverIsOpen = !popoverIsOpen&quot;
        onhide=&quot;popoverIsOpen = !popoverIsOpen&quot;
+       popover-class=&quot;increase-popover-width&quot;
        popover=&quot;true&quot;&gt;{{ user.name || 'empty' }}&lt;/a&gt;
   &lt;/div&gt;
 &lt;/div&gt;</pre>
@@ -2890,27 +2893,32 @@ Otherwise, if control is part of form - you should set <code>blur</code> of form
                           <td><code>buttons</code></td>
                           <td>string</td>
                           <td><p>Whether to show ok/cancel buttons. Values: <code>right|no</code>.
-If set to <code>no</code> control automatically submitted when value changed.<br>If control is part of form buttons will never be shown.</p>
+If set to <code>no</code> control automatically submitted when value changed.
+If control is part of form buttons will never be shown.</p>
 </td>
                         </tr>
                         <tr>
                           <td><code>e-*</code></td>
                           <td>any</td>
                           <td><p>Attributes defined with <code>e-*</code> prefix automatically transferred from original element to
-control.<br>For example, if you set <code>&lt;span editable-text=&quot;user.name&quot; e-style=&quot;width: 100px&quot;</code>&gt;
-then input will appear as <code>&lt;input style=&quot;width: 100px&quot;&gt;</code>.<br>See <a href="#text-customize">demo</a>.</p>
+control.
+For example, if you set <code>&lt;span editable-text=&quot;user.name&quot; e-style=&quot;width: 100px&quot;</code>&gt;
+then input will appear as <code>&lt;input style=&quot;width: 100px&quot;&gt;</code>.
+See <a href="#text-customize">demo</a>.</p>
 </td>
                         </tr>
                         <tr>
                           <td><code>onaftersave</code></td>
                           <td>method</td>
-                          <td><p>Called during submit after value is saved to model.<br>See <a href="#onaftersave">demo</a>.</p>
+                          <td><p>Called during submit after value is saved to model.
+See <a href="#onaftersave">demo</a>.</p>
 </td>
                         </tr>
                         <tr>
                           <td><code>onbeforesave</code></td>
                           <td>method</td>
-                          <td><p>Called during submit before value is saved to model.<br>See <a href="#onbeforesave">demo</a>.</p>
+                          <td><p>Called during submit before value is saved to model.
+See <a href="#onbeforesave">demo</a>.</p>
 </td>
                         </tr>
                         <tr>
@@ -2928,13 +2936,21 @@ then input will appear as <code>&lt;input style=&quot;width: 100px&quot;&gt;</co
                         <tr>
                           <td><code>onshow</code></td>
                           <td>method</td>
-                          <td><p>Called when control is shown.<br>See <a href="#select-remote">demo</a>.</p>
+                          <td><p>Called when control is shown.
+See <a href="#select-remote">demo</a>.</p>
 </td>
                         </tr>
                         <tr>
                           <td><code>popover</code></td>
                           <td>boolean</td>
                           <td><p>Whether to show the editable element in a ui-bootstrap popover. Values: <code>true|false</code>.</p>
+</td>
+                        </tr>
+                        <tr>
+                          <td><code>usemousedown</code></td>
+                          <td>string</td>
+                          <td><p>Listen to Mouse Down event instead of click: <code>true|false</code>.
+Has sense only for single editable element.</p>
 </td>
                         </tr>
                       </tbody>
