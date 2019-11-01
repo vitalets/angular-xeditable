@@ -48,7 +48,7 @@ angular.module('xeditable').factory('editableFormController',
         var toCancel = [];
         var toSubmit = [];
         for (var i = 0; i < shown.length; i++) {
-          console.log("in for", shown[i]);
+          // console.log("in for", shown[i]);
           // exclude clicked
           if (shown[i]._clicked) {
             shown[i]._clicked = false;
