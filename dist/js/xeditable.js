@@ -1,7 +1,7 @@
 /*!
-angular-xeditable - 0.10.1
+angular-xeditable - 0.10.2
 Edit-in-place for angular.js
-Build date: 2019-10-22 
+Build date: 2019-11-01 
 */
 /**
  * Angular-xeditable module
@@ -1502,7 +1502,7 @@ angular.module('xeditable').factory('editableFormController',
         var toCancel = [];
         var toSubmit = [];
         for (var i = 0; i < shown.length; i++) {
-          console.log("in for", shown[i]);
+          // console.log("in for", shown[i]);
           // exclude clicked
           if (shown[i]._clicked) {
             shown[i]._clicked = false;

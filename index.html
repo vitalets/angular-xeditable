@@ -57,7 +57,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="https://github.com/vitalets/angular-xeditable">GitHub</a></li>
           </ul>
-          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.10.1.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.10.1 ~ kb</a></form>
+          <form class="navbar-form navbar-right"><a href="zip/angular-xeditable-0.10.2.zip" style="font-weight:bold" class="btn btn-primary"><span style="margin-right:10px" class="glyphicon glyphicon-save"></span>Download 0.10.2 ~ kb</a></form>
           <div style="padding-top: 13px">
 <!-- google+ -->
 <div id="socials" style="text-align: center">
@@ -240,7 +240,7 @@ If installing via NPM, jQuery and moment js will also be installed.</p>
 
               <pre class="prettyprint">&lt;link href=&quot;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</pre>
             </li>
-            <li><span>Install angular-xeditable via</span><a href="http://bower.io" target="_blank">bower</a><span> or</span><a href="zip/angular-xeditable-0.10.1.zip">download latest zip</a>
+            <li><span>Install angular-xeditable via</span><a href="http://bower.io" target="_blank">bower</a><span> or</span><a href="zip/angular-xeditable-0.10.2.zip">download latest zip</a>
               <pre class="prettyprint">bower install angular-xeditable</pre>
             </li>
             <li>Include angular-xeditable into your project
@@ -528,7 +528,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["html5-inputs"]=v; }); 
 </div></div>
                       <pre>{{ debug["textarea"] | json }}</pre>
                       <p><p>To make element editable via textarea just add <code>editable-textarea</code> attribute
-pointing to model in scope. You can also wrap content into <code>&lt;pre&gt;</code> tags to keep linebreaks.<br>Data can be submitted by <em>Ctrl + Enter</em>.<br>Data can be submitted by <em>Enter</em> if the attribute <code>submit-on-enter=&quot;true&quot;</code> is used.</p>
+pointing to model in scope. You can also wrap content into <code>&lt;pre&gt;</code> tags to keep linebreaks.<br>Data can be submitted by <em>Ctrl + Enter</em>.  
+Data can be submitted by <em>Enter</em> if the attribute <code>submit-on-enter=&quot;true&quot;</code> is used.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('TextareaCtrl', function($scope) {
@@ -599,8 +600,7 @@ Optionally define <code>e-checklist-comparator</code> to use a function to deter
 <p>By default, checkboxes aligned <em>horizontally</em>. To align <em>vertically</em> just add following <strong>CSS</strong>:</p>
 <pre><code>.editable-checklist label {
   display: block;
-}</code></pre>
-</p>
+}</code></pre></p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('ChecklistCtrl', function($scope, $filter) {
   $scope.user = {
@@ -683,8 +683,7 @@ Also you should define <code>e-ng-options</code> attribute to set value and disp
 By default, radioboxes aligned <em>horizontally</em>. To align <em>vertically</em> just add following <strong>CSS</strong>:</p>
 <pre><code>.editable-radiolist label {
   display: block;
-}</code></pre>
-</p>
+}</code></pre></p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('RadiolistCtrl', function($scope, $filter) {
   $scope.user = {
@@ -737,13 +736,11 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["radiolist"]=v; }); });
   </a>
 </div></div>
                       <pre>{{ debug["bsdate"] | json }}</pre>
-                      <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code> for Bootstrap 3:</p>
-<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
-<p>For Bootstrap 4, include:</p>
-<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js&quot;&gt;&lt;/script&gt;</pre>
-<p>Add <code>ui.bootstrap</code> as module dependency:</p>
-<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
-<p>And set <code>editable-bsdate</code> attribute in editable element.<br>To make the input field read-only and force the date to be selected from the popup, add the <code>e-readonly=&quot;true&quot;</code> attribute.<br>Add <code>e-ng-change</code> attribute to call a function when the value of the datepicker is changed.<br>To hide the calendar button and display the calendar popup on click of the input field, set the <code>e-show-calendar-button</code> attribute to false.<br>Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;</code>.</p>
+                      <p><p>Date control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/datepicker">Angular-ui bootstrap datepicker</a>.  
+You should include additional <code>ui-bootstrap-tpls.min.js</code> for Bootstrap 3:</p>
+<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre><p>For Bootstrap 4, include:</p>
+<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js&quot;&gt;&lt;/script&gt;</pre><p>Add <code>ui.bootstrap</code> as module dependency:</p>
+<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre><p>And set <code>editable-bsdate</code> attribute in editable element.<br>To make the input field read-only and force the date to be selected from the popup, add the <code>e-readonly=&quot;true&quot;</code> attribute.<br>Add <code>e-ng-change</code> attribute to call a function when the value of the datepicker is changed.<br>To hide the calendar button and display the calendar popup on click of the input field, set the <code>e-show-calendar-button</code> attribute to false.<br>Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-datepicker-popup=&quot;dd-MMMM-yyyy&quot;</code>.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('BsdateCtrl', function($scope) {
@@ -798,19 +795,18 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["bsdate"]=v; }); });</s
                       <pre>{{ debug["uidate"] | json }}</pre>
                       <p><p>Date control is implemented via <a href="https://github.com/angular-ui/ui-date">jQuery UI Datepicker for AngularJS</a>.  </p>
 <p>You should install ui-date with bower:</p>
-<pre class="prettyprint">    bower install angular-ui-date --save    </pre>
-<p>Add the CSS:</p>
-<pre><code class="lang-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/jquery-ui/themes/smoothness/jquery-ui.css&quot;/&gt;</code></pre>
+<pre class="prettyprint">    bower install angular-ui-date --save    </pre><p>Add the CSS:</p>
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/jquery-ui/themes/smoothness/jquery-ui.css&quot;/&gt;</code></pre>
 <p>Load the script files (minimun jQuery version is v2.2.0):</p>
-<pre><code class="lang-html">&lt;script type=&quot;text/javascript&quot; src=&quot;bower_components/jquery/jquery.js&quot;&gt;&lt;/script&gt;
+<pre><code class="language-html">&lt;script type=&quot;text/javascript&quot; src=&quot;bower_components/jquery/jquery.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;bower_components/jquery-ui/jquery-ui.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;bower_components/angular/angular.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;bower_components/angular-ui-date/dist/date.js&quot;&gt;&lt;/script&gt;</code></pre>
 <p>Add the date module as a dependency to your application module:</p>
-<pre><code class="lang-js">angular.module(&#39;MyApp&#39;, [&#39;ui.date&#39;])</code></pre>
+<pre><code class="language-js">angular.module(&#39;MyApp&#39;, [&#39;ui.date&#39;])</code></pre>
 <p>And set <code>editable-uidate</code> attribute in editable element.  </p>
 <p>You can pass an <code>e-ui-date</code> attribute pointing to an object with a picker configuration that you may want.</p>
-<pre><code class="lang-js">var datePickerOptions = {
+<pre><code class="language-js">var datePickerOptions = {
     changeYear: true,
     changeMonth: true,
     showOn: &quot;button&quot;,
@@ -862,13 +858,11 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["uidate"]=v; }); });</s
   </a>
 </div></div>
                       <pre>{{ debug["bstime"] | json }}</pre>
-                      <p><p>Time control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/timepicker">Angular-ui bootstrap timepicker</a>.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>for Bootstrap 3:</p>
-<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
-<p>For Bootstrap 4, include:</p>
-<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js&quot;&gt;&lt;/script&gt;</pre>
-<p>Add <code>ui.bootstrap</code> as module dependency:</p>
-<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
-<p>And set <code>editable-bstime</code> attribute in editable element.
+                      <p><p>Time control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/timepicker">Angular-ui bootstrap timepicker</a>.  
+You should include additional <code>ui-bootstrap-tpls.min.js</code>for Bootstrap 3:</p>
+<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre><p>For Bootstrap 4, include:</p>
+<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js&quot;&gt;&lt;/script&gt;</pre><p>Add <code>ui.bootstrap</code> as module dependency:</p>
+<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre><p>And set <code>editable-bstime</code> attribute in editable element.
 Other parameters can be defined via <code>e-*</code> syntax, e.g. <code>e-minute-step=&quot;10&quot;</code>.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
@@ -933,13 +927,11 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["combodate"]=v; }); });
   </a>
 </div></div>
                       <pre>{{ debug["typeahead"] | json }}</pre>
-                      <p><p>Typeahead control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/typeahead">Angular-ui bootstrap typeahead</a>.<br>Basically it is normal <code>editable-text</code> control with additional <code>e-typeahead</code> attributes.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>for Bootstrap 3:</p>
-<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre>
-<p>For Bootstrap 4, include:</p>
-<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js&quot;&gt;&lt;/script&gt;</pre>
-<p>Then add <code>ui.bootstrap</code> as module dependency:</p>
-<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre>
-<p>And finally set <code>editable-text</code> attribute pointing to model and <code>e-uib-typeahead</code> attribute pointing to typeahead items.
+                      <p><p>Typeahead control is implemented via <a href="http://angular-ui.github.io/bootstrap/#/typeahead">Angular-ui bootstrap typeahead</a>.  
+Basically it is normal <code>editable-text</code> control with additional <code>e-typeahead</code> attributes.<br>You should include additional <code>ui-bootstrap-tpls.min.js</code>for Bootstrap 3:</p>
+<pre class="prettyprint">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js&quot;&gt;&lt;/script&gt;</pre><p>For Bootstrap 4, include:</p>
+<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/ui-bootstrap4@3.0.6/dist/ui-bootstrap-tpls.js&quot;&gt;&lt;/script&gt;</pre><p>Then add <code>ui.bootstrap</code> as module dependency:</p>
+<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.bootstrap&quot;]);</pre><p>And finally set <code>editable-text</code> attribute pointing to model and <code>e-uib-typeahead</code> attribute pointing to typeahead items.
 Other parameters can be defined via <code>e-typeahead-*</code> syntax, e.g. <code>e-typeahead-wait-ms=&quot;100&quot;</code>.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
@@ -1000,13 +992,12 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["typeahead"]=v; }); });
   </form>
 </div></div>
                       <pre>{{ debug["uiselect"] | json }}</pre>
-                      <p><p>UI-Select control is implemented via <a href="https://github.com/angular-ui/ui-select">AngularJS-native version of Select2 and Selectize</a>.<br>You should include additional <code>select.min.js</code> and <code>select.min.css</code>:</p>
+                      <p><p>UI-Select control is implemented via <a href="https://github.com/angular-ui/ui-select">AngularJS-native version of Select2 and Selectize</a>.  
+You should include additional <code>select.min.js</code> and <code>select.min.css</code>:</p>
 <pre><code>&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.16.1/select.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.16.1/select.min.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot;&gt;</code></pre>
-<p>Then add <code>ui.select</code> as module dependency:</p>
-<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.select&quot;]);</pre>
-<p>And finally set <code>editable-ui-select</code> attribute pointing to model and <code>editable-ui-select-match</code> to the match criteria
+&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.16.1/select.min.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot;&gt;</code></pre><p>Then add <code>ui.select</code> as module dependency:</p>
+<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ui.select&quot;]);</pre><p>And finally set <code>editable-ui-select</code> attribute pointing to model and <code>editable-ui-select-match</code> to the match criteria
 and <code>editable-ui-select-choices</code> to the choices.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
@@ -1087,15 +1078,14 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["uiselect"]=v; }); });<
   </form>
 </div></div>
                       <pre>{{ debug["ngtags"] | json }}</pre>
-                      <p><p>ngTagsInput control is implemented via <a href="http://mbenford.github.io/ngTagsInput/">Tags input directive for AngularJS </a>.<br>You should include additional <code>ng-tags-input.min.js</code> and <code>ng-tags-input.min.css</code> and <code>ng-tags-input.bootstrap.min.css</code> (if using bootstrap):</p>
+                      <p><p>ngTagsInput control is implemented via <a href="http://mbenford.github.io/ngTagsInput/">Tags input directive for AngularJS </a>.  
+You should include additional <code>ng-tags-input.min.js</code> and <code>ng-tags-input.min.css</code> and <code>ng-tags-input.bootstrap.min.css</code> (if using bootstrap):</p>
 <pre><code>&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.js&quot;&gt;&lt;/script&gt;
 
 &lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.min.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot;&gt;
 
-&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.bootstrap.min.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot;&gt;</code></pre>
-<p>Then add <code>ngTagsInput</code> as module dependency:</p>
-<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ngTagsInput&quot;]);</pre>
-<p>And finally set <code>editable-tags-input</code> attribute pointing to model and add <code>editable-tags-input-auto-complete</code> tag to do the auto complete criteria.</p>
+&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.1.1/ng-tags-input.bootstrap.min.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot;&gt;</code></pre><p>Then add <code>ngTagsInput</code> as module dependency:</p>
+<pre class="prettyprint">var app = angular.module(&quot;app&quot;, [&quot;xeditable&quot;, &quot;ngTagsInput&quot;]);</pre><p>And finally set <code>editable-tags-input</code> attribute pointing to model and add <code>editable-tags-input-auto-complete</code> tag to do the auto complete criteria.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('NgTagsCtrl', function($scope, $http) {
@@ -1209,7 +1199,8 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["text-customize"]=v; })
   </button>
 </div></div>
                       <pre>{{ debug["text-btn"] | json }}</pre>
-                      <p><p>To trigger edit-in-place by external button you should define <code>e-form</code> attribute.<br>Value of it is the name of variable to be created in scope that allows you to show / hide editor manually.<br>To trigger edit-in-place with <code>e-form</code> and no button for a single element, add <code>e-clickable=&quot;true&quot;</code>.<br>This will allow you to have custom form names in an ng-repeat for single elements.</p>
+                      <p><p>To trigger edit-in-place by external button you should define <code>e-form</code> attribute.<br>Value of it is the name of variable to be created in scope that allows you to show / hide editor manually.<br>To trigger edit-in-place with <code>e-form</code> and no button for a single element, add <code>e-clickable=&quot;true&quot;</code>.  
+This will allow you to have custom form names in an ng-repeat for single elements.</p>
 </p>
                       <!--script(src=dir+'/controller.js')-->
                       <script>app.controller('TextBtnCtrl', function($scope) {
@@ -1793,13 +1784,15 @@ $scope.$watch("user", function(v) { $scope.$parent.debug["onaftersave"]=v; }); }
 <li><code>string</code>: submit will be cancelled, form will stay opened, string will be shown as error message</li>
 <li><code>not string</code>: submit will be continued</li>
 </ul>
-<p>If you need to <strong>send data on server <em>before</em> writing to local model</strong> then you should define form&#39;s <code>onbeforesave</code>.<br>The result of form&#39;s <code>onbeforesave</code> is important for next step:</p>
+<p>If you need to <strong>send data on server <em>before</em> writing to local model</strong> then you should define form&#39;s <code>onbeforesave</code>.   
+The result of form&#39;s <code>onbeforesave</code> is important for next step:</p>
 <ul>
 <li><code>true</code> or <code>undefined</code>: local model will be updated and form will call <code>onaftersave</code> </li>
 <li><code>false</code>: local model <strong>will not be updated</strong> and form will just close (e.g. you update local model yourself)</li>
 <li><code>string</code>: local model <strong>will not be updated</strong> and <strong>form will not close</strong> (e.g. server error)</li>
 </ul>
-<p>If you need to <strong>send data on server <em>after</em> writing to local model</strong> then you should define form&#39;s <code>onaftersave</code>.<br>The result of form&#39;s <code>onaftersave</code> is also important for next step: </p>
+<p>If you need to <strong>send data on server <em>after</em> writing to local model</strong> then you should define form&#39;s <code>onaftersave</code>.  
+The result of form&#39;s <code>onaftersave</code> is also important for next step: </p>
 <ul>
 <li><code>string</code>: form will not close (e.g. server error)</li>
 <li><code>not string</code>: form will be closed</li>
