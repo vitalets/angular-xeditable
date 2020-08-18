@@ -1,9 +1,9 @@
 <div ng-controller="DevChecklistCtrl">
-  <a href="#" class="nobuttons" editable-checklist="user.devstatus" e-ng-options="s.value as s.text for s in statuses" buttons="no" blur="submit">
+  <a href="#" class="nobuttons" editable-checklist="user.devstatus" e-ng-options="s.value as s.text for s in statuses" buttons="no" blur="submit" data-e-name="check_list[]">
     {{ showStatus() }}
   </a>&nbsp;&nbsp;
-  
+
   <a href="#" class="onchange" editable-checklist="user.devobjectstatus" e-ng-options="s as s.text for s in statuses" buttons="no" blur="submit" e-ng-change="doSomething($data)" e-checklist-comparator="compareFn">
     {{ showObjectStatus() }}
   </a>
-</div>  
+</div>
