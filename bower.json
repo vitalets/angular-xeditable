@@ -26,7 +26,8 @@
     "package.json"
   ],
   "dependencies": {
-    "angular": "~1.x"
+    "angular": "~1.x",
+    "rbecheras-awesomplete": "~0.1.x"
   },
   "devDependencies": {
     "angular": "~1.5.0",
